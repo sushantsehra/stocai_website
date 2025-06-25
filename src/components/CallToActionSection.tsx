@@ -31,7 +31,7 @@ const CallToActionSection = () => {
               Feeling sad, anxious or figuring things out?
             </h2>
             <p className="mt-2 md:mt-5 lg:mt-8 text-lg md:text-2xl md:-2xl leading-6 lg:leading-10 font-[325] text-neutral-700 max-md:max-w-full font-Gotham">
-              That's the right time to start a session!
+              That&apos;s the right time to start a session!
             </p>
           </div>
           <Button

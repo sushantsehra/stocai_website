@@ -51,7 +51,7 @@ const InsightSection = () => {
                       Deeper Insight
                     </h3>
                     <p className="mt-2 text-lg font-Gotham">
-                      I don't know what to do with my free time.
+                      I don&apos;t know what to do with my free time.
                     </p>
                   </div>
                 </div>
@@ -60,7 +60,7 @@ const InsightSection = () => {
                     Your Solution
                   </h3>
                   <p className="mt-2.5 text-lg font-medium leading-7 text-white font-Gotham">
-                    I'll experiment with doing nothing intentionally and see how
+                    I&apos;ll experiment with doing nothing intentionally and see how
                     it feels.
                   </p>
                 </div>

@@ -3,13 +3,11 @@
 import React from "react";
 import Button from "./Button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import panda from "@/assets/panda_main.png";
 import background from "@/assets/Stocai_landingpage_bg.png";
 import arrow from "@/assets/Arrow_page.png";
 
 const HeroSection = () => {
-  const router = useRouter();
   return (
     <section
       className=" flex flex-col"
@@ -74,7 +72,7 @@ const HeroSection = () => {
 
           {/* Text */}
           <p className="absolute md:top-[2%] lg:top-[6%] xl:top-[10%] top-[-10px] left-[15%] md:left-[23%]  lg:left-[20%] xl:left-[18%] xs:top-[0%] sm:top-[-10%] sm:translate-x-[-80px] md:translate-x-[-100px] xs:left-[10%]  sm:left-[10%] text-base xs:text-lg sm:text-xl lg:text-2xl font-bold text-[#54B0AF] font-gotham leading-5">
-            Hi, I'm Sto - your <br /> introspection and <br /> clarity partner
+            Hi, I&apos;m Sto - your <br /> introspection and <br /> clarity partner
           </p>
 
           {/* Arrow Image */}

@@ -6,7 +6,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "teal" | "login";
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  [key: string]: any;
+  [key: string]: React.ReactNode | string | ((event: React.MouseEvent<HTMLButtonElement>) => void) | undefined;
 }
 
 const Button: React.FC<ButtonProps> = ({

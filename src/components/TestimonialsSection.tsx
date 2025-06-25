@@ -11,7 +11,11 @@ interface TestimonialCardProps {
   title: string;
   content: string;
   position: string;
-  imageSrc: any;
+  imageSrc: {
+    src: string;
+    height: number;
+    width: number;
+  };
 }
 
 const TestimonialCard = ({ title, content, position, imageSrc }: TestimonialCardProps) => (

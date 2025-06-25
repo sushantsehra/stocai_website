@@ -12,7 +12,6 @@ interface BlogPostCardProps {
 }
 
 export default function BlogPostCard({ 
-  id, 
   title, 
   excerpt, 
   date, 

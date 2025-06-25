@@ -110,7 +110,7 @@ const FAQSection = () => {
         Frequently asked questions
       </h2>
       <p className="mt-4 text-xl text-center text-zinc-700 font-Gotham">
-        Stocai is all about <strong>'Power of a Question'</strong>, These are
+        Stocai is all about <strong>&apos;Power of a Question&apos;</strong>, These are
         yours.
       </p>
 

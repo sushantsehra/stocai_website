@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import Button from "./Button";
-import { useRouter } from "next/navigation";
 import womenSitting from "@/assets/womenStressed.png";
 import arrow1 from "@/assets/Arrow_page.png";
 import arrow2 from "@/assets/Arrow_page_feature1.png";
@@ -11,8 +10,6 @@ import arrow3 from "@/assets/Arrow_page_feature2.png";
 import arrow4 from "@/assets/Arrow_page_feature3.png";
 
 const FeaturesSection = () => {
-  const router = useRouter();
-
   return (
     <section className="flex flex-col mt-11" id="features">
       <div className="self-center mt-[7.5rem] max-w-full text-center w-[1050px] md:mt-28 lg:mt-32">

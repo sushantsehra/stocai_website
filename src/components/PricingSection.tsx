@@ -26,14 +26,14 @@ const PricingSection = () => {
                 Free entry. Price of exit? Your honest opinion.
               </h2>
               <p className="lg:mt-8 mt-6 md:mt-4 text-lg leading-7 max-md:max-w-full">
-                We're building something that truly helps people.{" "}
+                We&apos;re building something that truly helps people.{" "}
                 <span className="font-bold text-[rgba(84,176,175,1)]">
                   Hence, our beta is completely free. No hidden costs, no trial
                   periods - just full access.
                 </span>
                 <br />
                 <br />
-                In return, we ask for your feedback. What works? What doesn't?
+                In return, we ask for your feedback. What works? What doesn&apos;t?
                 What would make Stocai even better for you? Your insights will
                 shape the future of coaching.
               </p>

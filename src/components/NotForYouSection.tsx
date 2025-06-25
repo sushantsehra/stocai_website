@@ -31,16 +31,16 @@ const NotForYouSection = () => {
           }}
         >
           <div className="gap-9 self-stretch flex items-center justify-center  px-2 py-2 md:px-9 md:py-7 mt-14 text-[12px] md:text-2xl text-black bg-white border border-solid shadow-md border-[color:var(--Primary-Teal,#54B0AF)] min-h-14 rounded-[124px] max-md:px-5 max-md:max-w-full">
-            You don't believe in the effectiveness of coaching
+            You don&apos;t believe in the effectiveness of coaching
           </div>
           <div className="gap-9 self-stretch flex items-center justify-center  px-2 py-2 md:px-9 md:py-7 mt-4 text-[12px] md:text-2xl text-black bg-white border border-solid shadow-md border-[color:var(--Primary-Teal,#54B0AF)] min-h-14 rounded-[124px] max-md:px-5 max-md:max-w-full">
-            You're already supported by a human coach
+            You&apos;re already supported by a human coach
           </div>
           <div className="gap-9 self-stretch flex items-center justify-center  px-2 py-2 md:px-9 md:py-7 mt-4 text-[12px] md:text-2xl text-black bg-white border border-solid shadow-md border-[color:var(--Primary-Teal,#54B0AF)] min-h-14 rounded-[124px] max-md:px-5 max-md:max-w-full">
-            You're looking for therapy, not personal coaching
+            You&apos;re looking for therapy, not personal coaching
           </div>
           <div className="gap-9 self-stretch flex items-center justify-center  px-2 py-2 md:px-9 md:py-7 mt-4 text-[12px] md:text-2xl text-black bg-white border border-solid shadow-md border-[color:var(--Primary-Teal,#54B0AF)] min-h-14 rounded-[124px] max-md:px-5 max-md:max-w-full">
-            You don't trust AI for coaching
+            You don&apos;t trust AI for coaching
           </div>
         </div>
       </div>

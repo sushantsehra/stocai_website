@@ -10,12 +10,6 @@ import { Metadata } from "next";
 export const dynamic = 'force-static';
 export const revalidate = false;
 
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
-
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
@@ -26,8 +20,14 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each blog post
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = getBlogPost(params.slug);
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}): Promise<Metadata> {
+  // Ensure params is fully resolved before accessing properties
+  const {slug} = await params
+  const post = getBlogPost(slug);
   
   if (!post) {
     return {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     description: post.excerpt,
     // Set canonical URL for this specific blog post
     alternates: {
-      canonical: `https://mystocai.com/blog/${params.slug}`,
+      canonical: `https://mystocai.com/blog/${slug}`,
     },
     // Ensure proper indexing
     robots: {
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
-      url: `https://mystocai.com/blog/${params.slug}`,
+      url: `https://mystocai.com/blog/${slug}`,
       images: post.imageUrl ? [{ url: post.imageUrl }] : undefined,
     },
     // Twitter Card data
@@ -69,8 +69,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   };
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPost(params.slug);
+export default async function BlogPostPage({ 
+  params 
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  // Ensure params is fully resolved before accessing properties
+  const {slug} = await params
+  const post = getBlogPost(slug);
   
   if (!post) {
     notFound();
@@ -115,7 +121,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     },
     "datePublished": post.date,
     "image": post.imageUrl || "https://mystocai.com/og-image.jpg",
-    "url": `https://mystocai.com/blog/${params.slug}`,
+    "url": `https://mystocai.com/blog/${slug}`,
     "publisher": {
       "@type": "Organization",
       "name": "Stocai",
@@ -126,7 +132,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://mystocai.com/blog/${params.slug}`
+      "@id": `https://mystocai.com/blog/${slug}`
     }
   };
 
@@ -151,7 +157,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         "@type": "ListItem",
         "position": 3,
         "name": post.title,
-        "item": `https://mystocai.com/blog/${params.slug}`
+        "item": `https://mystocai.com/blog/${slug}`
       }
     ]
   };
