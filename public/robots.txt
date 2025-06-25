@@ -1,0 +1,9 @@
+# Allow all web crawlers
+User-agent: *
+Allow: /
+
+# Disallow duplicate paths with query parameters
+Disallow: /*?*
+
+# Sitemap location
+Sitemap: https://mystocai.com/sitemap.xml 
