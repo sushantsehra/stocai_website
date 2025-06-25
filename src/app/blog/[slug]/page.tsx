@@ -228,6 +228,7 @@ export default async function BlogPostPage({
         </div>
       </main>
       
+      
       <Footer />
     </div>
   );
