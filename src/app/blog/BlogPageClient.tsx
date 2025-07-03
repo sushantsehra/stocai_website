@@ -147,7 +147,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
         </div>
         
         {/* Blog Posts Grid */}
-        {filteredPosts.length > 1 ? (
+        {filteredPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post: BlogPost) => (
               <BlogPostCard

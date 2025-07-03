@@ -14,11 +14,12 @@ type NavItem = {
   href: string;
   sectionId?: string; // ID of the section to highlight
   externalLink?: boolean;
+  loggedInLabel?: string;
 };
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/#home", sectionId: "home" },
-  { label: "Start Reflection", href: `${getAppUrl()}/workspace`, externalLink: true },
+  { label: "Start Reflection", loggedInLabel: "My Space", href: `${getAppUrl()}/workspace`, externalLink: true },
   { label: "History", href: `${getAppUrl()}/PastChats`, externalLink: true },
   { label: "Features", href: "/#features", sectionId: "features" },
   { label: "How Stocai Works", href: "/#how-stocai-works", sectionId: "how-stocai-works" },
@@ -186,10 +187,8 @@ export default function Navbar() {
                     ? "bg-[#54B0AF] text-white font-bold py-2 px-4"
                     : "text-gray-700 hover:text-[#54B0AF] py-2 px-4"
                 } transition-colors`}
-                target={item.externalLink ? "_blank" : undefined}
-                rel={item.externalLink ? "noopener noreferrer" : undefined}
               >
-                {item.label}
+                {user && item.loggedInLabel ? item.loggedInLabel : item.label}
               </Link>
             </li>
           );
@@ -278,7 +277,7 @@ export default function Navbar() {
                     target={item.externalLink ? "_blank" : undefined}
                     rel={item.externalLink ? "noopener noreferrer" : undefined}
                   >
-                    {item.label}
+                    {user && item.loggedInLabel ? item.loggedInLabel : item.label}
                   </Link>
                 </li>
               );
