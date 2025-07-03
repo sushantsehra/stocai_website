@@ -25,8 +25,8 @@ interface EnvConfig {
 // Configuration values for each environment
 const envConfigs: Record<Environment, EnvConfig> = {
   development: {
-    apiUrl: 'http://localhost:8000/api',
-    assetsUrl: 'http://localhost:3000',
+    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://127.0.0.1:8000',
+    assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'http://localhost:3000',
     isDebugEnabled: true,
     features: {
       newUi: true,
@@ -34,8 +34,8 @@ const envConfigs: Record<Environment, EnvConfig> = {
     }
   },
   staging: {
-    apiUrl: 'https://staging-api.stocai.com/api',
-    assetsUrl: 'https://staging.stocai.com',
+    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://mystocai.com/backend',
+    assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://mystocai.com',
     isDebugEnabled: false,
     features: {
       newUi: true,
@@ -43,8 +43,8 @@ const envConfigs: Record<Environment, EnvConfig> = {
     }
   },
   production: {
-    apiUrl: 'https://api.stocai.com/api',
-    assetsUrl: 'https://stocai.com',
+    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://mystocai.com/backend',
+    assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://mystocai.com',
     isDebugEnabled: false,
     features: {
       newUi: true,
@@ -57,6 +57,16 @@ const envConfigs: Record<Environment, EnvConfig> = {
 const currentEnv = getEnvironment();
 const config = envConfigs[currentEnv];
 
+// Get APP_PUBLIC_URL from environment variables or fallback to default
+const getPublicUrl = (): string => {
+  if (typeof window !== 'undefined') {
+    // Client-side: use the environment variable passed from Next.js
+    return process.env.NEXT_PUBLIC_APP_PUBLIC_URL || window.location.origin;
+  }
+  // Server-side: use the environment variable or fallback
+  return process.env.NEXT_PUBLIC_APP_PUBLIC_URL || config.assetsUrl;
+};
+
 // Export environment utilities
 export const env = {
   current: currentEnv,
@@ -65,8 +75,24 @@ export const env = {
   isProduction: currentEnv === 'production',
   apiUrl: config.apiUrl,
   assetsUrl: config.assetsUrl,
+  publicUrl: getPublicUrl(),
   isDebugEnabled: config.isDebugEnabled,
   features: config.features
+};
+
+// Utility function to generate signup redirect URLs
+export const getAppUrl = (): string => {
+  return env.publicUrl;
+}
+export const getSignupUrl = (redirectPath?: string): string => {
+  const baseUrl = env.publicUrl;
+  const signupPath = '/signUp'; // Note: using /signUp to match the existing external URLs
+  
+  if (!redirectPath) {
+    return `${baseUrl}${signupPath}`;
+  }
+  
+  return `${baseUrl}${signupPath}?redirect=${encodeURIComponent(redirectPath)}`;
 };
 
 // Export default for easier imports

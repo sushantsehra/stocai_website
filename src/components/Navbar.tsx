@@ -2,9 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
+import { useUser } from "@/contexts/UserContext";
+import { getAppUrl, getSignupUrl } from "@/utils/env";
+import { deleteUserCookie } from "@/utils/cookies";
 
 type NavItem = {
   label: string;
@@ -15,8 +18,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/#home", sectionId: "home" },
-  { label: "Start Reflection", href: "https://mystocai.com/signUp?redirect=/chat", externalLink: true },
-  { label: "History", href: "https://mystocai.com/signUp?redirect=/PastChats", externalLink: true },
+  { label: "Start Reflection", href: `${getAppUrl()}/workspace`, externalLink: true },
+  { label: "History", href: `${getAppUrl()}/PastChats`, externalLink: true },
   { label: "Features", href: "/#features", sectionId: "features" },
   { label: "How Stocai Works", href: "/#how-stocai-works", sectionId: "how-stocai-works" },
   { label: "Testimonials", href: "/#testimonials", sectionId: "testimonials" },
@@ -26,11 +29,26 @@ const navItems: NavItem[] = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, setUser } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    deleteUserCookie();
+    setUser(null);
+    setShowUserMenu(false);
+    router.push('/');
+  };
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
   };
 
   // Function to handle navigation
@@ -66,6 +84,21 @@ export default function Navbar() {
       }
     }
   };
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (showUserMenu && !target.closest('.user-menu-container')) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUserMenu]);
 
   // Setup section visibility detection using Intersection Observer
   useEffect(() => {
@@ -163,13 +196,52 @@ export default function Navbar() {
         })}
       </ul>
 
-      {/* Login Button - Desktop */}
-      <Link
-        href="/login"
-        className="hidden lg:block absolute right-4 bg-[#54B0AF] text-white py-2 px-7 rounded-full font-gotham font-medium whitespace-nowrap text-lg hover:opacity-90 transition-opacity"
-      >
-        Login
-      </Link>
+      {/* Login Button or User Avatar - Desktop */}
+      <div className="hidden lg:block absolute right-4">
+        {user ? (
+          <div className="relative user-menu-container">
+            <button
+              onClick={toggleUserMenu}
+              className="flex items-center space-x-2 bg-[#54B0AF] hover:bg-[#459190] transition-colors rounded-full p-1 pr-3"
+            >
+              <img
+                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                alt={`${user.firstName} ${user.lastName}`}
+                className="w-8 h-8 rounded-full"
+              />
+              <span className="text-white font-gotham font-medium text-sm">
+                {user.firstName}
+              </span>
+            </button>
+            
+            {showUserMenu && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
+                <div className="py-2">
+                  <div className="px-4 py-2 border-b">
+                    <p className="text-sm font-medium text-gray-900">
+                      {user.firstName} {user.lastName}
+                    </p>
+                    <p className="text-sm text-gray-500">{user.email}</p>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link
+            href={getSignupUrl()}
+            className="bg-[#54B0AF] text-white py-2 px-7 rounded-full font-gotham font-medium whitespace-nowrap text-lg hover:opacity-90 transition-opacity"
+          >
+            Login
+          </Link>
+        )}
+      </div>
 
       {/* Hamburger Menu Button - visible on screens smaller than lg */}
       <button
@@ -211,15 +283,42 @@ export default function Navbar() {
                 </li>
               );
             })}
-            {/* Login Button - Mobile */}
+            {/* Login Button or User Info - Mobile */}
             <li>
-              <Link
-                href="/login"
-                className="bg-[#54B0AF] text-white font-medium py-2 px-44 rounded-full text-center font-gotham whitespace-nowrap text-lg hover:opacity-90 transition-opacity"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Link>
+              {user ? (
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="flex items-center space-x-3 bg-[#54B0AF] text-white py-3 px-6 rounded-full">
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                      alt={`${user.firstName} ${user.lastName}`}
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <div className="text-center">
+                      <p className="font-gotham font-medium text-sm">
+                        {user.firstName} {user.lastName}
+                      </p>
+                      <p className="text-xs opacity-90">{user.email}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="bg-red-500 text-white font-medium py-2 px-8 rounded-full text-center font-gotham text-sm hover:bg-red-600 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href={getSignupUrl()}
+                  className="bg-[#54B0AF] text-white font-medium py-2 px-44 rounded-full text-center font-gotham whitespace-nowrap text-lg hover:opacity-90 transition-opacity"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>
