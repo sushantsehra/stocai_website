@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { getBlogPost, getAllBlogPosts, type BlogPost } from "../../../data/blogPosts";
+import { getBlogPost } from "../../../data/blogPosts";
 import { Metadata } from "next";
 import BlogPage from "./blog";
 
