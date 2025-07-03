@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Quattrocento } from "next/font/google";
 import "./globals.css";
+import { UserProvider } from "@/contexts/UserContext";
 
 // Initialize the Quattrocento font
 const quattrocento = Quattrocento({
@@ -14,8 +15,8 @@ const quattrocento = Quattrocento({
 export const metadata: Metadata = {
   metadataBase: new URL('https://mystocai.com'),
   title: {
-    default: "Stocai - AI-Powered Introspection Partner",
-    template: "%s | Stocai"
+    default: "StocAI",
+    template: "%s | StocAI"
   },
   description: "Stocai helps you uncover your own answers through guided introspection and mindful decision-making, providing clarity and personal growth.",
   keywords: ["introspection", "AI assistant", "mindfulness", "clarity", "personal growth", "decision-making", "self-reflection"],
@@ -57,11 +58,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/stocailogoo.png" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
       </head>
       <body className="antialiased">
-        {children}
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );
