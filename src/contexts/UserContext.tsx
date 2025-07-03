@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getUserCookie, deleteUserCookie } from '@/utils/cookies';
+import { getUserCookie } from '@/utils/cookies';
 
 interface User {
   user_id: string;

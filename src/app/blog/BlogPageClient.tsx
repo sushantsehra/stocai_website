@@ -166,7 +166,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
           </div>
         ) : filteredPosts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-500 text-lg">No blog posts found for the "{selectedTag}" tag.</p>
+            <p className="text-gray-500 text-lg">No blog posts found for the &ldquo;{selectedTag}&rdquo; tag.</p>
           </div>
         ) : null}
       </div>
