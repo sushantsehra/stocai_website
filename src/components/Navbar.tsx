@@ -19,13 +19,13 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/#home", sectionId: "home" },
-  { label: "Start Reflection", loggedInLabel: "My Space", href: `${getAppUrl()}/workspace`, externalLink: true },
-  { label: "History", href: `${getAppUrl()}/PastChats`, externalLink: true },
+  { label: "My Space", loggedInLabel: "My Space", href: `${getAppUrl()}/workspace`, externalLink: true },
   { label: "Features", href: "/#features", sectionId: "features" },
   { label: "How Stocai Works", href: "/#how-stocai-works", sectionId: "how-stocai-works" },
   { label: "Testimonials", href: "/#testimonials", sectionId: "testimonials" },
   { label: "FAQ'S", href: "/#faq", sectionId: "faq" },
   { label: "Blog", href: "/blog" },
+  { label: "Quiz", href: `${getAppUrl()}/psy-quiz`,externalLink: true },
 ];
 
 export default function Navbar() {
@@ -195,7 +195,7 @@ export default function Navbar() {
         })}
       </ul>
 
-      {/* Login Button or User Avatar - Desktop */}
+      {/* Login Button or User Avatar - Desktop }
       <div className="hidden lg:block absolute right-4">
         {user ? (
           <div className="relative user-menu-container">
@@ -240,7 +240,7 @@ export default function Navbar() {
             Login
           </Link>
         )}
-      </div>
+      </div>*/}
 
       {/* Hamburger Menu Button - visible on screens smaller than lg */}
       <button
