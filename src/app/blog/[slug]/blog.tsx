@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import BlogInteractions from '@/components/BlogInteractions';
 import { getBlogPost, getAllBlogPosts, type BlogPost } from '../../../data/blogPosts';
 import type { DynamicBlogPost } from '@/types/blog';
+import Image from 'next/image';
 
 interface BlogProps {
   params: { slug: string };
@@ -112,21 +113,27 @@ export default async function BlogPage({ params }: BlogProps) {
           
           <article className="bg-white shadow-lg rounded-xl overflow-hidden">
             {/* Blog Image */}
-            <img
-              src={staticPost.imageUrl || fallbackURL}
-              alt={staticPost.title}
-              className="w-full h-64 object-cover"
-            />
+          <Image
+            src={staticPost.imageUrl || fallbackURL}
+            alt={staticPost.title}
+            width={800} // Adjust based on layout
+            height={256} // 64 (h-64) in Tailwind is 16rem = 256px
+            className="w-full h-64 object-cover"
+            style={{ objectFit: 'cover' }}
+            unoptimized={false} // optional: remove if using local or supported remote domains
+          />
             
             <div className="p-8">
               {/* Blog Header */}
               <header className="mb-6">
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center">
-                    <img
+                    <Image
                       src={`https://ui-avatars.com/api/?name=${encodeURIComponent(staticPost.author)}&background=54B0AF&color=fff`}
                       alt={staticPost.author}
-                      className="w-8 h-8 rounded-full mr-3"
+                      width={32} // w-8 = 2rem = 32px
+                      height={32} // h-8 = 2rem = 32px
+                      className="rounded-full mr-3"
                     />
                     <span className="text-gray-900 font-medium">{staticPost.author}</span>
                   </div>

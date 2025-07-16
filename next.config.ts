@@ -2,12 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['cdn.builder.io'],
-    // Allow external images from any domain for blog posts
+    domains: [
+      'cdn.builder.io',
+      'ui-avatars.com', // ✅ Add this explicitly
+    ],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '**', // Still broad
       },
       {
         protocol: 'http',
