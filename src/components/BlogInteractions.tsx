@@ -6,6 +6,7 @@ import { ThumbsUp, MessageCircle } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { getSignupUrl } from '@/utils/env';
 import type { Comment, UserIntent, DynamicBlogPost } from '@/types/blog';
+import Image from 'next/image';
 
 interface BlogInteractionsProps {
   blog: DynamicBlogPost;
@@ -249,11 +250,13 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
                 className="border border-gray-200 p-4 rounded-lg bg-gray-50"
               >
                 <div className="flex items-center mb-2">
-                  <img
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(comment.username)}&background=54B0AF&color=fff`}
-                    alt={comment.username}
-                    className="w-8 h-8 rounded-full mr-3"
-                  />
+<Image
+  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(comment.username)}&background=54B0AF&color=fff`}
+  alt={comment.username}
+  width={32} // w-8 = 32px
+  height={32}
+  className="rounded-full mr-3"
+/>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-800">
                       {comment.username}

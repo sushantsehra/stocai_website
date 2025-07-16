@@ -8,6 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { useUser } from "@/contexts/UserContext";
 import { getAppUrl, getSignupUrl } from "@/utils/env";
 import { deleteUserCookie } from "@/utils/cookies";
+import Image from 'next/image';
 
 type NavItem = {
   label: string;
@@ -48,9 +49,9 @@ export default function Navbar() {
     router.push('/');
   };
 
-  const toggleUserMenu = () => {
+  /*const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
-  };
+  };*/
 
   // Function to handle navigation
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
@@ -287,11 +288,13 @@ export default function Navbar() {
               {user ? (
                 <div className="flex flex-col items-center space-y-4">
                   <div className="flex items-center space-x-3 bg-[#54B0AF] text-white py-3 px-6 rounded-full">
-                    <img
-                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
-                      alt={`${user.firstName} ${user.lastName}`}
-                      className="w-8 h-8 rounded-full"
-                    />
+<Image
+  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+  alt={`${user.firstName} ${user.lastName}`}
+  width={32}
+  height={32}
+  className="rounded-full"
+/>
                     <div className="text-center">
                       <p className="font-gotham font-medium text-sm">
                         {user.firstName} {user.lastName}
