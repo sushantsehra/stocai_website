@@ -2,8 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Stocai Blog - Insights on AI Trading and Investment",
-  description: "Read the latest articles and insights on AI-powered trading, investment strategies, and financial technology from Stocai.",
+  title: "Stocai Blog - Your AI-Powered Introspection & Clarity Partner",
+  description: "Read the latest articles and insights on AI-powered introspection, clarity, and personal growth from Stocai.",
   // Ensure proper indexing
   robots: {
     index: true,
