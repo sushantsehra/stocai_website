@@ -29,65 +29,7 @@ interface BackendBlogPost {
 }
 
 // Fallback data for when backend is unavailable or during build
-const fallbackBlogPosts: BlogPost[] = [
-  {
-    id: "1",
-    title: "How AI is Revolutionizing Investment Strategies",
-    slug: "ai-revolutionizing-investment-strategies",
-    excerpt: "Discover how artificial intelligence is transforming traditional investment approaches and creating new opportunities for investors.",
-    content: `# How AI is Revolutionizing Investment Strategies
-
-Artificial intelligence has become a game-changer in the investment world. From algorithmic trading to risk assessment, AI tools are helping investors make better decisions and achieve higher returns.
-
-## The Rise of AI in Finance
-
-Over the past decade, we've seen a significant increase in the adoption of AI technologies across the financial sector. Investment firms are leveraging machine learning algorithms to analyze market trends, predict price movements, and identify investment opportunities that human analysts might miss.
-
-## Key Benefits of AI-Powered Investing
-
-- **Enhanced Data Analysis**: AI can process vast amounts of data from multiple sources in real-time
-- **Reduced Emotional Bias**: Algorithms make decisions based on data, not emotions
-- **Improved Risk Management**: AI can identify potential risks before they become problems
-- **24/7 Market Monitoring**: Continuous analysis without human limitations
-
-## How Stocai is Leading the Way
-
-At Stocai, we're combining cutting-edge AI with human expertise to create investment strategies that outperform traditional approaches. Our platform uses advanced machine learning models to analyze market data, identify patterns, and generate actionable insights for investors.`,
-    date: "June 15, 2023",
-    author: "Sarah Johnson",
-    imageUrl: "/blog/ai-investing.jpg",
-    tags: ["AI", "Investment", "Technology"],
-    like_count: 0,
-    comment_count: 0
-  },
-  {
-    id: "2",
-    title: "Understanding Market Volatility Through Data Science",
-    slug: "understanding-market-volatility-data-science", 
-    excerpt: "Learn how data science techniques can help investors navigate and profit from market volatility.",
-    content: `# Understanding Market Volatility Through Data Science
-
-Market volatility can be intimidating for many investors, but with the right data science approaches, it can also present unique opportunities. This article explores how modern analytical techniques are changing the way we understand and respond to market fluctuations.
-
-## The Nature of Volatility
-
-Volatility is often misunderstood as simply "risk," but it's more accurately described as the rate at which prices increase or decrease. High volatility means prices change rapidly in either direction, while low volatility indicates more stable price movements.
-
-## Measuring Volatility with Data Science
-
-Data scientists use various metrics to quantify volatility:
-
-1. **Standard Deviation**: Measures the dispersion of returns
-2. **Beta**: Compares an asset's volatility to the market
-3. **VIX Index**: The market's expectation of 30-day volatility`,
-    date: "July 3, 2023",
-    author: "Michael Chen",
-    imageUrl: "/blog/market-volatility.jpg",
-    tags: ["Data Science", "Volatility", "Risk Management"],
-    like_count: 0,
-    comment_count: 0
-  }
-];
+const fallbackBlogPosts: BlogPost[] = []
 
 // Helper function to convert backend blog post to frontend format
 function transformBackendBlogPost(backendPost: BackendBlogPost): BlogPost {

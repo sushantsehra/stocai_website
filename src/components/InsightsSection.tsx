@@ -9,8 +9,8 @@ import screble2 from "@/assets/insightSection_image.png";
 
 const InsightSection = () => {
   return (
-    <section id="insight" className="mt-36 max-w-full text-center text-black ">
-      <h2 className="sm:text-xl md:text-4xl lg:text-5xl font-bold lg:leading-[60px] max-md:max-w-full max-md:text-4xl md:leading-[48px] leading-[35px] font-quattrocento">
+    <section id="insight" className="mt-36 max-w-full text-center text-black overflow-x-hidden overflow-y-hidden px-5">
+      <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold lg:leading-[60px] max-md:max-w-full md:leading-[48px] leading-[35px] font-quattrocento">
         My inquiry, your introspection -<br />
         worth more than any advice or gyaan.
       </h2>
@@ -18,7 +18,7 @@ const InsightSection = () => {
         Your problem might not be what you think it is.
         <br />
       </p>
-      <div className="flex justify-center ">
+      <div className="hidden md:flex justify-center ">
         <div className="mt-6  ml-5 w-full max-w-[1161px]  my-auto ">
           <div className="flex justify-center gap-5 max-md:flex-col">
             <div className="w-6/12  md:translate-x-[3%] lg:translate-x-0 max-md:w-full">
@@ -67,11 +67,13 @@ const InsightSection = () => {
               </div>
             </div>
 
+            
+
             <div className="ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <div className="grow max-md:mt-10 max-md:max-w-full">
                 <div className="flex gap-5 max-md:flex-col">
                   <div className="w-4/5 max-md:ml-0 max-md:w-full">
-                    <div className="flex relative flex-col grow items-start  aspect-[0.627] h-[530px] pb-[467px] max-md:pb-24 max-md:mt-4">
+                    <div className="hidden md:flex relative flex-col grow items-start  aspect-[0.627] h-[530px] pb-[467px] max-md:pb-24 max-md:mt-4">
                       {/* Background Image (Behind Panda) */}
                       <Image
                         src={backglow}
@@ -100,7 +102,7 @@ const InsightSection = () => {
                   </div>
 
                   {/* Another Scribble Element on the Right */}
-                  <div className="flex items-center ml-5 w-1/5 max-md:ml-0 relative max-md:w-full">
+                  <div className="hidden md:flex items-center ml-5 w-1/5 max-md:ml-0 relative max-md:w-full">
                     <Image
                       src={screble2}
                       alt="Decorative element"
@@ -109,6 +111,58 @@ const InsightSection = () => {
                       className="object-contain translate-x-10 shrink-0 self-stretch my-auto w-20 md:w-24 lg:w-24 absolute translate-y-[-300px] right-10 md:translate-y-0 md:top-[45%] lg:top-[40%] lg:right-40 md:right-20 aspect-square md:mt-10"
                     />
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex md:hidden justify-center pr-5">
+        <div className="mt-6  ml-5 w-full max-w-[1161px]  my-auto ">
+          <div className="flex justify-center gap-5 max-md:flex-col">
+            <div className="">
+              <div className="flex flex-col  items-end w-full max-md:mt-8 max-md:max-w-full">
+                <div className="flex flex-col max-w-full text-black w-full">
+                  <div className="flex  gap-2.5 justify-center items-center py-4 pr-7 pl-7 bg-white rounded-2xl border border-[#54B0AF] border-solid min-h-[100px] max-md:px-5">
+                    <div className="flex text-start flex-col justify-center self-stretch my-auto w-full">
+                      <h3 className="text-2xl font-bold font-quattrocento text-center">
+                        Stated Problem
+                      </h3>
+                      <p className="mt-2 text-lg font-Gotham text-center">
+                        I waste too much time on reels.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2.5 justify-center items-center py-4 pr-7 pl-8 mt-4 rounded-2xl border border-[#54B0AF] border-solid bg-[#EFEFEF] min-h-[100px] max-md:px-5">
+                    <div className="flex text-start flex-col justify-center self-stretch my-auto w-full">
+                      <h3 className="text-2xl font-bold font-quattrocento text-center">
+                        Common Advice
+                      </h3>
+                      <p className="mt-2.5 text-lg leading-none font-Gotham text-center">
+                        Just uninstall Instagram.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-2.5 justify-center items-center py-4 pr-7 pl-8 mt-4 rounded-2xl border border-[#54B0AF] border-solid bg-[#EFEFEF] min-h-[100px] max-md:px-5 w-full">
+                  <div className="flex text-start flex-col justify-center my-auto w-full">
+                    <h3 className="text-2xl font-bold font-quattrocento text-center">
+                      Deeper Insight
+                    </h3>
+                    <p className="mt-2 text-lg font-Gotham text-center">
+                      I don&apos;t know what to do with my free time.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col text-start   md:px-6  py-4 mt-6 max-w-full bg-[#54B0AF] rounded-2xl max-md:px-5 w-full">
+                  <h3 className=" text-2xl font-bold text-black font-quattrocento text-center">
+                    Your Solution
+                  </h3>
+                  <p className="mt-2.5 text-lg font-medium leading-7 text-white font-Gotham text-center">
+                    I&apos;ll experiment with doing nothing intentionally and see how
+                    it feels.
+                  </p>
                 </div>
               </div>
             </div>
