@@ -20,7 +20,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/#home", sectionId: "home" },
-  { label: "My Space", loggedInLabel: "My Space", href: `${getAppUrl()}/workspace`, externalLink: true },
+  { label: "My Space", loggedInLabel: "My Space", href: `${getAppUrl()}/`, externalLink: true },
   { label: "Features", href: "/#features", sectionId: "features" },
   { label: "How Stocai Works", href: "/#how-stocai-works", sectionId: "how-stocai-works" },
   { label: "Testimonials", href: "/#testimonials", sectionId: "testimonials" },
