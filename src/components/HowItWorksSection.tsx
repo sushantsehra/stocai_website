@@ -115,7 +115,7 @@ const HowItWorksSection = () => {
           <Button
             variant="primary"
             className="self-center sm:self-start py-2"
-            onClick={() => window.location.href = "https://mystocai.com/chat"}
+            onClick={() => window.location.href = "https://clarity.mystocai.com"}
           >
             Start Introspecting
           </Button>

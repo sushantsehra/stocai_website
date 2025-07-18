@@ -55,7 +55,7 @@ const HeroSection = () => {
             </Button>
             <Button
               variant="primary"
-              onClick={() => window.location.href = "https://mystocai.com/chat"}
+              onClick={() => window.location.href = "https://clarity.mystocai.com"}
               className="p-4"
             >
               See Stocai in Action

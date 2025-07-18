@@ -165,7 +165,7 @@ const TestimonialsSection = () => {
       </div>
 
       <div className="flex justify-center mt-4 lg:mt-4 md:mt-3">
-        <Button variant="primary" onClick={() => window.location.href = "https://mystocai.com/chat"}>
+        <Button variant="primary" onClick={() => window.location.href = "https://clarity.mystocai.com"}>
           See The Impact For Yourself
         </Button>
       </div>
