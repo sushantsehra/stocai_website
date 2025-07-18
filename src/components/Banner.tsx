@@ -8,7 +8,8 @@ interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ message }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  // const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   
   // Check if banner was previously closed
   // useEffect(() => {
