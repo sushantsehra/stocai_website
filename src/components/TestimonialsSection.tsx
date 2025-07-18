@@ -20,23 +20,23 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ title, content, position, imageSrc }: TestimonialCardProps) => (
   <article
-    className="flex flex-col p-6 bg-white rounded-lg shadow-md flex-shrink-0 w-[calc(100vw-40px)] sm:w-[80vw] md:w-[60vw] lg:w-[40vw] max-w-[600px]"
+    className="flex flex-col p-4 sm:p-6 bg-white rounded-lg shadow-md flex-shrink-0 w-[280px] sm:w-[320px] md:w-[400px] lg:w-[480px] max-w-[600px]"
   >
     <div className="w-full">
-      <h3 className="text-lg md:text-2xl font-bold leading-2 md:leading-8 text-[#6EB4AE]">
+      <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-tight md:leading-8 text-[#6EB4AE]">
         {title}
       </h3>
-      <p className="mt-4 text-sm md:text-base leading-2 md:leading-6 text-neutral-600">
+      <p className="mt-3 sm:mt-4 text-sm md:text-base leading-relaxed md:leading-6 text-neutral-600">
         {content}
       </p>
     </div>
-    <div className="flex gap-4 items-center self-start mt-6 text-base font-medium text-black">
+    <div className="flex gap-3 sm:gap-4 items-center self-start mt-4 sm:mt-6 text-sm sm:text-base font-medium text-black">
       <Image
         src={imageSrc}
         alt={`${position} profile`}
-        width={46}
-        height={46}
-        className="object-contain shrink-0 self-stretch my-auto rounded-full aspect-square"
+        width={40}
+        height={40}
+        className="object-contain shrink-0 self-stretch my-auto rounded-full aspect-square sm:w-[46px] sm:h-[46px]"
       />
       <div className="self-stretch my-auto">{position}</div>
     </div>
@@ -49,8 +49,10 @@ const TestimonialsSection = () => {
   const scrollLeft = () => {
     if (scrollContainerRef.current && scrollContainerRef.current.firstElementChild) {
       const cardWidth = (scrollContainerRef.current.firstElementChild as HTMLElement).offsetWidth;
+      // Get current gap from computed styles or use responsive defaults
+      const gap = window.innerWidth >= 1024 ? 40 : window.innerWidth >= 768 ? 32 : window.innerWidth >= 640 ? 24 : 16;
       scrollContainerRef.current.scrollBy({
-        left: -(cardWidth + 10), // Card width + gap
+        left: -(cardWidth + gap),
         behavior: "smooth",
       });
     }
@@ -59,8 +61,10 @@ const TestimonialsSection = () => {
   const scrollRight = () => {
     if (scrollContainerRef.current && scrollContainerRef.current.firstElementChild) {
       const cardWidth = (scrollContainerRef.current.firstElementChild as HTMLElement).offsetWidth;
+      // Get current gap from computed styles or use responsive defaults
+      const gap = window.innerWidth >= 1024 ? 40 : window.innerWidth >= 768 ? 32 : window.innerWidth >= 640 ? 24 : 16;
       scrollContainerRef.current.scrollBy({
-        left: cardWidth + 10,
+        left: cardWidth + gap,
         behavior: "smooth",
       });
     }
@@ -69,31 +73,32 @@ const TestimonialsSection = () => {
   return (
     <section
       id="testimonials"
-      className="mt-8 md:mt-24 lg:mt-24 w-full px-5 md:px-[5%] lg:px-[10%] overflow-x-hidden"
+      className="mt-8 md:mt-24 lg:mt-24 w-full px-4 sm:px-5 md:px-[5%] lg:px-[10%] overflow-x-hidden"
     >
-      <div className="flex flex-wrap gap-3 md:gap-5 justify-between items-end w-full max-w-[1280px] mx-auto">
-        <div className="max-w-[830px] mt-[8rem] md:mt-[8rem] lg:mt-[8rem]">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-none text-black font-quattrocento">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-5 justify-between items-start sm:items-end w-full max-w-[1280px] mx-auto">
+        <div className="max-w-[830px] mt-16 sm:mt-[8rem] md:mt-[8rem] lg:mt-[8rem]">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight sm:leading-none text-black font-quattrocento">
             Stories of Change, Powered by Stocai
           </h2>
-          <p className="mt-1 text-xl md:text-2xl leading-10 text-neutral-700 font-Gotham">
+          <p className="mt-1 text-lg sm:text-xl md:text-2xl leading-7 sm:leading-10 text-neutral-700 font-Gotham">
             Real Stories, Real Impact
           </p>
         </div>
-        <div className="flex gap-3 mt-2 md:gap-5 items-center justify-end translate-x-52 md:translate-x-[520px] lg:translate-x-0">
+        <div className="flex gap-3 mt-2 md:gap-5 items-center justify-end">
           <button
             type="button"
-            className="flex justify-center items-center md:px-6 md:py-3 px-4 py-1.5 bg-stone-900 rounded-full"
+            className="flex justify-center items-center md:px-6 md:py-3 px-3 py-2 bg-stone-900 rounded-full"
             aria-label="Previous testimonial"
             onClick={scrollLeft}
           >
             <svg
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
+              className="sm:w-6 sm:h-6"
             >
               <title>Previous arrow</title>
               <path
@@ -107,17 +112,18 @@ const TestimonialsSection = () => {
           </button>
           <button
             type="button"
-            className="flex justify-center items-center md:px-6 md:py-3 px-4 py-1.5 bg-stone-900 rounded-full"
+            className="flex justify-center items-center md:px-6 md:py-3 px-3 py-2 bg-stone-900 rounded-full"
             aria-label="Next testimonial"
             onClick={scrollRight}
           >
             <svg
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
+              className="sm:w-6 sm:h-6"
             >
               <title>Next arrow</title>
               <path
@@ -135,7 +141,7 @@ const TestimonialsSection = () => {
       <div className="w-full max-w-[1280px] mx-auto overflow-hidden">
         <div
           ref={scrollContainerRef}
-          className="flex gap-10 mt-6 lg:mt-12 md:mt-8 overflow-x-auto pb-4 w-full scrollbar-hide"
+          className="flex gap-4 sm:gap-6 md:gap-8 lg:gap-10 mt-6 lg:mt-12 md:mt-8 overflow-x-auto pb-4 w-full scrollbar-hide"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",

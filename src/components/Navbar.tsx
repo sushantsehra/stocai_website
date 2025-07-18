@@ -245,7 +245,7 @@ export default function Navbar() {
 
       {/* Hamburger Menu Button - visible on screens smaller than lg */}
       <button
-        className="lg:hidden fixed top-[76px] right-4 z-50 p-2 cursor-pointer"
+        className="lg:hidden fixed right-4 z-50 p-2 cursor-pointer"
         onClick={toggleMenu}
         aria-label="Toggle menu"
       >
@@ -258,7 +258,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation Dropdown */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-white z-40 flex flex-col items-center py-20 mt-[100px]">
+        <div className="lg:hidden fixed inset-0 bg-white z-40 flex flex-col items-center py-20 mt-[30px]">
           <ul className="flex flex-col items-center space-y-6">
             {navItems.map((item) => {
               const isActive = item.href.includes("#") && pathname === "/"
