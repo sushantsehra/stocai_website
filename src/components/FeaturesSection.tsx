@@ -102,7 +102,7 @@ const FeaturesSection = () => {
         <Button
           variant="primary"
           className="self-center mt-3 md:mt-4 lg:mt-4 font-Gotham"
-          onClick={() => window.location.href = "https://mystocai.com/chat"}
+          onClick={() => window.location.href = "https://clarity.mystocai.com"}
         >
           Try Stocai Now
         </Button>

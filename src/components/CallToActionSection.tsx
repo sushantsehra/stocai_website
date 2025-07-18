@@ -37,7 +37,7 @@ const CallToActionSection = () => {
           <Button
             variant="primary"
             className="self-start mt-3 md:mt-5 lg:mt-8"
-            onClick={() => window.location.href = "https://mystocai.com/chat"}
+            onClick={() => window.location.href = "https://clarity.mystocai.com"}
           >
             Start Reflecting
           </Button>

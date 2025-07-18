@@ -42,7 +42,7 @@ const PricingSection = () => {
               <Button
                 variant="primary"
                 className="mt-8 md:mt-5 lg:mt-8 lg:w-[40%] w-[60%]"
-                onClick={() => window.location.href = "https://mystocai.com/chat"}
+                onClick={() => window.location.href = "https://clarity.mystocai.com"}
               >
                 Start Free Beta
               </Button>
