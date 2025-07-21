@@ -10,7 +10,7 @@ import arrow from "@/assets/Arrow_page.png";
 const HeroSection = () => {
   return (
     <section
-      className=" flex flex-col"
+      className=" flex flex-col overflow-x-hidden overflow-y-hidden"
       id="home"
       style={{
         backgroundImage: `url(${background.src})`,
@@ -23,8 +23,8 @@ const HeroSection = () => {
           "linear-gradient(to bottom, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)",
       }}
     >
-      <div className="flex flex-col  lg:flex-row h-full mt-12 lg:mt-10">
-        <div className="w-full lg:w-[50%] md:mt-20 mt-[74px] lg:mt-[4.5rem] xl:mt-[10rem] lg:translate-x-10 text-center lg:text-left">
+      <div className="flex flex-col  lg:flex-row h-full lg:mt-10">
+        <div className="w-full lg:w-[50%] mt-[30px] lg:mt-[4.5rem] xl:mt-[10rem] lg:translate-x-10 text-center lg:text-left">
           <h1 className="text-3xl xs:text-4xl md:text-5xl lg:text-[65px] leading-[30px]  md:leading-[45px] lg:leading-[60px] font-quattrocento">
             Your Problem.
             <br /> Your Solution.
@@ -71,7 +71,7 @@ const HeroSection = () => {
           />
 
           {/* Text */}
-          <p className="absolute md:top-[2%] lg:top-[6%] xl:top-[10%] top-[-10px] left-[15%] md:left-[23%]  lg:left-[20%] xl:left-[18%] xs:top-[0%] sm:top-[-10%] sm:translate-x-[-80px] md:translate-x-[-100px] xs:left-[10%]  sm:left-[10%] text-base xs:text-lg sm:text-xl lg:text-2xl font-bold text-[#54B0AF] font-gotham leading-5">
+          <p className="absolute md:top-[2%] lg:top-[6%] xl:top-[10%] top-[-10px] left-[15%] md:left-[23%]  lg:left-[20%] xl:left-[18%] xs:top-[0%] sm:top-[-10%] sm:translate-x-[1px] md:translate-x-[-100px] xs:left-[10%]  sm:left-[10%] text-base xs:text-lg sm:text-xl lg:text-2xl font-bold text-[#54B0AF] font-gotham leading-5">
             Hi, I&apos;m Sto - your <br /> introspection and <br /> clarity partner
           </p>
 
