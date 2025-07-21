@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import Banner from "./Banner";
-import StocaiLogo from "../assets/Stocai_logo_header.png";
+import StocaiLogo from "../assets/stocai_logo_header.svg";
 
 export default function Header() {
   return (
@@ -16,18 +16,18 @@ export default function Header() {
         
         <div className="px-4 py-6 bg-white">
           <div className="flex items-center justify-between">
-            <Link href="/" className="cursor-pointer z-50">
+            <Link href="/" className="cursor-pointer z-50 flex items-center">
               <Image 
                 src={StocaiLogo} 
                 alt="Stocai Logo" 
                 priority
-                width={168}
-                height={64}
-                className="w-[168px] h-[64px] object-contain"
+                width={145}
+                height={55}
+                className="w-[145px] h-[55px] ml-3 mt-0.5 object-contain cursor-pointer"
               />
             </Link>
             
-            <div className="flex-grow flex justify-center relative">
+            <div className="flex-grow flex justify-center items-center relative">
               <Navbar />
             </div>
           </div>
