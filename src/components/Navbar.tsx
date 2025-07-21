@@ -248,7 +248,7 @@ export default function Navbar() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleResourcesNavigate("https://clarity.mystocai.com/quiz");
+                    handleResourcesNavigate("https://clarity.mystocai.com/psy-quiz");
                   }}
                   onMouseDown={(e) => e.stopPropagation()}
                   className={`py-2 px-4 w-full text-left block font-gotham transition-colors duration-300 whitespace-nowrap hover:text-[#54B0AF] ${
@@ -268,13 +268,13 @@ export default function Navbar() {
         <div className="block lg:hidden w-full">
           <button
             onClick={() => setResourcesOpen(!resourcesOpen)}
-            className={`py-2 px-4 w-full flex items-center justify-between transition-colors duration-300 rounded-3xl font-gotham text-lg ${
+            className={`px-4 w-full flex items-center justify-start transition-colors duration-300 rounded-3xl font-gotham text-lg ${
               isResourcesActive
                 ? "bg-[#54B0AF] text-white font-bold"
                 : "text-gray-700 hover:text-[#54B0AF]"
             }`}
           >
-            Resources
+            Resources&nbsp;
             <FaChevronDown
               className={`text-sm transition-transform duration-200 ${
                 resourcesOpen ? "rotate-180" : ""
@@ -296,7 +296,7 @@ export default function Navbar() {
                   Inner Voice
                 </button>
                 <button
-                  onClick={() => handleResourcesNavigate("https://clarity.mystocai.com/quiz")}
+                  onClick={() => handleResourcesNavigate("https://clarity.mystocai.com/psy-quiz")}
                   className={`py-2 px-6 w-full text-left block transition-colors duration-300 whitespace-nowrap font-gotham ${
                     pathname === "/quiz"
                       ? "bg-[#54B0AF] text-white font-bold"
@@ -434,7 +434,7 @@ export default function Navbar() {
             })}
             
             {/* Resources Dropdown Mobile */}
-            <li className="w-full max-w-xs">
+            <li className="w-full max-w-xs flex justify-center">
               <ResourcesDropdown />
             </li>
             
