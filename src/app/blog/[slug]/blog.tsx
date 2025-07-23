@@ -73,16 +73,24 @@ export default async function BlogPage({ params }: BlogProps) {
 
   // Convert markdown-like content to HTML (same as existing page.tsx)
   const formatContent = (content: string) => {
+
+    const h1Class = "text-3xl font-bold mt-8 mb-4";
+    const h2Class = "text-2xl font-bold mt-6 mb-3";
+    const h3Class = "text-xl font-bold mt-5 mb-2";
+
+    const orderedListClass = "ml-6 list-decimal mb-1";
+    const unorderedListClass = "ml-6 list-disc mb-1";
+
     let formatted = content
-      .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mt-8 mb-4">$1</h1>')
-      .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold mt-6 mb-3">$1</h2>')
-      .replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold mt-5 mb-2">$1</h3>')
+      .replace(/^# (.*$)/gm, `<h1 class="${h1Class}">$1</h1>`)
+      .replace(/^## (.*$)/gm, `<h2 class="${h2Class}">$1</h2>`)
+      .replace(/^### (.*$)/gm, `<h3 class="${h3Class}">$1</h3>`)
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n\n/g, '</p><p class="mb-4">');
     
     // Handle lists
-    formatted = formatted.replace(/^- (.*$)/gm, '<li class="ml-6 list-disc mb-1">$1</li>');
-    formatted = formatted.replace(/^(\d+)\. (.*$)/gm, '<li class="ml-6 list-decimal mb-1">$1. $2</li>');
+    formatted = formatted.replace(/^- (.*$)/gm, `<li class="${unorderedListClass}">$1</li>`);
+    formatted = formatted.replace(/^(\d+)\. (.*$)/gm, `<li class="${orderedListClass}">$1. $2</li>`);
     
     // Wrap in paragraph tags
     formatted = `<p class="mb-4">${formatted}</p>`;
@@ -92,8 +100,43 @@ export default async function BlogPage({ params }: BlogProps) {
     formatted = formatted.replace(/<\/li><\/p><p class="mb-4">/g, '</li>');
     
     // Group list items
-    formatted = formatted.replace(/(<li class="ml-6 list-disc mb-1">.*<\/li>)+/g, '<ul class="mb-4">$&</ul>');
-    formatted = formatted.replace(/(<li class="ml-6 list-decimal mb-1">.*<\/li>)+/g, '<ol class="mb-4">$&</ol>');
+    formatted = formatted.replace(/(<li class="${unorderedListClass}">.*<\/li>)+/g, `<ul class="mb-4">$&</ul>`);
+    formatted = formatted.replace(/(<li class="${orderedListClass}">.*<\/li>)+/g, `<ol class="mb-4">$&</ol>`);
+    
+    // handle h1,h2,h3 tags
+    formatted = formatted.replace(/<h1/g, `<h1 class="${h1Class}"`);
+    formatted = formatted.replace(/<h2/g, `<h2 class="${h2Class}"`);
+    formatted = formatted.replace(/<h3/g, `<h3 class="${h3Class}"`);
+
+
+    // Handle nested lists by adding appropriate indentation
+    formatted = formatted.replace(/<\/ul>\s*<ul/g, ''); // Combine adjacent ul elements
+    formatted = formatted.replace(/<\/ol>\s*<ol/g, ''); // Combine adjacent ol elements
+    
+    // Add indentation for nested lists
+    formatted = formatted.replace(/(<li[^>]*>)((?:\d+\.|-))\s*/g, (match, p1, p2) => {
+      const indent = p2.split('.').length - 1;
+      return `${p1}${' '.repeat(indent * 2)}${p2} `;
+    });
+    
+    // Add spacing between list items
+    formatted = formatted.replace(/<\/li><li/g, '</li>\n<li');
+    
+    // Ensure lists have proper margins
+    formatted = formatted.replace(/<ul class=/g, '<ul class="mt-2 mb-4 ');
+    formatted = formatted.replace(/<ol class=/g, '<ol class="mt-2 mb-4 ');
+    // Add appropriate list item classes based on parent element
+    formatted = formatted.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/g, (match, content) => {
+      return match.replace(/<li/g, `<li class="${unorderedListClass}"`);
+    });
+    formatted = formatted.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/g, (match, content) => {
+      return match.replace(/<li/g, `<li class="${orderedListClass}"`); 
+    });
+
+    // Handle links (a tags)
+    formatted = formatted.replace(/\[(.*?)\]\((.*?)\)/g, `<a href="$2" class="text-blue-600 underline hover:text-blue-800">$1</a>`);
+    // Handle HTML a tags (in case content already has HTML a tags)
+    formatted = formatted.replace(/<a\s+(?:[^>]*?\s+)?href="([^"]*)"(?:\s+[^>]*)?>/g, '<a href="$1" class="text-blue-600 underline hover:text-blue-800" rel="noopener noreferrer" target="_blank">');
     
     return formatted;
   };
