@@ -77,7 +77,9 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   }
 
   try {
-    const response = await fetch(`${backendUrl}/blogs`, {
+    // const response = await fetch(`${backendUrl}/blogs`, {
+    // const response = await fetch(`https://mystocai.com/backend/blogs`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/blogs`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
