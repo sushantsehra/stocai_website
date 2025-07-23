@@ -126,10 +126,10 @@ export default async function BlogPage({ params }: BlogProps) {
     formatted = formatted.replace(/<ul class=/g, '<ul class="mt-2 mb-4 ');
     formatted = formatted.replace(/<ol class=/g, '<ol class="mt-2 mb-4 ');
     // Add appropriate list item classes based on parent element
-    formatted = formatted.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/g, (match, content) => {
+    formatted = formatted.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/g, (match) => {
       return match.replace(/<li/g, `<li class="${unorderedListClass}"`);
     });
-    formatted = formatted.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/g, (match, content) => {
+    formatted = formatted.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/g, (match) => {
       return match.replace(/<li/g, `<li class="${orderedListClass}"`); 
     });
 
