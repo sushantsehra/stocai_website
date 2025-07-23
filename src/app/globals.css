@@ -2,7 +2,6 @@
 
 @import "tailwindcss";
 
-
 /* Font declarations */
 @font-face {
   font-family: "Gotham";
@@ -27,7 +26,6 @@
   src: url("/fonts/Gotham-Light.otf") format("opentype");
   font-weight: 300;
 }
-
 
 @font-face {
   font-family: "Gotham";
@@ -115,22 +113,19 @@
   font-weight: 300;
 }
 
-
-
-
 /* Base styles and variables */
 @layer base {
   :root {
     --background: #ffffff;
     --foreground: #171717;
-    --primary: #54B0AF;
+    --primary: #54b0af;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       --background: #ffffff;
       --foreground: #171717;
-      --primary: #54B0AF;
+      --primary: #54b0af;
     }
   }
 }
@@ -143,11 +138,11 @@ body {
 
 /* Utility classes for the fonts */
 .font-mona {
-  font-family: 'Mona Sans', system-ui, sans-serif;
+  font-family: "Mona Sans", system-ui, sans-serif;
 }
 
 .font-gotham {
-  font-family: 'Gotham', system-ui, sans-serif;
+  font-family: "Gotham", system-ui, sans-serif;
 }
 
 .font-quattrocento {
@@ -159,10 +154,10 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
 }
 
