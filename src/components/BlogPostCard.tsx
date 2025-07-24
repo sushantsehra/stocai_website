@@ -65,7 +65,7 @@ export default function BlogPostCard({
           )}
         </div>
         <h2 className="text-xl font-semibold mb-2 line-clamp-2">{title}</h2>
-        <p className="text-gray-600 mb-4 line-clamp-3">{excerpt}</p>
+        <p className="text-gray-600 mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: excerpt }} />
         
         {/* Engagement Stats */}
         <div className="flex items-center gap-4 text-gray-500 text-sm mb-4">

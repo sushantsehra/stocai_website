@@ -18,13 +18,17 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+const getUserFromCookies = () => {
+  return getUserCookie();
+};
+
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Check for stored user data on mount
-    const storedUser = getUserCookie();
+    const storedUser = getUserFromCookies();
     if (storedUser) {
       try {
         setUser(storedUser);
@@ -46,6 +50,9 @@ export function useUser() {
   const context = useContext(UserContext);
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider');
+  }
+  if (context.user === null) {
+    context.setUser(getUserFromCookies());
   }
   return context;
 }
