@@ -95,7 +95,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
                   )}
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">{filteredPosts[0].title}</h2>
-                <p className="text-gray-600 mb-4">{formatExcerpt(filteredPosts[0].excerpt)}</p>
+                <p className="text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: formatExcerpt(filteredPosts[0].excerpt) }} />
                 
                 {/* Engagement Stats for Featured Post */}
                 <div className="flex items-center gap-6 text-gray-500 text-sm mb-6">
