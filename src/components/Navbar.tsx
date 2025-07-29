@@ -346,21 +346,22 @@ export default function Navbar() {
       </ul>
 
       {/* Login Button or User Avatar - Desktop */}
-      {/* <div className="hidden lg:block absolute right-4">
+      <div className="hidden lg:block absolute right-4">
         {user ? (
           <div className="relative user-menu-container">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-2 bg-[#54B0AF] hover:bg-[#459190] transition-colors rounded-full p-1 pr-3"
+              className="flex items-center space-x-2 bg-[#54B0AF] hover:bg-[#459190] transition-colors rounded-full p-1 font-bold"
             >
               <img
-                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName.charAt(0)}`)}&background=54B0AF&bold=true&color=fff&size=32&font-size=0.7`}
                 alt={`${user.firstName} ${user.lastName}`}
                 className="w-8 h-8 rounded-full"
               />
-              <span className="text-white font-gotham font-medium text-sm">
+              {/* <span className="text-white font-gotham font-medium text-sm">
                 {user.firstName}
-              </span>
+              </span> */}
             </button>
             
             {showUserMenu && (
@@ -390,7 +391,7 @@ export default function Navbar() {
             Login
           </Link>
         )}
-      </div> */}
+      </div>
 
       {/* Hamburger Menu Button - visible on screens smaller than lg */}
       <button
@@ -444,18 +445,19 @@ export default function Navbar() {
                 <div className="flex flex-col items-center space-y-4">
                   <div className="flex items-center space-x-3 bg-[#54B0AF] text-white py-3 px-6 rounded-full">
                     <Image
-                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                      // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName.charAt(0)}${user.lastName.charAt(0)}`)}&background=54B0AF&color=fff&size=32`}
                       alt={`${user.firstName} ${user.lastName}`}
                       width={32}
                       height={32}
                       className="rounded-full"
                     />
-                    <div className="text-center">
+                    {/* <div className="text-center">
                       <p className="font-gotham font-medium text-sm">
                         {user.firstName} {user.lastName}
                       </p>
                       <p className="text-xs opacity-90">{user.email}</p>
-                    </div>
+                    </div> */}
                   </div>
                   <button
                     onClick={() => {
