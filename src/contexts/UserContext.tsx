@@ -51,10 +51,21 @@ export function useUser() {
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider');
   }
-  if (context.user === null) {
-    context.setUser(getUserFromCookies());
-  }
+
+  const { user, setUser } = context;
+
+  // Only update user from cookies on first load
+  useEffect(() => {
+    if (user === null) {
+      const storedUser = getUserFromCookies();
+      if (storedUser) {
+        setUser(storedUser);
+      }
+    }
+  }, [user, setUser]);
+
   return context;
 }
+
 
 export { UserContext }; 
