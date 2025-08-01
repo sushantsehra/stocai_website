@@ -365,22 +365,38 @@ export default function Navbar() {
             </button>
             
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
-                <div className="py-2">
-                  <div className="px-4 py-2 border-b">
-                    <p className="text-sm font-medium text-gray-900">
-                      {user.firstName} {user.lastName}
-                    </p>
-                    <p className="text-sm text-gray-500">{user.email}</p>
-                  </div>
+              // <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
+              //   <div className="py-2">
+              //     <div className="px-4 py-2 border-b">
+              //       <p className="text-sm font-medium text-gray-900">
+              //         {user.firstName} {user.lastName}
+              //       </p>
+              //       {/* <p className="text-sm text-gray-500">{user.email}</p> */}
+              //     </div>
+              //     <button
+              //       onClick={handleLogout}
+              //       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+              //     >
+              //       Sign Out
+              //     </button>
+              //   </div>
+              // </div>
+              <div className="absolute right-0 mt-2 p-1 w-36 bg-white rounded-b-md shadow-xl z-50">
+                <div className="py-2 px-4 text-center border-b border-gray-400">
+                  <p className="text-base font-semibold text-[#323232]">
+                    {user.firstName} {user.lastName}
+                  </p>
+                </div>
+                <div className="py-1">
                   <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                  >
-                    Sign Out
-                  </button>
+                  onClick={handleLogout}
+                  className="w-full py-2 text-center text-base font-semibold text-[#323232] hover:bg-gray-100 transition-colors"
+                >
+                  Logout
+                </button>
                 </div>
               </div>
+
             )}
           </div>
         ) : (
@@ -443,15 +459,25 @@ export default function Navbar() {
             <li>
               {user ? (
                 <div className="flex flex-col items-center space-y-4">
-                  <div className="flex items-center space-x-3 bg-[#54B0AF] text-white py-3 px-6 rounded-full">
-                    <Image
-                      // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
+                  <div className="flex items-center space-x-3 bg-[#54B0AF] text-white py-2 px-4 rounded-full">
+                    {/* <Image
                       src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName.charAt(0)}${user.lastName.charAt(0)}`)}&background=54B0AF&color=fff&size=32`}
                       alt={`${user.firstName} ${user.lastName}`}
                       width={32}
                       height={32}
                       className="rounded-full"
-                    />
+                    /> */}
+<Image
+  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+    `${user.firstName[0]}${user.lastName[0]}`
+  )}&background=54B0AF&color=fff&size=32`}
+  alt={`${user.firstName} ${user.lastName}`}
+  width={32}
+  height={32}
+  className="rounded-full"
+/>
+
+
                     {/* <div className="text-center">
                       <p className="font-gotham font-medium text-sm">
                         {user.firstName} {user.lastName}
@@ -466,7 +492,7 @@ export default function Navbar() {
                     }}
                     className="bg-red-500 text-white font-medium py-2 px-8 rounded-full text-center font-gotham text-sm hover:bg-red-600 transition-colors"
                   >
-                    Sign Out
+                    Logout
                   </button>
                 </div>
               ) : (
