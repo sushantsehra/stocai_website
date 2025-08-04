@@ -34,7 +34,7 @@ const envConfigs: Record<Environment, EnvConfig> = {
     }
   },
   staging: {
-    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://mystocai.com/backend',
+    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://backend.mystocai.com',
     assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://mystocai.com',
     isDebugEnabled: false,
     features: {
@@ -43,7 +43,7 @@ const envConfigs: Record<Environment, EnvConfig> = {
     }
   },
   production: {
-    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://mystocai.com/backend',
+    apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://backend.mystocai.com',
     assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://mystocai.com',
     isDebugEnabled: false,
     features: {
