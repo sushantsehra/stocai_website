@@ -77,22 +77,27 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   }
 
   try {
-    // const response = await fetch(`${backendUrl}/blogs`, {
-    // const response = await fetch(`https://mystocai.com/backend/blogs`, {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/blogs`, {
+    console.log('Fetching blogs from:', `${backendUrl}/blogs`);
+    
+    const response = await fetch(`${backendUrl}/blogs`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       // For static generation, we don't want to cache this
       cache: 'no-store'
     });
+
+    console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const backendPosts: BackendBlogPost[] = await response.json();
+    console.log('Fetched posts count:', backendPosts.length);
     
     // Transform backend posts to frontend format
     const transformedPosts = backendPosts.map(transformBackendBlogPost);
@@ -140,6 +145,7 @@ export async function getBlogPostById(id: string): Promise<BlogPost | undefined>
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       cache: 'no-store'
     });
@@ -181,6 +187,7 @@ export async function getBlogLikeCount(blogId: string): Promise<number> {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       cache: 'no-store'
     });
@@ -211,6 +218,7 @@ export async function getBlogCommentCount(blogId: string): Promise<number> {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       cache: 'no-store'
     });
@@ -234,4 +242,4 @@ export function getAllBlogPostsSync(): BlogPost[] {
 
 export function getBlogPostSync(slug: string): BlogPost | undefined {
   return fallbackBlogPosts.find(post => post.slug === slug);
-} 
+}
