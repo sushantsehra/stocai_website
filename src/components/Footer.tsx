@@ -23,7 +23,7 @@ const Footer = () => {
                 className="object-contain max-w-full aspect-[4] w-[236px]"
               />
               <p className="mt-4 font-gotham md:text-[14px] lg:text-xl text-white lg:pr-10 leading-[24px]">
-                Think clear. Feel Better. Take control. You already hold the
+                Think clear. Feel better. Take control. You already hold the
                 answers—let me help you uncover them.
               </p>
               <div>

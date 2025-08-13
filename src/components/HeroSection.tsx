@@ -27,7 +27,7 @@ const HeroSection = () => {
         <div className="w-full lg:w-[50%] mt-[30px] lg:mt-[4.5rem] xl:mt-[10rem] lg:translate-x-10 text-center lg:text-left">
           <h1 className="text-3xl xs:text-4xl md:text-5xl lg:text-[65px] leading-[30px]  md:leading-[45px] lg:leading-[60px] font-quattrocento">
             Think clear
-            <br /> Feel Better
+            <br /> Feel better
             <br /> Take control
           </h1>
           <p className=" mt-1 md:mt-3 lg:mt-6 text-base xs:text-lg sm:text-xl md:text-xl lg:text-[22px] xl:text-2xl font-light md:leading-8 leading-4 font-Gotham Light md:pr-10 px-8 md:px-0">
