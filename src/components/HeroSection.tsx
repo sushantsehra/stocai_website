@@ -58,7 +58,8 @@ const HeroSection = () => {
               onClick={() => window.location.href = "https://clarity.mystocai.com"}
               className="p-4"
             >
-              See Stocai in Action
+              {/* See Stocai in Action */}
+              Try Stocai now
             </Button>
           </div>
         </div>
