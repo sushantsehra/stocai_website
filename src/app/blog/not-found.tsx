@@ -11,7 +11,7 @@ export default function BlogNotFound() {
       <main className="container mx-auto pt-32 px-4 pb-16">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Blog Post Not Found</h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-[#323232] mb-8">
             Sorry, the blog post you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
           <Link 

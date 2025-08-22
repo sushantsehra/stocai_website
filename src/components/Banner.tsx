@@ -31,7 +31,7 @@ const Banner: React.FC<BannerProps> = ({ message }) => {
       <p className="font-gotham font-medium text-lg ">{message}</p>
       <button 
         onClick={closeBanner}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-200 transition-colors"
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white hover:text-[#323232] transition-colors"
         aria-label="Close banner"
       >
         <IoMdClose size={20} />
