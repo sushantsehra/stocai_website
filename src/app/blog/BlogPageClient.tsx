@@ -65,7 +65,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
       <div className="max-w-7xl mx-auto">
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Stocai Blog</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-[#323232] max-w-3xl mx-auto">
             Insights and reflections on introspection, mindful decision-making, and personal clarity.
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
               />
               <div className="p-8 md:w-1/2 flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-2">
-                  <p className="text-sm text-gray-500">{filteredPosts[0].date}</p>
+                  <p className="text-sm text-[#323232]">{filteredPosts[0].date}</p>
                   {filteredPosts[0].tags.length > 0 && (
                     <div className="flex gap-1">
                       {filteredPosts[0].tags.slice(0, 2).map((tag, index) => (
@@ -95,10 +95,10 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
                   )}
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">{filteredPosts[0].title}</h2>
-                <p className="text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: formatExcerpt(filteredPosts[0].excerpt) }} />
+                <p className="text-[#323232] mb-4" dangerouslySetInnerHTML={{ __html: formatExcerpt(filteredPosts[0].excerpt) }} />
                 
                 {/* Engagement Stats for Featured Post */}
-                <div className="flex items-center gap-6 text-gray-500 text-sm mb-6">
+                <div className="flex items-center gap-6 text-[#323232] text-sm mb-6">
                   <div className="flex items-center gap-2">
                     <ThumbsUp className="w-5 h-5" />
                     <span>{filteredPosts[0].like_count || 0}</span>
@@ -127,7 +127,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
                   selectedTag === tag
                     ? 'bg-[#54B0AF] text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+                    : 'bg-gray-100 text-[#323232] hover:bg-gray-200 hover:shadow-md'
                 }`}
               >
                 {tag}
@@ -166,7 +166,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
           </div>
         ) : filteredPosts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-500 text-lg">No blog posts found for the &ldquo;{selectedTag}&rdquo; tag.</p>
+            <p className="text-[#323232] text-lg">No blog posts found for the &ldquo;{selectedTag}&rdquo; tag.</p>
           </div>
         ) : null}
       </div>

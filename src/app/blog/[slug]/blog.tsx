@@ -169,7 +169,7 @@ export default async function BlogPage({ params }: BlogProps) {
             <div className="p-8">
               {/* Blog Header */}
               <header className="mb-6">
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                <div className="flex items-center justify-between text-sm text-[#323232]mb-4">
                   <div className="flex items-center">
                     <Image
                       src={`https://ui-avatars.com/api/?name=${encodeURIComponent(staticPost.author)}&background=54B0AF&color=fff`}
@@ -190,7 +190,7 @@ export default async function BlogPage({ params }: BlogProps) {
                                  {staticPost.tags && staticPost.tags.length > 0 && (
                    <div className="flex flex-wrap gap-2">
                      {staticPost.tags.map((tag: string) => (
-                      <span key={tag} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                      <span key={tag} className="bg-gray-100 text-[#323232] px-3 py-1 rounded-full text-sm">
                         {tag}
                       </span>
                     ))}
@@ -218,9 +218,9 @@ export default async function BlogPage({ params }: BlogProps) {
                 .map((relatedPost: BlogPost) => (
                   <div key={relatedPost.id} className="bg-white rounded-lg shadow-md overflow-hidden border">
                     <div className="p-6">
-                      <p className="text-sm text-gray-500 mb-2">{relatedPost.date}</p>
+                      <p className="text-sm text-[#323232] mb-2">{relatedPost.date}</p>
                       <h3 className="text-xl font-semibold mb-2">{relatedPost.title}</h3>
-                      <p className="text-gray-600 mb-4 line-clamp-2">{formatExcerpt(relatedPost.excerpt)}</p>
+                      <p className="text-[#323232] mb-4 line-clamp-2">{formatExcerpt(relatedPost.excerpt)}</p>
                       <Link href={`/blog/${relatedPost.slug}`} className="text-[#54B0AF] font-medium hover:underline">
                         Read More →
                       </Link>

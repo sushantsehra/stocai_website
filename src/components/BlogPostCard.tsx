@@ -47,7 +47,7 @@ export default function BlogPostCard({
       </div>
       <div className="p-6">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-sm text-gray-500">{date}</p>
+          <p className="text-sm text-[#323232]">{date}</p>
           {tags.length > 0 && (
             <div className="flex gap-1">
               {tags.slice(0, 2).map((tag, index) => (
@@ -59,16 +59,16 @@ export default function BlogPostCard({
                 </span>
               ))}
               {tags.length > 2 && (
-                <span className="text-xs text-gray-500">+{tags.length - 2}</span>
+                <span className="text-xs text-[#323232]">+{tags.length - 2}</span>
               )}
             </div>
           )}
         </div>
         <h2 className="text-xl font-semibold mb-2 line-clamp-2">{title}</h2>
-        <p className="text-gray-600 mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: excerpt }} />
+        <p className="text-[#323232] mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: excerpt }} />
         
         {/* Engagement Stats */}
-        <div className="flex items-center gap-4 text-gray-500 text-sm mb-4">
+        <div className="flex items-center gap-4 text-[#323232] text-sm mb-4">
           <div className="flex items-center gap-1">
             <ThumbsUp className="w-4 h-4" />
             <span>{likeCount}</span>

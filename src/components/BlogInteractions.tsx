@@ -206,7 +206,7 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
     <div className="mt-6">
       <hr className="mb-6" />
       
-      <div className="flex items-center gap-4 text-gray-600 mb-4">
+      <div className="flex items-center gap-4 text-[#323232] mb-4">
         <button
           className={`flex items-center gap-1 transition-colors ${
             liked ? 'text-blue-600' : 'hover:text-blue-600'
@@ -258,10 +258,10 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
   className="rounded-full mr-3"
 />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-800">
+                    <p className="text-sm font-medium text-[#323232]">
                       {comment.username}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-[#323232]">
                       {new Date(comment.created_at).toLocaleString(undefined, {
                         dateStyle: 'medium',
                         timeStyle: 'short',
@@ -269,7 +269,7 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
                     </p>
                   </div>
                 </div>
-                <p className="text-gray-700">{comment.text}</p>
+                <p className="text-[#323232]">{comment.text}</p>
               </div>
             ))}
           </div>
