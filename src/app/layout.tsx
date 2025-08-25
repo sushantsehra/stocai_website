@@ -3,6 +3,7 @@ import { Quattrocento } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/contexts/UserContext";
 import Script from "next/script"; // ✅ Import Script
+import PostHogInit from './_components/PostHogInit'
 
 // Initialize the Quattrocento font
 const quattrocento = Quattrocento({
@@ -95,6 +96,7 @@ export default function RootLayout({
         {/* ✅ End Meta Pixel Code */}
       </head>
       <body className="antialiased">
+        <PostHogInit />
         <UserProvider>{children}</UserProvider>
       </body>
     </html>
