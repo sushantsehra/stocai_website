@@ -63,10 +63,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={quattrocento.variable}>
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
-          rel="stylesheet"
-        />
         <link rel="icon" href="/stocailogoo.png" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
 
@@ -85,6 +81,8 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
+        {/* ✅ Meta Pixel fallback */}
+        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
         <noscript>
           <img
             height="1"

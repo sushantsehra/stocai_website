@@ -1,11 +1,11 @@
 'use client'
 import { useEffect } from 'react'
-import posthog from 'posthog-js'
+import posthog, { PostHog } from 'posthog-js'
 
 export default function PostHogInit() {
   useEffect(() => {
-    // avoid double-inits during Fast Refresh
-    if ((posthog as any).__loaded) return
+    const ph = posthog as PostHog & { __loaded?: boolean }
+    if (ph.__loaded) return
 
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
