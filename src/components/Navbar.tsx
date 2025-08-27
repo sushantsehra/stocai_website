@@ -249,7 +249,8 @@ export default function Navbar() {
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
-                  Inner Voice
+                  {/* Inner Voice */}
+                  Blog
                 </button>
                 <button
                   onClick={(e) => {
@@ -299,7 +300,8 @@ export default function Navbar() {
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  Inner Voice
+                  {/* Inner Voice */}
+                  Blog
                 </button>
                 <button
                   onClick={() => handleResourcesNavigate("https://clarity.mystocai.com/psy-quiz")}
