@@ -29,22 +29,24 @@ export default function BlogPostCard({
   const [imageError, setImageError] = useState(false);
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:translate-y-[-5px]">
-      <div className="h-48 bg-gray-200 relative">
-        {imageUrl && !imageError ? (
-          <Image 
-            src={imageUrl} 
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="h-full w-full flex items-center justify-center bg-gradient-to-r from-[#54B0AF] to-[#7ED5D4]">
-            <span className="text-white text-2xl font-bold">Stocai</span>
-          </div>
-        )}
-      </div>
+      <Link href={`/blog/${slug}`} className="block">
+        <div className="h-48 bg-gray-200 relative cursor-pointer">
+          {imageUrl && !imageError ? (
+            <Image 
+              src={imageUrl} 
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="h-full w-full flex items-center justify-center bg-gradient-to-r from-[#54B0AF] to-[#7ED5D4]">
+              <span className="text-white text-2xl font-bold">Stocai</span>
+            </div>
+          )}
+        </div>
+      </Link>
       <div className="p-6">
         <div className="flex items-center justify-between mb-2">
           <p className="text-sm text-[#323232]">{date}</p>
