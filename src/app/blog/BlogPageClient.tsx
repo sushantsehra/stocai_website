@@ -61,7 +61,7 @@ export default function BlogPageClient({ initialBlogPosts }: BlogPageClientProps
   };
 
   return (
-    <main className="container mx-auto pt-32 px-4 pb-16">
+    <main className="container mx-auto px-4 pb-16">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Stocai Blog</h1>
