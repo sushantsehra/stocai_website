@@ -145,7 +145,7 @@ export default async function BlogPage({ params }: BlogProps) {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <main className="container mx-auto pt-32 px-4 pb-16">
+      <main className="container mx-auto pt-4 px-4 pb-16">
         <div className="max-w-3xl mx-auto">
           <Link href="/blog" className="inline-flex items-center text-[#54B0AF] mb-8 hover:underline">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -161,7 +161,7 @@ export default async function BlogPage({ params }: BlogProps) {
             alt={staticPost.title}
             width={800} // Adjust based on layout
             height={256} // 64 (h-64) in Tailwind is 16rem = 256px
-            className="w-full h-64 object-cover"
+            className="w-full h-64 md:h-96 object-cover"
             style={{ objectFit: 'cover' }}
             unoptimized={false} // optional: remove if using local or supported remote domains
           />

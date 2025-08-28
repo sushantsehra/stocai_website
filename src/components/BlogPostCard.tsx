@@ -30,7 +30,7 @@ export default function BlogPostCard({
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:translate-y-[-5px]">
       <Link href={`/blog/${slug}`} className="block">
-        <div className="h-48 bg-gray-200 relative cursor-pointer">
+        <div className="h-48 md:h-52 bg-gray-200 relative cursor-pointer">
           {imageUrl && !imageError ? (
             <Image 
               src={imageUrl} 
