@@ -1,7 +1,7 @@
 "use client"
 
 // import Image from 'next/image';
-
+import posthog from "posthog-js";
 const OverthinkingToClarity = () => {
   return (
     <div className="bg-white">
@@ -22,7 +22,17 @@ const OverthinkingToClarity = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button  onClick={() => window.location.href = "https://clarity.mystocai.com"}
+              <button  onClick={() => {
+  posthog.capture("overthinking_to_clarity_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
                className="bg-[#54B0AF] font-gotham hover:bg-teal-600 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-200 text-lg shadow-lg hover:shadow-xl">
                 Start Free Session
               </button>

@@ -7,6 +7,7 @@ import stocai_img3 from "@/assets/3.png";
 import stocai_img4 from "@/assets/4.png";
 import stocai_img5 from "@/assets/5.png";
 import stocai_img6 from "@/assets/6.png";
+import posthog from "posthog-js";
 
 const TestimonialSlider = () => {
   const testimonials = [
@@ -92,7 +93,17 @@ const TestimonialSlider = () => {
       {/* CTA Button */}
       <div className="text-center mt-12">
         <button
-        onClick={() => window.location.href = "https://clarity.mystocai.com"}
+        onClick={() => {
+  posthog.capture("testimonial_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
          className="bg-[#54B0AF] font-gotham hover:bg-teal-600 text-white font-semibold py-3 px-8 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
           Start Free Session
         </button>

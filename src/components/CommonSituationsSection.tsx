@@ -3,6 +3,7 @@
 import React from 'react';
 import svg_linestroke from "@/assets/svg_linestroke.png";
 import Image from "next/image";
+import posthog from 'posthog-js';
 
 const CommonSituationsSection = () => {
   // First row data (moving left to right)
@@ -91,7 +92,17 @@ const CommonSituationsSection = () => {
         {/* CTA Button */}
         <div className="flex justify-center">
           <button
-           onClick={() => window.location.href = "https://clarity.mystocai.com"}
+           onClick={() => {
+  posthog.capture("common_situation_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
           className="bg-[#54B0AF] hover:bg-[#4a9e9d] text-white font-bold font-gotham px-8 py-4 rounded-full text-lg transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
             Start Free Session
           </button>
