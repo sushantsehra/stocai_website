@@ -11,7 +11,7 @@ const FooterStocai = () => {
   return (
     <footer className="bg-white text-black">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-8 lg:py-12">
+      <div className="container mx-auto px-2 md:px-0 py-8 lg:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Stocai Branding and Description */}
           <div className="lg:col-span-3">
@@ -35,7 +35,7 @@ const FooterStocai = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="lg:mt-20">
+          <div className="lg:mt-20 px-4 sm:px-0">
             <h3 className="text-lg text-[#54B0AF] font-bold font-gotham mb-4">
               Quick Links
             </h3>
@@ -92,7 +92,7 @@ const FooterStocai = () => {
           </div>
 
             {/* Stay Connected */}
-            <div className="lg:mt-20">
+            <div className="lg:mt-20 px-4 sm:px-0">
               <h3 className="text-lg text-[#54B0AF] font-bold font-gotham mb-4">
                 Stay connected
               </h3>
@@ -131,7 +131,7 @@ const FooterStocai = () => {
             </div>
 
             {/* Contact Us */}
-            <div className="lg:mt-20">
+            <div className="lg:mt-20 px-4 sm:px-0">
               <h3 className="text-lg text-[#54B0AF] font-bold font-gotham mb-4">
                 Contact us
               </h3>

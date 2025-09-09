@@ -10,32 +10,32 @@ const StocaiFAQ = () => {
     {
       id: 1,
       question: "Is this really effective for serious career or life decisions?",
-      answer: "Great insights start with great questions. Stocai is designed to guide your introspection by prompting you to think deeper and uncover what's beneath the surface. The right questions help you move beyond quick fixes and discover solutions that truly fit you."
+      answer: "Yes. Stocai is designed for high-stakes situations: whether it’s making a career move, planning retirement steps, or navigating complex relationships. Our structured prompts cut through noise and help you act with confidence."
     },
     {
       id: 2,
       question: "How much time does a session take?",
-      answer: "Sessions typically range from 15-20 minutes, allowing enough time for deep exploration while respecting your busy schedule. We also offer shorter 10-minute focused sessions for specific challenges."
+      answer: "Each session is self-paced. You can take as much time as you need. However, most users get clarity in under 15 minutes, and complete conversations take 25-30 minutes. Sessions are designed to fit into a break or between meetings so you can move forward without losing momentum at work or home."
     },
     {
       id: 3,
       question: "How is this different from therapy, coaching, or advice from friends?",
-      answer: "Unlike therapy which focuses on healing past wounds, or casual advice from friends, Stocai provides structured, forward-looking coaching that's specifically designed to help you make better decisions and take action toward your goals."
+      answer: "We don’t tell you what to do. Instead, coaching guides you through proven question frameworks that help you surface your own clarity and next step. It’s faster and more focused than journaling, and more structured than chatting with friends."
     },
     {
       id: 4,
       question: "Is my information private and secure?",
-      answer: "Absolutely. We use enterprise-grade security measures and follow strict confidentiality protocols. Your conversations and personal information are encrypted and never shared with third parties."
+      answer: "Absolutely. Sessions are private by default. Nothing is shared with third-party apps or service providers. All your data remains with Stocai."
     },
     {
       id: 5,
       question: "Do I need to be 'tech-savvy' to use this?",
-      answer: "Not at all! Our platform is designed to be intuitive and user-friendly. If you can use basic apps on your phone or computer, you'll have no trouble using Stocai."
+      answer: "Not at all. If you can answer a few questions on your phone or laptop, you can use Stocai. No setup, no app download - just click and go."
     },
     {
       id: 6,
       question: "Do I need to commit or pay to try Stocai?",
-      answer: "We offer a free initial consultation so you can experience our coaching approach without any commitment. After that, you can choose from flexible plans that suit your needs and budget."
+      answer: "No. Your first session is completely free during beta. No credit card required. If you find value, you can create an account to save sessions or continue exploring."
     }
   ];
 

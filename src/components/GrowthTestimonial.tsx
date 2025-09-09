@@ -97,7 +97,7 @@ const GrowthTestimonial = () => {
            {/* Right Stat */}
             <div className="text-center sm:text-left flex flex-row font-gotham gap-4 sm:gap-6 items-center sm:items-start">
               <div className="flex items-baseline mt-1">
-                <p className="text-7xl font-bold leading-none">
+                <p className="text-7xl font-bold leading-none ml-2 sm:ml-0">
                   13
                 </p>
                 <span className="font-bold text-2xl sm:text-3xl lg:text-4xl ml-2 mb-1">
