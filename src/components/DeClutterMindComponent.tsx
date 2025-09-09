@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import at_ease from "@/assets/at_ease.png";
 import fomo from "@/assets/fomo.png";
+import posthog from 'posthog-js';
 
 const DeClutterMindComponent = () => {
   return (
@@ -48,7 +49,17 @@ const DeClutterMindComponent = () => {
           
           {/* CTA Button */}
           <button
-            onClick={() => window.location.href = "https://clarity.mystocai.com"}
+           onClick={() => {
+  posthog.capture("declutter_mind_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
            className="bg-[#54B0AF] font-bold font-gotham hover:bg-teal-600 text-white font-semibold px-8 py-4 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
             Start Free Session
           </button>

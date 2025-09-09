@@ -7,6 +7,7 @@ import background from "@/assets/Stocai_landingpage_bg.png";
 import user2 from "@/assets/user2.jpg";
 import svg_linestroke from "@/assets/svg_linestroke.png";
 import Image from "next/image";
+import posthog from 'posthog-js';
 
 const HeroSectionStocai = () => {
   return (
@@ -114,7 +115,17 @@ const HeroSectionStocai = () => {
         <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
         
           <Button
-            onClick={() => window.location.href = "https://clarity.mystocai.com"}
+            onClick={() => {
+  posthog.capture("hero_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
             variant="tertiary"
             className="px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-medium rounded-full bg-[#54B0AF] text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-gotham"
           >

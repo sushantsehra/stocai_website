@@ -6,6 +6,7 @@ import rightside_img from "@/assets/rightside_img.png";
 import SectionBottom from "@/assets/SectionBottom.png";
 import SectionTop from "@/assets/SectionTop.png";
 import teal_circle from "@/assets/teal_circle.png";
+import posthog from "posthog-js";
 
 const ProfessionalHeroSection = () => {
   return (
@@ -87,7 +88,17 @@ const ProfessionalHeroSection = () => {
 
           {/* CTA Button */}
           <button
-            onClick={() => (window.location.href = "https://clarity.mystocai.com")}
+            onClick={() => {
+  posthog.capture("professional_hero_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
             className="bg-[#54B0AF] font-gotham font-bold hover:bg-teal-600 text-white py-3 px-8 md:py-4 md:px-10 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
             Start Free Session
@@ -135,7 +146,17 @@ const ProfessionalHeroSection = () => {
 
           {/* CTA Button */}
           <button
-            onClick={() => (window.location.href = "https://clarity.mystocai.com")}
+            onClick={() => {
+  posthog.capture("professional_hero_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
             className="bg-[#54B0AF] font-gotham font-bold hover:bg-teal-600 text-white py-3 px-8 md:py-4 md:px-10 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
             Start Free Session

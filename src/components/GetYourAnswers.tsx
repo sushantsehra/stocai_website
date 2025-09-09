@@ -5,6 +5,7 @@ import Image from 'next/image';
 import pic1 from "@/assets/pic1.png";
 import pic2 from "@/assets/pic2.png";
 import pic3 from "@/assets/pic3.png";
+import posthog from 'posthog-js';
 
 const GetYourAnswers = () => {
   return (
@@ -81,7 +82,17 @@ const GetYourAnswers = () => {
 
         {/* CTA Button */}
         <div className="text-center">
-          <button  onClick={() => window.location.href = "https://clarity.mystocai.com"}
+          <button  onClick={() => {
+  posthog.capture("get_your_answer_section", {
+    button: "start_free_session",
+    location: "about_page",
+  });
+
+  setTimeout(() => {
+    window.location.href = "https://clarity.mystocai.com";
+  }, 300);
+}}
+
            className="bg-[#54B0AF] font-gotham font-bold hover:bg-teal-600 text-white px-8 py-4 rounded-full text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
             Start Free Session
           </button>
