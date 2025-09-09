@@ -62,35 +62,28 @@ const BuiltBy = () => {
             Built by Top B-School graduates and{" "}
              <span className="relative inline-block">
               <span className="text-[#54B0AF] font-gotham font-medium">Corporate Leaders</span>
-              <Image src={svg_linestroke} alt="linestroke" width={250} height={250} className="top-6 md:top-3 absolute" />
+              <Image src={svg_linestroke} alt="linestroke" width={250} height={250} className="top-2 md:top-3 absolute" />
             </span>
-            {/* <span className="">
-              Corporate Leaders
-            </span> */}
           </h2>
         </div>
 
         {/* Logos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-6 lg:gap-1 items-center justify-items-center">
+        <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-6 lg:gap-1 items-center justify-items-center">
           {logos.map((logo, index) => (
             <div
               key={index}
-              className="group relative flex items-center justify-center hover:shadow-md transition-all duration-300 hover:scale-105 w-full h-20 sm:h-24"
+              className="group relative flex items-center justify-center hover:shadow-md transition-all duration-300 hover:scale-105 w-full h-14 sm:h-20 md:h-24 lg:h-16"
             >
               <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src={logo.url}
                   alt={logo.alt}
-                //   width={500}
-                //   height={40}
-                // //   fill
-                //   className="object-contain filter group-hover:grayscale-0 transition-all duration-300 p-2"
-                //   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 12.5vw"
-                width={["Citi", "King's College London"].includes(logo.name) ? 110 : 500}
-                height={["Citi", "King's College London"].includes(logo.name) ? 30 : 40}
-                className={`object-contain filter group-hover:grayscale-0 transition-all duration-300 p-2 
-                    ${["Citi", "King's College London"].includes(logo.name) ? "scale-90" : ""}`}
-                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 12.5vw"
+                  width={["Citi", "King's College London"].includes(logo.name) ? 60 : 320}
+                  height={["Citi", "King's College London"].includes(logo.name) ? 15 : 26}
+                  className={`object-contain filter group-hover:grayscale-0 transition-all duration-300 p-1 sm:p-2 
+                      ${["Citi", "King's College London"].includes(logo.name) ? "scale-90 lg:scale-50" : "lg:scale-75"} 
+                      sm:w-auto sm:h-auto`}
+                  sizes="(max-width: 640px) 25vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 12.5vw"
                 />
               </div>
             </div>

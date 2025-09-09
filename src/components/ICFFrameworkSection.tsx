@@ -10,13 +10,13 @@ import ifc_women from "@/assets/ifc_women.jpeg";
 const ICFFrameworkSection = () => {
   return (
     <section className="w-full bg-[#54B0AF] py-12 md:py-16 lg:py-0">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-0 lg:pr-8">
+      <div className="max-w-full mx-auto  ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           
           {/* Left Side - Images */}
           <div className="relative flex items-center justify-center lg:justify-start">
             {/* Main Featured Person */}
-            <div className="relative z-10 w-64 h-80 sm:w-72 sm:h-[700px] md:w-[700px] md:h-full mx-auto lg:mx-0">
+            <div className="relative z-10 w-[400px] h-92 sm:h-[700px] md:w-[700px] md:h-full mx-auto lg:mx-0">
               {/* <Image src={ifc_img} alt="ifc" width={700} /> */}
               {/* <Image src={ifc_img} alt="ifc" width={700} /> */}
               <Image src={ifc_women} alt="ifc" width={700} />
@@ -26,7 +26,7 @@ const ICFFrameworkSection = () => {
           </div>
 
           {/* Right Side - Content */}
-          <div className="text-white space-y-6 lg:space-y-8">
+          <div className="text-white space-y-6 lg:space-y-8 px-4 sm:px-6 pl-5 sm:pl-0 lg:px-0 lg:pr-8">
             {/* Main Heading */}
             <div className="space-y-3">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-gotham leading-tight">

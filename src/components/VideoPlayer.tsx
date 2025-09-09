@@ -1,22 +1,20 @@
 "use client"
 
 import React from 'react';
-import Image from 'next/image';
-import youtube from "@/assets/youtube.png";
 
 const VideoPlayer = () => {
   return (
-    <div className="w-full mx-auto container md:min-h-screen flex justify-center items-center">
-      <div className="w-full max-w-6xl mx-auto px-4 md:px-0">
+    <div id="video-player" className="w-full mx-auto container flex justify-center items-center">
+      <div className="w-full max-w-6xl mx-auto px-4 pb-20  md:py-20 md:px-0">
         {/* Video container with 16:9 aspect ratio */}
         <div className="relative w-full aspect-video bg-gray-200 rounded-xl overflow-hidden">
-          <Image 
-            src={youtube} 
-            alt="Video player interface showing Stocai coaching session demo" 
-            fill 
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-            priority
+          <iframe
+            src="https://www.youtube.com/embed/iMZHZt6TICs?autoplay=0&unmute=1&controls=1&modestbranding=1&rel=0"
+            title="Stocai coaching session demo"
+            className="absolute inset-0 w-full h-full"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
           />
         </div>
       </div>

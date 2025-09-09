@@ -75,8 +75,8 @@ const TestimonialSlider = () => {
                 />
 
                  {/* Testimonial Quote */}
-              <div className="text-center absolute bottom-4">
-                <p className="text-white font-medium font-gotham text-sm leading-relaxed italic">
+              <div className="text-center absolute bottom-4 px-4 sm:px-3">
+                <p className="text-white font-medium font-gotham text-sm leading-relaxed">
                   {testimonial.quote}
                 </p>
               </div>
@@ -109,8 +109,7 @@ const TestimonialSlider = () => {
         }
 
         .animate-scroll {
-          animation: scroll 30s linear infinite;
-        }
+          animation: scroll 5s linear infinite; 
 
         .animate-scroll:hover {
           animation-play-state: paused;
@@ -119,16 +118,17 @@ const TestimonialSlider = () => {
         /* Responsive adjustments */
         @media (max-width: 768px) {
           .animate-scroll {
-            animation: scroll 25s linear infinite;
+            animation: scroll 5s linear infinite;
           }
         }
 
         @media (max-width: 480px) {
           .animate-scroll {
-            animation: scroll 20s linear infinite;
+            animation: scroll 3s linear infinite; 
           }
         }
       `}</style>
+
     </div>
   );
 };
