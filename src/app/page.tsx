@@ -128,7 +128,6 @@ export default function Home() {
         <NotForYouSection />
         <FaqSection />
       </main>
-      
       <Footer />
     </div>
   );

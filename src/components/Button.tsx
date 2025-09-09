@@ -3,7 +3,8 @@ import React from "react";
 
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "teal" | "login";
+  // variant?: "primary" | "secondary" | "teal" | "login";
+  variant?: "primary" | "secondary" | "teal" | "login" | "normal" | "tertiary";
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   [key: string]: React.ReactNode | string | ((event: React.MouseEvent<HTMLButtonElement>) => void) | undefined;
@@ -24,6 +25,8 @@ const Button: React.FC<ButtonProps> = ({
     secondary: "text-black border-2 border-black border-solid", 
     teal: "text-white bg-emerald-400",
     login: "text-white bg-emerald-400",
+    normal: "text-[#54B0AF] border border-[#54B0AF]",
+    tertiary: "text-white bg-[#54B0AF] font-gotham"
   } as const;
 
   return (
