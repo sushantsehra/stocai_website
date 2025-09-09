@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "@/components/Header";
+import HeaderStocai from "@/components/HeaderStocai";
 import HeroSectionStocai from "@/components/HeroSectionStocai";
 import StocaiFAQ from "@/components/StocaiFAQ";
 import VideoPlayer from "@/components/VideoPlayer";
@@ -107,17 +107,17 @@ export default function Homepage() {
   return (
     <div className="min-h-screen bg-white">
       <JsonLd />
-      <Header />
+      <HeaderStocai />
       
       <main className="container mx-auto">
         <HeroSectionStocai />
         <BuiltBy />
         <GrowthTestimonial />
-        <VideoPlayer />
         <DeClutterMindComponent />
+        <VideoPlayer />
         <GetYourAnswers />
-        <ICFFrameworkSection />
         <CommonSituationsSection />
+        <ICFFrameworkSection />
         <SeeTheDifference />
         <TestimonialSlider />
         <StocaiFAQ />

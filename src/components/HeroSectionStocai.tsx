@@ -3,11 +3,9 @@
 import React from "react";
 import Button from "./Button";
 import background from "@/assets/Stocai_landingpage_bg.png";
-import user1 from "@/assets/user1.jpg";
+// import user1 from "@/assets/user1.jpg";
 import user2 from "@/assets/user2.jpg";
-// import circle_svg from "@/assets/circle_svg.png";
 import svg_linestroke from "@/assets/svg_linestroke.png";
-// import circle_removedbg from "@/assets/circle_removedbg.jpeg";
 import Image from "next/image";
 
 const HeroSectionStocai = () => {
@@ -34,22 +32,22 @@ const HeroSectionStocai = () => {
       <div className="absolute bottom-20 right-10 w-40 h-40 sm:w-56 sm:h-56 lg:w-72 lg:h-72 bg-gradient-to-tl from-[#54B0AF]/15 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px] bg-gradient-to-r from-[#54B0AF]/10 to-transparent rounded-full blur-3xl"></div>
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      <div className="relative z-10 max-w-4xl mx-auto text-center mt-[-150px] sm:mt-0">
         {/* User avatars and sessions completed */}
-        <div className="flex justify-center items-center mb-8 sm:mb-12">
-          <div className="flex items-center bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 sm:px-6 sm:py-3 shadow-lg border border-[#54B0AF50]">
+        <div className="flex justify-center items-center mb-8 sm:mb-12  md:mt-[-20px]">
+          <div className="flex items-center bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 sm:px-6 sm:py-3 shadow-lg border border-[#54B0AF50]  md:mt-[-20px]">
             <div className="flex -space-x-2 mr-3 sm:mr-4">
               <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user2} alt="user" height={20} width={25} className="rounded-full cover" />
+                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
               <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user1} alt="user" height={20} width={25} className="rounded-full cover" />
+                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
               <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user2} alt="user" height={20} width={25} className="rounded-full cover" />
+                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
               <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user1} alt="user" height={20} width={25} className="rounded-full cover" />
+                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
             </div>
             <span className="text-xs sm:text-sm text-gray-600 font-medium font-gotham">
@@ -61,79 +59,46 @@ const HeroSectionStocai = () => {
         {/* Main heading */}
         <div className="mb-6 sm:mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl font-light text-gray-800 leading-tight">
-            <span className="text-[#54B0AF] font-gotham font-medium">From Overthinking to </span>
+            <span className="text-[#54B0AF] font-quattrocento font-bold">From Overthinking to </span>
             <span className="relative inline-block">
-              <span className="text-[#54B0AF] font-gotham font-medium">Clarity.</span>
-              <Image src={svg_linestroke} alt="linestroke" width={200} height={250} className="top-6 md:top-12 absolute" />
+              <span className="text-[#54B0AF] font-quattrocento font-bold">Clarity.</span>
+              <Image src={svg_linestroke} alt="linestroke" width={200} height={250} className="top-5.5 md:top-12 absolute" />
             </span>
             <br />
-            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl text-[#54B0AF] font-gotham font-medium">In just </span>
+            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl mt-2 md:mt-0 text-[#54B0AF] font-quattrocento font-bold">In just </span>
             <span className="relative inline-block">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl text-[#54B0AF] font-gotham font-medium">minutes.</span>
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl text-[#54B0AF] font-quattrocento font-bold">minutes.</span>
 
                {/* <Image src={svg_linestroke} alt="linestroke" width={200} height={200} className="top-6 md:top-12 absolute" /> */}
-              {/* <svg
-                className="absolute -bottom-1 left-0 w-full h-6"
-                viewBox="0 0 200 40"
+              <svg
+                className="absolute -left-1 -bottom-6 lg:-bottom-5 w-full h-[80px] md:h-[110px]"
+                viewBox="0 0 880 320"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M10 25 
-                    C40 10, 160 10, 190 25 
-                    C160 40, 40 40, 10 25 Z"
+                <ellipse
+                  cx="440" cy="160" rx="440" ry="120"
                   stroke="black"
-                  strokeWidth="2"
-                  fill="none"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
-              </svg> */}
-{/* 
-<svg
-  className="absolute left-0 -bottom-5 w-full h-[80px] md:h-[110px]"
-  viewBox="0 0 800 320"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <ellipse
-    cx="400" cy="160" rx="360" ry="120"
-    stroke="black"
-    strokeWidth="8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-</svg> */}
+              </svg>
 
-<svg
-  className="absolute -left-1 -bottom-4 w-full h-[80px] md:h-[110px]"
-  viewBox="0 0 880 320"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <ellipse
-    cx="440" cy="160" rx="420" ry="120"
-    stroke="black"
-    strokeWidth="8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-</svg>
-
-<svg
-  className="absolute left-0 -bottom-3.5 w-full h-[80px] md:h-[110px]"
-  viewBox="0 0 880 320"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <ellipse
-    cx="440" cy="160" rx="420" ry="120"
-    stroke="black"
-    strokeWidth="8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-</svg>
-
-
+              <svg
+                className="absolute left-0 -bottom-5.5 lg:-bottom-4.5 w-full h-[80px] md:h-[110px]"
+                viewBox="0 0 880 320"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <ellipse
+                  cx="440" cy="160" rx="445" ry="120"
+                  stroke="black"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </span>
           </h1>
         </div>
@@ -147,27 +112,20 @@ const HeroSectionStocai = () => {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
-          {/* <Button
-            variant="primary"
+        
+          <Button
             onClick={() => window.location.href = "https://clarity.mystocai.com"}
+            variant="tertiary"
             className="px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-medium rounded-full bg-[#54B0AF] text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-gotham"
           >
             Start Free Session
-          </Button> */}
-          <Button
-  onClick={() => window.location.href = "https://clarity.mystocai.com"}
-   variant="tertiary"
-  className="px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-medium rounded-full bg-[#54B0AF] text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-gotham"
->
-  Start Free Session
-</Button>
+          </Button>
 
-          <Button
+          {/* <Button
             variant="normal"
                 onClick={() => {
                 const howStocaiWorksSection = document.getElementById("stocai-faqs");
                 if (howStocaiWorksSection) {
-                  // Adjust for fixed header
                   const headerOffset = 76;
                   const elementPosition = howStocaiWorksSection.getBoundingClientRect().top;
                   const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -181,11 +139,11 @@ const HeroSectionStocai = () => {
             className="px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-medium rounded-full border-2 border-[#54B0AF] text-teal transition-all duration-300 transform hover:scale-105 bg-white backdrop-blur-sm font-gotham"
           >
             Know more
-          </Button>
+          </Button> */}
         </div>
 
         {/* Bottom disclaimer */}
-        <p className="text-sm sm:text-base text-gray-500 font-medium font-gotham">
+        <p className="text-sm sm:text-base text-gray-500 font-normal font-gotham">
           Private by default. No card required.
         </p>
       </div>

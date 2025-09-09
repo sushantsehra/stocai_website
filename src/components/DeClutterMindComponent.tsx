@@ -32,8 +32,8 @@ const DeClutterMindComponent = () => {
           </div>
 
           {/* Right Side - Clear Mind */}
-          <div className="relative">
-            <div className="relative w-full h-96 sm:h-[650px] bg-gray-200 rounded-2xl overflow-hidden">
+          <div className="relative flex justify-center items-center">
+            <div className="relative w-[345px] sm:w-full h-96 sm:h-[650px] bg-gray-200 rounded-2xl overflow-hidden">
               {/* Image Placeholder */}
               <Image src={at_ease} alt="at_ease" fill />
             </div>
