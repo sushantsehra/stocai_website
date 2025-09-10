@@ -3,8 +3,10 @@
 import React from "react";
 import Button from "./Button";
 import background from "@/assets/Stocai_landingpage_bg.png";
-// import user1 from "@/assets/user1.jpg";
-import user2 from "@/assets/user2.jpg";
+import user2 from "@/assets/6.png";
+import user1 from "@/assets/3.png";
+import user3 from "@/assets/4.png";
+import user4 from "@/assets/5.png";
 import svg_linestroke from "@/assets/svg_linestroke.png";
 import Image from "next/image";
 import posthog from 'posthog-js';
@@ -26,7 +28,6 @@ const HeroSectionStocai = () => {
       }}
     >
       {/* Background gradient elements */}
-      {/* <div className="absolute top-10 left-10 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-[#54B0AF]/20 to-transparent rounded-full blur-3xl"></div> */}
       <div className="absolute top-20 right-5 w-20 h-20 bg-gradient-to-bl from-teal-400 to-transparent rounded-full opacity-100 blur-3xl"></div>
       <div className="absolute top-48 right-20 w-20 h-20 bg-gradient-to-bl from-teal-500 to-transparent rounded-full opacity-100 blur-3xl"></div>
       <div className="absolute top-0 -left-0 w-56 h-80 bg-gradient-to-tr from-teal-400 to-transparent rounded-full opacity-50 blur-3xl"></div>
@@ -36,19 +37,19 @@ const HeroSectionStocai = () => {
       <div className="relative z-10 max-w-4xl mx-auto text-center mt-[-150px] sm:mt-0">
         {/* User avatars and sessions completed */}
         <div className="flex justify-center items-center mb-8 sm:mb-12  md:mt-[-20px]">
-          <div className="flex items-center bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 sm:px-6 sm:py-3 shadow-lg border border-[#54B0AF50]  md:mt-[-20px]">
-            <div className="flex -space-x-2 mr-3 sm:mr-4">
-              <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
+          <div className="flex items-center bg-white backdrop-blur-sm rounded-full px-4 py-2 sm:px-6 sm:py-3 shadow-lg border border-[#54B0AF]  md:mt-[-20px]">
+            <div className="flex -space-x-1 mr-3 sm:mr-4">
+              <div className="rounded-full flex items-center justify-center text-white text-xs font-bold">
+                <Image src={user1} alt="user" height={20} width={22} className="rounded-full cover" />
+              </div>
+              <div className="rounded-full flex items-center justify-center text-white text-xs font-bold">
                 <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
-              <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
+              <div className="rounded-full flex items-center justify-center text-white text-xs font-bold">
+                <Image src={user3} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
-              <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
-              </div>
-              <div className=" rounded-full flex items-center justify-center text-white text-xs font-bold">
-                <Image src={user2} alt="user" height={20} width={22} className="rounded-full cover" />
+              <div className="rounded-full flex items-center justify-center text-white text-xs font-bold">
+                <Image src={user4} alt="user" height={20} width={22} className="rounded-full cover" />
               </div>
             </div>
             <span className="text-xs sm:text-sm text-gray-600 font-medium font-gotham">
@@ -116,18 +117,18 @@ const HeroSectionStocai = () => {
         
           <Button
             onClick={() => {
-  posthog.capture("hero_section", {
-    button: "start_free_session",
-    location: "about_page",
-  });
+              posthog.capture("hero_section", {
+                button: "start_free_session",
+                location: "about_page",
+              });
 
-  setTimeout(() => {
-    window.location.href = "https://clarity.mystocai.com";
-  }, 300);
-}}
+              setTimeout(() => {
+                window.location.href = "https://clarity.mystocai.com";
+              }, 300);
+            }}
 
             variant="tertiary"
-            className="px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-medium rounded-full bg-[#54B0AF] text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-gotham"
+            className="px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold rounded-full bg-[#54B0AF] text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-gotham"
           >
             Start Free Session
           </Button>

@@ -23,21 +23,21 @@ const OverthinkingToClarity = () => {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button  onClick={() => {
-  posthog.capture("overthinking_to_clarity_section", {
-    button: "start_free_session",
-    location: "about_page",
-  });
+                posthog.capture("overthinking_to_clarity_section", {
+                  button: "start_free_session",
+                  location: "about_page",
+                });
 
-  setTimeout(() => {
-    window.location.href = "https://clarity.mystocai.com";
-  }, 300);
-}}
+                setTimeout(() => {
+                  window.location.href = "https://clarity.mystocai.com";
+                }, 300);
+              }}
 
-               className="bg-[#54B0AF] font-gotham hover:bg-teal-600 text-white font-semibold px-8 py-4 rounded-full transition-colors duration-200 text-lg shadow-lg hover:shadow-xl">
+               className="bg-[#54B0AF] font-gotham hover:bg-teal-600 text-white font-bold px-8 py-4 rounded-full transition-colors duration-200 text-lg shadow-lg hover:shadow-xl">
                 Start Free Session
               </button>
               
-              <button className="border-2 border-[#54B0AF] hover:border-[#54B0AF] text-[#54B0AF] hover:text-[#54B0AF] font-bold px-8 py-4 rounded-full transition-colors duration-200 text-lg bg-white hover:bg-gray-50">
+              <button className="border-2 border-[#54B0AF] hover:border-[#54B0AF] text-[#54B0AF] hover:text-[#54B0AF] font-bold font-gotham px-8 py-4 rounded-full transition-colors duration-200 text-lg bg-white hover:bg-gray-50">
                 Know more
               </button>
             </div>

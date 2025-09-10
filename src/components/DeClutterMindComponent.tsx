@@ -43,24 +43,24 @@ const DeClutterMindComponent = () => {
 
         {/* Bottom Section */}
         <div className="text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#54B0AF] font-gotham font-medium mb-8">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#54B0AF] font-gotham mb-8">
             Think clear. Feel better. Take control.
           </h2>
           
           {/* CTA Button */}
           <button
            onClick={() => {
-  posthog.capture("declutter_mind_section", {
-    button: "start_free_session",
-    location: "about_page",
-  });
+              posthog.capture("declutter_mind_section", {
+                button: "start_free_session",
+                location: "about_page",
+              });
 
-  setTimeout(() => {
-    window.location.href = "https://clarity.mystocai.com";
-  }, 300);
-}}
+              setTimeout(() => {
+                window.location.href = "https://clarity.mystocai.com";
+              }, 300);
+            }}
 
-           className="bg-[#54B0AF] font-bold font-gotham hover:bg-teal-600 text-white font-semibold px-8 py-4 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
+           className="bg-[#54B0AF] font-bold font-gotham hover:bg-teal-600 text-white px-8 py-4 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
             Start Free Session
           </button>
         </div>
