@@ -93,18 +93,18 @@ const TestimonialSlider = () => {
       {/* CTA Button */}
       <div className="text-center mt-12">
         <button
-        onClick={() => {
-  posthog.capture("testimonial_section", {
-    button: "start_free_session",
-    location: "about_page",
-  });
+          onClick={() => {
+          posthog.capture("testimonial_section", {
+            button: "start_free_session",
+            location: "about_page",
+          });
 
-  setTimeout(() => {
-    window.location.href = "https://clarity.mystocai.com";
-  }, 300);
-}}
+          setTimeout(() => {
+            window.location.href = "https://clarity.mystocai.com";
+          }, 300);
+        }}
 
-         className="bg-[#54B0AF] font-gotham hover:bg-teal-600 text-white font-semibold py-3 px-8 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
+         className="bg-[#54B0AF] font-gotham hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
           Start Free Session
         </button>
       </div>

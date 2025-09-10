@@ -61,7 +61,7 @@ const CommonSituationsSection = () => {
                 {firstRowExtended.map((situation, index) => (
                   <div
                     key={`first-${index}`}
-                    className="flex-shrink-0 px-6 py-3 bg-white border-2 border-[#54B0AF] text-[#54B0AF] rounded-full text-sm md:text-base font-medium whitespace-nowrap hover:bg-[#54B0AF] hover:text-white transition-colors duration-300 cursor-pointer font-gotham font-bold"
+                    className="flex-shrink-0 px-6 py-3 bg-white border-2 border-[#54B0AF] text-[#54B0AF] rounded-full text-sm md:text-base font-semibold whitespace-nowrap hover:bg-[#54B0AF] hover:text-white transition-colors duration-300 cursor-pointer font-gotham"
                   >
                     {situation}
                    
@@ -78,7 +78,7 @@ const CommonSituationsSection = () => {
                 {secondRowExtended.map((situation, index) => (
                   <div
                     key={`second-${index}`}
-                    className="flex-shrink-0 px-6 py-3 bg-white border-2 border-[#54B0AF] text-[#54B0AF] rounded-full text-sm md:text-base font-medium whitespace-nowrap hover:bg-[#54B0AF] hover:text-white transition-colors duration-300 cursor-pointer font-gotham font-bold"
+                    className="flex-shrink-0 px-6 py-3 bg-white border-2 border-[#54B0AF] text-[#54B0AF] rounded-full text-sm md:text-base whitespace-nowrap hover:bg-[#54B0AF] hover:text-white transition-colors duration-300 cursor-pointer font-gotham font-bold"
                   >
                     {situation}
                   </div>
@@ -93,15 +93,15 @@ const CommonSituationsSection = () => {
         <div className="flex justify-center">
           <button
            onClick={() => {
-  posthog.capture("common_situation_section", {
-    button: "start_free_session",
-    location: "about_page",
-  });
+            posthog.capture("common_situation_section", {
+              button: "start_free_session",
+              location: "about_page",
+            });
 
-  setTimeout(() => {
-    window.location.href = "https://clarity.mystocai.com";
-  }, 300);
-}}
+            setTimeout(() => {
+              window.location.href = "https://clarity.mystocai.com";
+            }, 300);
+          }}
 
           className="bg-[#54B0AF] hover:bg-[#4a9e9d] text-white font-bold font-gotham px-8 py-4 rounded-full text-lg transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
             Start Free Session

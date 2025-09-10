@@ -67,6 +67,14 @@ const FooterStocai = () => {
               >
                 How it works
               </Link>
+              {/* <Link
+                href="https://youtu.be/iMZHZt6TICs?si=SUfc6aK3drQEJCya"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block text-[#323232] font-gotham font-normal hover:text-black/80 transition-colors"
+              >
+                How it works
+              </Link> */}
               <Link
                  href="#"
                 onClick={(e) => {
