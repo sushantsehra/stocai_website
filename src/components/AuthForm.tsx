@@ -92,7 +92,7 @@ const AuthForm = () => {
                   forgotPassword ? (
                     <>
                       <h3 className="font-medium text-xl font-gotham text-center">
-                        Don't Worry we will handle it
+                        Don&apos;t Worry we will handle it
                       </h3>
                       <h2 className="font-bold text-[#323232] text-4xl text-center mb-4">
                         Reset your password
@@ -111,7 +111,7 @@ const AuthForm = () => {
                 ) : (
                   <>
                     <h3 className="font-medium font-gotham text-xl text-center">
-                      Let's get started
+                      Let&apos;s get started
                     </h3>
                     <h2 className="font-bold font-gotham text-[#323232] text-4xl text-center mb-4">
                       Create new account
