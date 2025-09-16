@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { FaExclamationCircle, FaCheckCircle } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
 import Image from 'next/image';
-// import auth_background from "@/assets/blue-sky-full-clouds.png"
 import google from "@/assets/google.jpeg"
 
 const AuthForm = () => {
@@ -67,21 +66,16 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="font-sans flex items-center justify-center min-h-screen w-full p-4 md:p-10 text-gray-900 relative">
+    <div className="font-sans flex items-center justify-center w-full text-gray-900 relative">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="w-full h-full bg-white"></div>
-            {/* <Image
-            src={auth_background}
-            alt="Blue sky full clouds"
-            fill
-            className="w-full h-full object-cover"
-            /> */}
+  
       </div>
 
       <div className="flex flex-row w-full">
         <div className="w-full flex items-center justify-center">
-          <div className="flex flex-col w-full sm:w-[90%] md:w-[70%] lg:w-[50%] xl:w-[40%] items-center justify-center px-4 sm:px-4 md:px-8 lg:px-12 py-[54px] relative bg-white rounded-[32px] shadow-xl z-10">
+          <div className="flex flex-col w-full items-center justify-center relative z-10">
             
             {/* Header Section */}
             <div className="items-center w-full h-full flex flex-col justify-center flex-1">
