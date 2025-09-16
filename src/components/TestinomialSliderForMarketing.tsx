@@ -66,7 +66,7 @@ const TestinomialSliderForMarketing = () => {
               className="flex-shrink-0 w-80 mx-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
             >
               {/* Profile Image */}
-              <div className="relative w-full h-96 rounded-xl overflow-hidden relative">
+              <div className="relative w-full h-96 rounded-xl overflow-hidden">
                 <Image
                   src={testimonial.image}
                   alt="testimonial"
@@ -82,7 +82,6 @@ const TestinomialSliderForMarketing = () => {
               </div>
               </div>
 
-             
             </div>
           ))}
         </div>
