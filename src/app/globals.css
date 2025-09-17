@@ -188,3 +188,61 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #333; /* Slightly lighter on hover */
 }
+
+
+/* Prevent body scroll when popup is open */
+body.popup-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+}
+
+/* Custom scrollbar styles for the popup content */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animation classes for smooth popup transition */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-in {
+  animation-fill-mode: both;
+}
+
+.fade-in-0 {
+  animation: fade-in 0.3s ease-out;
+}
+
+.zoom-in-95 {
+  animation: zoom-in 0.3s ease-out;
+}
+
+.duration-300 {
+  animation-duration: 300ms;
+}
+
+/* Ensure popup appears above everything */
+.popup-overlay {
+  z-index: 9999 !important;
+}
