@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import LoginPopup from '@/components/LoginPopup';
+// import LoginPopup from '@/components/LoginPopup';
 import leftside_img from "@/assets/leftside_img.png";
 import rightside_img from "@/assets/rightside_img.png";
 import SectionBottom from "@/assets/SectionBottom.png";
@@ -11,7 +12,7 @@ import teal_circle from "@/assets/teal_circle.png";
 import posthog from "posthog-js";
 
 const ProfessionalHeroSection = () => {
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
   const handleStartFreeSession = () => {
     posthog.capture("professional_hero_section", {
@@ -19,12 +20,12 @@ const ProfessionalHeroSection = () => {
       location: "about_page",
     });
 
-    setIsLoginPopupOpen(true);
+    window.location.href = "https://clarity.mystocai.com";
   };
 
-  const handleCloseLoginPopup = () => {
-    setIsLoginPopupOpen(false);
-  };
+  // const handleCloseLoginPopup = () => {
+  //   setIsLoginPopupOpen(false);
+  // };
 
   return (
     <>
@@ -33,7 +34,7 @@ const ProfessionalHeroSection = () => {
         <div className="absolute left-4 lg:left-0 top-1/2 transform -translate-y-1/2 hidden lg:block">
           <div className="relative w-64 h-80 xl:w-[300px] xl:h-[900px] rounded-2xl overflow-hidden">
             {/* Circle Behind */}
-                 <div className="absolute bottom-20 z-10 left-20 w-20 h-20 bg-gradient-to-bl from-teal-500 to-transparent rounded-full opacity-100 blur-3xl"></div>
+            <div className="absolute bottom-20 z-10 left-20 w-20 h-20 bg-gradient-to-bl from-teal-500 to-transparent rounded-full opacity-100 blur-3xl"></div>
             {/* Foreground Image */}
             <Image
               src={leftside_img}
@@ -164,7 +165,7 @@ const ProfessionalHeroSection = () => {
       </section>
 
       {/* Login Popup Modal */}
-      <LoginPopup isOpen={isLoginPopupOpen} onClose={handleCloseLoginPopup} />
+      {/* <LoginPopup isOpen={isLoginPopupOpen} onClose={handleCloseLoginPopup} /> */}
     </>
   );
 };
