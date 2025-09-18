@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React from "react";
 import Button from "./Button";
-import LoginPopup from '@/components/LoginPopup';
+// import LoginPopup from '@/components/LoginPopup';
 import background from "@/assets/Stocai_landingpage_bg.png";
 import user2 from "@/assets/6.png";
 import user1 from "@/assets/3.png";
@@ -13,7 +14,7 @@ import Image from "next/image";
 import posthog from 'posthog-js';
 
 const HeroSectionStocai = () => {
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
   const handleStartFreeSession = () => {
     posthog.capture("hero_section", {
@@ -21,12 +22,12 @@ const HeroSectionStocai = () => {
       location: "about_page",
     });
 
-    setIsLoginPopupOpen(true);
+    window.location.href = "https://clarity.mystocai.com";
   };
 
-  const handleCloseLoginPopup = () => {
-    setIsLoginPopupOpen(false);
-  };
+  // const handleCloseLoginPopup = () => {
+  //   setIsLoginPopupOpen(false);
+  // };
 
   return (
     <>
@@ -153,9 +154,9 @@ const HeroSectionStocai = () => {
       </section>
 
       {/* Login Popup Modal */}
-      {isLoginPopupOpen && (
+      {/* {isLoginPopupOpen && (
         <LoginPopup isOpen={isLoginPopupOpen} onClose={handleCloseLoginPopup} />
-      )}
+      )} */}
     </>
   );
 };
