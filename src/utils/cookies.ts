@@ -8,38 +8,28 @@ export interface CookieOptions {
   httpOnly?: boolean;
 }
 
-/**
- * Get domain for cross-domain cookie sharing
- */
 function getDomain(): string | undefined {
   if (typeof window === 'undefined') return undefined;
   
   const hostname = window.location.hostname;
   
-  // Exclude localhost
-  if (hostname === 'localhost') return undefined;
-  
-  // Exclude IP addresses
-  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)) return undefined;
+  if (hostname === 'localhost' || /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)) {
+    return undefined;
+  }
   
   const parts = hostname.split('.');
   
   if (parts.length >= 2) {
     const domain = parts.slice(-2).join('.');
-    return `.${domain}`; // Add dot prefix for subdomain sharing
+    return `.${domain}`;
   }
   
   return undefined;
 }
 
-/**
- * Get a cookie value by name
- * @param name - The name of the cookie
- * @returns The cookie value or null if not found
- */
 export function getCookie(name: string): string | null {
   if (typeof document === 'undefined') {
-    return null; // Server-side rendering protection
+    return null;
   }
 
   const value = `; ${document.cookie}`;
@@ -52,15 +42,9 @@ export function getCookie(name: string): string | null {
   return null;
 }
 
-/**
- * Set a cookie with optional configuration
- * @param name - The name of the cookie
- * @param value - The value of the cookie
- * @param options - Optional cookie configuration
- */
 export function setCookie(name: string, value: string, options: CookieOptions = {}): void {
   if (typeof document === 'undefined') {
-    return; // Server-side rendering protection
+    return;
   }
 
   let cookieString = `${name}=${encodeURIComponent(value)}`;
@@ -76,11 +60,7 @@ export function setCookie(name: string, value: string, options: CookieOptions = 
     cookieString += `; max-age=${options.maxAge}`;
   }
 
-  if (options.path) {
-    cookieString += `; path=${options.path}`;
-  } else {
-    cookieString += `; path=/`; // Default to root path
-  }
+  cookieString += `; path=${options.path || '/'}`;
 
   if (options.domain) {
     cookieString += `; domain=${options.domain}`;
@@ -101,46 +81,11 @@ export function setCookie(name: string, value: string, options: CookieOptions = 
   document.cookie = cookieString;
 }
 
-/**
- * Remove a cookie by setting it to expire immediately
- * @param name - The name of the cookie to remove
- * @param options - Optional path and domain for the cookie to remove
- */
 export function removeCookie(name: string, options: Pick<CookieOptions, 'path' | 'domain'> = {}): void {
   setCookie(name, '', {
     ...options,
-    expires: new Date(0), // Set to epoch time to expire immediately
+    expires: new Date(0),
   });
-}
-
-/**
- * Check if a cookie exists
- * @param name - The name of the cookie
- * @returns True if the cookie exists, false otherwise
- */
-export function cookieExists(name: string): boolean {
-  return getCookie(name) !== null;
-}
-
-/**
- * Get all cookies as an object
- * @returns An object with all cookie names as keys and their values
- */
-export function getAllCookies(): Record<string, string> {
-  if (typeof document === 'undefined') {
-    return {}; // Server-side rendering protection
-  }
-
-  const cookies: Record<string, string> = {};
-  
-  document.cookie.split(';').forEach(cookie => {
-    const [name, value] = cookie.trim().split('=');
-    if (name && value) {
-      cookies[name] = decodeURIComponent(value);
-    }
-  });
-
-  return cookies;
 }
 
 export function getUserCookie() {
@@ -159,56 +104,41 @@ export function getUserCookie() {
 export function deleteUserCookie() {
   const domain = getDomain();
   
-  // Remove cookie with domain (for cross-subdomain)
   if (domain) {
     removeCookie('user', { path: '/', domain });
   }
   
-  // Remove cookie without domain (for same domain)
   removeCookie('user', { path: '/' });
 }
 
-/**
- * Set logout signal cookie for cross-domain logout
- */
 export function setLogoutSignal() {
   const domain = getDomain();
   const timestamp = Date.now().toString();
   
-  // Set logout signal with domain for cross-subdomain sharing
   if (domain) {
     setCookie('logout_signal', timestamp, { 
       path: '/', 
       domain,
-      maxAge: 60 // Expire in 60 seconds
+      maxAge: 60 
     });
   }
   
-  // Also set without domain for same domain
   setCookie('logout_signal', timestamp, { 
     path: '/', 
     maxAge: 60 
   });
 }
 
-/**
- * Clear logout signal cookie
- */
 export function clearLogoutSignal() {
   const domain = getDomain();
   
-  // Clear with domain
   if (domain) {
     removeCookie('logout_signal', { path: '/', domain });
   }
   
-  // Clear without domain
   removeCookie('logout_signal', { path: '/' });
 }
 
-/**
- * Check if logout signal exists and is recent
- */
 export function checkLogoutSignal(): boolean {
   const signal = getCookie('logout_signal');
   if (!signal) return false;
@@ -216,7 +146,6 @@ export function checkLogoutSignal(): boolean {
   const timestamp = parseInt(signal);
   const now = Date.now();
   
-  // Check if signal is less than 60 seconds old
   return (now - timestamp) < 60000;
 }
 
