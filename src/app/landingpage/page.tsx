@@ -218,7 +218,7 @@ import ICFFrameworkSection from "@/components/ICFFrameworkSection";
 import CommonSituationsSectionForMarketing from "@/components/CommonSituationsSectionForMarketing";
 // import FooterStocai from "@/components/FooterStocai";
 import TestinomialSliderForMarketing from "@/components/TestinomialSliderForMarketing";
-import AuthForm from "@/components/AuthForm";
+import AuthForm from "@/components/auth/AuthForm";
 import { Metadata } from "next";
 
 // This ensures the page is statically generated at build time
