@@ -12,6 +12,14 @@ import PricingSection from "@/components/PricingSection";
 import NotForYouSection from "@/components/NotForYouSection";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
+import BePromotableHero from "@/components/BePromotableHero";
+import PromotionMyths from "@/components/PromotionMyths";
+import CareerProblemsCards from "@/components/CareerProblemsCards";
+import SevenWeekArc from "@/components/SevenWeekArc";
+import BeforeAfterCompare from "@/components/BeforeAfterCompare";
+import PromoSystemSection from "@/components/PromoSystemSection";
+import FaqAccordion from "@/components/FaqAccordion";
+import RoiCards from "@/components/RoiCards";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -117,6 +125,14 @@ export default function Home() {
       <Header />
       
       <main className="container mx-auto">
+        <BePromotableHero />
+        <PromotionMyths />
+        <CareerProblemsCards />
+        <SevenWeekArc />
+        <BeforeAfterCompare />
+        <PromoSystemSection />
+        <FaqAccordion />
+        <RoiCards />
         <HeroSection />
         <FeaturesSection />
         <HowItWorksSection />
