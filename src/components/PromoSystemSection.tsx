@@ -1,6 +1,6 @@
 import React from "react";
-// import Image from "next/image";
-// import bannerImg from "../assets/professionalsBanner.png"; 
+import Image from "next/image";
+import joinProfessions from "../assets/joinProfessions.jpg"; 
 
 const PromoSystemSection: React.FC = () => {
   return (
@@ -27,13 +27,13 @@ const PromoSystemSection: React.FC = () => {
         <div className="relative rounded-2xl overflow-hidden shadow-lg">
           {/* Image */}
           <div className="relative w-full h-[420px] sm:h-[460px] lg:h-[480px]">
-            {/* <Image
-              src={bannerImg}
+            <Image
+              src={joinProfessions}
               alt="Professionals transformed banner"
               fill
-              className="object-cover"
+              className="object-cover scale-x-[-1]"
               priority
-            /> */}
+            />
           </div>
 
           {/* DARK OVERLAY */}

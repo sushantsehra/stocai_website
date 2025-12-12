@@ -75,7 +75,7 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
 
   useEffect(() => {
     fetchBlogData();
-  }, [blog.blog_id]);
+  }, [blog.blog_id, fetchBlogData]);
 
   useEffect(() => {
     // Handle stored user intent after login

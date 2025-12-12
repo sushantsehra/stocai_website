@@ -20,6 +20,13 @@ import BeforeAfterCompare from "@/components/BeforeAfterCompare";
 import PromoSystemSection from "@/components/PromoSystemSection";
 import FaqAccordion from "@/components/FaqAccordion";
 import RoiCards from "@/components/RoiCards";
+import HeroWaitlist from "@/components/HeroWaitlist";
+import FounderBonus from "@/components/FounderBonus";
+import OutcomeContract from "@/components/OutcomeContract";
+import SuccessStories from "@/components/SuccessStories";
+import PromotableDiagram from "@/components/PromotableDiagram";
+import TrustableCompanies from "@/components/TrustableCompanies";
+import CourseCarousel from "@/components/CourseCarousel";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -128,11 +135,18 @@ export default function Home() {
         <BePromotableHero />
         <PromotionMyths />
         <CareerProblemsCards />
+        <SuccessStories />
+        <PromotableDiagram />
+        <CourseCarousel />
         <SevenWeekArc />
         <BeforeAfterCompare />
         <PromoSystemSection />
+        <TrustableCompanies />
+        <OutcomeContract />
+        <FounderBonus />
         <FaqAccordion />
         <RoiCards />
+        <HeroWaitlist />
         <HeroSection />
         <FeaturesSection />
         <HowItWorksSection />
