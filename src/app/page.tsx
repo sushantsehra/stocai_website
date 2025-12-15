@@ -1,15 +1,5 @@
 import React from "react";
 import Header from "../components/Header";
-import HeroSection from "../components/HeroSection";
-import FeaturesSection from "../components/FeaturesSection";
-import HowItWorksSection from "../components/HowItWorksSection";
-import TestimonialsSection from "../components/TestimonialsSection";
-import FaqSection from "../components/FaqSection";
-import InsightSection from "@/components/InsightsSection";
-import CallToActionSection from "@/components/CallToActionSection";
-import BenefitSection from "@/components/BenefitSection";
-import PricingSection from "@/components/PricingSection";
-import NotForYouSection from "@/components/NotForYouSection";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import BePromotableHero from "@/components/BePromotableHero";
@@ -147,16 +137,6 @@ export default function Home() {
         <FaqAccordion />
         <RoiCards />
         <HeroWaitlist />
-        <HeroSection />
-        <FeaturesSection />
-        <HowItWorksSection />
-        <InsightSection />
-        <CallToActionSection />
-        <BenefitSection />
-        <TestimonialsSection />
-        <PricingSection />
-        <NotForYouSection />
-        <FaqSection />
       </main>
       <Footer />
     </div>
