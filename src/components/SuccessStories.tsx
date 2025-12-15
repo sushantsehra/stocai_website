@@ -67,7 +67,7 @@ const TestimonialCard: React.FC<{ t: Testimonial }> = ({ t }) => {
       aria-labelledby={`tn-${t.id}-name`}
     >
       {/* Replaced placeholder with actual next/image */}
-      <div className="h-44 sm:h-48 md:h-72 relative">
+      <div className="h-60 sm:h-48 md:h-72 relative">
         <Image
           src={t.image}
           alt={t.name}
