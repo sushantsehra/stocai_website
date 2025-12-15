@@ -17,6 +17,7 @@ import SuccessStories from "@/components/SuccessStories";
 import PromotableDiagram from "@/components/PromotableDiagram";
 import TrustableCompanies from "@/components/TrustableCompanies";
 import CourseCarousel from "@/components/CourseCarousel";
+import PromoBanner from "@/components/PromoBanner";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -122,6 +123,7 @@ export default function Home() {
       <Header />
       
       <main className="container mx-auto">
+        <PromoBanner />
         <BePromotableHero />
         <PromotionMyths />
         <CareerProblemsCards />
