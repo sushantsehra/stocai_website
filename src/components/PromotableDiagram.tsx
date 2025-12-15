@@ -49,7 +49,7 @@ const FloatingCard: React.FC<{ card: Card; className?: string }> = ({ card, clas
 
 const PromotableDiagram: React.FC = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
+    <section className="relative w-full overflow-hidden bg-white pt-12 pb-28 sm:py-16 lg:py-20">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         {/* keep the radial gradient as a soft backdrop (unchanged) */}
         <div
@@ -73,10 +73,10 @@ const PromotableDiagram: React.FC = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-54 md:gap-6 items-center">
           {/* Left: Heading */}
           <div className="md:col-span-6 lg:col-span-5">
-            <h2 className="text-3xl sm:text-4xl md:text-[40px] lg:text-[42px] leading-12 font-gotham font-bold text-[#0f1724]  absolute md:left-[0%] md:top-10 max-w-lg">
+            <h2 className="text-3xl sm:text-4xl md:text-[40px] lg:text-[42px] leading-10 md:leading-12 font-gotham font-bold text-[#0f1724]  absolute md:left-[0%] md:top-10 max-w-lg">
               <span className="text-[#014BAA]">Become promotable for life.</span>{" "}
               <span className="font-normal font-gotham text-[42px] block sm:inline text-[#161616]">
                 A system to <span className="text-[#161616] font-bold">win your next promotion.</span>
