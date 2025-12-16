@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import BuiltByLeaders from "./BuiltByLeaders";
+// import BuiltByLeaders from "./BuiltByLeaders";
 import promotableHero1 from "../assets/promotableHero1.png";
 import promotableHero2 from "../assets/promotableHero2.png";
 import promotableHero3 from "../assets/promotableHero3.png";
@@ -151,7 +151,7 @@ const BePromotableHero: React.FC<BePromotableHeroProps> = ({
         </div>
       </div>
 
-      <BuiltByLeaders />
+      {/* <BuiltByLeaders /> */}
     </header>
   );
 };
