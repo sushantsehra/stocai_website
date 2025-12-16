@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import BePromotableHero from "@/components/BePromotableHero";
 import PromotionMyths from "@/components/PromotionMyths";
@@ -140,7 +140,7 @@ export default function Home() {
         <RoiCards />
         <HeroWaitlist />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
