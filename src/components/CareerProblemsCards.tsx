@@ -49,7 +49,7 @@ const CardImagePlaceholder: React.FC<{ src?: string; alt?: string }> = ({
   alt = "placeholder",
 }) => {
   return (
-    <div className="w-32 h-32 sm:w-24 sm:h-24 md:w-28 md:h-28 relative">
+    <div className="w-32 h-32 sm:w-24 sm:h-24 md:w-36 md:h-36 relative">
       <Image
         src={src || ""}
         alt={alt}
