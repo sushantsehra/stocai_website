@@ -49,7 +49,7 @@ const CardImagePlaceholder: React.FC<{ src?: string; alt?: string }> = ({
   alt = "placeholder",
 }) => {
   return (
-    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 relative">
+    <div className="w-32 h-32 sm:w-24 sm:h-24 md:w-28 md:h-28 relative">
       <Image
         src={src || ""}
         alt={alt}
@@ -63,18 +63,18 @@ const CardImagePlaceholder: React.FC<{ src?: string; alt?: string }> = ({
 
 const ProblemCardView: React.FC<{ card: ProblemCard }> = ({ card }) => {
   return (
-    <article className="bg-white rounded-xl shadow-lg border border-transparent hover:border-black/5 transition-all duration-200 p-6 sm:p-8 flex flex-col items-center min-h-[340px]">
-      <div className="-mt-6 mb-4">
+    <article className="bg-white rounded-xl shadow-lg border border-transparent hover:border-black/5 transition-all duration-200 p-2 sm:p-8 flex flex-col items-center justify-start min-h-[290px] md:min-h-[320px] flex-shrink-0 w-[85%] sm:w-[45%] md:w-auto mx-auto">
+      <div className="-mt-4 mb-2 md:mb-4">
         <div className="bg-white rounded-full p-2 -translate-y-2 flex items-center justify-center">
           <CardImagePlaceholder src={card.img} alt={card.title} />
         </div>
       </div>
 
-      <h3 className="text-lg sm:text-xl md:text-[20px] font-bold font-gotham text-[#014BAA]">
+      <h3 className="text-lg sm:text-xl md:text-[20px] font-bold font-gotham text-[#014BAA] text-center mb-2">
         {card.title}
       </h3>
 
-      <p className="mt-1 text-sm sm:text-[14px] font-gotham font-normal text-[#1D1D1D] leading-relaxed">
+      <p className="text-sm sm:text-[14px] font-gotham font-normal text-[#1D1D1D] leading-relaxed text-center max-w-[260px] mx-auto">
         {card.description}
       </p>
     </article>
@@ -86,8 +86,8 @@ const CareerProblemsCards: React.FC<{ cards?: ProblemCard[] }> = ({
 }) => {
   return (
     <section className="w-full bg-white py-12 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 lg:mb-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-1">
+        <div className="mb-10 lg:mb-14 text-center sm:text-left">
           <h2 className="font-gotham font-normal text-2xl sm:text-3xl lg:text-[42px] text-[#1D1D1D]">
             If this sounds like your story,
           </h2>
@@ -96,11 +96,10 @@ const CareerProblemsCards: React.FC<{ cards?: ProblemCard[] }> = ({
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        {/* Horizontal scroll on mobile */}
+        <div className="flex p-2 gap-5 sm:gap-8 overflow-x-auto scrollbar-hide sm:overflow-visible sm:grid sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((c) => (
-            <div key={c.id} className="h-auto lg:h-[380px]">
-              <ProblemCardView card={c} />
-            </div>
+            <ProblemCardView key={c.id} card={c} />
           ))}
         </div>
       </div>
