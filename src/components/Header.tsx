@@ -11,7 +11,7 @@ export default function Header() {
       {/* Placeholder div to prevent content jump when header becomes fixed */}
       <div className="h-[100px]"></div>
       
-      <header className="fixed top-0 left-0 right-0 bg-white z-30">
+      <header className="fixed top-0 left-0 right-0 bg-white z-30 mt-20 md:mt-10">
         <Banner message="Stocai is guiding you through beta, and will guide you better in the future" />
         
         <div className="px-4 py-6 bg-white">

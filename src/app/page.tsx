@@ -118,12 +118,13 @@ function JsonLd() {
 
 export default function Home() {
   return (
+    <>
+      <PromoBanner />
     <div className="min-h-screen bg-white">
       <JsonLd />
       <Header />
       
       <main className="container mx-auto">
-        <PromoBanner />
         <BePromotableHero />
         <PromotionMyths />
         <CareerProblemsCards />
@@ -142,5 +143,6 @@ export default function Home() {
       </main>
       {/* <Footer /> */}
     </div>
+    </>
   );
 }
