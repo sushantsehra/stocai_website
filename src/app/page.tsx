@@ -122,7 +122,7 @@ export default function Home() {
       <PromoBanner />
     <div className="min-h-screen bg-white">
       <JsonLd />
-      {/* <Header /> */}
+      <Header />
       
       <main className="container mx-auto">
         <BePromotableHero />
