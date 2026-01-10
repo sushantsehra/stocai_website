@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import Banner from "./Banner";
-import StocaiLogo from "../assets/stocai_logo_header.svg";
+// import StocaiLogo from "../assets/stocai_logo_header.svg";
+import StocaiLogo from "../assets/bclLogo.png";
 
 export default function Header() {
   return (
@@ -21,9 +22,11 @@ export default function Header() {
                 src={StocaiLogo} 
                 alt="Stocai Logo" 
                 priority
-                width={145}
-                height={55}
-                className="w-[145px] h-[55px] ml-3 mt-0.5 object-contain cursor-pointer"
+                // width={145}
+                // height={55}
+                width={185}
+                height={75}
+                className="w-[215px] h-[75px]  object-contain cursor-pointer"
               />
             </Link>
             
