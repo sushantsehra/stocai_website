@@ -1,5 +1,6 @@
 import React from 'react';
 import KeyInsight from './KeyInsight';
+import Framework from './Framework';
 
 // Type Definitions
 interface TimeLeft {
@@ -50,13 +51,13 @@ const BMPLandingComponents = () => {
   return (
     <div className="min-h-screen bg-white">
       <KeyInsight />
-      {/* <Framework />
-      <LearningExperience />
-      <Testimonial />
-      <FAQ />
-      <CountdownTimer />
-      <TrustSection />
-      <Footer /> */}
+      <Framework />
+      {/* <LearningExperience /> */}
+      {/* <Testimonial /> */}
+      {/* <FAQ /> */}
+      {/* <CountdownTimer /> */}
+      {/* <TrustSection /> */}
+      {/* <Footer /> */}
     </div>
   );
 };
