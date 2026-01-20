@@ -8,6 +8,7 @@ import Footer from './FooterSection';
 import TrustSection from './TrustSection';
 import Header from './LandingHeader';
 import PromotionBanner from './PromotionBanner';
+import WaitlistSection from './WaitlistSection';
 
 // Type Definitions
 interface TimeLeft {
@@ -65,6 +66,7 @@ const BMPLandingComponents = () => {
       <Testimonial />
       <FAQ />
       {/* <CountdownTimer /> */}
+      <WaitlistSection />
       <TrustSection />
       <Footer />
     </div>

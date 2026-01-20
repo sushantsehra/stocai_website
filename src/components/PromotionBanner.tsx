@@ -4,7 +4,7 @@ import React from "react";
 
 const PromotionBanner = () => {
   return (
-    <div className="w-full bg-[#0B1E47] text-white text-sm sm:text-base py-2 overflow-hidden">
+    <div className="w-full bg-[#1B294B] text-white text-sm sm:text-base py-2 overflow-hidden">
       <div className="whitespace-nowrap animate-marquee">
         <span className="mx-6 lg:mx-12">
           🎯 Limited Seats Available • Early Bird: ₹24,999 (Save ₹10,000) • Cohort
