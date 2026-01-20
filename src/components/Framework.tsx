@@ -289,8 +289,14 @@ const Framework = () => {
         </div>
         </div>
 
+        <div className="bg-gradient-to-l from-[#0F1729] to-[#0B64F4] max-w-3xl flex lg:justify-end py-4.5 px-1 my-6 absolute right-[9%]">
+          <p className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits | Claim what you deserve | Navigate</p>
+        </div>
+      
+
         {/* CTA Button */}
-        <div className="text-center mt-10">
+        <div className="text-center mt-28">
+          
          <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-90 transition">
             Get Early Access
           </button>

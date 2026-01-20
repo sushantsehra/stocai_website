@@ -17,6 +17,7 @@ import founderIMT from "../assets/founderIMT.png";
 import founderIIMC from "../assets/founderIIMC.png";
 import founderKing from "../assets/founderKing.png";
 import founderTex from "../assets/founderTex.png";
+import BuiltBy from "./BuiltBy";
 
 
 interface Stat {
@@ -55,8 +56,8 @@ const TrustSection = () => {
   ];
 
   return (
-    <section className="py-12 md:py-20 px-4 sm:px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-12 md:py-20 px-2 bg-white">
+      <div className="max-w-full">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           {/* Left Section */}
           <div>
@@ -86,7 +87,7 @@ const TrustSection = () => {
               .
             </p>
             <p className="text-lg sm:text-xl font-bold text-black mt-6 md:mt-16">
-              We're rooting for you. 💪
+              We're rooting for you.
             </p>
           </div>
 
@@ -203,24 +204,7 @@ const TrustSection = () => {
           </div>
         </div>
 
-        {/* Company Logos */}
-        {/* <div className="flex gap-5 justify-items-center">
-        {grayscaleCompanies.map((company, i) => (
-            <div
-            key={i}
-            className="flex items-center justify-center transition-all duration-300"
-            >
-            <Image
-                src={company.logo}
-                alt={company.name}
-                width={180}
-                height={60}
-                className="object-contain"
-            />
-            </div>
-        ))}
-        </div> */}
-
+        <BuiltBy />
       </div>
     </section>
   );

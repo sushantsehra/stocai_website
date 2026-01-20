@@ -59,7 +59,7 @@ const WaitlistSection = () => {
         </div>
 
         {/* Bottom Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-20">
+        <div className="flex flex-col sm:flex-row items-center justify-start absolute left-[25%] gap-4 lg:gap-20">
           {/* Avatars + Waitlist Count */}
           <div className="flex items-center gap-3">
             <div className="flex -space-x-3">
@@ -84,13 +84,13 @@ const WaitlistSection = () => {
           </div>
 
           {/* Checkbox */}
-          <label className="flex items-center text-sm sm:text-base lg:text-[16px] cursor-pointer">
+          {/* <label className="flex items-center text-sm sm:text-base lg:text-[16px] cursor-pointer">
             <input
               type="checkbox"
               className="w-4 h-4 mr-2 accent-[#0B64F4] rounded focus:ring-2 focus:ring-blue-400"
             />
             Subscribe to our newsletter
-          </label>
+          </label> */}
         </div>
       </div>
     </section>
