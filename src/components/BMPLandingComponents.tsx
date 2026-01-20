@@ -9,6 +9,8 @@ import TrustSection from './TrustSection';
 import Header from './LandingHeader';
 import PromotionBanner from './PromotionBanner';
 import WaitlistSection from './WaitlistSection';
+import CareerStalledSection from './CareerStalledSection';
+import BePromotableSection from './BePromotableSection';
 
 // Type Definitions
 interface TimeLeft {
@@ -60,6 +62,8 @@ const BMPLandingComponents = () => {
     <div className="min-h-screen bg-white">
       <PromotionBanner />
       <Header />
+      <BePromotableSection />
+      <CareerStalledSection />
       <KeyInsight />
       <Framework />
       <LearningExperience />
