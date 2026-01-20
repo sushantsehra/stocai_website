@@ -6,6 +6,8 @@ import Testimonial from './Testimonial';
 import FAQ from './FAQ';
 import Footer from './FooterSection';
 import TrustSection from './TrustSection';
+import Header from './LandingHeader';
+import PromotionBanner from './PromotionBanner';
 
 // Type Definitions
 interface TimeLeft {
@@ -55,6 +57,8 @@ interface Stat {
 const BMPLandingComponents = () => {
   return (
     <div className="min-h-screen bg-white">
+      <PromotionBanner />
+      <Header />
       <KeyInsight />
       <Framework />
       <LearningExperience />

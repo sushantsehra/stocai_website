@@ -1,0 +1,51 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import bclLogo from "../assets/bclLogo.png";
+import Image from "next/image";
+
+const Header = () => {
+  return (
+    <header className="w-full bg-white shadow-sm">
+      <div className="max-w-7xl mx-auto flex justify-between items-center pr-4">
+        {/* Logo */}
+        <Image
+          src={bclLogo}
+          alt="BCL Logo"
+          width={180}
+          height={50}
+          className="object-contain"
+        />
+
+        <div className="flex mr-20">
+        {/* Navigation Links */}
+        <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
+          <Link href="#about" className="hover:text-[#0B64F4] transition-colors">
+            About Us
+          </Link>
+          <Link href="#program" className="hover:text-[#0B64F4] transition-colors">
+            Program
+          </Link>
+          <Link href="#faq" className="hover:text-[#0B64F4] transition-colors">
+            FAQ
+          </Link>
+        </nav>
+
+        {/* Buttons */}
+        <div className="flex items-center space-x-3 lg:space-x-4">
+          <button className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-bold shadow-xl transition-all">
+            Get Early Access
+          </button>
+          <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] text-[14px] px-4 py-2 rounded-[12px] font-bold shadow-xl transition-all">
+            Sign In / Login
+          </button>
+        </div>
+
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
