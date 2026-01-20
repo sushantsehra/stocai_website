@@ -2,6 +2,22 @@
 
 import Image from "next/image";
 import { Crown } from "lucide-react";
+import nvidia from "../assets/foundernvidia.png";
+import accenture from "../assets/founderaccenture.png";
+import citi from "../assets/founderCiti.png";
+// import iimt from "../assets/iimt.png";
+import edelweiss from "../assets/edelweiss.png";
+// import iimc from "../assets/iimc.png";
+// import texas from "../assets/texas.png";
+// import kings from "../assets/kings.png";
+import founder from "../assets/founder.jpg";
+import founderEdelweiss from "../assets/founderEdelweiss.png";
+import founderNVI from "../assets/founderNVI.png";
+import founderIMT from "../assets/founderIMT.png";
+import founderIIMC from "../assets/founderIIMC.png";
+import founderKing from "../assets/founderKing.png";
+import founderTex from "../assets/founderTex.png";
+
 
 interface Stat {
   label: string;
@@ -17,14 +33,25 @@ const TrustSection = () => {
   ];
 
   const companies = [
-    { name: "NVIDIA", logo: "/logos/nvidia.png" },
-    { name: "Accenture", logo: "/logos/accenture.png" },
-    { name: "Citi", logo: "/logos/citi.png" },
-    { name: "IMT", logo: "/logos/imt.png" },
-    { name: "Edelweiss", logo: "/logos/edelweiss.png" },
-    { name: "IIMC", logo: "/logos/iimc.png" },
-    { name: "Texas", logo: "/logos/texas.png" },
-    { name: "Kings", logo: "/logos/kings.png" },
+    { name: "NVIDIA", logo: nvidia },
+    { name: "Accenture", logo: accenture },
+    { name: "Citi", logo: citi },
+    { name: "IMT", logo: founderIMT },
+    { name: "Edelweiss", logo: edelweiss },
+    { name: "IIMC", logo: founderIIMC },
+    { name: "Texas", logo: founderTex},
+    { name: "Kings", logo: founderKing},
+  ];
+
+    const grayscaleCompanies = [
+    { name: "NVIDIA", logo: nvidia },
+    { name: "Accenture", logo: accenture },
+    { name: "Citi", logo: citi },
+    { name: "IMT", logo: founderIMT },
+    { name: "Edelweiss", logo: edelweiss },
+    { name: "IIMC", logo: founderIIMC },
+    { name: "Texas", logo: founderTex},
+    { name: "Kings", logo: founderKing},
   ];
 
   return (
@@ -41,7 +68,7 @@ const TrustSection = () => {
               We're not motivational speakers or LinkedIn influencers peddling
               platitudes. And we're not here to sell you empty confidence.
             </p>
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#000000] mb-4">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#000000] mb-4 md:mt-20">
               We've been overlooked. We've figured out why.
             </h3>
             <p className="text-sm sm:text-base text-black font-normal mb-6">
@@ -58,33 +85,35 @@ const TrustSection = () => {
               </span>
               .
             </p>
-            <p className="text-lg sm:text-xl font-bold text-black mt-6">
+            <p className="text-lg sm:text-xl font-bold text-black mt-6 md:mt-16">
               We're rooting for you. 💪
             </p>
           </div>
 
           {/* Right Section (Founder Card) */}
-          <div className="relative rounded-3xl shadow-2xl border-2 border-[#D5D5D5] overflow-hidden max-w-md mx-auto transform rotate-[5deg] hover:rotate-0 transition-transform duration-500">
+          <div className="relative rounded-3xl shadow-2xl border-2 border-[#D5D5D5] overflow-hidden min-w-[400px] max-w-[442.999988143542px] mx-auto transform rotate-[5deg] hover:rotate-0 transition-transform duration-500">
             {/* Top White Section */}
-            <div className="bg-white text-center py-6 relative z-10 min-h-[150px]">
-              <h3 className="text-lg sm:text-xl font-semibold text-black tracking-wider">
+            <div className="bg-white text-center py-6 relative z-10 min-h-[130px]">
+              <h3 className="text-lg sm:text-xl lg:text-[14px] font-semibold text-black tracking-wider">
                 CORPORATE MAFIAS
               </h3>
             </div>
 
             {/* Overlapping Profile */}
-            <div className="absolute top-[40px] left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
+            <div className="absolute top-[30px] left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
               <div className="relative">
-                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-[6px] border-blue-500 shadow-lg mt-4 lg:mt-8">
-                  <Image
-                    src="/founder.jpg"
-                    alt="Sushant Sehra"
-                    width={128}
-                    height={128}
-                    className="object-cover"
-                  />
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden bg-gradient-to-b from-[#0B63F2] to-[#0F2479] shadow-lg mt-4 lg:mt-8 p-1">
+                    <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-[#0B63F2] to-[#0F2479]">
+                        <Image
+                        src={founder}
+                        alt="Sushant Sehra"
+                        fill
+                        className="object-cover rounded-full p-1"
+                        priority
+                        />
+                    </div>
                 </div>
-                <div className="absolute -bottom-1 -right-1 bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-md">
+                <div className="absolute bottom-3.5 right-0.5 bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-md">
                   <Crown className="w-4 h-4 text-white" />
                 </div>
               </div>
@@ -94,11 +123,24 @@ const TrustSection = () => {
             <div className="bg-gradient-to-b from-slate-900 to-black text-white pt-24 pb-10 px-8 sm:px-10 ">
               {/* Name and Role */}
               <div className="text-center mb-6">
-                <h3 className="text-lg sm:text-xl font-bold tracking-wide">
-                  SUSHANT SEHRA
+                <h3
+                className="
+                    text-lg sm:text-xl font-bold tracking-wide
+                    text-transparent bg-clip-text
+                    bg-[radial-gradient(circle_at_top,#FFFFFF_0%,#BDBDBD_40%,#717171_75%)]
+                "
+                >
+                SUSHANT SEHRA
                 </h3>
-                <p className="text-sm sm:text-base text-blue-200 font-medium">
-                  FOUNDER
+
+                <p
+                className="
+                    text-sm sm:text-base font-medium
+                    text-transparent bg-clip-text
+                    bg-[radial-gradient(circle_at_top,#FFFFFF_0%,#BDBDBD_40%,#717171_75%)]
+                "
+                >
+                FOUNDER
                 </p>
               </div>
 
@@ -107,12 +149,13 @@ const TrustSection = () => {
                 {stats.map((stat, index) => (
                   <div
                     key={index}
-                    className="flex justify-between items-center border-b border-slate-800 pb-2"
+                    className="flex justify-between items-center"
                   >
-                    <span className="text-xs sm:text-sm text-slate-400 tracking-wide">
+                    <span className="text-xs sm:text-sm lg:text-[12px] font-medium text-[#9F9F9F] tracking-wide">
                       {stat.label}
                     </span>
-                    <span className="text-lg sm:text-xl font-bold">
+                    <span className="text-white font-bold">:</span>
+                    <span className="text-lg sm:text-xl lg:text-[14px] text-white font-semibold">
                       {stat.value}
                     </span>
                   </div>
@@ -120,31 +163,38 @@ const TrustSection = () => {
               </div>
 
               {/* Divider */}
-              <div className="border-t border-slate-800 my-6" />
+              <div className="border-t border-[#E3E3E3] mt-6 mb-2" />
 
               {/* Tagline */}
               <div className="text-center mb-8">
-                <p className="text-xs sm:text-sm text-slate-300">
+                <p className="text-xs sm:text-sm lg:text-[14px] font-medium text-[#FFFFFF] font-bold uppercase">
                   Built by Top B-School graduates and{" "}
-                  <span className="font-semibold text-blue-400">
+                  <br />
+                  <span 
+                //   className="font-semibold text-blue-400"
+                   className="
+                    text-lg sm:text-xl font-bold tracking-wide
+                    text-transparent bg-clip-text
+                    bg-[radial-gradient(circle_at_top,#FFFFFF_0%,#BDBDBD_40%,#0B64F4_85%)]
+                ">
                     Corporate Leaders
                   </span>
                 </p>
               </div>
 
               {/* Company Logos */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 justify-items-center">
+              <div className="grid grid-cols-3 gap-5 justify-items-center">
                 {companies.map((company, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300"
+                    className="flex items-center justify-center grayscale-0 hover:grayscale-0 transition-all duration-300"
                   >
                     <Image
                       src={company.logo}
                       alt={company.name}
-                      width={80}
-                      height={30}
-                      className="object-contain max-h-7"
+                      width={140}
+                      height={50}
+                      className="object-contain max-h-10"
                     />
                   </div>
                 ))}
@@ -152,6 +202,25 @@ const TrustSection = () => {
             </div>
           </div>
         </div>
+
+        {/* Company Logos */}
+        {/* <div className="flex gap-5 justify-items-center">
+        {grayscaleCompanies.map((company, i) => (
+            <div
+            key={i}
+            className="flex items-center justify-center transition-all duration-300"
+            >
+            <Image
+                src={company.logo}
+                alt={company.name}
+                width={180}
+                height={60}
+                className="object-contain"
+            />
+            </div>
+        ))}
+        </div> */}
+
       </div>
     </section>
   );

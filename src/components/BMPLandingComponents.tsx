@@ -64,10 +64,10 @@ const BMPLandingComponents = () => {
       <Framework />
       <LearningExperience />
       <Testimonial />
-      <FAQ />
       {/* <CountdownTimer /> */}
-      <WaitlistSection />
       <TrustSection />
+      <WaitlistSection />
+      <FAQ />
       <Footer />
     </div>
   );
