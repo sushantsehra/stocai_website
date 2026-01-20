@@ -1,14 +1,15 @@
 import React from 'react';
-import { User } from 'lucide-react';
 import Image from 'next/image';
 import bgColor from '../assets/bgCircle.png';
+import harshImg from '../assets/harshImg.jpg';
+import harshImage from '../assets/harshImage.png';
 
-const BePromotableSection = () => {
+export default function BePromotableSection() {
   const profile = {
     name: "Harsh Agarwal",
     title: "SENIOR PRODUCT MANAGER",
     currentState: {
-      image: "/api/placeholder/96/96",
+      image: harshImg,
       status: "Invisible Contributor",
       visibilityScore: "34/100",
       influenceRating: "Operational",
@@ -22,7 +23,7 @@ const BePromotableSection = () => {
       promotabilityQuotient: "34%"
     },
     futureState: {
-      image: "/api/placeholder/96/96",
+      image: harshImage,
       status: "Business Driver",
       visibilityScore: "92/100",
       influenceRating: "Strategic",
@@ -58,10 +59,6 @@ const BePromotableSection = () => {
         {/* Cards Container */}
         <div className="relative flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 mb-8">
           {/* Bluish Glow Background */}
-          {/* <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-            <div className="w-[800px] h-[800px] bg-gradient-to-t from-blue-400 to-blue-600 rounded-full opacity-20 blur-3xl"></div>
-          </div> */}
-
           <Image
             src={bgColor}
             alt="Background Glow"
@@ -72,7 +69,7 @@ const BePromotableSection = () => {
           <div
             className="relative bg-white rounded-[25px] border-2 border-[#D9D9D9] w-full sm:w-[380px] lg:w-[420px] shadow-2xl overflow-hidden z-10"
             style={{
-              transform: "rotate(-6deg) perspective(1000px) rotateY(5deg)",
+              transform: "rotate(-10deg) perspective(1000px) rotateY(5deg)",
             }}
           >
             {/* Black Header */}
@@ -82,11 +79,15 @@ const BePromotableSection = () => {
               </h4>
             </div>
 
-              <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[163.97729938336576px] 2xl:h-[163.97729938336576px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-17">
-                <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                  <User className="w-16 h-16 text-gray-400" />
-                </div>
-              </div>
+            <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[163.97729938336576px] 2xl:h-[163.97729938336576px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-[65px]">
+              <Image
+                src={profile.currentState.image}
+                alt="Current State"
+                width={164}
+                height={164}
+                className="object-cover w-full h-full"
+              />
+            </div>
 
             {/* White Body */}
             <div className="bg-white px-8 py-6 mt-8">
@@ -106,21 +107,21 @@ const BePromotableSection = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Visibility Score</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.currentState.visibilityScore}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Influence Rating</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.currentState.influenceRating}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Access Level</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.currentState.accessLevel}
                   </span>
                 </div>
@@ -141,11 +142,11 @@ const BePromotableSection = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-5 pb-2">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-xs md:text-[12px] lg:text-lg uppercase tracking-wide font-bold text-black">
+                <div className="flex justify-center items-center mb-3">
+                  <span className="text-xs md:text-[12px] lg:text-[15px] uppercase tracking-wide font-bold text-black">
                     Promotability Quotient
                   </span>
-                  <span className="font-bold text-black text-xs md:text-[12px] lg:text-lg">
+                  <span className="font-bold text-black text-xs md:text-[12px] lg:text-[15px]">
                     {profile.currentState.promotabilityQuotient}
                   </span>
                 </div>
@@ -162,9 +163,9 @@ const BePromotableSection = () => {
 
           {/* Future You Card */}
           <div
-            className="relative bg-white rounded-[25px] border-2 border-[#E9E9E9] w-full sm:w-[380px] lg:w-[420px] shadow-2xl overflow-hidden z-10"
+            className="relative right-[7%] bg-white rounded-[25px] border-2 border-[#E9E9E9] w-full sm:w-[380px] lg:w-[420px] shadow-2xl overflow-hidden z-10"
             style={{
-              transform: "rotate(6deg) perspective(1000px) rotateY(-5deg)",
+              transform: "rotate(15deg) perspective(1000px) rotateY(-5deg)",
             }}
           >
             {/* Blue Header */}
@@ -172,13 +173,17 @@ const BePromotableSection = () => {
               <h4 className="text-xs md:text-[14px] uppercase text-white mb-6 tracking-widest font-semibold text-center">
                 Future You
               </h4>
-            
             </div>
-              <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[163.97729938336576px] 2xl:h-[163.97729938336576px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-17">
-                <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                  <User className="w-16 h-16 text-gray-400" />
-                </div>
-              </div>
+            
+            <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[163.97729938336576px] 2xl:h-[163.97729938336576px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-[65px]">
+              <Image
+                src={profile.futureState.image}
+                alt="Future State"
+                width={164}
+                height={164}
+                className="object-cover w-full h-full"
+              />
+            </div>
 
             {/* White Body */}
             <div className="bg-white px-8 py-6 mt-8">
@@ -191,28 +196,28 @@ const BePromotableSection = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Status</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.futureState.status}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Visibility Score</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.futureState.visibilityScore}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Influence Rating</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.futureState.influenceRating}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#7A7777] font-semibold text-xs md:text-[10px] lg:text-[12px] uppercase tracking-wide">Access Level</span>
                   <span className="text-[#B3B3B3] text-[10px] lg:text-[12px]">:</span>
-                  <span className="text-black font-semibold text-[10px] lg:text-[12px]">
+                  <span className="text-black font-semibold text-[10px] lg:text-[12px] flex justify-start">
                     {profile.futureState.accessLevel}
                   </span>
                 </div>
@@ -232,12 +237,12 @@ const BePromotableSection = () => {
                 </ul>
               </div>
 
-              <div className="border-t border-gray-200 pt-5 pb-2">
+              <div className="border-t border-gray-200 pt-5 pb-2 lg:py-8">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-xs md:text-[12px] lg:text-lg uppercase tracking-wide font-bold text-[#0B64F4]">
+                  <span className="text-xs md:text-[12px] lg:text-[15px] uppercase tracking-wide font-bold text-[#0B64F4]">
                     Promotability Quotient
                   </span>
-                  <span className="font-bold text-[#0B64F4] text-xs md:text-[12px] lg:text-lg">
+                  <span className="font-bold text-[#0B64F4] text-xs md:text-[12px] lg:text-[15px]">
                     {profile.futureState.promotabilityQuotient}
                   </span>
                 </div>
@@ -256,5 +261,3 @@ const BePromotableSection = () => {
     </div>
   );
 }
-
-export default BePromotableSection;
