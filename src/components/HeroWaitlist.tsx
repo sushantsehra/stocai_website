@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 // import Image from "next/image";
 import YourCarrerYourPeeks from "../assets/YourCarrerYourPeeks.jpg";
+import env from "@/utils/env";
 
 type HeroWaitlistProps = {
   bgImage?: string;
@@ -18,7 +19,12 @@ type HeroWaitlistProps = {
   }) => void;
 };
 
-const HeroWaitlist: React.FC<HeroWaitlistProps> = ({ bgImage = "", isOpen, onClose, onSubmit }) => {
+const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
+  bgImage = "",
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -58,13 +64,35 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({ bgImage = "", isOpen, onClo
     setMessage("");
   }, [isOpen]);
 
+  const createPaymentLink = async (payload: {
+    email: string;
+    phone: string;
+    amount: number;
+  }) => {
+    const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data?.error || "Unable to start payment.");
+    }
+    const shortUrl = data?.short_url || data?.shortUrl;
+    if (!shortUrl) {
+      throw new Error("Payment link was not returned.");
+    }
+    return shortUrl as string;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
     setMessage("");
 
     try {
-      const response = await fetch("/api/waitlist", {
+      const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -83,14 +111,6 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({ bgImage = "", isOpen, onClo
         throw new Error(data?.error || "Unable to join the waitlist.");
       }
 
-      setStatus("success");
-      setMessage("");
-      setFirstName("");
-      setPhone("");
-      setEmail("");
-      setLevel("");
-      setOtherLevel("");
-      setChallenge("");
       onSubmit?.({
         name: firstName,
         phone,
@@ -99,6 +119,26 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({ bgImage = "", isOpen, onClo
         otherLevel: level === "Other" ? otherLevel : undefined,
         challenge,
       });
+
+      const shouldStartPayment = true; /*typeof paymentAmount === "number" && paymentAmount > 0;*/
+      if (shouldStartPayment) {
+        const shortUrl = await createPaymentLink({
+          email,
+          phone,
+          amount: 100, /*paymentAmount,*/
+        });
+        window.location.href = shortUrl;
+        return;
+      }
+
+      setStatus("success");
+      setMessage("");
+      setFirstName("");
+      setPhone("");
+      setEmail("");
+      setLevel("");
+      setOtherLevel("");
+      setChallenge("");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -229,8 +269,8 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({ bgImage = "", isOpen, onClo
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 className="w-full rounded-[12px] bg-white placeholder:text-[#8A8684] px-4 py-3 text-gray-900 shadow-inner border border-[#cfe0ff] focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
-                                pattern="^\\+[1-9]\\d{1,14}$"
-                                title="Use E.164 format, e.g. +14155552671."
+                                pattern="^\\+?[0-9\\s-]{8,20}$"
+                                title="Use digits only, optional +, e.g. +14155552671."
                                 required
                               />
                             </div>

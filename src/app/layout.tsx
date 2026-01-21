@@ -5,6 +5,7 @@ import { UserProvider } from "@/contexts/UserContext";
 import Script from "next/script";
 import PostHogInit from './_components/PostHogInit'
 import Image from "next/image";
+import WaitlistModalHost from "@/components/WaitlistModalHost";
 
 // Initialize the Quattrocento font
 const quattrocento = Quattrocento({
@@ -100,6 +101,7 @@ export default function RootLayout({
          <div suppressHydrationWarning>
             {children}
           </div>
+          <WaitlistModalHost />
          </UserProvider>
       </body>
     </html>
