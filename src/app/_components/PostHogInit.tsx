@@ -2,13 +2,16 @@
 import { useEffect } from "react";
 import posthog, { PostHog } from "posthog-js";
 
+type PostHogWithLoaded = PostHog & { __loaded?: boolean };
+
 export default function PostHogInit() {
   useEffect(() => {
-    const ph = posthog as PostHog & { __loaded?: boolean };
+    const ph = posthog as PostHogWithLoaded;
     if (ph.__loaded) return;
 
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    const apiHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://app.posthog.com";
+    const apiHost =
+      process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://app.posthog.com";
 
     if (!apiKey) {
       console.warn(
@@ -21,15 +24,14 @@ export default function PostHogInit() {
       api_host: apiHost,
       autocapture: true,
       session_recording: { maskAllInputs: true },
-      loaded: (ph) => {
-        (ph as any).__loaded = true;
+      loaded: (phInstance) => {
+        (phInstance as PostHogWithLoaded).__loaded = true;
       },
     });
   }, []);
 
   return null;
 }
-
 
 // 'use client'
 // import { useEffect } from 'react'

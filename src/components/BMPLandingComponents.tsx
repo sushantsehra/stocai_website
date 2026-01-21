@@ -7,7 +7,7 @@ import FAQ from './FAQ';
 import Footer from './FooterSection';
 import TrustSection from './TrustSection';
 import Header from './LandingHeader';
-import PromotionBanner from './PromotionBanner';
+// import PromotionBanner from './PromotionBanner';
 import WaitlistSection from './WaitlistSection';
 import CareerStalledSection from './CareerStalledSection';
 import BePromotableSection from './BePromotableSection';
@@ -21,7 +21,7 @@ interface FAQ {
 const BMPLandingComponents = () => {
   return (
     <div className="min-h-screen bg-white">
-      <PromotionBanner />
+      {/* <PromotionBanner /> */}
       <Header />
       <BePromotableSection />
       <CareerStalledSection />
@@ -29,7 +29,6 @@ const BMPLandingComponents = () => {
       <Framework />
       <LearningExperience />
       <Testimonial />
-      {/* <CountdownTimer /> */}
       <TrustSection />
       <WaitlistSection />
       <FAQ />

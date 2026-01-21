@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Brain, Eye, BarChart3, Network, MessageSquare, Repeat, Crown } from "lucide-react";
+import { IoMdCheckboxOutline } from "react-icons/io";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
@@ -235,71 +236,75 @@ const Framework = () => {
           <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-3deg] hover:rotate-0 transition-transform duration-500">
             <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl lg:w-[400px]">
               {/* Subtle border effect */}
-              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-blue-400/30 to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-[32px] pointer-events-none"></div>
               
               {/* <div className="relative bg-gradient-to-br from-[#1e5ddb] to-[#0d3d8f] rounded-[30px] p-6"> */}
               <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] rounded-[30px] p-0 rounded-t-[40px]">
                 {/* Top Section with Title and Icon */}
-                <div className="text-center mb-6 relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] p-6 rounded-t-[40px]">
-                  
-                  <h3 className="text-white text-sm md:text-[14px] text-white font-semibold mb-3 tracking-wide">BE MORE PROMOTABLE</h3>
-                  
+                <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] text-center p-8 rounded-t-[40px] min-h-[140px]">
+                  <h3 className="text-white text-sm md:text-[14px] lg:text-[18px] font-semibold tracking-wide mb-4">
+                    BE MORE PROMOTABLE
+                  </h3>
+
                   {/* Crown Icon Circle */}
-                  <div className="inline-flex items-center justify-center w-32 h-32 lg:w-[100.7288719059023px] lg:h-[100.8423057412021px] bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-4 shadow-lg border-6 border-white relative">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400 to-blue-700"></div>
-                    <Crown className="w-16 h-16 text-white relative z-10" strokeWidth={2.5} fill="white" />
+                  <div className="absolute -bottom-[72%] z-50 left-[50%] transform -translate-x-1/2 -translate-y-1/2 mx-auto w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-gradient-to-br from-[#4B8DFF] to-[#0A47FF] flex items-center justify-center shadow-xl border-4 border-white">
+                    <Crown className="w-16 h-16 text-white" strokeWidth={2.5} fill="white" />
                   </div>
                 </div>
 
                 {/* Black Card with Achievements and Progress */}
-                <div className="bg-gradient-to-br from-black/60 via-black/50 to-black/60 rounded-b-[40px] p-6 backdrop-blur-md shadow-xl">
+                <div className="bg-gradient-to-b from-black/80 via-black/60 to-black/80 rounded-b-[40px] p-8 backdrop-blur-md shadow-xl py-20">
                   {/* Achievements Checklist */}
                   <div className="space-y-3 mb-6">
                     {achievements.map((item, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all ${
-                          item.checked 
-                            ? 'bg-white border-white' 
-                            : 'bg-transparent border-white'
-                        }`}>
+                        <div
+                          className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
+                            item.checked ? "bg-transparent" : "bg-transparent border-2 border-white"
+                          }`}
+                        >
                           {item.checked ? (
-                            <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
+                            <IoMdCheckboxOutline className="w-8 h-8 text-white" />
                           ) : (
-                            <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                            <svg
+                              className="w-3.5 h-3.5 text-white"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2.5}
+                            >
                               <line x1="6" y1="6" x2="18" y2="18" />
                               <line x1="6" y1="18" x2="18" y2="6" />
                             </svg>
                           )}
                         </div>
-                        <span className="text-white md:text-[15px] text-sm font-semibold">{item.label}</span>
+                        <span className="text-white md:text-[15px] text-sm font-semibold">
+                          {item.label}
+                        </span>
                       </div>
                     ))}
                   </div>
 
                   {/* Separator Line */}
-                  <div className="border-t border-[#FFFFFF] my-3"></div>
+                  <div className="border-t border-[#FFFFFF]/30 my-4"></div>
 
                   {/* Progress Bars Section */}
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     {progressItems.map((item, idx) => (
                       <div key={idx} className="flex justify-between items-center">
-                        <div className="flex justify-between items-center">
-                          <span className="text-white text-[15px] font-semibold">{item.label}</span>
-                          {/* <div className="bg-blue-300/90 text-blue-900 px-3 py-0.5 rounded-full text-sm font-bold">
-                            {item.value}/100
-                          </div> */}
-                        </div>
-                        <div className="w-1/3 bg-[#0E2E64] rounded-[100px] h-3.5 shadow-inner">
-                          <div 
-                            className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-3.5 rounded-[100px] transition-all duration-700 shadow-lg"
-                            style={{ width: `${item.value}%` }}
-                          >
-                            <p className="text-black font-extrabold text-[10px] ml-4">
-                              {item.value}/100
-                            </p>
+                        <span className="text-white text-[15px] font-semibold">
+                          {item.label}
+                        </span>
+                        <div className="flex items-center gap-2 w-[45%]">
+                          <div className="w-full bg-[#0E2E64] rounded-[100px] h-3.5 shadow-inner">
+                            <div
+                              className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-3.5 rounded-[100px] transition-all duration-700 shadow-lg"
+                              style={{ width: `${item.value}%` }}
+                            ></div>
                           </div>
+                          <p className="text-[#AFCBFF] font-bold text-[11px]">
+                            {item.value}/100
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -313,16 +318,16 @@ const Framework = () => {
           <div className="flex-1 flex lg:justify-end">
             <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-3xl w-full">
               {/* Tabs */}
-              <div className="flex overflow-x-auto gap-4 scrollbar-hide">
+              <div className="flex overflow-x-auto gap-2 scrollbar-hide">
                 {tabs.map((tab) => {
                   const IconComponent = tab.icon;
                   return (
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-2 px-4 mb-1 sm:px-6 py-4 text-sm sm:text-[12px] font-normal transition-all whitespace-nowrap ${
+                      className={`flex items-center gap-2 px-4 mb-1 py-3 text-sm sm:text-[12px] font-normal transition-all whitespace-nowrap ${
                         activeTab === tab.id
-                          ? "bg-white text-[#0F1729] rounded-[8px] border mb-0 border-white"
+                          ? "bg-white text-[#0F1729] border rounded-[8px] border mb-0 border-white"
                           : "bg-[#0B64F4] rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
                       }`}
                     >
@@ -336,7 +341,7 @@ const Framework = () => {
               {/* Tab Content */}
        
 
-              <div className="p-8 sm:p-12 bg-white">
+              <div className="p-8 sm:p-10 bg-white">
                 {currentTab ? (
                   <>
                     <div className="mb-8">
@@ -382,7 +387,7 @@ const Framework = () => {
         </div>
 
         {/* Rolling Band Animation */}
-        <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[37%] lg:top-[30%]">
+        <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[37%] lg:top-[-10%]">
           <style>{`
             @keyframes scroll {
               0% {
@@ -398,19 +403,19 @@ const Framework = () => {
           `}</style>
           <div className="flex whitespace-nowrap animate-scroll">
             <div className="flex items-center gap-3 px-4">
-              <span className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Rewire Non promotable habits</span>
               <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Claim what you deserve</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Claim what you deserve</span>
               <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Navigate with confidence in corporate structure</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Navigate with confidence in corporate structure</span>
               <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Signal leadership readiness</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Signal leadership readiness</span>
               <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Build advocates</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Build advocates</span>
               <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Multiply the impact without compromising work life balance</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Multiply the impact without compromising work life balance</span>
               <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Build your custom plan</span>
+              <span className="text-white text-lg lg:text-[21px] font-medium">Build your custom plan</span>
               <span className="text-white/50">|</span>
             </div>
             {/* Duplicate for seamless loop */}
@@ -434,8 +439,8 @@ const Framework = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="text-center mt-12">
-          <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-90 transition">
+        <div className="text-center mt-8 lg:translate-x-[-3.5%]">
+          <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
             Get Early Access
           </button>
         </div>

@@ -7,8 +7,8 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="w-full bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto flex justify-between items-center pr-4">
+    <header className="w-full bg-white">
+      <div className="max-w-full flex justify-between items-center pr-4">
         {/* Logo */}
         <Image
           src={bclLogo}

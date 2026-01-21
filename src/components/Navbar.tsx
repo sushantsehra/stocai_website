@@ -365,6 +365,8 @@ export default function Navbar() {
                 // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
                 src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName.charAt(0)}`)}&background=54B0AF&bold=true&color=fff&size=32&font-size=0.7`}
                 alt={`${user.firstName} ${user.lastName}`}
+                  width={32}
+                  height={32}
                 className="w-8 h-8 rounded-full"
               />
               {/* <span className="text-white font-gotham font-medium text-sm">
