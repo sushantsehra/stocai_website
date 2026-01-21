@@ -4,7 +4,7 @@ import Framework from './Framework';
 import LearningExperience from './LearningExperience';
 import Testimonial from './Testimonial';
 import FAQ from './FAQ';
-import Footer from './FooterSection';
+// import Footer from './FooterSection';
 import TrustSection from './TrustSection';
 import Header from './LandingHeader';
 // import PromotionBanner from './PromotionBanner';
@@ -32,7 +32,7 @@ const BMPLandingComponents = () => {
       <TrustSection />
       <WaitlistSection />
       <FAQ />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
