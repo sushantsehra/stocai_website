@@ -20,6 +20,7 @@
     "framer-motion": "^12.27.4",
     "lucide-react": "^0.525.0",
     "next": "15.3.8",
+    "pg": "^8.17.2",
     "posthog-js": "^1.260.3",
     "posthog-node": "^5.7.0",
     "react": "^19.0.0",
