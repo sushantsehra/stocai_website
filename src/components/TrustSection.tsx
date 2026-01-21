@@ -2,21 +2,28 @@
 
 import Image from "next/image";
 import { Crown } from "lucide-react";
-import nvidia from "../assets/foundernvidia.png";
+// import nvidia from "../assets/foundernvidia.png";
 import accenture from "../assets/founderaccenture.png";
-import citi from "../assets/founderCiti.png";
+// import citi from "../assets/founderCiti.png";
 // import iimt from "../assets/iimt.png";
-import edelweiss from "../assets/edelweiss.png";
+// import edelweiss from "../assets/edelweiss.png";
 // import iimc from "../assets/iimc.png";
 // import texas from "../assets/texas.png";
 // import kings from "../assets/kings.png";
 import founder from "../assets/founder.jpg";
 // import founderEdelweiss from "../assets/founderEdelweiss.png";
 // import founderNVI from "../assets/founderNVI.png";
-import founderIMT from "../assets/founderIMT.png";
-import founderIIMC from "../assets/founderIIMC.png";
+// import founderIMT from "../assets/founderIMT.png";
+// import founderIIMC from "../assets/founderIIMC.png";
 import founderKing from "../assets/founderKing.png";
 import founderTex from "../assets/founderTex.png";
+import iimcwhitelogo from "../assets/iimcwhitelogo.png";  
+import edelweisswhitelogo from "../assets/edelweisswhitelogo.png";  
+import imtwhitelogo from "../assets/imtwhitelogo.png";  
+// import kingswhitelogo from "../assets/Kclblacklogo.svg";  
+import nvidiablacklogo from "../assets/nvidiablacklogo.png";
+// import accentureblacklogo from "../assets/accentureblacklogo.svg";
+import citiblacklogo from "../assets/citiblacklogo.png";
 import BuiltBy from "./BuiltBy";
 
 
@@ -34,13 +41,17 @@ const TrustSection = () => {
   ];
 
   const companies = [
-    { name: "NVIDIA", logo: nvidia },
+    { name: "NVIDIA", logo: nvidiablacklogo },
     { name: "Accenture", logo: accenture },
-    { name: "Citi", logo: citi },
-    { name: "IMT", logo: founderIMT },
-    { name: "Edelweiss", logo: edelweiss },
-    { name: "IIMC", logo: founderIIMC },
+    { name: "Citi", logo: citiblacklogo },
+    { name: "IIMC", logo: iimcwhitelogo },
+    { name: "Edelweiss", logo: edelweisswhitelogo },
+    { name: "IMT", logo: imtwhitelogo },
+    // { name: "IMT", logo: founderIMT },
+    // { name: "Edelweiss", logo: edelweiss },
+    // { name: "IIMC", logo: founderIIMC },
     { name: "Texas", logo: founderTex},
+    // { name: "Kings", logo: founderKing},
     { name: "Kings", logo: founderKing},
   ];
 
@@ -57,7 +68,7 @@ const TrustSection = () => {
 
   return (
     <section className="py-8 px-2 bg-white">
-      <div className="max-w-full">
+      <div className="max-w-full relative z-50 pb-16">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           {/* Left Section */}
           <div>
@@ -92,7 +103,7 @@ const TrustSection = () => {
           </div>
 
           {/* Right Section (Founder Card) */}
-          <div className="relative rounded-3xl shadow-2xl border-2 border-[#D5D5D5] overflow-hidden min-w-[400px] max-w-[442.999988143542px] mx-auto transform rotate-[10deg] hover:rotate-0 transition-transform duration-500">
+          <div className="relative z-50 rounded-3xl my-10 lg:my-0 shadow-2xl border-2 border-[#D5D5D5] overflow-hidden min-w-[400px] max-w-[442.999988143542px] mx-auto transform rotate-[10deg] hover:rotate-0 transition-transform duration-500">
             {/* Top White Section */}
             <div className="bg-white text-center py-6 relative z-10 min-h-[130px]">
               <h3 className="text-lg sm:text-xl lg:text-[14px] font-semibold text-black tracking-wider">

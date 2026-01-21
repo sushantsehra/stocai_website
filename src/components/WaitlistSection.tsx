@@ -19,7 +19,7 @@ const WaitlistSection = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 px-4 text-center">
+    <section className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 px-4 text-center mt-6">
       <div className="max-w-full mx-auto">
         {/* Title */}
         <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white font-bold mb-2">Get early access</h2>
@@ -46,7 +46,7 @@ const WaitlistSection = () => {
 
         <div className="flex justify-center">
         {/* Email Input & Button */}
-        <div className="flex flex-col sm:flex-row items-center justify-center lg:min-w-3xl bg-[#F5F5F5] rounded-[8px] h-[80px] shadow-lg overflow-hidden mb-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[8px] h-[80px] shadow-lg overflow-hidden mb-6">
           <input
             type="email"
             placeholder="Enter email address"
@@ -59,7 +59,7 @@ const WaitlistSection = () => {
         </div>
 
         {/* Bottom Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-start absolute left-[25%] gap-4 lg:gap-20">
+        <div className="flex flex-col sm:flex-row items-center justify-start absolute left-[17%] lg:left-[25%] gap-4 lg:gap-20">
           {/* Avatars + Waitlist Count */}
           <div className="flex items-center gap-3">
             <div className="flex -space-x-3">

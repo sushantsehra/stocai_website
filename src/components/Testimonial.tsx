@@ -2,49 +2,57 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import utkarshJha from "../assets/utkarshJha.jpg";
 
 const testimonials = [
   {
-    name: "John Adams",
-    role: "Software Developer",
-    title: "Project Manager",
+    name: "M. Hussain",
+    role: "AVP Marketing",
+    title: "10+ Years of Experience",
     before: "I delivered results, but no one beyond my team noticed.",
     after:
       "Better Corporate Life taught me how to share wins confidently. Now leaders know (and value) my work.",
+    image: utkarshJha,
   },
   {
-    name: "Sarah Lee",
-    role: "Marketing Analyst",
-    title: "Brand Strategist",
+    name: "Eleena R",
+    role: "Project Manager",
+    title: "8+ Years of Experience",
     before:
       "I contributed to major projects but struggled to make my impact visible.",
     after:
       "Now, I communicate achievements clearly and get recognized for my contributions.",
+    image: utkarshJha,
   },
   {
-    name: "David Clark",
-    role: "Operations Lead",
-    title: "Program Manager",
-    before: "I was always 'reliable' but never seen as leadership material.",
+    name: "Utkarsh Jha",
+    role: "AVP Marketing",
+    title: "10+ Years of Experience",
+    before:
+      "I said 'yes' to everything to get noticed, but always ended up exhausted.",
     after:
-      "The program helped me show initiative and influence decisions confidently.",
+      "I learned to prioritize and delegate. I work less, deliver more, and the impact of my work got noticed.",
+    image: utkarshJha,
   },
   {
-    name: "Emily Rodriguez",
-    role: "UX Designer",
-    title: "Design Lead",
+    name: "Venkatraman A.",
+    role: "Lead Researcher",
+    title: "8+ Years of Experience",
     before:
       "My designs were good, but I struggled to advocate for them in meetings.",
     after:
       "I learned to present my work strategically and gained buy-in from stakeholders.",
+    image: utkarshJha,
   },
   {
     name: "Michael Chen",
     role: "Data Analyst",
-    title: "Analytics Manager",
+    title: "10+ Years of Experience",
     before: "I had great insights but couldn't translate them into action.",
     after:
       "Now I communicate data in ways that drive decisions and show business impact.",
+    image: utkarshJha,
   },
 ];
 
@@ -57,7 +65,6 @@ const Testimonial = () => {
   const handleNext = () =>
     setCurrent((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
 
-  // const getCardPosition = (index) => {
   const getCardPosition = (index: number): number | null => {
     const diff = index - current;
     const totalCards = testimonials.length;
@@ -115,22 +122,22 @@ const Testimonial = () => {
               textColor = "active";
             } else if (position === 1) {
               styles =
-                "translate-x-[45%] sm:translate-x-[50%] md:translate-x-[55%] rotate-[6deg] scale-[0.85] opacity-50 blur-[2px]";
+                "translate-x-[45%] sm:translate-x-[50%] md:translate-x-[70%] rotate-[10deg] scale-[0.85] opacity-50 blur-[1px]";
               zIndex = "z-30";
               textColor = "inactive";
             } else if (position === 2) {
               styles =
-                "translate-x-[80%] sm:translate-x-[85%] md:translate-x-[95%] rotate-[10deg] scale-[0.7] opacity-30 blur-[3px]";
+                "translate-x-[80%] sm:translate-x-[85%] md:translate-x-[125%] rotate-[20deg] scale-[0.7] opacity-30 blur-[1.5px] mt-36";
               zIndex = "z-10";
               textColor = "inactive";
             } else if (position === -1) {
               styles =
-                "translate-x-[-45%] sm:translate-x-[-50%] md:translate-x-[-55%] rotate-[-6deg] scale-[0.85] opacity-50 blur-[2px]";
+                "translate-x-[-45%] sm:translate-x-[-50%] md:translate-x-[-70%] rotate-[-10deg] scale-[0.85] opacity-50 blur-[1px]";
               zIndex = "z-30";
               textColor = "inactive";
             } else if (position === -2) {
               styles =
-                "translate-x-[-80%] sm:translate-x-[-85%] md:translate-x-[-95%] rotate-[-10deg] scale-[0.7] opacity-30 blur-[3px]";
+                "translate-x-[-80%] sm:translate-x-[-85%] md:translate-x-[-125%] rotate-[-20deg] scale-[0.7] opacity-30 blur-[1.5px] mt-36";
               zIndex = "z-10";
               textColor = "inactive";
             }
@@ -138,21 +145,35 @@ const Testimonial = () => {
             return (
               <div
                 key={index}
-                className={`absolute w-[85%] sm:w-[70%] md:w-[520px] lg:w-[400px] bg-[#F5F5F5] rounded-3xl shadow-2xl p-8 sm:p-10 md:p-12 transition-all duration-700 ease-in-out ${styles} ${zIndex}`}
+                className={`absolute w-[85%] sm:w-[70%] md:w-[520px] lg:w-[380px] bg-[#F5F5F5] rounded-3xl shadow-2xl p-8 sm:p-10 md:p-9 transition-all duration-700 ease-in-out ${styles} ${zIndex}`}
               >
-                <div className="flex items-center gap-4 sm:gap-6 mb-8 md:mb-10">
-                  <div className="w-16 h-16 sm:w-22 sm:h-22 2xl:w-[114px] 2xl:h-[114px] rounded-full bg-[#D9D9D9] flex-shrink-0" />
+                <div className="flex items-center gap-4 sm:gap-6 mb-8">
+                  {/* ✅ Replaced placeholder with actual image */}
+                  <div className="w-16 h-16 sm:w-22 sm:h-22 2xl:w-[114px] 2xl:h-[114px] rounded-full overflow-hidden flex-shrink-0">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      width={114}
+                      height={114}
+                      className="w-full h-full object-co rounded-full"
+                    />
+                  </div>
+
                   <div className="text-left">
                     <h3
                       className={`text-xl sm:text-2xl md:text-3xl lg:text-[26px] font-bold mb-1 ${
-                        textColor === "active" ? "text-[#0B64F4]" : "text-gray-400"
+                        textColor === "active"
+                          ? "text-[#0B64F4]"
+                          : "text-gray-400"
                       }`}
                     >
                       {testimonial.name}
                     </h3>
                     <p
                       className={`text-sm sm:text-base md:text-[16px] font-bold ${
-                        textColor === "active" ? "text-[#00000066]" : "text-gray-400"
+                        textColor === "active"
+                          ? "text-[#00000066]"
+                          : "text-gray-400"
                       }`}
                     >
                       {testimonial.role}
@@ -167,34 +188,42 @@ const Testimonial = () => {
                   </div>
                 </div>
 
-                <div className="space-y-6 md:space-y-8 text-left">
-                  <div>
+                <div className="space-y-6 md:space-y-5 text-left">
+                  <div className="p-4">
                     <h4
-                      className={`font-bold text-base sm:text-lg md:text-xl lg:text-[22px] font-bold mb-3 ${
-                        textColor === "active" ? "text-[#00000099]" : "text-gray-400"
+                      className={`font-bold text-base sm:text-lg md:text-xl lg:text-[22px] font-bold mb-1.5 ${
+                        textColor === "active"
+                          ? "text-[#00000099]"
+                          : "text-gray-400"
                       }`}
                     >
                       Before:
                     </h4>
                     <p
-                      className={`text-sm sm:text-base md:text-[16px] font-medium leading-relaxed ${
-                        textColor === "active" ? "text-black" : "text-gray-400"
+                      className={`text-sm sm:text-base md:text-[16px] font-medium leading-5 ${
+                        textColor === "active"
+                          ? "text-black"
+                          : "text-gray-400"
                       }`}
                     >
                       {testimonial.before}
                     </p>
                   </div>
-                  <div>
+                  <div className="bg-[#0B64F4] rounded-[20px] p-4">
                     <h4
-                      className={`font-bold text-base sm:text-lg md:text-[22px] font-bold mb-3 ${
-                        textColor === "active" ? "text-[#000000F2]" : "text-gray-400"
+                      className={`font-bold text-base sm:text-lg md:text-[22px] font-bold mb-1.5 ${
+                        textColor === "active"
+                          ? "text-white/90"
+                          : "text-gray-400"
                       }`}
                     >
                       After:
                     </h4>
                     <p
-                      className={`text-sm sm:text-base md:text-[16px] font-medium leading-relaxed ${
-                        textColor === "active" ? "text-black" : "text-gray-400"
+                      className={`text-sm sm:text-base md:text-[16px] font-medium leading-5 ${
+                        textColor === "active"
+                          ? "text-white"
+                          : "text-gray-400"
                       }`}
                     >
                       {testimonial.after}
@@ -224,7 +253,6 @@ const Testimonial = () => {
             );
           })}
         </div>
-
       </div>
     </section>
   );

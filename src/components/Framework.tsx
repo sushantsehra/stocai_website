@@ -233,8 +233,8 @@ const Framework = () => {
         {/* Main Content with Left Card */}
         <div className="flex flex-col lg:flex-row gap-6 items-start relative">
           {/* Left Side Card - Progress Tracker */}
-          <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-3deg] hover:rotate-0 transition-transform duration-500">
-            <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl lg:w-[400px]">
+          <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-3deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start my-10">
+            <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]">
               {/* Subtle border effect */}
               <div className="absolute inset-0 rounded-[32px] pointer-events-none"></div>
               
@@ -316,7 +316,7 @@ const Framework = () => {
 
           {/* Main Content Card - Right Side */}
           <div className="flex-1 flex lg:justify-end">
-            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-3xl w-full">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-xl lg:max-w-3xl w-full">
               {/* Tabs */}
               <div className="flex overflow-x-auto gap-2 scrollbar-hide">
                 {tabs.map((tab) => {

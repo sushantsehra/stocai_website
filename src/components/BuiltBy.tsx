@@ -25,7 +25,7 @@ const BuiltBy = () => {
   ];
 
   return (
-    <section className="w-full py-6 bg-white overflow-hidden">
+    <section className="w-full py-6 bg-white overflow-hidden absolute -bottom-6 z-10">
       <div className="relative w-full overflow-hidden">
         <motion.div
           className="flex w-max gap-6"

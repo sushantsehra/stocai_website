@@ -14,31 +14,31 @@ const FAQ = () => {
   const faqs: FAQItem[] = [
     {
       question: "I'm very senior and experienced, so I don't think this will really help me.",
-      answer: "This program is specifically designed for experienced professionals who've hit career plateaus. The frameworks we teach address the unique challenges of senior-level advancement where technical skills alone aren't enough."
+      answer: "Our program is built for experienced professionals too. We focus on practical, level-specific levers — positioning, stakeholder alignment, and measurable influence — that senior leaders use to accelerate promotion decisions."
     },
     {
       question: "I don't think promotion skills can be taught or learnt.",
-      answer: "Promotability is absolutely a learnable skill. Our KRAR methodology has helped hundreds of professionals develop the specific behaviors that lead to career advancement."
+      answer: "Promotion-readiness is a set of repeatable behaviours and signals. We teach what to do, how to communicate it, and how to measure it — so behaviours become habits and outcomes become visible to leaders."
     },
     {
       question: "I don't know if anyone can apply it in real day-to-day work.",
-      answer: "Every module includes practical exercises and real workplace scenarios. You'll apply what you learn immediately with concrete frameworks you can use in meetings, presentations, and daily interactions."
+      answer: "Every module is designed as a short, actionable practice that you can apply during regular work. Participants get templates, 1:1 coaching prompts and real-time feedback loops to integrate learnings immediately."
     },
     {
       question: "I'm not sure if this course will be worth the fees being charged.",
-      answer: "The average participant sees measurable results within weeks. Many report promotions or new opportunities within 6 months."
+      answer: "We focus on ROI: better role matches, faster promotions, and clear visibility. Many participants recoup the investment within months through promotions or expanded responsibilities."
     },
     {
       question: "I need something that actually helps with my team, deadlines, and stress.",
-      answer: "Our program addresses the root causes of workplace stress by teaching you how to delegate effectively, communicate strategically, and build influence."
+      answer: "We prioritise applied frameworks — delegation, leverage, and influence — and concrete experiments you deploy with your team. The program reduces busywork while increasing visible impact."
     },
     {
       question: "I've read positive reviews... I'm not sure it can actually live up to the hype.",
-      answer: "We provide detailed case studies, testimonials with verifiable results, and a clear breakdown of what you'll learn. You can also speak with program alumni before joining."
+      answer: "We emphasise measurable progress: before/after visibility metrics, sponsor agreements, and concrete promotion-ready deliverables that you can show leaders."
     },
     {
       question: "I won't be able to pay the attention it requires for 7 weeks.",
-      answer: "The program requires just 3-4 hours per week with flexible scheduling. All content is available on-demand with lifetime access."
+      answer: "The curriculum is intentionally bite-sized and prioritised. Each week focuses on 1–2 high-leverage practices that you can implement without major time investment."
     }
   ];
 
