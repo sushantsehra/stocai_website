@@ -316,7 +316,7 @@ const Framework = () => {
 
           {/* Main Content Card - Right Side */}
           <div className="flex-1 flex lg:justify-end">
-            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-xl lg:max-w-3xl w-full">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-xl lg:max-w-3xl w-full">
               {/* Tabs */}
               <div className="flex overflow-x-auto gap-2 scrollbar-hide">
                 {tabs.map((tab) => {

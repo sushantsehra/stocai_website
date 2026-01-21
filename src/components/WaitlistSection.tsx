@@ -46,13 +46,13 @@ const WaitlistSection = () => {
 
         <div className="flex justify-center">
         {/* Email Input & Button */}
-        <div className="flex flex-col sm:flex-row items-center justify-center min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[8px] h-[80px] shadow-lg overflow-hidden mb-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center min-w-xs md:min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[8px] h-[80px] shadow-lg overflow-hidden mb-6">
           <input
             type="email"
             placeholder="Enter email address"
             className="w-full sm:w-[65%] px-4 py-3 text-[#C8C8C8] font-medium outline-none text-sm sm:text-base lg:text-[20px]"
           />
-          <button className="w-full sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[12px] text-white lg:text-[20px] font-semibold py-3 transition-all">
+          <button className="w-full sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[12px] text-white lg:text-[20px] font-semibold py-1 md:py-3 transition-all">
             Join Waitlist
           </button>
         </div>

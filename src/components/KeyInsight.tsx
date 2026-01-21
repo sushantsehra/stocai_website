@@ -55,7 +55,7 @@ const KeyInsight = () => {
           </div>
 
           {/* Subheading */}
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-bold text-center mb-4">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-gotham font-bold text-center mb-4">
             Here&apos;s what no one told you.
           </h3>
 

@@ -29,7 +29,7 @@ const BuiltBy = () => {
       <div className="relative w-full overflow-hidden">
         <motion.div
           className="flex w-max gap-6"
-          animate={{ x: ["0%", "-50%"] }}
+          animate={{ x: ["-50%", "0%"] }}
           transition={{
             repeat: Infinity,
             repeatType: "loop",

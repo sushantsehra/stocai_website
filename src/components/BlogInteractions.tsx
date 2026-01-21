@@ -77,47 +77,8 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
     fetchBlogData();
   }, [blog.blog_id, fetchBlogData]);
 
-  useEffect(() => {
-    // Handle stored user intent after login
-    const intentStr = localStorage.getItem('userIntent');
-    if (!intentStr) return;
 
-    try {
-      const intent: UserIntent = JSON.parse(intentStr);
-      
-      if (
-        intent.blogId === blog.blog_id &&
-        Date.now() - intent.timestamp < 5 * 60 * 1000 // 5-minute window
-      ) {
-        const executeIntent = async () => {
-          if (intent.actionType === 'like' && !liked && user) {
-            await handleLike();
-          } else if (intent.actionType === 'comment' && intent.payload && user) {
-            setCommentText(intent.payload);
-            await handleAddComment(intent.payload);
-          }
-          localStorage.removeItem('userIntent');
-        };
-
-        executeIntent();
-      }
-    } catch (error) {
-      console.error('Error parsing user intent:', error);
-      localStorage.removeItem('userIntent');
-    }
-  }, [user, blog.blog_id, liked]);
-
-  const saveUserIntent = (actionType: 'like' | 'comment', blogId: string, payload?: string) => {
-    const intent: UserIntent = {
-      actionType,
-      blogId,
-      payload,
-      timestamp: Date.now(),
-    };
-    localStorage.setItem('userIntent', JSON.stringify(intent));
-  };
-
-  const handleLike = async () => {
+  const handleLike = useCallback(async () => {
     if (!user?.user_id) {
       saveUserIntent('like', blog.blog_id);
       router.push(getSignupUrl(`/blog/${slug}`));
@@ -153,9 +114,9 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
     } catch (err) {
       console.error('Error liking blog:', err);
     }
-  };
+  }, [user, blog.blog_id, slug, router, fetchBlogData]);
 
-  const handleAddComment = async (text?: string) => {
+  const handleAddComment = useCallback(async (text?: string) => {
     const commentContent = text || commentText.trim();
     
     if (!user?.user_id) {
@@ -196,7 +157,48 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
     } catch (err) {
       console.error('Error posting comment:', err);
     }
+  }, [user, blog.blog_id, commentText, slug, router, fetchBlogData]);
+
+  useEffect(() => {
+    // Handle stored user intent after login
+    const intentStr = localStorage.getItem('userIntent');
+    if (!intentStr) return;
+
+    try {
+      const intent: UserIntent = JSON.parse(intentStr);
+      
+      if (
+        intent.blogId === blog.blog_id &&
+        Date.now() - intent.timestamp < 5 * 60 * 1000 // 5-minute window
+      ) {
+        const executeIntent = async () => {
+          if (intent.actionType === 'like' && !liked && user) {
+            await handleLike();
+          } else if (intent.actionType === 'comment' && intent.payload && user) {
+            setCommentText(intent.payload);
+            await handleAddComment(intent.payload);
+          }
+          localStorage.removeItem('userIntent');
+        };
+
+        executeIntent();
+      }
+    } catch (error) {
+      console.error('Error parsing user intent:', error);
+      localStorage.removeItem('userIntent');
+    }
+  }, [user, blog.blog_id, liked, handleLike, handleAddComment]);
+
+  const saveUserIntent = (actionType: 'like' | 'comment', blogId: string, payload?: string) => {
+    const intent: UserIntent = {
+      actionType,
+      blogId,
+      payload,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem('userIntent', JSON.stringify(intent));
   };
+
 
   if (isLoading) {
     return <div className="mt-6">Loading interactions...</div>;

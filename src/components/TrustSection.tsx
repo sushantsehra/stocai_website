@@ -16,7 +16,7 @@ import founder from "../assets/founder.jpg";
 // import founderIMT from "../assets/founderIMT.png";
 // import founderIIMC from "../assets/founderIIMC.png";
 import founderKing from "../assets/founderKing.png";
-import founderTex from "../assets/founderTex.png";
+// import founderTex from "../assets/founderTex.png";
 import iimcwhitelogo from "../assets/iimcwhitelogo.png";  
 import edelweisswhitelogo from "../assets/edelweisswhitelogo.png";  
 import imtwhitelogo from "../assets/imtwhitelogo.png";  
@@ -25,6 +25,8 @@ import nvidiablacklogo from "../assets/nvidiablacklogo.png";
 // import accentureblacklogo from "../assets/accentureblacklogo.svg";
 import citiblacklogo from "../assets/citiblacklogo.png";
 import BuiltBy from "./BuiltBy";
+import University_of_Texas_at_Austin_logo from "../assets/University_of_Texas_at_Austin_logo.png";
+// import Kcllogo from "../assets/Kcllogo.png";
 
 
 interface Stat {
@@ -50,21 +52,10 @@ const TrustSection = () => {
     // { name: "IMT", logo: founderIMT },
     // { name: "Edelweiss", logo: edelweiss },
     // { name: "IIMC", logo: founderIIMC },
-    { name: "Texas", logo: founderTex},
+    { name: "Texas", logo: University_of_Texas_at_Austin_logo},
     // { name: "Kings", logo: founderKing},
     { name: "Kings", logo: founderKing},
   ];
-
-  //   const grayscaleCompanies = [
-  //   { name: "NVIDIA", logo: nvidia },
-  //   { name: "Accenture", logo: accenture },
-  //   { name: "Citi", logo: citi },
-  //   { name: "IMT", logo: founderIMT },
-  //   { name: "Edelweiss", logo: edelweiss },
-  //   { name: "IIMC", logo: founderIIMC },
-  //   { name: "Texas", logo: founderTex},
-  //   { name: "Kings", logo: founderKing},
-  // ];
 
   return (
     <section className="py-8 px-2 bg-white">
