@@ -12,6 +12,8 @@ module.exports = {
         gotham: ['Gotham', 'sans-serif'],
         mona: ['Mona Sans', 'sans-serif'],
         quattrocento: ['var(--font-quattrocento)', 'serif'],
+        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
       },
       colors: {
         "primary": {

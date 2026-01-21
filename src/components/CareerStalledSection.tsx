@@ -21,7 +21,7 @@ const CareerStalledSection: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-full relative z-10">
         {/* Heading */}
         <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold">
           <span className="text-[#0B64F4] text-[36px] md:text-[40px] lg:text-[48px] font-bold">You show up. You deliver.</span>

@@ -44,13 +44,13 @@ export default function BePromotableSection() {
         {/* Header */}
         <div className="text-center mb-16">
          {/* Headings */}
-         <h2 className="text-3xl sm:text-5xl lg:text-[70px] font-bold text-[#0B64F4]">
+         <h2 className="text-3xl sm:text-5xl lg:text-[70px] font-jakarta font-bold text-[#0B64F4]">
            #BePromotable.
          </h2>
-         <h3 className="text-lg sm:text-2xl lg:text-[40px] font-bold text-black mb-2">
+         <h3 className="text-lg sm:text-2xl lg:text-[40px] font-jakarta font-bold text-black mb-2">
            Stop being the hard worker who gets overlooked.
          </h3>
-         <p className="text-black font-normal max-w-5xl mx-auto mb-12 text-sm sm:text-base">
+         <p className="text-black font-normal max-w-5xl font-jakarta mx-auto mb-12 mt-2 text-sm sm:text-base">
            A promotion strategy system for experienced professionals who feel
            stuck despite doing everything &apos;right&apos;.
          </p>
@@ -67,14 +67,14 @@ export default function BePromotableSection() {
 
           {/* Current State Card */}
           <div
-            className="relative bg-white rounded-[25px] border-2 border-[#D9D9D9] w-full sm:w-[380px] lg:w-[420px] shadow-2xl overflow-hidden z-10"
+            className="relative bg-white rounded-[25px] border-2 border-[#D9D9D9] w-full sm:w-[380px] lg:max-w-[442.9999951029332px] shadow-2xl overflow-hidden z-10"
             style={{
-              transform: "rotate(-10deg) perspective(1000px) rotateY(5deg)",
+              transform: "rotate(-10deg) perspective(1000px) rotateY(0deg)",
             }}
           >
             {/* Black Header */}
             <div className="bg-black pt-6 px-5 relative min-h-[150px]">
-              <h4 className="text-xs md:text-[14px] uppercase text-white mb-6 tracking-widest font-semibold text-center">
+              <h4 className="text-xs md:text-[14px] font-montserrat uppercase text-white mb-6 tracking-widest font-semibold text-center">
                 Current State
               </h4>
             </div>
@@ -142,9 +142,9 @@ export default function BePromotableSection() {
               </div>
 
               <div className="border-t border-gray-200 pt-5 pb-2">
-                <div className="flex justify-center items-center mb-3">
+                <div className="flex justify-start items-center mb-3 text-start">
                   <span className="text-xs md:text-[12px] lg:text-[15px] uppercase tracking-wide font-bold text-black">
-                    Promotability Quotient
+                    Promotability Quotient{" "}
                   </span>
                   <span className="font-bold text-black text-xs md:text-[12px] lg:text-[15px]">
                     {profile.currentState.promotabilityQuotient}
@@ -163,9 +163,9 @@ export default function BePromotableSection() {
 
           {/* Future You Card */}
           <div
-            className="relative right-[7%] bg-white rounded-[25px] border-2 border-[#E9E9E9] w-full sm:w-[380px] lg:w-[420px] shadow-2xl overflow-hidden z-10"
+            className="relative right-[7%] bg-white rounded-[25px] border-2 border-[#E9E9E9] w-full sm:w-[380px] lg:max-w-[443.0000120531346px] shadow-2xl overflow-hidden z-10"
             style={{
-              transform: "rotate(15deg) perspective(1000px) rotateY(-5deg)",
+              transform: "rotate(10deg) perspective(1000px) rotateY(0deg)",
             }}
           >
             {/* Blue Header */}

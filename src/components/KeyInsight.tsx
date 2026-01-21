@@ -37,9 +37,9 @@ const KeyInsight = () => {
 
   return (
     <section className="p-4 lg:px-1 bg-white">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-full">
         {/* Heading */}
-        <div className="text-center mb-8 md:mb-5 py-6 bg-[#0B64F4] rounded-2xl">
+        <div className="text-center mb-8 md:mb-5 py-6 md:py-10 bg-[#0B64F4]">
           <h2 className="text-2xl sm:text-3xl md:text-[36px] font-bold text-white italic px-4">
             Am I missing something everyone else seems to know?
           </h2>
