@@ -131,7 +131,8 @@ export default function Home() {
       {/* <Header /> */}
       {/* <Header /> */}
       
-      <main className="container mx-auto">
+      {/* <main className="container mx-auto"> */}
+      <main>
         {/* <BePromotableHero />
         <PromotionMyths />
         <CareerProblemsCards />
