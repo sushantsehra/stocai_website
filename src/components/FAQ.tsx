@@ -3,10 +3,15 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
+type FAQItem = {
+  question: string;
+  answer: string;
+};
+
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqs: FAQ[] = [
+  const faqs: FAQItem[] = [
     {
       question: "I'm very senior and experienced, so I don't think this will really help me.",
       answer: "This program is specifically designed for experienced professionals who've hit career plateaus. The frameworks we teach address the unique challenges of senior-level advancement where technical skills alone aren't enough."
@@ -46,7 +51,7 @@ const FAQ = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-[#1D1D1D] mb-2">
-            Feeling some hesitation? It's natural.
+            Feeling some hesitation? It&apos;s natural.
           </h2>
           <p className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-bold text-[#0B64F4]">
             Your Questions Answered.
@@ -54,7 +59,7 @@ const FAQ = () => {
         </div>
 
         <div className="space-y-3 sm:space-y-4">
-          {faqs.map((faq: FAQ, index: number) => (
+          {faqs.map((faq: FAQItem, index: number) => (
             <div
               key={index}
               className="bg-white rounded-xl shadow-sm border border-[#E5E7EB80] overflow-hidden transition-all hover:shadow-md"

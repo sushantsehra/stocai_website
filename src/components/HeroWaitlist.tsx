@@ -164,26 +164,26 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({ bgImage = "", isOpen, onClo
                           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[49.1px] font-gotham font-normal tracking-tight text-white leading-tight">
                             <span className="block">Congratulations!</span>
                             <span className="block">You just made a decision</span>
-                            <span className="block">that'll change your</span>
+                            <span className="block">that&apos;ll change your</span>
                             <span className="block">career trajectory.</span>
                           </h1>
                         )}
 
                         {status === "success" ? null : (
                           <p className="mt-6 text-sm sm:text-base md:text-[18px] text-white leading-relaxed max-w-lg">
-                            Fill out your details below, and we'll notify you once enrollment for Be More Promotable opens.
+                            Fill out your details below, and we&apos;ll notify you once enrollment for Be More Promotable opens.
                           </p>
                         )}
 
                         {status === "success" ? (
                           <div className="mt-8 rounded-2xl border border-white/15 bg-white/10 p-6 text-white backdrop-blur">
-                            <h2 className="text-2xl font-gotham font-semibold">You're on the list! Your future self thanks you.</h2>
+                            <h2 className="text-2xl font-gotham font-semibold">You&apos;re on the list! Your future self thanks you.</h2>
                             <p className="mt-4 text-base font-medium">Next steps:</p>
                             <ul className="mt-3 space-y-2 text-sm sm:text-base">
                               <li>Check your inbox (or Spam folder!) for our confirmation email</li>
                               <li>Download our free guide &lt;&lt;TBD&gt;&gt;</li>
                               <li>Follow us on LinkedIn for weekly promotion strategy insights</li>
-                              <li>Share this with a friend who's also stuck (they'll thank you)</li>
+                              <li>Share this with a friend who&apos;s also stuck (they&apos;ll thank you)</li>
                             </ul>
                           </div>
                         ) : (

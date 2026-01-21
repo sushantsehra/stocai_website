@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { ThumbsUp, MessageCircle } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
@@ -31,7 +31,7 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
   }, [blog.blog_id]);
 
   // Function to fetch current blog stats and comments
-  const fetchBlogData = async () => {
+  const fetchBlogData = useCallback(async () => {
     if (!process.env.NEXT_PUBLIC_BACKEND_API_URL) {
       setIsLoading(false);
       return;
@@ -71,7 +71,7 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [blog.blog_id]);
 
   useEffect(() => {
     fetchBlogData();

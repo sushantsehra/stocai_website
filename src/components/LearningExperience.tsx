@@ -52,7 +52,7 @@ const LearningExperience = () => {
             not theory
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-[20px] text-[#6B7280] font-normal text-slate-600">
-            What you'll learn and do
+            What you&apos;ll learn and do
           </p>
         </div>
 

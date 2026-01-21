@@ -33,7 +33,7 @@ const KeyInsight = () => {
       setCurrentSet((prev) => (prev + 1) % comparisons.length);
     }, 5000); // ⏱️ every 5 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [comparisons.length]);
 
   return (
     <section className="p-4 lg:px-1 bg-white">
@@ -56,7 +56,7 @@ const KeyInsight = () => {
 
           {/* Subheading */}
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-bold text-center mb-4">
-            Here's what no one told you.
+            Here&apos;s what no one told you.
           </h3>
 
           {/* Highlighted Quote */}

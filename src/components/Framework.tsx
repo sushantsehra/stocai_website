@@ -1,11 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { LuBrain } from "react-icons/lu";
-import { FaRegEye } from "react-icons/fa6";
-import { GiNetworkBars } from "react-icons/gi";
-import { FaNetworkWired } from "react-icons/fa6";
-import { FaRegCommentAlt } from "react-icons/fa";
-import { IoRepeat } from "react-icons/io5";
+import { Brain, Eye, BarChart3, Network, MessageSquare, Repeat, Crown } from "lucide-react";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
@@ -14,7 +9,7 @@ const Framework = () => {
     {
       id: "framework",
       label: "The Framework",
-      icon: LuBrain,
+      icon: Brain,
       heading: "Knowledge → Reflection → Action → Rewiring",
       subtext:
         "Our proven KRAR methodology creates lasting behavioral change, not just awareness.",
@@ -44,25 +39,25 @@ const Framework = () => {
     {
       id: "visibility",
       label: "Visibility",
-      icon: FaRegEye,
-      heading: "Master Strategic Visibility",
+      icon: Eye,
+      heading: "Be seen by the people who matter",
       subtext:
-        "Position yourself where it matters most — in the rooms and conversations that shape careers.",
+        "Learn techniques that make you impossible to ignore (without self-promotion)",
       steps: [
         {
           number: "1",
           title: "Strategic Presence",
-          description: "Position yourself in high-visibility projects and meetings",
+          description: "Get included in high-visibility projects and meetings",
         },
         {
           number: "2",
           title: "Stakeholder Mapping",
-          description: "Identify and cultivate relationships with decision-makers",
+          description: "Identify decision-makers and make them your advocates",
         },
         {
           number: "3",
           title: "Executive Communication",
-          description: "Communicate impact in language leaders understand",
+          description: "Learn the best way to convey your impact",
         },
         {
           number: "4",
@@ -74,40 +69,40 @@ const Framework = () => {
     {
       id: "credibility",
       label: "Credibility",
-      icon: GiNetworkBars,
-      heading: "Transform Competence into Authority",
+      icon: BarChart3,
+      heading: "Transform 'competence' into 'authority'",
       subtext:
-        "Move from being 'the expert' to being 'the leader' through credibility amplification.",
+        "Stop being 'an expert' and start being 'a leader' with enhanced credibility",
       steps: [
         {
           number: "1",
           title: "Expertise Positioning",
-          description: "Package your knowledge as strategic business value",
+          description: "Translate your knowledge into strategic business value",
         },
         {
           number: "2",
           title: "Trust Architecture",
-          description: "Build systematic trust with key stakeholders",
+          description: "Build relationships of trust with key stakeholders",
         },
         {
           number: "3",
           title: "Thought Leadership",
-          description: "Share insights that demonstrate strategic thinking",
+          description: "Visibly demonstrate your strategic thinking",
         },
         {
           number: "4",
           title: "Results Articulation",
-          description: "Quantify and communicate your impact effectively",
+          description: "Quantify and communicate your impact in their language",
         },
       ],
     },
     {
       id: "influence",
       label: "Influence",
-      icon: FaNetworkWired,
+      icon: Network,
       heading: "Lead Without the Title",
       subtext:
-        "Master the art of organizational influence to drive decisions and outcomes.",
+        "Master the art of organizational influence to drive decisions and outcomes",
       steps: [
         {
           number: "1",
@@ -117,7 +112,7 @@ const Framework = () => {
         {
           number: "2",
           title: "Persuasion Techniques",
-          description: "Influence outcomes in meetings and decisions",
+          description: "Shape decisions and influence outcomes",
         },
         {
           number: "3",
@@ -127,32 +122,32 @@ const Framework = () => {
         {
           number: "4",
           title: "Sponsor Cultivation",
-          description: "Develop advocates who champion your advancement",
+          description: "Develop advocates who champion your cause",
         },
       ],
     },
     {
       id: "communication",
       label: "Communication",
-      icon: FaRegCommentAlt,
+      icon: MessageSquare,
       heading: "Speak the Language of Leadership",
       subtext:
-        "Develop executive presence through strategic communication mastery.",
+        "Master strategic communication and gain respect",
       steps: [
         {
           number: "1",
           title: "Executive Presence",
-          description: "Command attention and respect in any room",
+          description: "Command attention authentically",
         },
         {
           number: "2",
           title: "Narrative Crafting",
-          description: "Tell compelling stories about your work and vision",
+          description: "Share compelling stories, not 'updates'",
         },
         {
           number: "3",
           title: "Difficult Conversations",
-          description: "Navigate challenging discussions with confidence",
+          description: "Handle tough discussions with confidence",
         },
         {
           number: "4",
@@ -164,20 +159,20 @@ const Framework = () => {
     {
       id: "habits",
       label: "Habits",
-      icon: IoRepeat,
+      icon: Repeat,
       heading: "Sustainable Behavior Change",
       subtext:
-        "Build lasting habits that compound into career momentum over time.",
+        "Build lasting habits that compound into career momentum over time",
       steps: [
         {
           number: "1",
           title: "Weekly Rituals",
-          description: "Implement consistent practices that drive visibility",
+          description: "Consolidate learning with consistent practice",
         },
         {
           number: "2",
           title: "Energy Management",
-          description: "Protect your capacity for high-impact work",
+          description: "Protect your capacity for what matters most",
         },
         {
           number: "3",
@@ -187,7 +182,7 @@ const Framework = () => {
         {
           number: "4",
           title: "Continuous Learning",
-          description: "Stay ahead with targeted skill development",
+          description: "Develop skills with intention and without burning out",
         },
       ],
     },
@@ -195,8 +190,22 @@ const Framework = () => {
 
   const currentTab = tabs.find((tab) => tab.id === activeTab);
 
+  const progressItems = [
+    { label: "Skip Level access", value: 89 },
+    { label: "Meeting Presence", value: 91 },
+    { label: "Seat at decision table", value: 92 },
+    { label: "Network Advocacy", value: 88 },
+  ];
+
+  const achievements = [
+    { label: "Own Cabin", checked: true },
+    { label: "43% raise", checked: true },
+    { label: "New role post", checked: true },
+    { label: "Imposter syndrome", checked: false },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 py-12 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 py-12 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -220,84 +229,213 @@ const Framework = () => {
           </p>
         </div>
 
-        {/* Main Content Card */}
-        <div className="flex lg:justify-end">
-         <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-3xl">
-          {/* Tabs */}
-          <div className="flex overflow-x-auto gap-4 scrollbar-hide">
-            {tabs.map((tab) => {
-              const IconComponent = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 mb-1 sm:px-6 py-4 text-sm sm:text-[12px] font-normal transition-all whitespace-nowrap ${
-                    activeTab === tab.id
-                      ? "bg-white text-[#0F1729] rounded-[8px] border mb-0 border-white"
-                      : "bg-[#0B64F4] rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
-                  }`}
-                >
-                  <IconComponent className="w-5 h-5" />
-                  <span className="">{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Tab Content */}
-          <div className="p-8 sm:p-12 bg-white">
-            <div className="mb-8">
-              <h3 className="text-3xl sm:text-4xl lg:text-[26px] font-bold text-black mb-2">
-                {currentTab.heading}
-              </h3>
-              <p className="text-lg lg:text-[16px] font-normal text-black">{currentTab.subtext}</p>
-            </div>
-
-            {/* Steps Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {currentTab.steps.map((step) => (
-                <div
-                  key={step.number}
-                  className="bg-[#E9F0FB] rounded-[8px] p-6 hover:shadow-lg transition-shadow"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-[#0B64F433] text-[#0B64F4] rounded-[4px] flex items-center justify-center font-bold text-lg">
-                        {step.number}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl lg:text-[18px] font-semibold text-black mb-2">
-                        {step.title}
-                      </h4>
-                      <p className="text-xs lg:text-[12px] font-semiboltext-[#686868]">{step.description}</p>
-                    </div>
+        {/* Main Content with Left Card */}
+        <div className="flex flex-col lg:flex-row gap-6 items-start relative">
+          {/* Left Side Card - Progress Tracker */}
+          <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-3deg] hover:rotate-0 transition-transform duration-500">
+            <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl lg:w-[400px]">
+              {/* Subtle border effect */}
+              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-blue-400/30 to-transparent pointer-events-none"></div>
+              
+              {/* <div className="relative bg-gradient-to-br from-[#1e5ddb] to-[#0d3d8f] rounded-[30px] p-6"> */}
+              <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] rounded-[30px] p-0 rounded-t-[40px]">
+                {/* Top Section with Title and Icon */}
+                <div className="text-center mb-6 relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] p-6 rounded-t-[40px]">
+                  
+                  <h3 className="text-white text-sm md:text-[14px] text-white font-semibold mb-3 tracking-wide">BE MORE PROMOTABLE</h3>
+                  
+                  {/* Crown Icon Circle */}
+                  <div className="inline-flex items-center justify-center w-32 h-32 lg:w-[100.7288719059023px] lg:h-[100.8423057412021px] bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-4 shadow-lg border-6 border-white relative">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400 to-blue-700"></div>
+                    <Crown className="w-16 h-16 text-white relative z-10" strokeWidth={2.5} fill="white" />
                   </div>
                 </div>
-              ))}
-            </div>
 
-            {/* Dots indicator */}
-            <div className="flex justify-center mt-8">
-              <div className="flex gap-1">
-                <span className="w-1 h-1 bg-[#000000] rounded-full"></span>
-                <span className="w-1 h-1 bg-[#000000] rounded-full"></span>
-                <span className="w-1 h-1 bg-[#000000] rounded-full"></span>
+                {/* Black Card with Achievements and Progress */}
+                <div className="bg-gradient-to-br from-black/60 via-black/50 to-black/60 rounded-b-[40px] p-6 backdrop-blur-md shadow-xl">
+                  {/* Achievements Checklist */}
+                  <div className="space-y-3 mb-6">
+                    {achievements.map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all ${
+                          item.checked 
+                            ? 'bg-white border-white' 
+                            : 'bg-transparent border-white'
+                        }`}>
+                          {item.checked ? (
+                            <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                              <line x1="6" y1="18" x2="18" y2="6" />
+                            </svg>
+                          )}
+                        </div>
+                        <span className="text-white md:text-[15px] text-sm font-semibold">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Separator Line */}
+                  <div className="border-t border-[#FFFFFF] my-3"></div>
+
+                  {/* Progress Bars Section */}
+                  <div className="space-y-2">
+                    {progressItems.map((item, idx) => (
+                      <div key={idx} className="flex justify-between items-center">
+                        <div className="flex justify-between items-center">
+                          <span className="text-white text-[15px] font-semibold">{item.label}</span>
+                          {/* <div className="bg-blue-300/90 text-blue-900 px-3 py-0.5 rounded-full text-sm font-bold">
+                            {item.value}/100
+                          </div> */}
+                        </div>
+                        <div className="w-1/3 bg-[#0E2E64] rounded-[100px] h-3.5 shadow-inner">
+                          <div 
+                            className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-3.5 rounded-[100px] transition-all duration-700 shadow-lg"
+                            style={{ width: `${item.value}%` }}
+                          >
+                            <p className="text-black font-extrabold text-[10px] ml-4">
+                              {item.value}/100
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+
+          {/* Main Content Card - Right Side */}
+          <div className="flex-1 flex lg:justify-end">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-3xl w-full">
+              {/* Tabs */}
+              <div className="flex overflow-x-auto gap-4 scrollbar-hide">
+                {tabs.map((tab) => {
+                  const IconComponent = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex items-center gap-2 px-4 mb-1 sm:px-6 py-4 text-sm sm:text-[12px] font-normal transition-all whitespace-nowrap ${
+                        activeTab === tab.id
+                          ? "bg-white text-[#0F1729] rounded-[8px] border mb-0 border-white"
+                          : "bg-[#0B64F4] rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
+                      }`}
+                    >
+                      <IconComponent className="w-5 h-5" />
+                      <span className="">{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Tab Content */}
+       
+
+              <div className="p-8 sm:p-12 bg-white">
+                {currentTab ? (
+                  <>
+                    <div className="mb-8">
+                      <h3 className="text-3xl sm:text-4xl lg:text-[26px] font-bold text-black mb-2">
+                        {currentTab.heading}
+                      </h3>
+                      <p className="text-lg lg:text-[16px] font-normal text-black">{currentTab.subtext}</p>
+                    </div>
+
+                    {/* Steps Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {currentTab.steps.map((step) => (
+                        <div
+                          key={step.number}
+                          className="bg-[#E9F0FB] rounded-[8px] p-6 hover:shadow-lg transition-shadow"
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0">
+                              <div className="w-10 h-10 bg-[#0B64F433] text-[#0B64F4] rounded-[4px] flex items-center justify-center font-bold text-lg">
+                                {step.number}
+                              </div>
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="text-xl lg:text-[18px] font-semibold text-black mb-2">
+                                {step.title}
+                              </h4>
+                              <p className="text-xs lg:text-[12px] font-semibold text-[#686868]">
+                                {step.description}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-center text-gray-500">No tab data available.</p>
+                )}
+              </div>
+
+            </div>
+          </div>
         </div>
 
-        <div className="bg-gradient-to-l from-[#0F1729] to-[#0B64F4] max-w-3xl flex lg:justify-end py-4.5 px-1 my-6 absolute right-[9%]">
-          <p className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits | Claim what you deserve | Navigate</p>
+        {/* Rolling Band Animation */}
+        <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[37%] lg:top-[30%]">
+          <style>{`
+            @keyframes scroll {
+              0% {
+                transform: translateX(0);
+              }
+              100% {
+                transform: translateX(-50%);
+              }
+            }
+            .animate-scroll {
+              animation: scroll 30s linear infinite;
+            }
+          `}</style>
+          <div className="flex whitespace-nowrap animate-scroll">
+            <div className="flex items-center gap-3 px-4">
+              <span className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Claim what you deserve</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Navigate with confidence in corporate structure</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Signal leadership readiness</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Build advocates</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Multiply the impact without compromising work life balance</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Build your custom plan</span>
+              <span className="text-white/50">|</span>
+            </div>
+            {/* Duplicate for seamless loop */}
+            {/* <div className="flex items-center gap-3 px-4">
+              <span className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Claim what you deserve</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Navigate with confidence in corporate structure</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Signal leadership readiness</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Build advocates</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Multiply the impact without compromising work life balance</span>
+              <span className="text-white/50">|</span>
+              <span className="text-white text-lg lg:text-[25px] font-medium">Build your custom plan</span>
+              <span className="text-white/50">|</span>
+            </div> */}
+          </div>
         </div>
-      
 
         {/* CTA Button */}
-        <div className="text-center mt-28">
-          
-         <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-90 transition">
+        <div className="text-center mt-12">
+          <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-90 transition">
             Get Early Access
           </button>
         </div>

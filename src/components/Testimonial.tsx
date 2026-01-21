@@ -57,7 +57,8 @@ const Testimonial = () => {
   const handleNext = () =>
     setCurrent((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
 
-  const getCardPosition = (index) => {
+  // const getCardPosition = (index) => {
+  const getCardPosition = (index: number): number | null => {
     const diff = index - current;
     const totalCards = testimonials.length;
 
@@ -90,7 +91,7 @@ const Testimonial = () => {
 
         <div className="max-w-5xl mx-auto mb-12">
           <p className="text-[#000000] lg:text-[24px] text-lg sm:text-xl md:text-2xl font-semibold">
-            We don't add noise.
+            We don&apos;t add noise.
           </p>
           <p className="text-[#000000] lg:text-[24px] text-lg sm:text-xl md:text-2xl font-semibold">
             We create space, structure, and the right prompts—so you finally

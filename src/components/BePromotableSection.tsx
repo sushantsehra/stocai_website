@@ -52,7 +52,7 @@ export default function BePromotableSection() {
          </h3>
          <p className="text-black font-normal max-w-5xl mx-auto mb-12 text-sm sm:text-base">
            A promotion strategy system for experienced professionals who feel
-           stuck despite doing everything 'right'.
+           stuck despite doing everything &apos;right&apos;.
          </p>
         </div>
 

@@ -11,8 +11,8 @@ import edelweiss from "../assets/edelweiss.png";
 // import texas from "../assets/texas.png";
 // import kings from "../assets/kings.png";
 import founder from "../assets/founder.jpg";
-import founderEdelweiss from "../assets/founderEdelweiss.png";
-import founderNVI from "../assets/founderNVI.png";
+// import founderEdelweiss from "../assets/founderEdelweiss.png";
+// import founderNVI from "../assets/founderNVI.png";
 import founderIMT from "../assets/founderIMT.png";
 import founderIIMC from "../assets/founderIIMC.png";
 import founderKing from "../assets/founderKing.png";
@@ -44,19 +44,19 @@ const TrustSection = () => {
     { name: "Kings", logo: founderKing},
   ];
 
-    const grayscaleCompanies = [
-    { name: "NVIDIA", logo: nvidia },
-    { name: "Accenture", logo: accenture },
-    { name: "Citi", logo: citi },
-    { name: "IMT", logo: founderIMT },
-    { name: "Edelweiss", logo: edelweiss },
-    { name: "IIMC", logo: founderIIMC },
-    { name: "Texas", logo: founderTex},
-    { name: "Kings", logo: founderKing},
-  ];
+  //   const grayscaleCompanies = [
+  //   { name: "NVIDIA", logo: nvidia },
+  //   { name: "Accenture", logo: accenture },
+  //   { name: "Citi", logo: citi },
+  //   { name: "IMT", logo: founderIMT },
+  //   { name: "Edelweiss", logo: edelweiss },
+  //   { name: "IIMC", logo: founderIIMC },
+  //   { name: "Texas", logo: founderTex},
+  //   { name: "Kings", logo: founderKing},
+  // ];
 
   return (
-    <section className="py-12 md:py-20 px-2 bg-white">
+    <section className="py-8 px-2 bg-white">
       <div className="max-w-full">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           {/* Left Section */}
@@ -66,15 +66,15 @@ const TrustSection = () => {
               <span className="text-[#0B64F4]">why should you trust us?</span>
             </h2>
             <p className="text-sm sm:text-base md:text-[18px] text-black font-normal mb-4">
-              We're not motivational speakers or LinkedIn influencers peddling
-              platitudes. And we're not here to sell you empty confidence.
+              We&apos;re not motivational speakers or LinkedIn influencers peddling
+              platitudes. And we&apos;re not here to sell you empty confidence.
             </p>
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#000000] mb-4 md:mt-20">
-              We've been overlooked. We've figured out why.
+              We&apos;ve been overlooked. We&apos;ve figured out why.
             </h3>
             <p className="text-sm sm:text-base text-black font-normal mb-6">
-              And we've learned how to unblock career growth, without becoming
-              someone we're not. Now, we help capable professionals like you
+              And we&apos;ve learned how to unblock career growth, without becoming
+              someone we&apos;re not. Now, we help capable professionals like you
               stop second-guessing themselves and start moving forward with
               intent.
             </p>
@@ -87,12 +87,12 @@ const TrustSection = () => {
               .
             </p>
             <p className="text-lg sm:text-xl font-bold text-black mt-6 md:mt-16">
-              We're rooting for you.
+              We&apos;re rooting for you.
             </p>
           </div>
 
           {/* Right Section (Founder Card) */}
-          <div className="relative rounded-3xl shadow-2xl border-2 border-[#D5D5D5] overflow-hidden min-w-[400px] max-w-[442.999988143542px] mx-auto transform rotate-[5deg] hover:rotate-0 transition-transform duration-500">
+          <div className="relative rounded-3xl shadow-2xl border-2 border-[#D5D5D5] overflow-hidden min-w-[400px] max-w-[442.999988143542px] mx-auto transform rotate-[10deg] hover:rotate-0 transition-transform duration-500">
             {/* Top White Section */}
             <div className="bg-white text-center py-6 relative z-10 min-h-[130px]">
               <h3 className="text-lg sm:text-xl lg:text-[14px] font-semibold text-black tracking-wider">

@@ -50,12 +50,12 @@ const CareerStalledSection: React.FC = () => {
             {/* Text Content */}
             <div className="flex flex-col space-y-6 lg:w-[40%] text-left">
               <p className="font-semibold text-xl sm:text-2xl text-[#6B7280]">
-                Your manager says you're "doing great."<br />
+                Your manager says you&apos;re &quot;doing great.&quot;<br />
                 Then someone else gets the promotion.
               </p>
               
               <p className="font-normal text-xl sm:text-2xl lg:text-[30px] text-[#6B7280]">
-                You're dependable, <span className="text-[#0B64F4] font-semibold">but invisible</span>.<br />
+                You&apos;re dependable, <span className="text-[#0B64F4] font-semibold">but invisible</span>.<br />
                 Valued, <span className="text-[#0B64F4] font-semibold">but not chosen</span>.
               </p>
             </div>

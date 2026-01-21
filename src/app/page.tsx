@@ -10,7 +10,7 @@ import BeforeAfterCompare from "@/components/BeforeAfterCompare";
 import PromoSystemSection from "@/components/PromoSystemSection";
 import FaqAccordion from "@/components/FaqAccordion";
 import RoiCards from "@/components/RoiCards";
-import HeroWaitlist from "@/components/HeroWaitlist";
+// import HeroWaitlist from "@/components/HeroWaitlist";
 import FounderBonus from "@/components/FounderBonus";
 import OutcomeContract from "@/components/OutcomeContract";
 import SuccessStories from "@/components/SuccessStories";
@@ -139,7 +139,7 @@ export default function Home() {
         <FounderBonus />
         <FaqAccordion />
         <RoiCards />
-        <HeroWaitlist />
+        {/* <HeroWaitlist /> */}
       </main>
       {/* <Footer /> */}
     </div>

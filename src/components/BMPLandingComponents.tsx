@@ -12,48 +12,9 @@ import WaitlistSection from './WaitlistSection';
 import CareerStalledSection from './CareerStalledSection';
 import BePromotableSection from './BePromotableSection';
 
-// Type Definitions
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
 interface FAQ {
   question: string;
   answer: string;
-}
-
-interface Slide {
-  title: string;
-  points: string[];
-}
-
-interface Tab {
-  id: string;
-  label: string;
-}
-
-interface Step {
-  number: string;
-  title: string;
-  description: string;
-}
-
-interface Comparison {
-  old: string;
-  new: string;
-}
-
-interface CountdownUnit {
-  value: number;
-  label: string;
-}
-
-interface Stat {
-  label: string;
-  value: number;
 }
 
 // Main App Component

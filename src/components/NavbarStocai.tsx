@@ -328,7 +328,7 @@ export default function NavbarStocai() {
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="flex items-center font-gotham space-x-2 bg-[#54B0AF] hover:bg-[#459190] transition-colors rounded-full p-1 font-bold"
             >
-              <img
+              <Image
                 src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName.charAt(0)}`)}&background=54B0AF&bold=true&color=fff&size=32&font-size=0.7`}
                 alt={`${user.firstName} ${user.lastName}`}
                 className="w-8 h-8 rounded-full"
