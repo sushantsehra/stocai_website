@@ -242,7 +242,7 @@ const Framework = () => {
         {/* Main Content with Left Card */}
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start relative">
           {/* Left Side Card - Progress Tracker */}
-          <div className="w-[390.14613978924467px] ml-[20%] md:ml-[0%] lg:flex-shrink-0 bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[40px] p-0.5 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
+          <div className="w-[390.14613978924467px] md:ml-[0%] lg:flex-shrink-0 bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[40px] p-0.5 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
             {/* <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]"> */}
             <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] rounded-[40px] p-0 shadow-2xl w-[390.14613978924467px]">
               {/* Subtle border effect */}
@@ -422,7 +422,7 @@ const Framework = () => {
 
           {/* Main Content Card - Right Side */}
           <div className="flex-1 flex flex-col md:translate-x-[7.5%] mt-10 md:mt-0">
-            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-2xl md:max-w-xl lg:max-w-3xl w-full">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-2xl md:max-w-xl lg:max-w-3xl w-full">
               {/* Tabs */}
               {/* <div className="flex overflow-x-auto gap-2 scrollbar-hide"> */}
               <div className="relative z-20 flex overflow-x-auto gap-2 scrollbar-hide">
@@ -432,10 +432,10 @@ const Framework = () => {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-2 px-4 md:px-4.5 mb-1 py-3 text-sm sm:text-[12px] font-jakarta font-normal transition-all whitespace-nowrap ${
+                      className={`flex items-center gap-2 px-4 md:px-4 mb-1 py-3 text-sm sm:text-[12px] font-jakarta font-normal transition-all whitespace-nowrap ${
                         activeTab === tab.id
-                          ? "bg-white text-[#0F1729] border rounded-[8px] border mb-0 border-white"
-                          : "bg-[#0B64F4]/30 text-white rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
+                          ? "bg-white text-[#0F1729] border rounded-t-[8px] border mb-0 border-white"
+                          : "bg-[#0B64F4]/30 text-white rounded-[8px] mb-3 text-[#FFFFFF] hover:bg-white/10 border-transparent"
                       }`}
                     >
                       <IconComponent className="w-5 h-5" />
@@ -526,7 +526,7 @@ const Framework = () => {
               </div>
             </div>
           </div> */}
-          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-2xl lg:max-w-3xl">
+          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-3xl">
             {/* Edge fade gradients */}
             <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
             <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>

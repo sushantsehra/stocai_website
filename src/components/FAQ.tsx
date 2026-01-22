@@ -50,10 +50,10 @@ const FAQ = () => {
     <section className="py-12 md:py-20 px-4 sm:px-6 bg--white">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-[#1D1D1D] mb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold font-jakarta text-[#1D1D1D] mb-2">
             Feeling some hesitation? It&apos;s natural.
           </h2>
-          <p className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-bold text-[#0B64F4]">
+          <p className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-bold font-jakarta text-[#0B64F4]">
             Your Questions Answered.
           </p>
         </div>
@@ -69,11 +69,11 @@ const FAQ = () => {
                 className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-4"
                 aria-expanded={openIndex === index}
               >
-                <span className="font-bold text-[16px] text-sm sm:text-base md:text-[16px] pr-4">
+                <span className="text-black text-[16px] text-sm sm:text-base md:text-[16px] font-bold font-jakarta pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-300 ${
+                  className={`w-5 h-5 text-[#A8A8A8] flex-shrink-0 transition-transform duration-300 ${
                     openIndex === index ? 'rotate-180' : ''
                   }`}
                 />
@@ -83,7 +83,7 @@ const FAQ = () => {
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 }`}
               >
-                <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-sm sm:text-base text-slate-600 leading-relaxed">
+                <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-sm sm:text-base text-slate-600 font-jakarta leading-relaxed">
                   {faq.answer}
                 </div>
               </div>

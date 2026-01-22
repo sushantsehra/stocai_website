@@ -1,32 +1,33 @@
 "use client";
 
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
-import wl1 from "../assets/wl1.png";
-import wl2 from "../assets/wl2.png";
-import wl3 from "../assets/wl3.png";
-import wl4 from "../assets/wl4.png"; 
-import wl5 from "../assets/wl5.png";      
-import { SlEnergy } from "react-icons/sl";
+// import wl1 from "../assets/wl1.png";
+// import wl2 from "../assets/wl2.png";
+// import wl3 from "../assets/wl3.png";
+// import wl4 from "../assets/wl4.png"; 
+// import wl5 from "../assets/wl5.png";      
+// import { SlEnergy } from "react-icons/sl";
+// import bluetickcheckbox from "../assets/bluetickcheckbox.png";
+import { IoCheckbox } from "react-icons/io5";
 
 const WaitlistSection = () => {
-  const avatars = [
-    wl1,
-    wl2,
-    wl3,
-    wl4,
-    wl5,
-  ];
+  // const avatars = [
+  //   wl1,
+  //   wl2,
+  //   wl3,
+  //   wl4,
+  //   wl5,
+  // ];
 
   return (
     <section className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 px-4 text-center mt-6">
       <div className="max-w-full mx-auto">
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white font-bold mb-2">Get early access</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white font-jakarta font-bold mb-2">Ready to change your career trajectory?</h2>
 
         {/* Subtitle */}
-        <p className="flex items-center justify-center text-[#0B64F4] font-bold mb-4 text-sm sm:text-base lg:text-[20px]">
-         {/* <span className="text-gray-400"><SlEnergy stroke="fill" fill="#54B0AF" className="text-gray-400" /> </span> <span className="ml-2">Available in Early July</span> */}
+        {/* <p className="flex items-center justify-center text-[#0B64F4] font-bold mb-4 text-sm sm:text-base lg:text-[20px]">
          <span className="text-gray-400 flex items-center">
             <SlEnergy
                 size={16}
@@ -36,24 +37,31 @@ const WaitlistSection = () => {
             />
         <span className="ml-2 text-[#0B64F4]">Available in Early July</span>
         </span>
-        </p>
+        </p> */}
 
         {/* Description */}
-        <p className="lg:text-[20px] mb-10 text-sm sm:text-base font-medium">
-          Be amongst the first to experience wait and launch a viral waitlist.
-          Sign up to be notified when we launch!
+        <div className="flex items-center justify-center">
+        <p className="lg:text-[20px] mb-10 text-sm sm:text-base font-medium leading-6 text-white/60 font-jakarta lg:max-w-3xl text-center">
+         After years of doing this privately and helping hundreds become promotable, we’re scaling to our first paid launch.
+        </p>
+        </div>
+
+
+        {/* Description */}
+        <p className="lg:text-[22px] mb-6 text-sm sm:text-base font-jakarta font-medium">
+          Benefit from our early-bird offer, only available for a short time, for this special launch.
         </p>
 
         <div className="flex justify-center">
         {/* Email Input & Button */}
-        <div className="flex flex-col sm:flex-row items-center justify-center min-w-xs md:min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[8px] h-[80px] shadow-lg overflow-hidden mb-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center min-w-xs md:min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[8px] h-[80px] shadow-lg overflow-hidden mb-2">
           <input
             type="email"
             placeholder="Enter email address"
             className="w-full sm:w-[65%] px-4 py-3 text-[#C8C8C8] font-medium outline-none text-sm sm:text-base lg:text-[20px]"
           />
           <button className="w-full sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[12px] text-white lg:text-[20px] font-semibold py-1 md:py-3 transition-all">
-            Join Waitlist
+            Request Access
           </button>
         </div>
         </div>
@@ -61,7 +69,7 @@ const WaitlistSection = () => {
         {/* Bottom Row */}
         <div className="flex flex-col sm:flex-row items-center justify-start absolute left-[17%] lg:left-[25%] gap-4 lg:gap-20">
           {/* Avatars + Waitlist Count */}
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div className="flex -space-x-3">
               {avatars.map((src, index) => (
                 <div
@@ -81,8 +89,16 @@ const WaitlistSection = () => {
             <p className="text-sm sm:text-base lg:text-[20px] font-medium">
               Join 8,500+ others on the waitlist
             </p>
-          </div>
+        
+          </div> */}
 
+          <div className="flex items-center justify-center w-full lg:translate-x-[90%]">
+            <p className="text-sm sm:text-base lg:text-[20px] font-medium">
+              <IoCheckbox className="inline-block w-5 h-5 text-[#0B64F4] mr-2 mb-1" />
+              Opt in to receive updates
+            </p>
+          </div>
+       
           {/* Checkbox */}
           {/* <label className="flex items-center text-sm sm:text-base lg:text-[16px] cursor-pointer">
             <input
