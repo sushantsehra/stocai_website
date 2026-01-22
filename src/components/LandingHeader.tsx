@@ -15,7 +15,7 @@ const Header = () => {
           alt="BCL Logo"
           width={180}
           height={50}
-          className="object-contain"
+          className="object-contain lg:ml-[2%]"
         />
 
         <div className="flex mr-20">
@@ -34,10 +34,10 @@ const Header = () => {
 
         {/* Buttons */}
         <div className="flex items-center space-x-3 lg:space-x-4">
-          <button className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-bold shadow-xl transition-all">
+          <button className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
             Get Early Access
           </button>
-          <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] text-[14px] px-4 py-2 rounded-[12px] font-bold shadow-xl transition-all">
+          <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
             Sign In / Login
           </button>
         </div>

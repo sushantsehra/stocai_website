@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Brain, Eye, BarChart3, Network, MessageSquare, Repeat, Crown } from "lucide-react";
 import { IoMdCheckboxOutline } from "react-icons/io";
+import cardBgImage from "../assets/cardBgImage.png";
+import Image from "next/image";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
@@ -206,7 +208,7 @@ const Framework = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 py-12 px-4 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-12 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -220,29 +222,29 @@ const Framework = () => {
             </svg>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-bold leading-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-12">
             Introducing <br />
-            <span className="text-white">BMP – Be More Promotable</span>
+            <span className="text-white  font-jakarta">BMP – Be More Promotable</span>
           </h2>
-          <p className="text-white mt-4 lg:mt-1 text-base sm:text-lg md:text-xl max-w-7xl mx-auto">
+          <p className="text-white mt-4 lg:mt-1 text-base sm:text-lg md:text-xl font-normal font-jakarta max-w-7xl mx-auto">
             A proven blueprint for changing how you show up, speak, and are
             perceived at work, so you become more promotable.
           </p>
         </div>
 
         {/* Main Content with Left Card */}
-        <div className="flex flex-col lg:flex-row gap-6 items-start relative">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start relative">
           {/* Left Side Card - Progress Tracker */}
-          <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-3deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start my-10">
+          <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
             <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]">
               {/* Subtle border effect */}
               <div className="absolute inset-0 rounded-[32px] pointer-events-none"></div>
               
               {/* <div className="relative bg-gradient-to-br from-[#1e5ddb] to-[#0d3d8f] rounded-[30px] p-6"> */}
-              <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] rounded-[30px] p-0 rounded-t-[40px]">
+              <div className="relative  rounded-[30px] p-0 rounded-t-[40px]">
                 {/* Top Section with Title and Icon */}
                 <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] text-center p-8 rounded-t-[40px] min-h-[140px]">
-                  <h3 className="text-white text-sm md:text-[14px] lg:text-[18px] font-semibold tracking-wide mb-4">
+                  <h3 className="text-white text-sm md:text-[14px] lg:text-[18px] font-montserrat font-semibold tracking-wide mb-4">
                     BE MORE PROMOTABLE
                   </h3>
 
@@ -253,61 +255,76 @@ const Framework = () => {
                 </div>
 
                 {/* Black Card with Achievements and Progress */}
-                <div className="bg-gradient-to-b from-black/80 via-black/60 to-black/80 rounded-b-[40px] p-8 backdrop-blur-md shadow-xl py-20">
-                  {/* Achievements Checklist */}
-                  <div className="space-y-3 mb-6">
-                    {achievements.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
-                        <div
-                          className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
-                            item.checked ? "bg-transparent" : "bg-transparent border-2 border-white"
-                          }`}
-                        >
-                          {item.checked ? (
-                            <IoMdCheckboxOutline className="w-8 h-8 text-white" />
-                          ) : (
-                            <svg
-                              className="w-3.5 h-3.5 text-white"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth={2.5}
-                            >
-                              <line x1="6" y1="6" x2="18" y2="18" />
-                              <line x1="6" y1="18" x2="18" y2="6" />
-                            </svg>
-                          )}
-                        </div>
-                        <span className="text-white md:text-[15px] text-sm font-semibold">
-                          {item.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                {/* <div className="bg-gradient-to-b from-black/80 via-black/60 to-black/80 rounded-b-[40px] p-8 backdrop-blur-md shadow-xl py-20"> */}
+                <div className="relative rounded-b-[40px] overflow-hidden shadow-xl py-16">
+                  {/* Background Image */}
+                  <Image
+                    src={cardBgImage}
+                    alt="Card Background"
+                    fill
+                    className="object-cover opacity-100 z-0"
+                    priority
+                  />
 
-                  {/* Separator Line */}
-                  <div className="border-t border-[#FFFFFF]/30 my-4"></div>
-
-                  {/* Progress Bars Section */}
-                  <div className="space-y-4">
-                    {progressItems.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-center">
-                        <span className="text-white text-[15px] font-semibold">
-                          {item.label}
-                        </span>
-                        <div className="flex items-center gap-2 w-[45%]">
-                          <div className="w-full bg-[#0E2E64] rounded-[100px] h-3.5 shadow-inner">
-                            <div
-                              className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-3.5 rounded-[100px] transition-all duration-700 shadow-lg"
-                              style={{ width: `${item.value}%` }}
-                            ></div>
+                  {/* Foreground content (above image) */}
+                  <div className="relative z-10 p-8">
+                    {/* Achievements Checklist */}
+                    <div className="space-y-3 mb-6">
+                      {achievements.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-3">
+                          <div
+                            className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
+                              item.checked
+                                ? "bg-transparent"
+                                : "bg-transparent border-2 border-white"
+                            }`}
+                          >
+                            {item.checked ? (
+                              <IoMdCheckboxOutline className="w-8 h-8 text-white" />
+                            ) : (
+                              <svg
+                                className="w-3.5 h-3.5 text-white"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={2.5}
+                              >
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                                <line x1="6" y1="18" x2="18" y2="6" />
+                              </svg>
+                            )}
                           </div>
-                          <p className="text-[#AFCBFF] font-bold text-[11px]">
-                            {item.value}/100
-                          </p>
+                          <span className="text-white md:text-[15px] text-sm font-jakarta font-semibold">
+                            {item.label}
+                          </span>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+
+                    {/* Separator Line */}
+                    <div className="border-t border-[#FFFFFF] my-4 lg:my-6 lg:mb-8"></div>
+
+                    {/* Progress Bars Section */}
+                    <div className="space-y-4">
+                      {progressItems.map((item, idx) => (
+                        <div key={idx} className="flex justify-between items-center">
+                          <span className="text-white text-[15px] font-jakarta font-semibold">
+                            {item.label}
+                          </span>
+                          <div className="flex items-center gap-2 w-[45%]">
+                            <div className="w-full bg-[#0E2E64] rounded-[100px] h-3.5 shadow-inner">
+                              <div
+                                className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-3.5 rounded-[100px] transition-all duration-700 shadow-lg"
+                                style={{ width: `${item.value}%` }}
+                              ></div>
+                            </div>
+                            <p className="text-[#AFCBFF] font-bold text-[11px]">
+                              {item.value}/100
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -315,7 +332,7 @@ const Framework = () => {
           </div>
 
           {/* Main Content Card - Right Side */}
-          <div className="flex-1 flex lg:justify-end">
+          <div className="flex-1 flex flex-col md:translate-x-[7.5%]">
             <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-xl lg:max-w-3xl w-full">
               {/* Tabs */}
               <div className="flex overflow-x-auto gap-2 scrollbar-hide">
@@ -325,7 +342,7 @@ const Framework = () => {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-2 px-4 mb-1 py-3 text-sm sm:text-[12px] font-normal transition-all whitespace-nowrap ${
+                      className={`flex items-center gap-2 px-4 md:px-4.5 mb-1 py-3 text-sm sm:text-[12px] font-jakarta font-normal transition-all whitespace-nowrap ${
                         activeTab === tab.id
                           ? "bg-white text-[#0F1729] border rounded-[8px] border mb-0 border-white"
                           : "bg-[#0B64F4] rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
@@ -345,10 +362,10 @@ const Framework = () => {
                 {currentTab ? (
                   <>
                     <div className="mb-8">
-                      <h3 className="text-3xl sm:text-4xl lg:text-[26px] font-bold text-black mb-2">
+                      <h3 className="text-3xl sm:text-4xl lg:text-[26px] font-jakarta font-bold text-black mb-2">
                         {currentTab.heading}
                       </h3>
-                      <p className="text-lg lg:text-[16px] font-normal text-black">{currentTab.subtext}</p>
+                      <p className="text-lg lg:text-[16px] font-jakarta font-normal text-black">{currentTab.subtext}</p>
                     </div>
 
                     {/* Steps Grid */}
@@ -356,19 +373,19 @@ const Framework = () => {
                       {currentTab.steps.map((step) => (
                         <div
                           key={step.number}
-                          className="bg-[#E9F0FB] rounded-[8px] p-6 hover:shadow-lg transition-shadow"
+                          className="bg-[#E9F0FB] rounded-[8px] p-6 lg:p-4 hover:shadow-lg transition-shadow"
                         >
                           <div className="flex items-start gap-4">
                             <div className="flex-shrink-0">
-                              <div className="w-10 h-10 bg-[#0B64F433] text-[#0B64F4] rounded-[4px] flex items-center justify-center font-bold text-lg">
+                              <div className="w-10 h-10 bg-[#0B64F433] text-[#0B64F4] rounded-[4px] flex items-center font-jakarta justify-center font-bold text-lg">
                                 {step.number}
                               </div>
                             </div>
                             <div className="flex-1">
-                              <h4 className="text-xl lg:text-[18px] font-semibold text-black mb-2">
+                              <h4 className="text-xl lg:text-[18px] font-jakarta font-semibold text-black mb-2">
                                 {step.title}
                               </h4>
-                              <p className="text-xs lg:text-[12px] font-semibold text-[#686868]">
+                              <p className="text-xs lg:text-[12px] font-jakarta font-semibold text-[#686868]">
                                 {step.description}
                               </p>
                             </div>
@@ -383,67 +400,72 @@ const Framework = () => {
               </div>
 
             </div>
-          </div>
-        </div>
 
-        {/* Rolling Band Animation */}
-        <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[37%] lg:top-[-10%]">
-          <style>{`
-            @keyframes scroll {
-              0% {
-                transform: translateX(0);
+
+        <div className="flex flex-col">
+          {/* Rolling Band Animation */}
+          <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[0%] lg:top-[-10%]">
+            <style>{`
+              @keyframes scroll {
+                0% {
+                  transform: translateX(0);
+                }
+                100% {
+                  transform: translateX(-50%);
+                }
               }
-              100% {
-                transform: translateX(-50%);
+              .animate-scroll {
+                animation: scroll 30s linear infinite;
               }
-            }
-            .animate-scroll {
-              animation: scroll 30s linear infinite;
-            }
-          `}</style>
-          <div className="flex whitespace-nowrap animate-scroll">
-            <div className="flex items-center gap-3 px-4">
-              <span className="text-white text-lg lg:text-[21px] font-medium">Rewire Non promotable habits</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[21px] font-medium">Claim what you deserve</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[21px] font-medium">Navigate with confidence in corporate structure</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[21px] font-medium">Signal leadership readiness</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[21px] font-medium">Build advocates</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[21px] font-medium">Multiply the impact without compromising work life balance</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[21px] font-medium">Build your custom plan</span>
-              <span className="text-white/50">|</span>
+            `}</style>
+            <div className="flex whitespace-nowrap animate-scroll">
+              <div className="flex items-center gap-3 px-4">
+                <span className="text-white text-lg lg:text-[21px] font-medium">Rewire Non promotable habits</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[21px] font-medium">Claim what you deserve</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[21px] font-medium">Navigate with confidence in corporate structure</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[21px] font-medium">Signal leadership readiness</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[21px] font-medium">Build advocates</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[21px] font-medium">Multiply the impact without compromising work life balance</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[21px] font-medium">Build your custom plan</span>
+                <span className="text-white/50">|</span>
+              </div>
+              {/* Duplicate for seamless loop */}
+              {/* <div className="flex items-center gap-3 px-4">
+                <span className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[25px] font-medium">Claim what you deserve</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[25px] font-medium">Navigate with confidence in corporate structure</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[25px] font-medium">Signal leadership readiness</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[25px] font-medium">Build advocates</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[25px] font-medium">Multiply the impact without compromising work life balance</span>
+                <span className="text-white/50">|</span>
+                <span className="text-white text-lg lg:text-[25px] font-medium">Build your custom plan</span>
+                <span className="text-white/50">|</span>
+              </div> */}
             </div>
-            {/* Duplicate for seamless loop */}
-            {/* <div className="flex items-center gap-3 px-4">
-              <span className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Claim what you deserve</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Navigate with confidence in corporate structure</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Signal leadership readiness</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Build advocates</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Multiply the impact without compromising work life balance</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white text-lg lg:text-[25px] font-medium">Build your custom plan</span>
-              <span className="text-white/50">|</span>
-            </div> */}
+          </div>
+
+          {/* CTA Button */}
+          <div className="text-start mt-5">
+            <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+              Get Early Access
+            </button>
+          </div>
+        </div>
           </div>
         </div>
 
-        {/* CTA Button */}
-        <div className="text-center mt-8 lg:translate-x-[-3.5%]">
-          <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
-            Get Early Access
-          </button>
-        </div>
+
       </div>
     </div>
   );
