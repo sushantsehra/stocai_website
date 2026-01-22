@@ -7,50 +7,32 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const KeyInsight = () => {
   const comparisons = [
-    [
-      { old: "Working harder", new: "Being visible in the right ways" },
-      { old: "Waiting to be noticed", new: "Executive presence" },
-      { old: "Technical excellence", new: "Strategic positioning" },
-    ],
-    [
-      { old: "Asking for permission", new: "Creating opportunities" },
-      { old: "Being busy", new: "Being impactful" },
-      { old: "CC’d on decisions", new: "Making decisions" },
-    ],
-    [
-      { old: "Attending the ‘All Hands’", new: "Presenting at the ‘All Hands’" },
-      { old: "Hotdesking every day", new: "Corner office with your name" },
-      { old: "Flying ‘Economy’", new: "Business class approved" },
-    ],
+    { old: "Working harder", new: "Being visible in the right ways" },
+    { old: "Waiting to be noticed", new: "Executive presence" },
+    { old: "Technical excellence", new: "Strategic positioning" },
+    { old: "Asking for permission", new: "Creating opportunities" },
+    { old: "Being busy", new: "Being impactful" },
+    { old: "CC’d on decisions", new: "Making decisions" },
+    { old: "Attending the ‘All Hands’", new: "Presenting at the ‘All Hands’" },
+    { old: "Hotdesking every day", new: "Corner office with your name" },
+    { old: "Flying ‘Economy’", new: "Business class approved" },
   ];
 
-  const [currentSet, setCurrentSet] = useState(0);
-  const [visibleLines, setVisibleLines] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
 
-  // show lines one-by-one, then switch to next set
   useEffect(() => {
-    setVisibleLines(0);
-    // let lineTimer: NodeJS.Timeout;
-    // let switchTimer: NodeJS.Timeout;
+    const interval = setInterval(() => {
+      setStartIndex((prev) => (prev + 1) % comparisons.length);
+    }, 2000); // every 2s a new one comes in
+    return () => clearInterval(interval);
+  }, [comparisons.length]);
 
-    // Animate lines 1, 2, 3 one by one (every 1s)
-    const lineTimer = setInterval(() => {
-      setVisibleLines((prev) => {
-        if (prev < 3) return prev + 1;
-        return prev;
-      });
-    }, 1000);
-
-    // after all lines are visible, wait 3s then switch set
-    const switchTimer = setTimeout(() => {
-      setCurrentSet((prev) => (prev + 1) % comparisons.length);
-    }, 6000); // total: 3s for lines + 3s hold = 6s
-
-    return () => {
-      clearInterval(lineTimer);
-      clearTimeout(switchTimer);
-    };
-  }, [currentSet, comparisons.length]);
+  // always keep 3 visible items
+  const visibleItems = [
+    comparisons[startIndex % comparisons.length],
+    comparisons[(startIndex + 1) % comparisons.length],
+    comparisons[(startIndex + 2) % comparisons.length],
+  ];
 
   return (
     <section className="py-0 lg:px-0 bg-white">
@@ -72,13 +54,13 @@ const KeyInsight = () => {
           </div>
 
           {/* Subheading */}
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[48px] font-jakarta font-gotham font-bold text-center">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[48px] font-jakarta font-bold text-center">
             Here&apos;s what no one told you.
           </h3>
 
           {/* Highlighted Quote */}
           <div className="bg-[#0B64F4] text-white text-center rounded-[16px] px-6 py-6 lg:py-8 max-w-[896px] mx-auto translate-y-8">
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-[30px] font-jakarta font-bold leading-9">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-[30px] font-jakarta font-bold leading-10">
               What worked earlier in your career{" "}
               <br className="hidden sm:block" />
               now quietly works against you.
@@ -90,29 +72,26 @@ const KeyInsight = () => {
             <p className="text-base sm:text-lg lg:text-[22px] font-jakarta font-normal text-black mt-6">
               Most capable professionals don’t stall because they lack skills.
             </p>
-            <p className="text-lg sm:text-xl lg:text-[22px] font-jakarta font-bold text-black mt-2">
+            <p className="text-lg sm:text-xl lg:text-[22px] font-jakarta font-bold text-black mt-1.5">
               They stall because they confuse performance with promotability.
             </p>
 
             {/* Animated Comparison Section */}
             <div className="flex justify-center w-full py-2">
-              <div className="relative min-h-[160px] flex flex-col items-center justify-center bg-white shadow-2xl mt-2 lg:mt-5 rounded-[31.5px] p-4 sm:p-6 w-full max-w-3xl">
-                <AnimatePresence mode="wait">
+              <div className="relative h-[160px] overflow-hidden flex flex-col items-center justify-center bg-white shadow-2xl mt-2 lg:mt-5 rounded-[31.5px] p-4 sm:p-6 w-full max-w-xl">
+                <AnimatePresence initial={false}>
                   <motion.div
-                    key={currentSet}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -50 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full"
+                    key={startIndex}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -40, opacity: 0 }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    className="flex flex-col gap-2 w-full"
                   >
-                    {comparisons[currentSet].slice(0, visibleLines).map((item, index) => (
+                    {visibleItems.map((item, index) => (
                       <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2, duration: 0.5 }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2 mb-3"
+                        key={`${item.old}-${index}`}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2"
                       >
                         <div className="flex-1 text-center sm:text-left lg:ml-[10%]">
                           <span className="text-base sm:text-lg lg:text-[16px] text-black font-jakarta font-normal line-through">
@@ -152,7 +131,6 @@ export default KeyInsight;
 // import { motion, AnimatePresence } from "framer-motion";
 
 // const KeyInsight = () => {
-//   // ✅ Your comparisons grouped
 //   const comparisons = [
 //     [
 //       { old: "Working harder", new: "Being visible in the right ways" },
@@ -171,15 +149,33 @@ export default KeyInsight;
 //     ],
 //   ];
 
-//   // ✅ Track which set of comparisons is active
 //   const [currentSet, setCurrentSet] = useState(0);
+//   const [visibleLines, setVisibleLines] = useState(0);
 
+//   // show lines one-by-one, then switch to next set
 //   useEffect(() => {
-//     const interval = setInterval(() => {
+//     setVisibleLines(0);
+//     // let lineTimer: NodeJS.Timeout;
+//     // let switchTimer: NodeJS.Timeout;
+
+//     // Animate lines 1, 2, 3 one by one (every 1s)
+//     const lineTimer = setInterval(() => {
+//       setVisibleLines((prev) => {
+//         if (prev < 3) return prev + 1;
+//         return prev;
+//       });
+//     }, 1000);
+
+//     // after all lines are visible, wait 3s then switch set
+//     const switchTimer = setTimeout(() => {
 //       setCurrentSet((prev) => (prev + 1) % comparisons.length);
-//     }, 5000); // ⏱️ every 5 seconds
-//     return () => clearInterval(interval);
-//   }, [comparisons.length]);
+//     }, 6000); // total: 3s for lines + 3s hold = 6s
+
+//     return () => {
+//       clearInterval(lineTimer);
+//       clearTimeout(switchTimer);
+//     };
+//   }, [currentSet, comparisons.length]);
 
 //   return (
 //     <section className="py-0 lg:px-0 bg-white">
@@ -215,7 +211,7 @@ export default KeyInsight;
 //           </div>
 
 //           {/* Insight Text */}
-//           <div className="text-center mb-8  bg-[#F5F5F5] py-10 rounded-[31.5px] px-6 md:px-10">
+//           <div className="text-center mb-8 bg-[#F5F5F5] py-10 rounded-[31.5px] px-6 md:px-10">
 //             <p className="text-base sm:text-lg lg:text-[22px] font-jakarta font-normal text-black mt-6">
 //               Most capable professionals don’t stall because they lack skills.
 //             </p>
@@ -223,46 +219,48 @@ export default KeyInsight;
 //               They stall because they confuse performance with promotability.
 //             </p>
 
-//           <div className="flex justify-center w-full py-2">
-//                   {/* Animated Comparison Section */}
-//           <div className="relative h-[160px] w-xl flex items-center justify-center bg-white shadow-2xl mt-2 lg:mt-5 rounded-[31.5px] p-2">
-//             <AnimatePresence mode="wait">
-//               <motion.div
-//                 key={currentSet}
-//                 initial={{ opacity: 0, rotateX: 90 }}
-//                 animate={{ opacity: 1, rotateX: 0 }}
-//                 exit={{ opacity: 0, rotateX: -90 }}
-//                 transition={{ duration: 0.7, ease: "easeInOut" }}
-//                 className="absolute inset-0 flex flex-col justify-center space-y-2 md:space-y-3"
-//               >
-//                 {comparisons[currentSet].map((item, index) => (
-//                   <div
-//                     key={index}
-//                     className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2"
+//             {/* Animated Comparison Section */}
+//             <div className="flex justify-center w-full py-2">
+//               <div className="relative min-h-[160px] flex flex-col items-center justify-center bg-white shadow-2xl mt-2 lg:mt-5 rounded-[31.5px] p-4 sm:p-6 w-full max-w-3xl">
+//                 <AnimatePresence mode="wait">
+//                   <motion.div
+//                     key={currentSet}
+//                     initial={{ opacity: 0, y: 50 }}
+//                     animate={{ opacity: 1, y: 0 }}
+//                     exit={{ opacity: 0, y: -50 }}
+//                     transition={{ duration: 0.5 }}
+//                     className="w-full"
 //                   >
-//                     <div className="flex-1 text-center sm:text-left lg:ml-[10%]">
-//                       <span className="text-base sm:text-lg lg:text-[16px] text-black font-jakarta font-normal line-through">
-//                         {item.old}
-//                       </span>
-//                     </div>
+//                     {comparisons[currentSet].slice(0, visibleLines).map((item, index) => (
+//                       <motion.div
+//                         key={index}
+//                         initial={{ opacity: 0, y: 20 }}
+//                         animate={{ opacity: 1, y: 0 }}
+//                         transition={{ delay: index * 0.2, duration: 0.5 }}
+//                         className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2 mb-3"
+//                       >
+//                         <div className="flex-1 text-center sm:text-left lg:ml-[10%]">
+//                           <span className="text-base sm:text-lg lg:text-[16px] text-black font-jakarta font-normal line-through">
+//                             {item.old}
+//                           </span>
+//                         </div>
 
-//                     <div className="flex-shrink-0 lg:mr-[2%] rotate-90 sm:rotate-0 bg-[#0B64F41A] w-6 h-6 flex items-center justify-center rounded-full">
-//                       <FaArrowRight className="w-3 h-3 text-[#0B64F4]" />
-//                     </div>
+//                         <div className="flex-shrink-0 lg:mr-[2%] rotate-90 sm:rotate-0 bg-[#0B64F41A] w-6 h-6 flex items-center justify-center rounded-full">
+//                           <FaArrowRight className="w-3 h-3 text-[#0B64F4]" />
+//                         </div>
 
-//                     <div className="flex-1 text-center sm:text-left lg:mr-[1%]">
-//                       <span className="text-base lg:text-[16px] font-bold font-jakarta text-[#0B64F4]">
-//                         {item.new}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 ))}
-//               </motion.div>
-//             </AnimatePresence>
+//                         <div className="flex-1 text-center sm:text-left lg:mr-[1%]">
+//                           <span className="text-base lg:text-[16px] font-bold font-jakarta text-[#0B64F4]">
+//                             {item.new}
+//                           </span>
+//                         </div>
+//                       </motion.div>
+//                     ))}
+//                   </motion.div>
+//                 </AnimatePresence>
+//               </div>
+//             </div>
 //           </div>
-//           </div>
-//           </div>
-
 //         </div>
 //       </div>
 //     </section>

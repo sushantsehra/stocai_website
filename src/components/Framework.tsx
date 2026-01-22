@@ -1,9 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { Brain, Eye, BarChart3, Network, MessageSquare, Repeat, Crown } from "lucide-react";
-import { IoMdCheckboxOutline } from "react-icons/io";
+import { Brain, Eye, BarChart3, Network, MessageSquare, Repeat } from "lucide-react";
+// import { IoMdCheckboxOutline } from "react-icons/io";
 import cardBgImage from "../assets/cardBgImage.png";
 import Image from "next/image";
+import crown from "../assets/crown.png";
+import crossbox from "../assets/crossbox.png";
+import cross from "../assets/cross.png";
+import tickbox from "../assets/tickbox.png";
+import correctsign from "../assets/correctsign.png";
+
+
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
@@ -222,7 +229,7 @@ const Framework = () => {
             </svg>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-14">
             Introducing <br />
             <span className="text-white  font-jakarta">BMP – Be More Promotable</span>
           </h2>
@@ -235,8 +242,9 @@ const Framework = () => {
         {/* Main Content with Left Card */}
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start relative">
           {/* Left Side Card - Progress Tracker */}
-          <div className="w-full lg:w-auto lg:flex-shrink-0 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
-            <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]">
+          <div className="w-[390.14613978924467px] ml-[20%] md:ml-[0%] lg:flex-shrink-0 bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[40px] p-0.5 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
+            {/* <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]"> */}
+            <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] rounded-[40px] p-0 shadow-2xl w-[390.14613978924467px]">
               {/* Subtle border effect */}
               <div className="absolute inset-0 rounded-[32px] pointer-events-none"></div>
               
@@ -244,13 +252,34 @@ const Framework = () => {
               <div className="relative  rounded-[30px] p-0 rounded-t-[40px]">
                 {/* Top Section with Title and Icon */}
                 <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] text-center p-8 rounded-t-[40px] min-h-[140px]">
-                  <h3 className="text-white text-sm md:text-[14px] lg:text-[18px] font-montserrat font-semibold tracking-wide mb-4">
+                  {/* <h3 className="text-white text-sm md:text-[14px] lg:text-[14px] font-montserrat font-semibold tracking-wide mb-4">
                     BE MORE PROMOTABLE
-                  </h3>
+                  </h3> */}
+                    {/* Base gradient */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#2F66FF] via-[#0B3FB8] to-[#02045E] rounded-t-[40px]" />
+
+  {/* Soft top glow */}
+  {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(120,170,255,0.45)_0%,_rgba(11,100,244,0.25)_35%,_rgba(0,0,0,0)_70%)]" /> */}
+
+  {/* Subtle dark depth at bottom */}
+  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/25" />
+
+  {/* Content */}
+  <div className="relative z-10">
+    <h3 className="text-white text-sm md:text-[14px] lg:text-[14px] font-montserrat font-semibold tracking-wide mb-4">
+      BE MORE PROMOTABLE
+    </h3>
+  </div>
 
                   {/* Crown Icon Circle */}
                   <div className="absolute -bottom-[72%] z-50 left-[50%] transform -translate-x-1/2 -translate-y-1/2 mx-auto w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-gradient-to-br from-[#4B8DFF] to-[#0A47FF] flex items-center justify-center shadow-xl border-4 border-white">
-                    <Crown className="w-16 h-16 text-white" strokeWidth={2.5} fill="white" />
+                    {/* <Crown className="w-16 h-16 text-white" strokeWidth={2.5} fill="white" /> */}
+                    <Image
+                      src={crown}
+                      alt="Crown"
+                      width={200}
+                      height={200}
+                    />
                   </div>
                 </div>
 
@@ -258,19 +287,31 @@ const Framework = () => {
                 {/* <div className="bg-gradient-to-b from-black/80 via-black/60 to-black/80 rounded-b-[40px] p-8 backdrop-blur-md shadow-xl py-20"> */}
                 <div className="relative rounded-b-[40px] overflow-hidden shadow-xl py-16">
                   {/* Background Image */}
-                  <Image
+                    <div className="absolute inset-0 opactiy-40">
+                      <Image
+                        src={cardBgImage}
+                        alt="Card Background"
+                        fill
+                        className="object-cover opacity-180 z-0"
+                        priority
+                      />
+                      {/* Subtle dark shadow overlay for that depth effect */}
+                      <div className="absolute inset-0 bg-black/40 z-10"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent"></div>
+                    </div>
+                  {/* <Image
                     src={cardBgImage}
                     alt="Card Background"
                     fill
-                    className="object-cover opacity-100 z-0"
+                    className="object-cover opacity-80 z-0"
                     priority
-                  />
+                  /> */}
 
                   {/* Foreground content (above image) */}
-                  <div className="relative z-10 p-8">
+                  <div className="relative z-10 p-8 lg:px-10">
                     {/* Achievements Checklist */}
                     <div className="space-y-3 mb-6">
-                      {achievements.map((item, idx) => (
+                      {/* {achievements.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-3">
                           <div
                             className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
@@ -298,7 +339,51 @@ const Framework = () => {
                             {item.label}
                           </span>
                         </div>
-                      ))}
+                      ))} */}
+                      {achievements.map((item, idx) => (
+  <div key={idx} className="flex items-center gap-3">
+    <div className="relative w-5 h-5 flex items-center justify-center">
+      {item.checked ? (
+        <>
+          <Image
+            src={tickbox}
+            alt="Checked box"
+            fill
+            className="object-contain"
+          />
+          <Image
+            src={correctsign}
+            alt="Tick"
+            width={24}
+            height={24}
+            className="absolute left-[20%] bottom-[20%]"
+          />
+        </>
+      ) : (
+        <>
+          <Image
+            src={crossbox}
+            alt="Unchecked box"
+            fill
+            className="object-contain"
+          />
+          <Image
+            src={cross}
+            alt="Cross"
+            width={12}
+            height={12}
+            className="absolute"
+          />
+        </>
+      )}
+    </div>
+
+    <span className="text-white md:text-[15px] text-sm font-jakarta font-semibold">
+      {item.label}
+    </span>
+  </div>
+))}
+
                     </div>
 
                     {/* Separator Line */}
@@ -312,15 +397,19 @@ const Framework = () => {
                             {item.label}
                           </span>
                           <div className="flex items-center gap-2 w-[45%]">
-                            <div className="w-full bg-[#0E2E64] rounded-[100px] h-3.5 shadow-inner">
+                            <div className="w-full bg-[#0E2E64] rounded-[100px] h-4 shadow-inner">
                               <div
-                                className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-3.5 rounded-[100px] transition-all duration-700 shadow-lg"
+                                className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-4 rounded-[100px] transition-all duration-700 shadow-lg"
                                 style={{ width: `${item.value}%` }}
-                              ></div>
+                              >
+                                <p className="ml-[10%] text-[#0E2E64] font-extrabold font-jakarta text-[10px]">
+                                  {item.value}/100
+                                </p>
+                              </div>
                             </div>
-                            <p className="text-[#AFCBFF] font-bold text-[11px]">
+                            {/* <p className="text-[#AFCBFF] font-bold text-[11px]">
                               {item.value}/100
-                            </p>
+                            </p> */}
                           </div>
                         </div>
                       ))}
@@ -332,10 +421,11 @@ const Framework = () => {
           </div>
 
           {/* Main Content Card - Right Side */}
-          <div className="flex-1 flex flex-col md:translate-x-[7.5%]">
-            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-xl lg:max-w-3xl w-full">
+          <div className="flex-1 flex flex-col md:translate-x-[7.5%] mt-10 md:mt-0">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-2xl md:max-w-xl lg:max-w-3xl w-full">
               {/* Tabs */}
-              <div className="flex overflow-x-auto gap-2 scrollbar-hide">
+              {/* <div className="flex overflow-x-auto gap-2 scrollbar-hide"> */}
+              <div className="relative z-20 flex overflow-x-auto gap-2 scrollbar-hide">
                 {tabs.map((tab) => {
                   const IconComponent = tab.icon;
                   return (
@@ -345,7 +435,7 @@ const Framework = () => {
                       className={`flex items-center gap-2 px-4 md:px-4.5 mb-1 py-3 text-sm sm:text-[12px] font-jakarta font-normal transition-all whitespace-nowrap ${
                         activeTab === tab.id
                           ? "bg-white text-[#0F1729] border rounded-[8px] border mb-0 border-white"
-                          : "bg-[#0B64F4] rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
+                          : "bg-[#0B64F4]/30 text-white rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
                       }`}
                     >
                       <IconComponent className="w-5 h-5" />
@@ -356,9 +446,8 @@ const Framework = () => {
               </div>
 
               {/* Tab Content */}
-       
-
-              <div className="p-8 sm:p-10 bg-white">
+              {/* <div className="p-8 sm:p-10 bg-white"> */}
+              <div className="relative z-10 -mt-1 p-8 sm:p-10 bg-white pt-10">
                 {currentTab ? (
                   <>
                     <div className="mb-8">
@@ -404,7 +493,7 @@ const Framework = () => {
 
         <div className="flex flex-col">
           {/* Rolling Band Animation */}
-          <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[0%] lg:top-[-10%]">
+          {/* <div className="relative overflow-hidden bg-gradient-to-l from-[#0F1729] to-[#0B64F4] my-6 py-4  max-w-3xl lg:left-[0%] lg:top-[-10%]">
             <style>{`
               @keyframes scroll {
                 0% {
@@ -420,44 +509,69 @@ const Framework = () => {
             `}</style>
             <div className="flex whitespace-nowrap animate-scroll">
               <div className="flex items-center gap-3 px-4">
-                <span className="text-white text-lg lg:text-[21px] font-medium">Rewire Non promotable habits</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Rewire Non promotable habits</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[21px] font-medium">Claim what you deserve</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Claim what you deserve</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[21px] font-medium">Navigate with confidence in corporate structure</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Navigate with confidence in corporate structure</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[21px] font-medium">Signal leadership readiness</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Signal leadership readiness</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[21px] font-medium">Build advocates</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build advocates</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[21px] font-medium">Multiply the impact without compromising work life balance</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Multiply the impact without compromising work life balance</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[21px] font-medium">Build your custom plan</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build your custom plan</span>
                 <span className="text-white/50">|</span>
               </div>
-              {/* Duplicate for seamless loop */}
-              {/* <div className="flex items-center gap-3 px-4">
-                <span className="text-white text-lg lg:text-[25px] font-medium">Rewire Non promotable habits</span>
+            </div>
+          </div> */}
+          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-2xl lg:max-w-3xl">
+            {/* Edge fade gradients */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
+
+            {/* Scrolling Text */}
+            <style>{`
+              @keyframes scroll {
+                0% {
+                  transform: translateX(0);
+                }
+                100% {
+                  transform: translateX(-50%);
+                }
+              }
+              .animate-scroll {
+                animation: scroll 5s linear infinite;
+              }
+            `}</style>
+
+            <div className="flex whitespace-nowrap animate-scroll">
+              <div className="flex items-center gap-3 px-4">
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Rewire Non promotable habits</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[25px] font-medium">Claim what you deserve</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Claim what you deserve</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[25px] font-medium">Navigate with confidence in corporate structure</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Navigate with confidence in corporate structure</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[25px] font-medium">Signal leadership readiness</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Signal leadership readiness</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[25px] font-medium">Build advocates</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build advocates</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[25px] font-medium">Multiply the impact without compromising work life balance</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Multiply the impact without compromising work life balance</span>
                 <span className="text-white/50">|</span>
-                <span className="text-white text-lg lg:text-[25px] font-medium">Build your custom plan</span>
+                <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build your custom plan</span>
                 <span className="text-white/50">|</span>
-              </div> */}
+              </div>
             </div>
           </div>
 
           {/* CTA Button */}
-          <div className="text-start mt-5">
-            <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-bold text-lg sm:text-xl px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+          <div className="text-start mt-1">
+            {/* <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+              Get Early Access
+            </button> */}
+            <button className="bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
               Get Early Access
             </button>
           </div>

@@ -1,18 +1,34 @@
 import type { Metadata } from "next";
-import { Quattrocento } from "next/font/google";
+import { Quattrocento, Plus_Jakarta_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/contexts/UserContext";
 import Script from "next/script";
-import PostHogInit from './_components/PostHogInit'
+import PostHogInit from "./_components/PostHogInit";
 import Image from "next/image";
 import WaitlistModalHost from "@/components/WaitlistModalHost";
 
 // Initialize the Quattrocento font
 const quattrocento = Quattrocento({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-quattrocento',
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-quattrocento",
+});
+
+// Plus Jakarta Sans
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-jakarta",
+});
+
+// Montserrat
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "900"],
+  display: "swap",
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -63,7 +79,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={quattrocento.variable}>
+    // ✅ Added the new font variables to html className
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${quattrocento.variable} ${jakarta.variable} ${montserrat.variable}`}
+    >
       <head>
         <link rel="icon" href="/stocailogoo.png" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
@@ -83,7 +104,6 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
-        {/* Meta Pixel fallback */}
         <noscript>
           <Image
             height={1}
@@ -93,16 +113,13 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-        {/* End Meta Pixel Code */}
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <PostHogInit />
         <UserProvider>
-         <div suppressHydrationWarning>
-            {children}
-          </div>
+          <div suppressHydrationWarning>{children}</div>
           <WaitlistModalHost />
-         </UserProvider>
+        </UserProvider>
       </body>
     </html>
   );
@@ -112,8 +129,10 @@ export default function RootLayout({
 // import { Quattrocento } from "next/font/google";
 // import "./globals.css";
 // import { UserProvider } from "@/contexts/UserContext";
-// import Script from "next/script"; // ✅ Import Script
+// import Script from "next/script";
 // import PostHogInit from './_components/PostHogInit'
+// import Image from "next/image";
+// import WaitlistModalHost from "@/components/WaitlistModalHost";
 
 // // Initialize the Quattrocento font
 // const quattrocento = Quattrocento({
@@ -176,7 +195,7 @@ export default function RootLayout({
 //         <link rel="icon" href="/stocailogoo.png" sizes="any" />
 //         <link rel="apple-touch-icon" href="/apple-icon.png" />
 
-//         {/* ✅ Meta Pixel Code */}
+//         {/* Meta Pixel Code */}
 //         <Script id="meta-pixel" strategy="afterInteractive">
 //           {`
 //             !function(f,b,e,v,n,t,s)
@@ -191,17 +210,17 @@ export default function RootLayout({
 //             fbq('track', 'PageView');
 //           `}
 //         </Script>
-//         {/* ✅ Meta Pixel fallback */}
-//         {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+//         {/* Meta Pixel fallback */}
 //         <noscript>
-//           <img
-//             height="1"
-//             width="1"
+//           <Image
+//             height={1}
+//             width={1}
 //             style={{ display: "none" }}
 //             src="https://www.facebook.com/tr?id=1161086805845175&ev=PageView&noscript=1"
+//             alt=""
 //           />
 //         </noscript>
-//         {/* ✅ End Meta Pixel Code */}
+//         {/* End Meta Pixel Code */}
 //       </head>
 //       <body className="antialiased" suppressHydrationWarning>
 //         <PostHogInit />
@@ -209,6 +228,7 @@ export default function RootLayout({
 //          <div suppressHydrationWarning>
 //             {children}
 //           </div>
+//           <WaitlistModalHost />
 //          </UserProvider>
 //       </body>
 //     </html>
