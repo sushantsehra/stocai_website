@@ -26,16 +26,16 @@ const TrustSection = () => {
     { label: "BOSSES SERVED", value: 61 },
   ];
 
-  const companies = [
-    { name: "NVIDIA", logo: nvidiablacklogo },
-    { name: "Accenture", logo: accenture },
-    { name: "Citi", logo: citiblacklogo },
-    { name: "IIMC", logo: iimcwhitelogo },
-    { name: "Edelweiss", logo: edelweisswhitelogo },
-    { name: "IMT", logo: imtwhitelogo },
-    { name: "Texas", logo: University_of_Texas_at_Austin_logo},
-    { name: "Kings", logo: founderKing},
-  ];
+  // const companies = [
+  //   { name: "NVIDIA", logo: nvidiablacklogo },
+  //   { name: "Accenture", logo: accenture },
+  //   { name: "Citi", logo: citiblacklogo },
+  //   { name: "IIMC", logo: iimcwhitelogo },
+  //   { name: "Edelweiss", logo: edelweisswhitelogo },
+  //   { name: "IMT", logo: imtwhitelogo },
+  //   { name: "Texas", logo: University_of_Texas_at_Austin_logo},
+  //   { name: "Kings", logo: founderKing},
+  // ];
 
   return (
     <section className="py-8 bg-white font-jakarta">
