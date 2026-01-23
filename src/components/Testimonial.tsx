@@ -89,7 +89,7 @@ const Testimonial = () => {
           </span> */}
         </h2>
           <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-3">
-          <span className="text-black font-jakarta">
+          <span className="text-black font-jakarta leading-6">
             And like any skill, it can be learnt.
           </span>
         </h2>
@@ -100,7 +100,7 @@ const Testimonial = () => {
         </p>
       </div>
 
-      <section className="relative bg-white pt-40 pb-6 overflow-hidden">
+      <section className="relative bg-white pt-16 lg:pt-40 pb-6 overflow-hidden">
         {/* BACKGROUND */}
         <div className="absolute inset-0 flex justify-center items-center z-0 pointer-events-none">
           <Image

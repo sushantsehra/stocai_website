@@ -14,6 +14,7 @@ import correctsign from "../assets/correctsign.png";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
+  const [stepPage, setStepPage] = useState(0);
 
   const tabs = [
     {
@@ -450,8 +451,8 @@ const Framework = () => {
           </div>
 
           {/* Main Content Card - Right Side */}
-          <div className="flex-1 flex flex-col md:translate-x-[7.5%] mt-10 md:mt-0">
-            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-2xl md:max-w-xl lg:max-w-3xl w-full">
+          <div className="flex-1 flex flex-col md:translate-x-[4.5%] mt-10 md:mt-0">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-2xl md:max-w-xl lg:max-w-[776px] w-full">
               {/* Tabs */}
               {/* <div className="flex overflow-x-auto gap-2 scrollbar-hide"> */}
               <div className="relative z-20 flex overflow-x-auto gap-2 scrollbar-hide">
@@ -480,7 +481,7 @@ const Framework = () => {
                 {currentTab ? (
                   <>
                     <div className="mb-8">
-                      <h3 className="text-3xl sm:text-4xl lg:text-[26px] font-jakarta font-bold text-black mb-2">
+                      <h3 className="text-3xl sm:text-4xl lg:text-[26px] font-jakarta font-bold text-black mb-1.5">
                         {currentTab.heading}
                       </h3>
                       <p className="text-lg lg:text-[16px] font-jakarta font-normal text-black">{currentTab.subtext}</p>
@@ -491,16 +492,16 @@ const Framework = () => {
                       {currentTab.steps.map((step) => (
                         <div
                           key={step.number}
-                          className="bg-[#E9F0FB] rounded-[8px] p-6 lg:p-4 hover:shadow-lg transition-shadow"
+                          className="bg-[#E9F0FB]  rounded-[8px] p-6 lg:p-4 hover:shadow-lg transition-shadow"
                         >
                           <div className="flex items-start gap-4">
                             <div className="flex-shrink-0">
-                              <div className="w-10 h-10 bg-[#0B64F433] text-[#0B64F4] rounded-[4px] flex items-center font-jakarta justify-center font-bold text-lg">
+                              <div className="w-[28px] h-[22px] mt-0.5 bg-[#0B64F433] text-[14px] text-[#0B64F4] rounded-[4px] flex items-center font-jakarta justify-center font-bold text-lg">
                                 {step.number}
                               </div>
                             </div>
                             <div className="flex-1">
-                              <h4 className="text-xl lg:text-[18px] font-jakarta font-semibold text-black mb-2">
+                              <h4 className="text-xl lg:text-[18px] font-jakarta font-semibold text-black mb-1">
                                 {step.title}
                               </h4>
                               <p className="text-xs lg:text-[12px] font-jakarta font-semibold text-[#686868]">
@@ -555,7 +556,7 @@ const Framework = () => {
               </div>
             </div>
           </div> */}
-          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-3xl">
+          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-[776px]">
             {/* Edge fade gradients */}
             <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
             <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>

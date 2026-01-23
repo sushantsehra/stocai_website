@@ -9,12 +9,22 @@ const CareerStalledSection: React.FC = () => {
   return (
     <section className="bg-white py-10 lg:pt-32 lg:pb-40 text-center relative overflow-hidden">
       {/* ✅ Full-width wave background behind everything */}
-      <div className="absolute inset-0 w-full h-[750px] z-0 mt-[42%]">
+      {/* <div className="absolute inset-0 w-full h-[750px] z-10 mt-[42%]">
         <Image
           src={waveBg}
           alt="Wave Background"
           fill
-          className="object-cover opacity-100"
+          className="object-contain opacity-100"
+          priority
+        />
+      </div> */}
+
+      <div className="absolute inset-x-0 bottom-0 w-full h-[750px] z-0">
+        <Image
+          src={waveBg}
+          alt="Wave Background"
+          fill
+          className="object-contain object-left opacity-100"
           priority
         />
       </div>
@@ -44,7 +54,7 @@ const CareerStalledSection: React.FC = () => {
         <h3 className="text-[32px] md:text-[40px] lg:text-[48px] leading-10 font-bold text-[#0F1729] font-jakarta mb-1 mt-1.5">
           People trust you to get things done.
         </h3>
-        <p className="text-[#6B7280] leading-5 mb-10 mt-8 text-base sm:text-lg lg:text-[26px] font-jakarta font-semibold">
+        <p className="text-[#6B7280] leading-5 md:mb-10 mt-3 md:mt-8 text-base sm:text-lg lg:text-[26px] font-jakarta font-semibold">
           So why does it feel like your career has... stalled?
         </p>
 
@@ -93,7 +103,7 @@ const CareerStalledSection: React.FC = () => {
           </div>
 
           {/* Description Text */}
-          <div className="md:absolute  md:bottom-[-8.5%] md:left-[23.5%] max-w-5xl mx-auto text-center text-base sm:text-lg lg:text-[24px] font-semibold text-[#6B7280] z-20">
+          <div className="md:absolute  md:bottom-[-7.5%] md:left-[23.5%] max-w-5xl mx-auto text-center text-base sm:text-lg lg:text-[24px] font-semibold text-[#6B7280] z-20">
             <div className="pt-4 lg:pt-1">
               <p className="font-bold text-[#0F1729] leading-7 text-lg sm:text-xl font-jakarta lg:text-[32px]">
                 But no one tells you what to actually do differently.
