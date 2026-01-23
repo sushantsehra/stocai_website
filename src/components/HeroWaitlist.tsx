@@ -13,9 +13,6 @@ type HeroWaitlistProps = {
     name: string;
     phone: string;
     email: string;
-    level: string;
-    otherLevel?: string;
-    challenge?: string;
   }) => void;
 };
 
@@ -28,9 +25,6 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [level, setLevel] = useState("");
-  const [otherLevel, setOtherLevel] = useState("");
-  const [challenge, setChallenge] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -65,14 +59,20 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   }, [isOpen]);
 
   const createPaymentLink = async (payload: {
-    email: string;
+    name?: string;
+    email?: string;
     phone: string;
+    reference_id?: string;
     amount: number;
   }) => {
     const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        ...payload,
+        name: payload.name ?? firstName,
+        email: payload.email ?? email,
+      }),
     });
 
     const data = await response.json().catch(() => ({}));
@@ -99,32 +99,28 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           name: firstName,
           phone,
           email,
-          level,
-          otherLevel: level === "Other" ? otherLevel : "",
-          challenge,
           source: "hero",
         }),
       });
 
+      const waitlistData = await response.json().catch(() => ({}));
       if (!response.ok) {
-        const data = await response.json().catch(() => ({}));
-        throw new Error(data?.error || "Unable to join the waitlist.");
+        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
       }
 
       onSubmit?.({
         name: firstName,
         phone,
         email,
-        level,
-        otherLevel: level === "Other" ? otherLevel : undefined,
-        challenge,
       });
 
       const shouldStartPayment = true; /*typeof paymentAmount === "number" && paymentAmount > 0;*/
       if (shouldStartPayment) {
         const shortUrl = await createPaymentLink({
+          name: firstName,
           email,
           phone,
+          reference_id: waitlistData?.reference_id,
           amount: 100, /*paymentAmount,*/
         });
         window.location.href = shortUrl;
@@ -136,9 +132,6 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setFirstName("");
       setPhone("");
       setEmail("");
-      setLevel("");
-      setOtherLevel("");
-      setChallenge("");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -272,59 +265,6 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                                 pattern="^\\+?[0-9\\s-]{8,20}$"
                                 title="Use digits only, optional +, e.g. +14155552671."
                                 required
-                              />
-                            </div>
-
-                            <fieldset className="mt-6">
-                              <legend className="text-sm sm:text-base font-medium text-white">
-                                Your current level at work:
-                              </legend>
-                              <div className="mt-3 space-y-3 text-white">
-                                {["Individual contributor", "Manager/Sr. Manager", "Director", "Other"].map((option) => (
-                                  <label key={option} className="flex items-center gap-3 text-sm sm:text-base">
-                                    <input
-                                      type="radio"
-                                      name="level"
-                                      value={option}
-                                      checked={level === option}
-                                      onChange={(e) => setLevel(e.target.value)}
-                                      className="h-4 w-4 border-white/40 text-[#014BAA] focus:ring-[#cfe0ff]"
-                                      required
-                                    />
-                                    <span>{option === "Other" ? "Other (Please specify)" : option}</span>
-                                  </label>
-                                ))}
-                              </div>
-                              {level === "Other" ? (
-                                <div className="mt-3">
-                                  <label className="sr-only" htmlFor="otherLevel">
-                                    Please specify
-                                  </label>
-                                  <input
-                                    id="otherLevel"
-                                    name="otherLevel"
-                                    type="text"
-                                    placeholder="Please specify"
-                                    value={otherLevel}
-                                    onChange={(e) => setOtherLevel(e.target.value)}
-                                    className="w-full rounded-[12px] bg-white placeholder:text-[#8A8684] px-4 py-3 text-gray-900 shadow-inner border border-[#cfe0ff] focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
-                                    required
-                                  />
-                                </div>
-                              ) : null}
-                            </fieldset>
-
-                            <div className="mt-6">
-                              <label className="sr-only" htmlFor="challenge">
-                                Your biggest career challenge today (Optional)
-                              </label>
-                              <textarea
-                                id="challenge"
-                                name="challenge"
-                                placeholder="Your biggest career challenge today (Optional)"
-                                value={challenge}
-                                onChange={(e) => setChallenge(e.target.value)}
-                                className="w-full min-h-[110px] rounded-[12px] bg-white placeholder:text-[#8A8684] px-4 py-3 text-gray-900 shadow-inner border border-[#cfe0ff] focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
                               />
                             </div>
 
