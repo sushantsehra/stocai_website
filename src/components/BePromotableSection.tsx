@@ -79,18 +79,42 @@ export default function BePromotableSection() {
                 Current State
               </h4>
             </div>
-
+{/* 
             <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[164px] 2xl:h-[164px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-[65px]">
               <Image
                 src={profile.currentState.image}
                 alt="Current State"
-                width={164}
-                height={164}
+                width={141}
+                height={141}
                 className="object-cover w-full h-full"
               />
+            </div> */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-[57px]">
+              {/* Outer Border */}
+              <div className="w-32 h-32 md:w-36 md:h-36 lg:w-[155px] 2xl:w-[163.9772931092164px] 
+                              lg:h-[155px] 2xl:h-[163.9772931092164px]
+                              rounded-full border-[2.76px] border-[#E8E8E8] bg-[#F1F1F1]
+                              flex items-center justify-center shadow-xl">
+
+                {/* Inner Border */}
+                <div className="relative w-full h-full rounded-full 
+                                flex items-center justify-center scale-[0.95]">
+
+                  {/* Image */}
+                  <div className="relative w-[140px] h-[140px] rounded-full overflow-hidden">
+                    <Image
+                      src={profile.currentState.image}
+                      alt="Current State"
+                      fill
+                      className="object-cover rounded-full scale-[1.05]"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-white px-5 py-6 mt-8 lg:mt-9 2xl:mt-16">
+
+            <div className="bg-white px-5 py-6 mt-8 lg:mt-12 2xl:mt-16">
               <div className="flex flex-col items-center mb-3">
                 <h5 className="text-lg md:text-[23px] font-medium font-gotham text-[#1C1C1C]">{profile.name}</h5>
                 <p className="text-sm md:text-[14px] font-normal font-gotham text-[#1C1C1C] mt-1">{profile.currentState.title}</p>
@@ -163,7 +187,7 @@ export default function BePromotableSection() {
               </h4>
             </div>
 
-            <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[164px] 2xl:h-[164px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-[65px]">
+            {/* <div className="w-28 h-28 md:w-32 md:h-32 2xl:w-[164px] 2xl:h-[164px] rounded-full overflow-hidden border-[2.76px] border-[#E8E8E8] shadow-xl mx-auto bg-[#F1F1F1] absolute left-1/2 -translate-x-1/2 top-[65px]">
               <Image
                 src={profile.futureState.image}
                 alt="Future State"
@@ -171,9 +195,33 @@ export default function BePromotableSection() {
                 height={164}
                 className="object-cover w-full h-full"
               />
+            </div> */}
+
+            <div className="absolute left-1/2 -translate-x-1/2 top-[57px]">
+              {/* Outer Border */}
+              <div className="w-32 h-32 md:w-36 md:h-36 lg:w-[155px] 2xl:w-[163.9772931092164px] 
+                              lg:h-[155px] 2xl:h-[163.9772931092164px]
+                              rounded-full border-[2.76px] border-[#E8E8E8] bg-[#F1F1F1]
+                              flex items-center justify-center shadow-xl">
+
+                {/* Inner Border */}
+                <div className="relative w-full h-full rounded-full 
+                                flex items-center justify-center scale-[0.95]">
+
+                  {/* Image */}
+                  <div className="relative w-[140px] h-[140px] rounded-full overflow-hidden">
+                    <Image
+                      src={profile.futureState.image}
+                      alt="Future State"
+                      fill
+                      className="object-cover rounded-full scale-[1.1]"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-white px-8 lg:px-10 py-6 mt-8 lg:mt-9 2xl:mt-16">
+            <div className="bg-white px-8 lg:px-10 py-6 mt-8 lg:mt-12 2xl:mt-16">
               <div className="flex flex-col items-center mb-3">
                 <h5 className="text-lg md:text-[23px] font-medium text-[#1C1C1C] font-gotham">{profile.name}</h5>
                 <p className="text-sm md:text-[14px] font-normal text-[#1C1C1C] font-gotham mt-1">{profile.futureState.title}</p>
