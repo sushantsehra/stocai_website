@@ -14,7 +14,7 @@ import correctsign from "../assets/correctsign.png";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
-  const [stepPage, setStepPage] = useState(0);
+  // const [stepPage, setStepPage] = useState(0);
 
   const tabs = [
     {
