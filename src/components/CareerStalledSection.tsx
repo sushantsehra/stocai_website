@@ -41,7 +41,7 @@ const CareerStalledSection: React.FC = () => {
             You show up. You deliver.
           </span>
         </h2>
-        <h3 className="text-[32px] md:text-[40px] lg:text-[48px] leading-10 font-bold text-[#0F1729] font-jakarta mb-1">
+        <h3 className="text-[32px] md:text-[40px] lg:text-[48px] leading-10 font-bold text-[#0F1729] font-jakarta mb-1 mt-1.5">
           People trust you to get things done.
         </h3>
         <p className="text-[#6B7280] leading-5 mb-10 mt-8 text-base sm:text-lg lg:text-[26px] font-jakarta font-semibold">
