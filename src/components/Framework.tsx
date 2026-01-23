@@ -219,7 +219,7 @@ const Framework = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-[#0B64F4] text-white rounded-2xl mb-6">
+          {/* <div className="inline-flex items-center justify-center w-14 h-14 md:w-[64px] md:h-[64px] bg-[#0B64F4] text-white rounded-[16px] mb-6">
             <svg
               className="w-8 h-8"
               fill="currentColor"
@@ -227,9 +227,39 @@ const Framework = () => {
             >
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
+          </div> */}
+          <div className="inline-flex items-center justify-center
+            w-14 h-14 md:w-[64px] md:h-[64px]
+            bg-[#3B6FF5]
+            rounded-[20px]
+            mb-6"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {/* main sparkle */}
+              <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
+
+              {/* top-right small sparkle — moved farther */}
+              <g transform="translate(2,-2)">
+                <path d="M18 5 V8 M16.5 6.5 H19.5" />
+              </g>
+
+              {/* bottom-left small sparkle — moved farther */}
+              <g transform="translate(-2,2)">
+                <path d="M6 16 V18 M5 17 H7" />
+              </g>
+            </svg>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-14">
+          <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-11 md:leading-14">
             Introducing <br />
             <span className="text-white  font-jakarta">BMP – Be More Promotable</span>
           </h2>
@@ -242,7 +272,7 @@ const Framework = () => {
         {/* Main Content with Left Card */}
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start relative">
           {/* Left Side Card - Progress Tracker */}
-          <div className="w-[390.14613978924467px] ml-[20%] md:ml-[0%] lg:flex-shrink-0 bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[40px] p-0.5 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
+          <div className="w-[390.14613978924467px] md:ml-[0%] lg:flex-shrink-0 bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[40px] p-0.5 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
             {/* <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]"> */}
             <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] rounded-[40px] p-0 shadow-2xl w-[390.14613978924467px]">
               {/* Subtle border effect */}
@@ -256,20 +286,20 @@ const Framework = () => {
                     BE MORE PROMOTABLE
                   </h3> */}
                     {/* Base gradient */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#2F66FF] via-[#0B3FB8] to-[#02045E] rounded-t-[40px]" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#2F66FF] via-[#0B3FB8] to-[#02045E] rounded-t-[40px]" />
 
-  {/* Soft top glow */}
-  {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(120,170,255,0.45)_0%,_rgba(11,100,244,0.25)_35%,_rgba(0,0,0,0)_70%)]" /> */}
+                  {/* Soft top glow */}
+                  {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(120,170,255,0.45)_0%,_rgba(11,100,244,0.25)_35%,_rgba(0,0,0,0)_70%)]" /> */}
 
-  {/* Subtle dark depth at bottom */}
-  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/25" />
+                  {/* Subtle dark depth at bottom */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/25" />
 
-  {/* Content */}
-  <div className="relative z-10">
-    <h3 className="text-white text-sm md:text-[14px] lg:text-[14px] font-montserrat font-semibold tracking-wide mb-4">
-      BE MORE PROMOTABLE
-    </h3>
-  </div>
+                  {/* Content */}
+                  <div className="relative z-10">
+                    <h3 className="text-white text-sm md:text-[14px] lg:text-[14px] font-montserrat font-semibold tracking-wide mb-4">
+                      BE MORE PROMOTABLE
+                    </h3>
+                  </div>
 
                   {/* Crown Icon Circle */}
                   <div className="absolute -bottom-[72%] z-50 left-[50%] transform -translate-x-1/2 -translate-y-1/2 mx-auto w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-gradient-to-br from-[#4B8DFF] to-[#0A47FF] flex items-center justify-center shadow-xl border-4 border-white">
@@ -341,49 +371,48 @@ const Framework = () => {
                         </div>
                       ))} */}
                       {achievements.map((item, idx) => (
-  <div key={idx} className="flex items-center gap-3">
-    <div className="relative w-5 h-5 flex items-center justify-center">
-      {item.checked ? (
-        <>
-          <Image
-            src={tickbox}
-            alt="Checked box"
-            fill
-            className="object-contain"
-          />
-          <Image
-            src={correctsign}
-            alt="Tick"
-            width={24}
-            height={24}
-            className="absolute left-[20%] bottom-[20%]"
-          />
-        </>
-      ) : (
-        <>
-          <Image
-            src={crossbox}
-            alt="Unchecked box"
-            fill
-            className="object-contain"
-          />
-          <Image
-            src={cross}
-            alt="Cross"
-            width={12}
-            height={12}
-            className="absolute"
-          />
-        </>
-      )}
-    </div>
+                        <div key={idx} className="flex items-center gap-3">
+                          <div className="relative w-5 h-5 flex items-center justify-center">
+                            {item.checked ? (
+                              <>
+                                <Image
+                                  src={tickbox}
+                                  alt="Checked box"
+                                  fill
+                                  className="object-contain"
+                                />
+                                <Image
+                                  src={correctsign}
+                                  alt="Tick"
+                                  width={24}
+                                  height={24}
+                                  className="absolute left-[20%] bottom-[20%]"
+                                />
+                              </>
+                            ) : (
+                              <>
+                                <Image
+                                  src={crossbox}
+                                  alt="Unchecked box"
+                                  fill
+                                  className="object-contain"
+                                />
+                                <Image
+                                  src={cross}
+                                  alt="Cross"
+                                  width={12}
+                                  height={12}
+                                  className="absolute"
+                                />
+                              </>
+                            )}
+                          </div>
 
-    <span className="text-white md:text-[15px] text-sm font-jakarta font-semibold">
-      {item.label}
-    </span>
-  </div>
-))}
-
+                          <span className="text-white md:text-[15px] ml-1 text-sm font-jakarta font-semibold">
+                            {item.label}
+                          </span>
+                        </div>
+                      ))}
                     </div>
 
                     {/* Separator Line */}
@@ -422,7 +451,7 @@ const Framework = () => {
 
           {/* Main Content Card - Right Side */}
           <div className="flex-1 flex flex-col md:translate-x-[7.5%] mt-10 md:mt-0">
-            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-2xl md:max-w-xl lg:max-w-3xl w-full">
+            <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-2xl md:max-w-xl lg:max-w-3xl w-full">
               {/* Tabs */}
               {/* <div className="flex overflow-x-auto gap-2 scrollbar-hide"> */}
               <div className="relative z-20 flex overflow-x-auto gap-2 scrollbar-hide">
@@ -432,10 +461,10 @@ const Framework = () => {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-2 px-4 md:px-4.5 mb-1 py-3 text-sm sm:text-[12px] font-jakarta font-normal transition-all whitespace-nowrap ${
+                      className={`flex items-center gap-2 px-4 md:px-4 mb-1 py-3 text-sm sm:text-[12px] font-jakarta font-normal transition-all whitespace-nowrap ${
                         activeTab === tab.id
-                          ? "bg-white text-[#0F1729] border rounded-[8px] border mb-0 border-white"
-                          : "bg-[#0B64F4]/30 text-white rounded-[8px] text-[#FFFFFF] hover:bg-white/10 border-transparent"
+                          ? "bg-white text-[#0F1729] border rounded-t-[8px] border mb-0 border-white"
+                          : "bg-[#0B64F4]/30 text-white rounded-[8px] mb-3 text-[#FFFFFF] hover:bg-white/10 border-transparent"
                       }`}
                     >
                       <IconComponent className="w-5 h-5" />
@@ -526,10 +555,10 @@ const Framework = () => {
               </div>
             </div>
           </div> */}
-          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-2xl lg:max-w-3xl">
+          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-3xl">
             {/* Edge fade gradients */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
 
             {/* Scrolling Text */}
             <style>{`

@@ -68,7 +68,7 @@ const KeyInsight = () => {
           </div>
 
           {/* Insight Text */}
-          <div className="text-center mb-8 bg-[#F5F5F5] py-10 rounded-[31.5px] px-6 md:px-10">
+          <div className="text-center mb-8 bg-[#F5F5F5] py-10 lg:py-12 lg:mx-20 rounded-[31.5px] px-6 md:px-12">
             <p className="text-base sm:text-lg lg:text-[22px] font-jakarta font-normal text-black mt-6">
               Most capable professionals don’t stall because they lack skills.
             </p>

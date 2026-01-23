@@ -90,7 +90,7 @@ export default function BePromotableSection() {
               />
             </div>
 
-            <div className="bg-white px-5 py-6 mt-8 lg:mt-16">
+            <div className="bg-white px-5 py-6 mt-8 lg:mt-9 2xl:mt-16">
               <div className="flex flex-col items-center mb-3">
                 <h5 className="text-lg md:text-[23px] font-medium font-gotham text-[#1C1C1C]">{profile.name}</h5>
                 <p className="text-sm md:text-[14px] font-normal font-gotham text-[#1C1C1C] mt-1">{profile.currentState.title}</p>
@@ -173,7 +173,7 @@ export default function BePromotableSection() {
               />
             </div>
 
-            <div className="bg-white px-8 lg:px-10 py-6 mt-8 lg:mt-16">
+            <div className="bg-white px-8 lg:px-10 py-6 mt-8 lg:mt-9 2xl:mt-16">
               <div className="flex flex-col items-center mb-3">
                 <h5 className="text-lg md:text-[23px] font-medium text-[#1C1C1C] font-gotham">{profile.name}</h5>
                 <p className="text-sm md:text-[14px] font-normal text-[#1C1C1C] font-gotham mt-1">{profile.futureState.title}</p>
