@@ -38,7 +38,7 @@ const TrustSection = () => {
   // ];
 
   return (
-    <section className="py-8 bg-white font-jakarta">
+    <section className="py-8 bg-white font-jakarta lg:my-28">
       <div className="max-w-full relative z-50 pb-8">
         {/* Content with responsive margins */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
@@ -90,7 +90,7 @@ const TrustSection = () => {
             </div>
 
             {/* Right Section (Founder Card) - Responsive */}
-            <div className="relative z-50 rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full lg:max-w-[400px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500">
+            <div className="relative z-50 rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500">
 
               {/* Top White Section - FIXED HEIGHT */}
               <div className="bg-white text-center relative z-10 h-[120px] sm:h-[146px] flex justify-center">

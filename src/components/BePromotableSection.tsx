@@ -42,7 +42,7 @@ export default function BePromotableSection() {
   return (
     <div className="min-h-screen bg-white py-12 px-4 relative overflow-hidden">
       {/* Background Glow moved below all text */}
-      <div className="absolute inset-0 flex justify-center items-center">
+      <div className="hidden md:block absolute inset-0 flex justify-center items-center">
         <Image
           src={bgColor}
           alt="Background Glow"
@@ -69,7 +69,8 @@ export default function BePromotableSection() {
         <div className="relative flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 mb-2 z-40">
           {/* Current State Card */}
           <div
-            className="relative mt-32 bg-white rounded-[25px] border-2 border-[#D9D9D9] w-full sm:w-[380px] lg:w-[385px] shadow-2xl overflow-hidden z-40"
+            className="relative mt-6 lg:mt-32 bg-white rounded-[25px] border-2 border-[#D9D9D9] w-full sm:w-[380px] lg:w-[385px] shadow-2xl overflow-hidden z-40"
+            // className="relative mt-32 bg-white rounded-[25px] bg-gradient-to-br from-[#D9D9D9] to-[#707070] p-2 w-full sm:w-[380px] lg:w-[385px] shadow-2xl overflow-hidden z-40"
             style={{
               transform: "rotate(-9deg) perspective(1000px) rotateY(0deg)",
             }}
