@@ -44,7 +44,7 @@ const CareerStalledSection: React.FC = () => {
         <h3 className="text-[32px] md:text-[40px] lg:text-[48px] leading-10 font-bold text-[#0F1729] font-jakarta mb-1">
           People trust you to get things done.
         </h3>
-        <p className="text-[#6B7280] leading-5 mb-10 text-base sm:text-lg lg:text-[26px] font-jakarta font-semibold">
+        <p className="text-[#6B7280] leading-5 mb-10 mt-8 text-base sm:text-lg lg:text-[26px] font-jakarta font-semibold">
           So why does it feel like your career has... stalled?
         </p>
 
