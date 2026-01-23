@@ -22,9 +22,39 @@ const WaitlistSection = () => {
 
   return (
     <section className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 px-4 text-center mt-6">
+              <div className="inline-flex items-center justify-center
+            w-14 h-14 md:w-[64px] md:h-[64px]
+            bg-[#3B6FF5]
+            rounded-[20px]
+            mb-6 lg:mb-8"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {/* main sparkle */}
+              <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
+
+              {/* top-right small sparkle — moved farther */}
+              <g transform="translate(2,-2)">
+                <path d="M18 5 V8 M16.5 6.5 H19.5" />
+              </g>
+
+              {/* bottom-left small sparkle — moved farther */}
+              <g transform="translate(-2,2)">
+                <path d="M6 16 V18 M5 17 H7" />
+              </g>
+            </svg>
+          </div>
       <div className="max-w-full mx-auto">
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white font-jakarta font-bold mb-2">Ready to change your career trajectory?</h2>
+        <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white font-jakarta font-bold mb-2 lg:mb-4">Ready to change your career trajectory?</h2>
 
         {/* Subtitle */}
         {/* <p className="flex items-center justify-center text-[#0B64F4] font-bold mb-4 text-sm sm:text-base lg:text-[20px]">
@@ -94,7 +124,7 @@ const WaitlistSection = () => {
 
           <div className="flex items-center justify-center w-full lg:translate-x-[90%]">
             <p className="text-sm sm:text-base lg:text-[20px] font-medium">
-              <IoCheckbox className="inline-block w-5 h-5 text-[#0B64F4] mr-2 mb-1" />
+              <IoCheckbox className="inline-block w-5 h-5 text-[#87beff] mr-2 mb-1" />
               Opt in to receive updates
             </p>
           </div>

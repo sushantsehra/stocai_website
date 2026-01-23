@@ -183,6 +183,29 @@ const LearningExperience = () => {
             </ul>
           </div>
         </div>
+{/* 
+        <div className="flex justify-center items-center">
+          <button>
+            Built from real
+          </button>
+        </div> */}
+        <div className="flex justify-center items-center mt-8 md:mt-16 lg:translate-x-[-2%]">
+          <button
+            className="
+              w-[206px] md:w-[215px] py-8 h-[54px]
+              rounded-[12px]
+              bg-[radial-gradient(ellipse_at_top,_#FFFFFF_0%,_#ADADAD_220%)]
+              shadow-[0_5px_20px_rgba(0,0,0,0.3)]
+              text-black
+              flex items-center justify-center
+              transition-all duration-300
+              hover:scale-[1.02]
+              active:scale-[0.98] text-lg md:text-[20px] font-bold font-jakarta 
+            "
+          >
+            Get Early Access
+          </button>
+        </div>
       </div>
     </section>
   );

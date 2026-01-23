@@ -11,12 +11,12 @@ import bgColor from "../assets/bgCircle.png";
 
 const testimonials = [
   {
-    name: "M. Hussain",
+    name: "Diksha Jain",
     role: "AVP Marketing",
     title: "10+ Years of Experience",
     before: "I delivered results, but no one beyond my team noticed.",
     after:
-      "Better Corporate Life taught me how to share wins confidently. Now leaders know (and value) my work.",
+      "I said 'yes' to everything to get noticed, but always ended up exhausted.",
     image: manav,
   },
   {
@@ -24,9 +24,9 @@ const testimonials = [
     role: "Project Manager",
     title: "8+ Years of Experience",
     before:
-      "I contributed to major projects but struggled to make my impact visible.",
+      "I delivered results, but no one beyond my team noticed.",
     after:
-      "Now, I communicate achievements clearly and get recognized for my contributions.",
+      "Better Corporate Life taught me how to share wins confidently. Now leaders know (and value) my work.",
     image: eleena,
   },
   {
@@ -43,16 +43,16 @@ const testimonials = [
     name: "Venkatraman A.",
     role: "Lead Researcher",
     title: "8+ Years of Experience",
-    before: "I spoke only in facts, so people found me distant.",
+    before: "I relied only on facts...spoke only of projects, so people found me distant.",
     after:
       "I learned to balance empathy with logic. Now people trust my ideas.",
     image: venkatraman,
   },
   {
-    name: "Michael Chen",
+    name: "Manav Gupta",
     role: "Data Analyst",
     title: "10+ Years of Experience",
-    before: "I had insights, but no influence.",
+    before: "I said 'yes' to everything to get noticed, but always ended up exhausted.",
     after: "Now my data drives decisions.",
     image: manav,
   },
@@ -80,10 +80,15 @@ const Testimonial = () => {
   return (
     <>
       {/* HEADING */}
-      <div className="relative z-20 max-w-7xl mx-auto text-center mb-10">
-        <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-3">
+      <div className="relative z-20 max-w-7xl mx-auto text-center mb-6">
+        <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-1">
           <span className="text-[#0B64F4] font-jakarta">Promotability is a skill.</span>
-          <br />
+          {/* <br />
+          <span className="text-black font-jakarta">
+            And like any skill, it can be learnt.
+          </span> */}
+        </h2>
+          <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-3">
           <span className="text-black font-jakarta">
             And like any skill, it can be learnt.
           </span>
@@ -127,8 +132,10 @@ const Testimonial = () => {
 
               const normalBg =
                 p === 1 || p === -1
-                  ? "bg-[#8E8E8E] shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
-                  : "bg-[#5A5A5A] shadow-[0_15px_40px_rgba(0,0,0,0.45)]";
+                  // ? "bg-[#8E8E8E] shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+                  // : "bg-[#5A5A5A] shadow-[0_15px_40px_rgba(0,0,0,0.45)]";
+                      ? "bg-[#8E8E8E] shadow-[0_20px_50px_#00000080]"
+                      : "bg-[#5A5A5A] shadow-[0_15px_40px_#000000CC]";
 
               return (
                 <div
@@ -136,18 +143,27 @@ const Testimonial = () => {
                   className={`absolute w-[420px] h-[560px] transition-all duration-700 ${styles}`}
                 >
                   {p === 0 ? (
-                    <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] p-[2px] rounded-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">
+                    <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">
                       <div className="bg-[#F5F5F5] rounded-[40px] p-8 h-full">
                         {/* CONTENT */}
                         <div className="flex items-center gap-5 mb-8">
-                          <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden">
+                          {/* <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden">
                             <Image
                               src={t.image}
                               alt={t.name}
                               width={114}
                               height={114}
                             />
-                          </div>
+                          </div> */}
+                             <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden relative">
+                          <Image
+                            src={t.image}
+                            alt={t.name}
+                            fill
+                            className="object-cover"
+                            sizes="114px"
+                          />
+                        </div>
 
                           <div className="text-left">
                             <h3 className="text-xl lg:text-[26px] font-bold font-jakarta text-[#0B64F4]">
@@ -163,7 +179,7 @@ const Testimonial = () => {
                         </div>
 
                         <div className="space-y-5 text-left">
-                          <div className="p-2">
+                          <div className="p-3">
                             <h4 className="font-bold text-[22px] font-jakarta text-black/60">
                               Before:
                             </h4>
@@ -176,7 +192,7 @@ const Testimonial = () => {
                           </div>
                         </div>
 
-                        <div className="flex justify-center gap-4 mt-8 md:mt-10">
+                        <div className="flex justify-center gap-4 mt-8 md:mt-10 md:absolute md:bottom-[10%] md:left-[40%]">
                           <button
                             onClick={handlePrev}
                             className="w-9 h-9 rounded-full bg-[#A8A8A8] flex items-center justify-center"
@@ -197,39 +213,48 @@ const Testimonial = () => {
                       className={`w-[420px] h-[560px] rounded-[40px] p-8 ${normalBg}`}
                     >
                       <div className="flex items-center gap-5 mb-8">
-                        <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden">
+                        {/* <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden">
                           <Image
                             src={t.image}
                             alt={t.name}
                             width={114}
                             height={114}
                           />
+                        </div> */}
+                        <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden relative">
+                          <Image
+                            src={t.image}
+                            alt={t.name}
+                            fill
+                            className="object-cover"
+                            sizes="114px"
+                          />
                         </div>
 
                         <div className="text-left">
-                          <h3 className="text-xl lg:text-[26px] font-jakarta font-bold text-[#1E3A8A]">
+                          <h3 className="text-xl lg:text-[26px] mb-1 font-jakarta font-bold text-[#0B64F4]">
                             {t.name}
                           </h3>
-                          <p className="text-sm font-bold text-[#A8A8A8]">
+                          <p className="text-sm font-bold md:text-[14px] mb-1 font-jakarta text-[#A8A8A8]">
                             {t.role}
                           </p>
-                          <p className="font-bold text-gray-800">
+                          <p className="font-bold text-black font-jakarta text-sm md:text-[16px]">
                             {t.title}
                           </p>
                         </div>
                       </div>
 
                       <div className="space-y-5 text-left">
-                        <div>
-                          <h4 className="font-bold text-black/60">
+                        <div className="p-3">
+                          <h4 className="font-bold font-jakarta text-lg md:text-[22px] text-black/60">
                             Before:
                           </h4>
-                          <p>{t.before}</p>
+                          <p className="font-medium font-jakarta text-sm md:text-[16px]">{t.before}</p>
                         </div>
 
                         <div className="bg-[#2F66F3] rounded-2xl p-4 text-white">
-                          <h4 className="font-bold mb-1">After:</h4>
-                          <p>{t.after}</p>
+                          <h4 className="font-bold font-jakarta text-sm md:text-[22px] text-white/90 mb-1">After:</h4>
+                          <p className="text-sm md:text-[16px] font-medium font-jakarta text-white">{t.after}</p>
                         </div>
                       </div>
                     </div>
