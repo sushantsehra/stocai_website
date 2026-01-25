@@ -40,7 +40,7 @@ export default function BePromotableSection() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-12 px-4 relative overflow-hidden container mx-auto">
+    <div className="bg-white py-12 px-4 relative overflow-hidden container mx-auto">
       {/* Background Glow moved below all text */}
       <div className="hidden md:block absolute inset-0 flex justify-center items-center">
         <Image
@@ -56,7 +56,7 @@ export default function BePromotableSection() {
           <h2 className="text-3xl sm:text-5xl lg:text-[70px] font-jakarta font-bold text-[#0B64F4] relative z-[60]">
             #BePromotable.
           </h2>
-          <h3 className="text-lg sm:text-2xl lg:text-[40px] font-jakarta font-bold text-black mt-3 lg:mt-3 mb-2 relative z-[60]">
+          <h3 className="text-lg sm:text-2xl lg:text-[40px] font-jakarta font-bold text-black mt-3 lg:mt-4 mb-2 relative z-[60]">
             Stop being the hard worker who gets overlooked.
           </h3>
           <p className="text-black font-normal max-w-5xl font-jakarta mx-auto mb-2 mt-2 lg:mt-3 text-sm sm:text-base md:text-lg relative z-[60]">

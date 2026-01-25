@@ -216,7 +216,7 @@ const Framework = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-12 px-4 lg:px-8">
+    <div className="bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-12 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">

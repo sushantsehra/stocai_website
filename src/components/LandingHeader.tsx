@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="w-full bg-white">
+    <header className="w-full bg-white mt-2">
       <div className="max-w-full flex justify-between items-center pr-4">
         {/* Logo */}
         <Image
@@ -18,7 +18,7 @@ const Header = () => {
           className="object-contain lg:ml-[2%]"
         />
 
-        <div className="flex mr-20">
+        <div className="flex lg:mr-24">
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
           <Link href="#about" className="hover:text-[#0B64F4] transition-colors">

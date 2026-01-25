@@ -122,7 +122,7 @@ const WaitlistSection = () => {
         
           </div> */}
 
-          <div className="flex items-center justify-center w-full lg:translate-x-[90%]">
+          <div className="flex items-center justify-center w-full lg:translate-x-[90%] 2xl:translate-x-[130%]">
             <p className="text-sm sm:text-base lg:text-[20px] font-medium">
               <IoCheckbox className="inline-block w-5 h-5 text-[#87beff] mr-2 mb-1" />
               Opt in to receive updates
