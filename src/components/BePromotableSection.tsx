@@ -40,13 +40,13 @@ export default function BePromotableSection() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-12 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-white py-12 px-4 relative overflow-hidden container mx-auto">
       {/* Background Glow moved below all text */}
       <div className="hidden md:block absolute inset-0 flex justify-center items-center">
         <Image
           src={bgColor}
           alt="Background Glow"
-          className="w-[900px] h-[900px] rotate-[135deg] lg:translate-x-[34%] 2xl:translate-x-[54%] opacity-50 pointer-events-none z-0 mt-60"
+          className="w-[900px] h-[900px] rotate-[135deg] lg:translate-x-[22%] 2xl:translate-x-[35%] opacity-50 pointer-events-none z-0 mt-60"
         />
       </div>
 
