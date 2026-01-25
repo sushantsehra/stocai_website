@@ -46,7 +46,7 @@ export default function BePromotableSection() {
         <Image
           src={bgColor}
           alt="Background Glow"
-          className="w-[900px] h-[900px] rotate-[135deg] lg:translate-x-[34%] opacity-50 pointer-events-none z-0 mt-60"
+          className="w-[900px] h-[900px] rotate-[135deg] lg:translate-x-[34%] 2xl:translate-x-[54%] opacity-50 pointer-events-none z-0 mt-60"
         />
       </div>
 
