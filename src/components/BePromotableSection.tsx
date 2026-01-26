@@ -40,13 +40,13 @@ export default function BePromotableSection() {
   };
 
   return (
-    <div className="bg-white py-12 px-4 relative overflow-hidden container mx-auto">
+    <div className="bg-white py-12 lg:py-12 lg:pt-12 px-4 relative overflow-hidden container mx-auto mt-6">
       {/* Background Glow moved below all text */}
       <div className="hidden md:block absolute inset-0 flex justify-center items-center">
         <Image
           src={bgColor}
           alt="Background Glow"
-          className="w-[900px] h-[900px] rotate-[135deg] lg:translate-x-[22%] 2xl:translate-x-[35%] opacity-50 pointer-events-none z-0 mt-60"
+          className="w-[900px] h-[960px] rotate-[135deg] lg:translate-x-[22%] 2xl:translate-x-[35%] opacity-50 pointer-events-none z-0 mt-44"
         />
       </div>
 
@@ -56,17 +56,17 @@ export default function BePromotableSection() {
           <h2 className="text-3xl sm:text-5xl lg:text-[70px] font-jakarta font-bold text-[#0B64F4] relative z-[60]">
             #BePromotable.
           </h2>
-          <h3 className="text-lg sm:text-2xl lg:text-[40px] font-jakarta font-bold text-black mt-3 lg:mt-4 mb-2 relative z-[60]">
+          <h3 className="text-lg sm:text-2xl lg:text-[40px] font-jakarta font-bold text-black mt-3 lg:mt-5 mb-2 relative z-[60]">
             Stop being the hard worker who gets overlooked.
           </h3>
-          <p className="text-black font-normal max-w-5xl font-jakarta mx-auto mb-2 mt-2 lg:mt-3 text-sm sm:text-base md:text-lg relative z-[60]">
+          <p className="text-black font-normal max-w-5xl font-jakarta mx-auto mb-2 mt-2 lg:mt-3.5 text-sm sm:text-base md:text-lg relative z-[60]">
             A promotion strategy system for experienced professionals who feel
             stuck despite doing everything &apos;right&apos;.
           </p>
         </div>
 
         {/* Cards Container */}
-        <div className="relative flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 mb-2 z-40">
+        <div className="relative flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-16 mb-2 z-40 lg:translate-y-[-10px]">
           {/* Current State Card */}
           <div
             className="relative mt-6 lg:mt-32 bg-white rounded-[25px] border-2 border-[#D9D9D9] w-full sm:w-[380px] lg:w-[385px] shadow-2xl overflow-hidden z-40"

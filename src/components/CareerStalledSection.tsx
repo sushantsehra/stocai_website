@@ -7,7 +7,7 @@ import waveBg from "../assets/waveBg.jpg";
 
 const CareerStalledSection: React.FC = () => {
   return (
-    <section className="bg-white py-10 lg:pt-32 lg:pb-40 text-center relative overflow-hidden">
+    <section className="bg-white py-10 lg:pt-22 lg:pb-40 text-center relative overflow-hidden">
       {/* ✅ Full-width wave background behind everything */}
       {/* <div className="absolute inset-0 w-full h-[750px] z-10 mt-[42%]">
         <Image
