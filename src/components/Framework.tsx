@@ -9,12 +9,18 @@ import crossbox from "../assets/crossbox.png";
 import cross from "../assets/cross.png";
 import tickbox from "../assets/tickbox.png";
 import correctsign from "../assets/correctsign.png";
-
-
+// import Link from "next/link";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
   // const [stepPage, setStepPage] = useState(0);
+
+    const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const tabs = [
     {
@@ -601,9 +607,11 @@ const Framework = () => {
             {/* <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
               Get Early Access
             </button> */}
-            <button className="bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+            {/* <Link href="#waitlist" scroll={true}> */}
+            <button onClick={scrollToWaitlist} className="bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
               Get Early Access
             </button>
+            {/* </Link> */}
           </div>
         </div>
           </div>

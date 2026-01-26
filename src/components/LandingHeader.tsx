@@ -6,6 +6,12 @@ import bclLogo from "../assets/bclLogo.png";
 import Image from "next/image";
 
 const Header = () => {
+    const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   return (
     <header className="w-full bg-white mt-2">
       <div className="max-w-full flex justify-between items-center pr-4">
@@ -34,9 +40,11 @@ const Header = () => {
 
         {/* Buttons */}
         <div className="flex items-center space-x-3 lg:space-x-4">
-          <button className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
+          {/* <Link href="#waitlist" scroll={true}> */}
+          <button  onClick={scrollToWaitlist} className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
             Get Early Access
           </button>
+          {/* </Link> */}
           <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
             Sign In / Login
           </button>
