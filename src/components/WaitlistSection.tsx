@@ -21,7 +21,7 @@ const WaitlistSection = () => {
   // ];
 
   return (
-    <section className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 px-4 text-center mt-6">
+    <section id="waitlist" className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 px-4 text-center mt-6">
               <div className="inline-flex items-center justify-center
             w-14 h-14 md:w-[64px] md:h-[64px]
             bg-[#3B6FF5]
@@ -122,7 +122,7 @@ const WaitlistSection = () => {
         
           </div> */}
 
-          <div className="flex items-center justify-center w-full lg:translate-x-[90%]">
+          <div className="flex items-center justify-center w-full lg:translate-x-[90%] 2xl:translate-x-[130%]">
             <p className="text-sm sm:text-base lg:text-[20px] font-medium">
               <IoCheckbox className="inline-block w-5 h-5 text-[#87beff] mr-2 mb-1" />
               Opt in to receive updates

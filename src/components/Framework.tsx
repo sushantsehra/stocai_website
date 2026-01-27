@@ -9,12 +9,18 @@ import crossbox from "../assets/crossbox.png";
 import cross from "../assets/cross.png";
 import tickbox from "../assets/tickbox.png";
 import correctsign from "../assets/correctsign.png";
-
-
+// import Link from "next/link";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
-  const [stepPage, setStepPage] = useState(0);
+  // const [stepPage, setStepPage] = useState(0);
+
+    const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const tabs = [
     {
@@ -216,7 +222,7 @@ const Framework = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-12 px-4 lg:px-8">
+    <div className="bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-12 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -601,9 +607,11 @@ const Framework = () => {
             {/* <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
               Get Early Access
             </button> */}
-            <button className="bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+            {/* <Link href="#waitlist" scroll={true}> */}
+            <button onClick={scrollToWaitlist} className="bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
               Get Early Access
             </button>
+            {/* </Link> */}
           </div>
         </div>
           </div>

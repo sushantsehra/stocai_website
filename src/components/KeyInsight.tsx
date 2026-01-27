@@ -23,16 +23,24 @@ const KeyInsight = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setStartIndex((prev) => (prev + 1) % comparisons.length);
-    }, 2000); // every 2s a new one comes in
+    }, 2500); // every 2s a new one comes in
     return () => clearInterval(interval);
   }, [comparisons.length]);
 
   // always keep 3 visible items
-  const visibleItems = [
-    comparisons[startIndex % comparisons.length],
-    comparisons[(startIndex + 1) % comparisons.length],
-    comparisons[(startIndex + 2) % comparisons.length],
-  ];
+  // const visibleItems = [
+  //   comparisons[startIndex % comparisons.length],
+  //   comparisons[(startIndex + 1) % comparisons.length],
+  //   comparisons[(startIndex + 2) % comparisons.length],
+  // ];
+
+  const visibleItems = comparisons.slice(
+    startIndex,
+    startIndex + 3
+  ).map((item, i) => ({
+    ...item,
+    id: `${startIndex + i}`,
+  }));
 
   return (
     <section className="py-0 lg:px-0 bg-white">
@@ -80,39 +88,37 @@ const KeyInsight = () => {
             {/* Animated Comparison Section */}
             <div className="flex justify-center w-full py-2">
               <div className="relative h-[160px] overflow-hidden flex flex-col items-center justify-center bg-white shadow-2xl mt-2 lg:mt-5 rounded-[31.5px] p-4 sm:p-6 w-full max-w-xl">
-                <AnimatePresence initial={false}>
-                  <motion.div
-                    key={startIndex}
-                    initial={{ y: 40, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -40, opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="flex flex-col gap-2 w-full"
-                  >
-                    {visibleItems.map((item, index) => (
-                      <motion.div
-                        key={`${item.old}-${index}`}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-2"
-                      >
-                        <div className="flex-1 text-center sm:text-left lg:ml-[10%]">
-                          <span className="text-base sm:text-lg lg:text-[16px] text-black font-jakarta font-normal line-through">
-                            {item.old}
-                          </span>
-                        </div>
+     
+                <AnimatePresence mode="popLayout">
+                  {visibleItems.map((item) => (
+                    <motion.div
+                      key={item.id}
+                      layout
+                      initial={{ y: 40, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -40, opacity: 0 }}
+                      transition={{ duration: 0.6, ease: "easeInOut" }}
+                      className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-3.5 space-y-2.5 w-full"
+                    >
+                      <div className="flex-1 text-center sm:text-left ">
+                        <span className="text-base sm:text-lg lg:text-[16px] text-black font-jakarta font-normal line-through">
+                          {item.old}
+                        </span>
+                      </div>
 
-                        <div className="flex-shrink-0 lg:mr-[2%] rotate-90 sm:rotate-0 bg-[#0B64F41A] w-6 h-6 flex items-center justify-center rounded-full">
-                          <FaArrowRight className="w-3 h-3 text-[#0B64F4]" />
-                        </div>
+                      <div className="flex-shrink-0 lg:mr-[2%] rotate-90 sm:rotate-0 bg-[#0B64F41A] w-6 h-6 flex items-center justify-center rounded-full">
+                        <FaArrowRight className="w-3 h-3 text-[#0B64F4]" />
+                      </div>
 
-                        <div className="flex-1 text-center sm:text-left lg:mr-[1%]">
-                          <span className="text-base lg:text-[16px] font-bold font-jakarta text-[#0B64F4]">
-                            {item.new}
-                          </span>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </motion.div>
+                      <div className="flex-1 text-center sm:text-left lg:mr-[1%]">
+                        <span className="text-base lg:text-[16px] font-bold font-jakarta text-[#0B64F4]">
+                          {item.new}
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
                 </AnimatePresence>
+
               </div>
             </div>
           </div>

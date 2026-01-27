@@ -15,7 +15,7 @@ import ReflicationModal from "../assets/ReflicationModal.png";
 import futureIdCard from "../assets/futureIdCard.png";
 import lnoFramework from "../assets/lnoFramework.png";
 import videocontainer from "../assets/videocontainer.png";
-
+// import Link from "next/link";
 
 // Type Definition
 interface Slide {
@@ -27,6 +27,13 @@ interface Slide {
 
 const LearningExperience = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+    const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const slides: Slide[] = [
     {
@@ -190,7 +197,9 @@ const LearningExperience = () => {
           </button>
         </div> */}
         <div className="flex justify-center items-center mt-8 md:mt-16 lg:translate-x-[-2%]">
+          {/* <Link href="#waitlist" scroll={true}> */}
           <button
+          onClick={scrollToWaitlist}
             className="
               w-[206px] md:w-[215px] py-8 h-[54px]
               rounded-[12px]
@@ -205,6 +214,7 @@ const LearningExperience = () => {
           >
             Get Early Access
           </button>
+          {/* </Link> */}
         </div>
       </div>
     </section>
