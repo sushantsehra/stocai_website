@@ -25,10 +25,15 @@ const BuiltBy = () => {
   ];
 
   return (
-    <section className="w-full py-6 bg-white overflow-hidden absolute -bottom-6 z-10">
-      <div className="relative w-full overflow-hidden">
+    // <section className="w-full py-6 bg-white overflow-hidden absolute -bottom-6 z-10">
+    <section className="w-full py-6 bg-white overflow-hidden z-10">
+      {/* <div className="relative w-full overflow-hidden"> */}
+      <div className="relative w-full overflow-hidden flex justify-center bottom-4 lg:bottom-12">
         <motion.div
-          className="flex w-max gap-6"
+          // className="flex w-max gap-6"
+          // animate={{ x: ["-50%", "0%"] }}
+          className="flex gap-6"
+          style={{ width: "max-content" }}
           animate={{ x: ["-50%", "0%"] }}
           transition={{
             repeat: Infinity,

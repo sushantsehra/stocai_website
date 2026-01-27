@@ -143,8 +143,8 @@ const Testimonial = () => {
                   className={`absolute w-[360px] lg:w-[420px] h-[560px] transition-all duration-700 ${styles}`}
                 >
                   {p === 0 ? (
-                    <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">
-                      <div className="bg-[#F5F5F5] rounded-[40px] p-8 h-full">
+                    <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-t-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">
+                      <div className="bg-[#F5F5F5] rounded-t-[40px] p-8 h-full">
                         {/* CONTENT */}
                         <div className="flex items-center gap-5 mb-8">
                           {/* <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden">
