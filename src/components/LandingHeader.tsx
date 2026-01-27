@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import bclLogo from "../assets/bclLogo.png";
+// import Link from "next/link";
+import bclLogo from "../assets/bcl.png";
 import Image from "next/image";
 
 const Header = () => {
@@ -12,6 +12,13 @@ const Header = () => {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+  const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
+
   return (
     <header className="w-full bg-white mt-2">
       <div className="max-w-full flex justify-between items-center pr-4">
@@ -26,7 +33,7 @@ const Header = () => {
 
         <div className="flex lg:mr-24">
         {/* Navigation Links */}
-        <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
+        {/* <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
           <Link href="#about" className="hover:text-[#0B64F4] transition-colors">
             About Us
           </Link>
@@ -36,7 +43,18 @@ const Header = () => {
           <Link href="#faq" className="hover:text-[#0B64F4] transition-colors">
             FAQ
           </Link>
-        </nav>
+        </nav> */}
+        <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
+            <button onClick={() => scrollToSection("framework")} className="hover:text-[#0B64F4]">
+              About Us
+            </button>
+            <button onClick={() => scrollToSection("waitlist")} className="hover:text-[#0B64F4]">
+              Program
+            </button>
+            <button onClick={() => scrollToSection("faq")} className="hover:text-[#0B64F4]">
+              FAQ
+            </button>
+          </nav>
 
         {/* Buttons */}
         <div className="flex items-center space-x-3 lg:space-x-4">

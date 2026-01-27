@@ -1,6 +1,9 @@
+"use client"
+
 import { Linkedin, Mail, Twitter } from "lucide-react";
 import { MdOutlineSecurity } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
+import Link from "next/link";
 
 const Footer = () => {
   // const quickLinks: string[] = [
@@ -16,6 +19,12 @@ const Footer = () => {
   //   'Terms of Service',
   //   'Refund Policy'
   // ];
+    const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <footer className="bg-[#0e1729] text-white py-10 px-4 sm:px-6">
@@ -30,9 +39,18 @@ const Footer = () => {
               A career acceleration program by BCL. We help experienced professionals break through career plateaus using proven frameworks for visibility, credibility, and influence.
             </p>
             <div className="flex gap-3">
-              <button className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="LinkedIn">
+              {/* <button className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="LinkedIn">
                 <Linkedin className="w-5 h-5 text-black" />
-              </button>
+              </button> */}
+              <Link
+                href="https://www.linkedin.com/company/betetrcorporatelife/posts/?feedView=all"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
+              >
+                <Linkedin className="w-5 h-5 text-black" />
+              </Link>
               <button className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Twitter">
                 <Twitter className="w-5 h-5 text-black" />
               </button>
@@ -45,7 +63,7 @@ const Footer = () => {
           {/* Column 2 */}
           <div>
             <h4 className="mb-4 text-sm sm:text-base font-bold font-jakarta">Quick Links</h4>
-            <ul className="space-y-2 text-xs sm:text-sm lg:text-base">
+            {/* <ul className="space-y-2 text-xs sm:text-sm lg:text-base">
               {['About the Program', 'Modules', 'Testimonials', 'Pricing', 'FAQ'].map((link, index) => (
                 <li key={index}>
                   <a href="#" className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
@@ -53,7 +71,35 @@ const Footer = () => {
                   </a>
                 </li>
               ))}
-            </ul>
+            </ul> */}
+            <ul className="space-y-2 text-xs sm:text-sm lg:text-base">
+  <li>
+    <button onClick={() => scrollToSection("framework")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+      About the Program
+    </button>
+  </li>
+  <li>
+    <button onClick={() => scrollToSection("framework")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+      Modules
+    </button>
+  </li>
+  <li>
+    <button onClick={() => scrollToSection("testimonials")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+      Testimonials
+    </button>
+  </li>
+  <li>
+    <button onClick={() => scrollToSection("waitlist")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+      Pricing
+    </button>
+  </li>
+  <li>
+    <button onClick={() => scrollToSection("faq")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+      FAQ
+    </button>
+  </li>
+</ul>
+
           </div>
 
           {/* Column 3 */}

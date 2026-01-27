@@ -80,7 +80,7 @@ const Testimonial = () => {
   return (
     <>
       {/* HEADING */}
-      <div className="relative z-20 max-w-7xl mx-auto text-center mb-6">
+      <div id="testimonials" className="relative z-20 max-w-7xl mx-auto text-center mb-6">
         <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-1">
           <span className="text-[#0B64F4] font-jakarta">Promotability is a skill.</span>
           {/* <br />
