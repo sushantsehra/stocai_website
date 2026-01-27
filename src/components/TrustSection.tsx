@@ -120,7 +120,7 @@ const TrustSection = () => {
               </div>
 
               {/* Bottom Black Section - Responsive */}
-              <div className="bg-gradient-to-b from-slate-900 to-black text-white pt-20 sm:pt-24 pb-8 sm:pb-10 px-6 sm:px-10">
+              <div className="bg-[radial-gradient(ellipse_at_top_left,_#2f2f2f_0%,_#1a1a1a_35%,_#0a0a0a_55%,_#000000_75%)] text-white pt-20 sm:pt-24 pb-8 sm:pb-10 px-6 sm:px-10">
                 {/* Name and Role */}
                 <div className="text-center mb-6">
                   <h3 className="font-montserrat text-[18px] sm:text-[20px] leading-[100%] font-bold tracking-normal text-transparent bg-clip-text bg-[radial-gradient(114.18%_114.18%_at_50%_50%,#FFFFFF_0%,#717171_100%)]">
