@@ -9,6 +9,7 @@ type HeroWaitlistProps = {
   bgImage?: string;
   isOpen: boolean;
   onClose: () => void;
+  initialEmail?: string;
   onSubmit?: (data: {
     name: string;
     phone: string;
@@ -20,6 +21,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   bgImage = "",
   isOpen,
   onClose,
+  initialEmail,
   onSubmit,
 }) => {
   const [firstName, setFirstName] = useState("");
@@ -57,6 +59,11 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     setStatus("idle");
     setMessage("");
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setEmail(initialEmail ?? "");
+  }, [isOpen, initialEmail]);
 
   const createPaymentLink = async (payload: {
     name?: string;
