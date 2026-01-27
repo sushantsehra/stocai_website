@@ -60,7 +60,7 @@ const TrustSection = () => {
                 And we&apos;re not here to sell you empty confidence.
               </p>
               
-              <h3 className="text-[20px] sm:text-[24px] leading-[30px] font-bold text-[#000000] mb-2 mt-10">
+              <h3 className="text-[20px] sm:text-[24px] leading-[30px] font-bold text-[#000000] mb-2 mt-10 lg:mt-13">
                 We&apos;ve been overlooked. We&apos;ve figured out why.
               </h3>
               
@@ -84,13 +84,13 @@ const TrustSection = () => {
                 </span>
               </p>
               
-              <p className="text-[20px] sm:text-[25px] leading-[24px] font-bold text-[#000000] mt-8 sm:mt-10 md:mt-16">
+              <p className="text-[20px] sm:text-[25px] leading-[24px] font-bold text-[#000000] mt-8 sm:mt-10 md:mt-16 lg:mt-18">
                 We&apos;re rooting for you.
               </p>
             </div>
 
             {/* Right Section (Founder Card) - Responsive */}
-            <div className="relative z-50 rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500">
+            <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[350px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500">
 
               {/* Top White Section - FIXED HEIGHT */}
               <div className="bg-white text-center relative z-10 h-[120px] sm:h-[146px] flex justify-center">

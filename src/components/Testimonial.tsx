@@ -140,7 +140,7 @@ const Testimonial = () => {
               return (
                 <div
                   key={i}
-                  className={`absolute w-[420px] h-[560px] transition-all duration-700 ${styles}`}
+                  className={`absolute w-[360px] lg:w-[420px] h-[560px] transition-all duration-700 ${styles}`}
                 >
                   {p === 0 ? (
                     <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">

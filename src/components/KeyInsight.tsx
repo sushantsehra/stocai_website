@@ -46,14 +46,14 @@ const KeyInsight = () => {
     <section className="py-0 lg:px-0 bg-white">
       <div className="max-w-full">
         {/* Heading */}
-        <div className="text-center mb-8 md:mb-1 py-6 md:py-10 lg:py-12 bg-[#0B64F4]">
+        <div className="text-center mb-8 md:mb-1 lg:mb-2 py-6 md:py-10 lg:py-12 bg-[#0B64F4]">
           <h2 className="text-2xl sm:text-3xl md:text-[36px] font-jakarta font-bold text-white italic px-4">
             Am I missing something everyone else seems to know?
           </h2>
         </div>
 
         {/* Main Card */}
-        <div className="bg-white shadow-xl p-6 sm:p-8 md:p-16 relative overflow-hidden mt-1.5">
+        <div className="bg-white shadow-xl p-6 sm:p-8 md:p-16 lg:p-[67px] relative overflow-hidden mt-1.5 lg:mt-2.5">
           {/* Icon */}
           <div className="flex justify-center mb-6 lg:mb-7">
             <div className="w-14 h-14 lg:w-[64px] lg:h-[64px] bg-[#0B64F4] rounded-[16px] flex items-center justify-center">
@@ -68,7 +68,7 @@ const KeyInsight = () => {
 
         <div>
           {/* Highlighted Quote */}
-          <div className="bg-[#0B64F4] relative z-50 text-white text-center rounded-[16px] px-6 py-6 lg:py-8 max-w-[896px] mx-auto z-50 translate-y-6">
+          <div className="bg-[#0B64F4] relative z-50 text-white text-center rounded-[16px] px-6 py-6 lg:py-8 max-w-[896px] mx-auto z-50 translate-y-5.5">
             <p className="text-lg sm:text-xl md:text-2xl lg:text-[30px] font-jakarta font-bold leading-10">
               What worked earlier in your career{" "}
               <br className="hidden sm:block" />
@@ -110,7 +110,7 @@ const KeyInsight = () => {
                         <FaArrowRight className="w-3 h-3 text-[#0B64F4]" />
                       </div>
 
-                      <div className="flex-1 text-center sm:text-left lg:mr-[1%]">
+                      <div className="flex-1 text-center sm:text-left lg:mr-[1%] lg:mb-3.5">
                         <span className="text-base lg:text-[16px] font-bold font-jakarta text-[#0B64F4]">
                           {item.new}
                         </span>

@@ -124,7 +124,7 @@ const LearningExperience = () => {
         <div className="flex flex-col md:flex-row gap-10 items-center">
           {/* Left: Dynamic Image */}
                   {/* LEFT IMAGE CONTAINER (FIXED SIZE) */}
-          <div className="w-[100%] md:w-[60%] bg-[#F0F0F0] rounded-2xl p-4 shadow-xl relative">
+          <div className="w-[100%] md:w-[60%] bg-[#F0F0F0] lg:w-[741px] rounded-[20px] p-4 shadow-xl relative">
             
             {/* FIXED IMAGE FRAME */}
             <div className="relative w-full h-[420px] overflow-hidden rounded-xl bg-white">
@@ -153,13 +153,13 @@ const LearningExperience = () => {
             <div className="flex gap-4 justify-center mt-4">
               <button
                 onClick={handlePrev}
-                className="w-8 h-8 rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
+                className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
               >
                 <ChevronLeft className="text-white font-bold" />
               </button>
               <button
                 onClick={handleNext}
-                className="w-8 h-8 rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
+                className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
               >
                 <ChevronRight className="text-white font-bold" />
               </button>

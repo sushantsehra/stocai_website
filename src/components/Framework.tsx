@@ -562,10 +562,10 @@ const Framework = () => {
               </div>
             </div>
           </div> */}
-          <div className="relative overflow-hidden bg-[#0B64F4] my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-[776px]">
+          <div className="relative overflow-hidden  my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-[776px]">
             {/* Edge fade gradients */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#222324] to-transparent z-20"></div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#222324] to-transparent z-20"></div>
 
             {/* Scrolling Text */}
             <style>{`
