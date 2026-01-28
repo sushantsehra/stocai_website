@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import Image from "next/image";
-import YourCarrerYourPeeks from "../assets/YourCarrerYourPeeks.jpg";
 import env from "@/utils/env";
+import certificate from "../assets/certificate.png"
+import Image from "next/image";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
 
 type HeroWaitlistProps = {
   bgImage?: string;
@@ -18,17 +19,41 @@ type HeroWaitlistProps = {
 };
 
 const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
-  bgImage = "",
   isOpen,
   onClose,
   initialEmail,
   onSubmit,
 }) => {
-  const [firstName, setFirstName] = useState("");
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+91"); // Default India
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  // Popular country codes
+  const countryCodes = [
+    { code: "+91", country: "India", flag: "🇮🇳" },
+    { code: "+1", country: "USA", flag: "🇺🇸" },
+    { code: "+44", country: "UK", flag: "🇬🇧" },
+    { code: "+971", country: "UAE", flag: "🇦🇪" },
+    { code: "+65", country: "Singapore", flag: "🇸🇬" },
+    { code: "+86", country: "China", flag: "🇨🇳" },
+    { code: "+81", country: "Japan", flag: "🇯🇵" },
+    { code: "+82", country: "South Korea", flag: "🇰🇷" },
+    { code: "+61", country: "Australia", flag: "🇦🇺" },
+    { code: "+49", country: "Germany", flag: "🇩🇪" },
+    { code: "+33", country: "France", flag: "🇫🇷" },
+    { code: "+39", country: "Italy", flag: "🇮🇹" },
+    { code: "+34", country: "Spain", flag: "🇪🇸" },
+    { code: "+7", country: "Russia", flag: "🇷🇺" },
+    { code: "+55", country: "Brazil", flag: "🇧🇷" },
+    { code: "+52", country: "Mexico", flag: "🇲🇽" },
+    { code: "+27", country: "South Africa", flag: "🇿🇦" },
+    { code: "+62", country: "Indonesia", flag: "🇮🇩" },
+    { code: "+60", country: "Malaysia", flag: "🇲🇾" },
+    { code: "+66", country: "Thailand", flag: "🇹🇭" },
+  ];
 
   useEffect(() => {
     if (!isOpen) {
@@ -74,22 +99,30 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   }) => {
     const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
       body: JSON.stringify({
-        ...payload,
-        name: payload.name ?? firstName,
-        email: payload.email ?? email,
+        name: payload.name || name,
+        email: payload.email || email,
+        phone: payload.phone,
+        reference_id: payload.reference_id || `waitlist_${Date.now()}`,
+        amount: payload.amount,
       }),
     });
 
     const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
       throw new Error(data?.error || "Unable to start payment.");
     }
+
     const shortUrl = data?.short_url || data?.shortUrl;
     if (!shortUrl) {
       throw new Error("Payment link was not returned.");
     }
+
     return shortUrl as string;
   };
 
@@ -98,13 +131,15 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     setStatus("loading");
     setMessage("");
 
+    const fullPhone = `${countryCode}${phone}`;
+
     try {
       const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: firstName,
-          phone,
+          name,
+          phone: fullPhone,
           email,
           source: "hero",
         }),
@@ -116,19 +151,19 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       }
 
       onSubmit?.({
-        name: firstName,
-        phone,
+        name,
+        phone: fullPhone,
         email,
       });
 
-      const shouldStartPayment = true; /*typeof paymentAmount === "number" && paymentAmount > 0;*/
+      const shouldStartPayment = true;
       if (shouldStartPayment) {
         const shortUrl = await createPaymentLink({
-          name: firstName,
+          name,
           email,
-          phone,
+          phone: fullPhone,
           reference_id: waitlistData?.reference_id,
-          amount: 100, /*paymentAmount,*/
+          amount: 399900,
         });
         window.location.href = shortUrl;
         return;
@@ -136,7 +171,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
       setStatus("success");
       setMessage("");
-      setFirstName("");
+      setName("");
       setPhone("");
       setEmail("");
     } catch (error) {
@@ -156,7 +191,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 z-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 z-0 bg-black/70 backdrop-blur-sm"
         onClick={handleBackdropClick}
         aria-label="Close waitlist"
       />
@@ -165,7 +200,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl pointer-events-auto"
+        className="relative z-10 w-full border border-white max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl shadow-4xl pointer-events-auto bg-[#F5F5F5]"
       >
         <button
           type="button"
@@ -173,153 +208,189 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
             event.stopPropagation();
             onClose();
           }}
-          className="absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white pointer-events-auto"
+          className="absolute right-6 top-6 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-lg transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 pointer-events-auto"
           aria-label="Close waitlist"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            <path d="M18 6l-12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M18 6l-12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
           </svg>
         </button>
 
         <div className="max-h-[90vh] overflow-y-auto">
-          <section className="w-full" id="waitlist">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
-              <div className="relative overflow-hidden rounded-2xl border border-black/5 shadow-sm">
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-center bg-cover"
-                  style={{
-                    backgroundImage: `url(${bgImage || YourCarrerYourPeeks.src})`,
-                  }}
+          <div className="px-0 py-0">
+            {/* Header Icon & Title */}
+            <div className="text-center mb-10 px-8 pt-8">
+              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-[#2F5BFF] rounded-2xl mb-6 z-10">
+                <Image
+                  src={certificate}
+                  width={32}
+                  height={32}
+                  alt="certificate"
+                  className="relative z-20 object-contain"
                 />
+              </div>
 
-                <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent" />
+              <h2 className="text-3xl lg:text-[40px] font-jakarta font-bold text-[#0B64F4]">
+                Be More Promotable
+              </h2>
+            </div>
 
-                <div className="relative z-10">
-                  <div className="grid grid-cols-1 lg:grid-cols-12">
-                    <div className="lg:col-span-7 px-6 sm:px-10 lg:px-12 py-12 md:py-16 lg:py-20">
-                      <div className="max-w-2xl">
-                        {status === "success" ? null : (
-                          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[49.1px] font-gotham font-normal tracking-tight text-white leading-tight">
-                            <span className="block">Congratulations!</span>
-                            <span className="block">You just made a decision</span>
-                            <span className="block">that&apos;ll change your</span>
-                            <span className="block">career trajectory.</span>
-                          </h1>
-                        )}
+            {/* Promise & Commitment Cards */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8 px-8">
+              {/* Our Promise Card */}
+              <div className="bg-[#EFEFEF] rounded-[20px] p-6 shadow-sm">
+                <h3 className="text-2xl lg:text-[28px] font-jakarta font-bold text-[#0E2E64] mb-4">Our promise:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <IoIosArrowDroprightCircle className="text-[#A8A8A8] w-6 h-6" />
+                    <p className="text-[14px] font-jakarta text-[#424242] font-medium">
+                      Become <span className="text-[#0B64F4] font-jakarta font-bold italic">more promotable</span>, or your money back
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <IoIosArrowDroprightCircle className="text-[#A8A8A8] w-6 h-6" />
+                    <p className="text-[14px] font-medium font-jakarta text-[#424242]">
+                      Accountability partner <span className="text-[#0B64F4] font-jakarta font-bold italic">will stay in touch</span>
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <IoIosArrowDroprightCircle className="text-[#A8A8A8] w-6 h-6" />
+                    <p className="text-[14px] font-medium font-jakarta text-[#424242]">
+                      Access to the program and all modules including the plan{" "}
+                      <span className="text-[#0B64F4] font-jakarta font-bold italic">for 6 months</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                        {status === "success" ? null : (
-                          <p className="mt-6 text-sm sm:text-base md:text-[18px] text-white leading-relaxed max-w-lg">
-                            Fill out your details below, and we&apos;ll notify you once enrollment for Be More Promotable opens.
-                          </p>
-                        )}
+              {/* Your Commitment Card */}
+              <div className="bg-[#EFEFEF] rounded-[20px] p-6 shadow-sm">
+                <h3 className="text-2xl lg:text-[28px] font-jakarta font-bold text-[#0E2E64] mb-4">Your commitment:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <IoIosArrowDroprightCircle className="text-[#A8A8A8] w-6 h-6" />
+                    <p className="text-[14px] font-jakarta text-[#424242] font-medium">
+                      You will access the program only on <span className="text-[#0B64F4] font-jakarta font-bold italic">Laptop/PC</span>
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <IoIosArrowDroprightCircle className="text-[#A8A8A8] w-6 h-6" />
+                    <p className="text-[14px] font-jakarta text-[#424242] font-medium">
+                      <span className="text-[#0B64F4] font-jakarta font-bold italic">Stay in touch&nbsp;</span> with accountability partner
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <IoIosArrowDroprightCircle className="text-[#A8A8A8] w-6 h-6" />
+                    <p className="text-[14px] font-jakarta text-[#424242] font-medium">
+                      Complete the program and all exercises{" "}
+                      <span className="text-[#0B64F4] font-jakarta font-bold italic">in under 2 months</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                        {status === "success" ? (
-                          <div className="mt-8 rounded-2xl border border-white/15 bg-white/10 p-6 text-white backdrop-blur">
-                            <h2 className="text-2xl font-gotham font-semibold">You&apos;re on the list! Your future self thanks you.</h2>
-                            <p className="mt-4 text-base font-medium">Next steps:</p>
-                            <ul className="mt-3 space-y-2 text-sm sm:text-base">
-                              <li>Check your inbox (or Spam folder!) for our confirmation email</li>
-                              <li>Download our free guide &lt;&lt;TBD&gt;&gt;</li>
-                              <li>Follow us on LinkedIn for weekly promotion strategy insights</li>
-                              <li>Share this with a friend who&apos;s also stuck (they&apos;ll thank you)</li>
-                            </ul>
-                          </div>
-                        ) : (
-                          <form className="mt-8" onSubmit={handleSubmit}>
-                            <div className="space-y-4">
-                              <label className="sr-only" htmlFor="firstName">
-                                Your first name
-                              </label>
-                              <input
-                                id="firstName"
-                                name="firstName"
-                                type="text"
-                                placeholder="Your first name"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                                className="w-full rounded-[12px] bg-white placeholder:text-[#8A8684] px-4 py-3 text-gray-900 shadow-inner border border-[#cfe0ff] focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
-                                required
-                              />
+            {/* Pricing Section */}
+            <div className="flex items-center justify-between gap-8 mb-8 px-8">
+              <div className="flex flex-row justify-between gap-4">
+                <div className="flex text-center justify-center items-center">
+                  <p className="text-lg md:text-lg 2xl:text-[20px] text-[#737373] font-jakarta font-bold">Program price</p>
+                </div>
+                <div className="bg-[#737373] text-white px-8 py-3 rounded-[10px]">
+                  <span className="text-3xl font-bold line-through">₹19,999/-</span>
+                </div>
+              </div>
+              <div className="flex flex-row justify-between gap-4 lg:translate-x-[-70px] 2xl:translate-x-[-55px]">
+                <div className="flex text-center justify-center items-center">
+                  <p className="text-lg md:text-lg 2xl:text-[20px] text-[#000000CC] font-jakarta font-bold">Early bird offer for you</p>
+                </div>
+                <div className="bg-black text-white px-8 py-3 rounded-[10px]">
+                  <span className="text-3xl font-bold">₹3,999/-</span>
+                </div>
+              </div>
+            </div>
 
-                              <label className="sr-only" htmlFor="email">
-                                Email id
-                              </label>
-                              <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder="Email id"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full rounded-[12px] bg-white placeholder:text-[#8A8684] px-4 py-3 text-gray-900 shadow-inner border border-[#cfe0ff] focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
-                                required
-                              />
+            {/* Form Section */}
+            <div className="bg-black rounded-b-[15px] py-10 max-w-full shadow-[0_0_60px_rgba(0,0,0,0.5)]">
+              <h3 className="text-center text-white text-lg md:text-xl 2xl:text-[21px] font-bold font-jakarta mb-8">
+                Sign up only if you&apos;re willing to put in the work.{" "}
+                <span className="italic font-bold font-jakarta">We guarantee it&apos;ll be worth it!</span>
+              </h3>
 
-                              <label className="sr-only" htmlFor="phone">
-                                WhatsApp number
-                              </label>
-                              <input
-                                id="phone"
-                                name="phone"
-                                type="tel"
-                                inputMode="tel"
-                                placeholder="WhatsApp number"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                className="w-full rounded-[12px] bg-white placeholder:text-[#8A8684] px-4 py-3 text-gray-900 shadow-inner border border-[#cfe0ff] focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
-                                pattern="^\\+?[0-9\\s-]{8,20}$"
-                                title="Use digits only, optional +, e.g. +14155552671."
-                                required
-                              />
-                            </div>
-
-                            <div className="mt-6">
-                              <button
-                                type="submit"
-                                disabled={status === "loading"}
-                                className="inline-flex items-center gap-3 bg-[#014BAA] text-white px-6 py-3 rounded-[12px] shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#cfe0ff] transition"
-                              >
-                                <span className="font-medium text-[16px] font-gotham">
-                                  {status === "loading" ? "Joining..." : "Join the waitlist"}
-                                </span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                                  <path d="M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                  <path d="M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                              </button>
-                            </div>
-                            <p className="mt-4 text-xs sm:text-sm text-white/80">
-                              By submitting, you agree to receive program updates and our newsletter. Your information is
-                              secure. No spam or third-party nonsense. Unsubscribe at any time.
-                            </p>
-                            {message ? (
-                              <p
-                                className="mt-4 text-sm text-red-200"
-                                role="status"
-                                aria-live="polite"
-                              >
-                                {message}
-                              </p>
-                            ) : null}
-                          </form>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="hidden lg:block lg:col-span-5">
-                      <div className="h-full" />
-                    </div>
-
-                    <div className="lg:hidden px-6 pb-10" />
+              <form onSubmit={handleSubmit} className="max-w-2xl mx-auto px-4">
+                <div className="flex flex-col md:flex-row gap-4 mb-6">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="flex-1 rounded-[10px] h-[48px] bg-white px-6 py-4 text-gray-900 placeholder:text-[#C1C1C1] font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+                    required
+                  />
+                  
+                  {/* Phone Number with Country Code Dropdown */}
+                  <div className="flex-1 flex gap-2">
+                    <select
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                      className="rounded-[10px] h-[48px] bg-white px-3 text-gray-900 font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition cursor-pointer"
+                    >
+                      {countryCodes.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.flag} {country.code}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone Number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))}
+                      className="flex-1 rounded-[10px] h-[48px] bg-white px-6 py-4 text-gray-900 placeholder:text-[#C1C1C1] font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+                      pattern="[0-9]{7,15}"
+                      title="Enter 7-15 digits"
+                      required
+                    />
                   </div>
                 </div>
 
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-black/8 to-transparent" />
-              </div>
+                <div className="mb-6">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-[10px] h-[48px] bg-white px-6 py-4 text-gray-900 placeholder:text-[#C1C1C1] font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+                    required
+                  />
+                </div>
+
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="inline-flex items-center justify-center bg-gradient-to-r from-[#0C57D1] to-[#3C83F6] text-white px-12 py-4 rounded-[10px] text-lg lg:text-[20px] font-bold font-jakarta shadow-[0_0_25px_rgba(11,100,244,0.6)] hover:from-[#0952cc] hover:to-[#2563EB] focus:outline-none focus:ring-2 focus:ring-blue-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {status === "loading" ? "Processing..." : "I'll Invest in My Career"}
+                  </button>
+                </div>
+
+                {message && (
+                  <p
+                    className="mt-4 text-center text-sm text-red-300"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {message}
+                  </p>
+                )}
+              </form>
             </div>
-          </section>
+          </div>
         </div>
       </div>
     </div>
