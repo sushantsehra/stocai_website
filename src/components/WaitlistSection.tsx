@@ -6,8 +6,8 @@ import { IoCheckbox } from "react-icons/io5";
 const WaitlistSection = () => {
 
   return (
-    <section id="waitlist" className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 lg:py-14 px-4 text-center mt-6">
-              <div className="inline-flex items-center justify-center
+    <section id="waitlist" className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-20 lg:py-15 px-4 text-center mt-6">
+            <div className="inline-flex items-center justify-center
             w-14 h-14 md:w-[64px] md:h-[64px]
             bg-[#3B6FF5]
             rounded-[20px]
@@ -56,7 +56,7 @@ const WaitlistSection = () => {
 
         <div className="flex justify-center">
         {/* Email Input & Button */}
-        <div className="flex flex-col sm:flex-row px-4 md:px-0 items-center justify-center min-w-xs md:min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[20px] h-[80px] shadow-lg overflow-hidden mb-2">
+        <div className="flex flex-col sm:flex-row px-4 md:px-0 items-center justify-center min-w-xs md:min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[20px] h-[90px] shadow-lg overflow-hidden mb-2">
           <input
             id="waitlist-email"
             type="email"
@@ -67,7 +67,7 @@ const WaitlistSection = () => {
           <button
             data-waitlist-cta
             data-waitlist-email-input="waitlist-email"
-            className="w-full sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[12px] text-white lg:text-[20px] font-semibold py-1 md:py-3 transition-all"
+            className="w-full sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-semibold py-1 md:py-3 transition-all"
           >
             Request Access
           </button>
