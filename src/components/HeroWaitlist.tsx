@@ -224,8 +224,8 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
               <div className="relative inline-flex items-center justify-center w-16 h-16 bg-[#2F5BFF] rounded-2xl mb-6 z-10">
                 <Image
                   src={certificate}
-                  width={32}
-                  height={32}
+                  width={34}
+                  height={34}
                   alt="certificate"
                   className="relative z-20 object-contain"
                 />

@@ -6,18 +6,19 @@ import Image from "next/image";
 import utkarshJha from "../assets/utkarshJha.jpg";
 import venkatraman from "../assets/venkatraman.png";
 import eleena from "../assets/eleena.png";
-import manav from "../assets/manav.png";
+import manav from "../assets/manav.jpg";
 import bgColor from "../assets/bgCircle.png";
+import diksha from "../assets/diksha.jpg"
 
 const testimonials = [
   {
     name: "Diksha Jain",
     role: "AVP Marketing",
     title: "10+ Years of Experience",
-    before: "I delivered results, but no one beyond my team noticed.",
+    before: " I was always reliable and online, but promotions kept getting delayed. ",
     after:
-      "I said 'yes' to everything to get noticed, but always ended up exhausted.",
-    image: manav,
+      "I learned to be replaceable strategically, focusing on problems, gaining visibility, and evolving.",
+    image: diksha,
   },
   {
     name: "Eleena R",
@@ -45,15 +46,15 @@ const testimonials = [
     title: "8+ Years of Experience",
     before: "I relied only on facts...spoke only of projects, so people found me distant.",
     after:
-      "I learned to balance empathy with logic. Now people trust my ideas.",
+      "I added empathy to logic. Now, people connect with my ideas + numbers. Coach helped in practicing.",
     image: venkatraman,
   },
   {
     name: "Manav Gupta",
     role: "Data Analyst",
     title: "10+ Years of Experience",
-    before: "I said 'yes' to everything to get noticed, but always ended up exhausted.",
-    after: "Now my data drives decisions.",
+    before: "My calendar ran my life; long hours felt normal, leadership meant overwork.",
+    after: "I redesigned my workload and lead through systems. My team performs better, and I think strategically now.",
     image: manav,
   },
 ];
