@@ -98,10 +98,15 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     setMessage("");
   }, [isOpen]);
 
+  // useEffect(() => {
+  //   if (!isOpen) return;
+  //   setEmail(initialEmail ?? "");
+  // }, [isOpen, initialEmail]);
+
   useEffect(() => {
-    if (!isOpen) return;
-    setEmail(initialEmail ?? "");
-  }, [isOpen, initialEmail]);
+    if (initialEmail) setEmail(initialEmail);
+  }, [initialEmail]);
+
 
   const createPaymentLink = async (payload: {
     name?: string;
@@ -269,8 +274,8 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
         <div className="max-h-[90vh] overflow-y-auto">
           <div className="px-0 py-0">
             {/* Header Icon & Title */}
-            <div className="text-center mb-10 px-8 pt-8">
-              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-[#2F5BFF] rounded-2xl mb-6 z-10">
+            <div className="text-center mb-10 px-8 pt-8 md:mb-6 md:pt-5">
+              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-[#2F5BFF] rounded-2xl mb-6 md:mb-4 z-10">
                 <Image
                   src={certificate}
                   width={34}
@@ -286,7 +291,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
             </div>
 
             {/* Promise & Commitment Cards */}
-            <div className="grid md:grid-cols-2 gap-6 mb-8 px-8">
+            <div className="grid md:grid-cols-2 gap-6 mb-8 md:mb-6 px-8">
               {/* Our Promise Card */}
               <div className="bg-[#EFEFEF] rounded-[20px] p-6 shadow-sm">
                 <h3 className="text-2xl lg:text-[28px] font-jakarta font-bold text-[#0E2E64] mb-4">Our promise:</h3>
@@ -341,7 +346,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
             </div>
 
             {/* Pricing Section */}
-            <div className="flex items-center justify-between gap-8 mb-8 px-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8 md:mb-4 px-8">
               <div className="flex flex-row justify-between gap-4">
                 <div className="flex text-center justify-center items-center">
                   <p className="text-lg md:text-lg 2xl:text-[20px] text-[#737373] font-jakarta font-bold">Program price</p>
@@ -361,7 +366,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
             </div>
 
             {/* Form Section */}
-            <div className="bg-black rounded-b-[15px] py-10 max-w-full shadow-[0_0_60px_rgba(0,0,0,0.5)]">
+            <div className="bg-black rounded-b-[15px] py-10 md:py-7 max-w-full shadow-[0_0_60px_rgba(0,0,0,0.5)]">
               <h3 className="text-center text-white text-lg md:text-xl 2xl:text-[21px] font-bold font-jakarta mb-8">
                 Sign up only if you&apos;re willing to put in the work.{" "}
                 <span className="italic font-bold font-jakarta">We guarantee it&apos;ll be worth it!</span>
@@ -406,7 +411,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                   </div>
                 </div>
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <input
                     type="email"
                     name="email"
@@ -416,7 +421,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                     className="w-full rounded-[10px] h-[48px] bg-white px-6 py-4 text-gray-900 placeholder:text-[#C1C1C1] font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
                     required
                   />
-                </div>
+                </div> */}
 
                 <div className="text-center">
                   <button
