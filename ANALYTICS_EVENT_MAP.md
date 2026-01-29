@@ -42,6 +42,19 @@ Event name: $pageview (PostHog only)
   - url
   - (Attribution properties attached globally)
 
+### Section viewed
+Event name: section_viewed
+- Trigger: a tracked section becomes visible in the viewport (first time per page load)
+- Properties:
+  - section_id
+  - section_label
+  - section_order
+  - view_index (order the user saw sections in a session)
+  - path
+  - url
+- PostHog: yes
+- GTM dataLayer: no
+
 ### Waitlist modal opened
 Event name: waitlist_modal_opened
 - Trigger: click on any waitlist CTA
