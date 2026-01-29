@@ -3,25 +3,19 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaRegCircleCheck } from "react-icons/fa6";
-// import Image from "next/image";
 import Image, { StaticImageData } from "next/image";
-import programOverview from "../assets/programOverview.png";
-import AccountabilityPartner from "../assets/AccountabilityPartner.png";
-// import CareerMyths from "../assets/CareerMyths.png";
-import CourseCard from "../assets/CourseCard.png";
-// import ReflectionRoom from "../assets/ReflectionRoom.png";
-// import Modal from "../assets/Modal.png";
 import ReflicationModal from "../assets/ReflicationModal.png";
-import futureIdCard from "../assets/futureIdCard.png";
-import lnoFramework from "../assets/lnoFramework.png";
-import videocontainer from "../assets/videocontainer.png";
-// import Link from "next/link";
+import tile1 from "../assets/tile1.png";
+import tile2 from "../assets/tile2.png";
+import tile3 from "../assets/tile3.png";
+import tile4 from "../assets/tile4.png";
+import tile5 from "../assets/tile5.png";
+import tile7 from "../assets/tile7.png";
 
 // Type Definition
 interface Slide {
   title: string;
   points: string[];
-  // image: any;
   image: StaticImageData;
 }
 
@@ -39,11 +33,11 @@ const LearningExperience = () => {
     {
       title: "Concept-Led Videos",
       points: [
-        "Understand why hard work stopped converting into growth",
+        "Understand growth levers and blockers",
         "Decode unspoken workplace dynamics",
         "Spot patterns you've been missing for years",
       ],
-      image: futureIdCard,
+      image: tile1,
     },
     {
       title: "Actionable frameworks",
@@ -52,7 +46,7 @@ const LearningExperience = () => {
         "Navigate matrix organizations with a fresh approach",
         "Learn mental models and their real-world applications",
       ],
-      image: lnoFramework,
+      image: tile2,
     },
     {
       title: "Mindset & psychological shifts",
@@ -61,7 +55,7 @@ const LearningExperience = () => {
         "Shift from effort to leverage",
         "Build confidence under pressure",
       ],
-      image: videocontainer,
+      image: tile3,
     },
     {
       title: "Practical exercises & activities",
@@ -70,16 +64,17 @@ const LearningExperience = () => {
         "Pressure-test your thinking safely",
         "Lock learning into behaviour",
       ],
-      image: CourseCard,
+      image: tile4,
     },
     {
       title: "AI career coach",
       points: [
         "Practice difficult conversations in a private, judgment-free space",
-        "Reflect with guided prompts and identify blind spots early",
-        "Grow faster with AI-powered insights",
+        "Reflect with guided prompts",
+        // "Grow faster with AI-powered insights",
+        "Identify blind spots early"
       ],
-      image: programOverview,
+      image: tile5,
     },
     {
       title: "Human coach support (Optional)",
@@ -97,7 +92,7 @@ const LearningExperience = () => {
         "Tracks your progress, not just completion",
         "Helps you keep learning tied to real outcomes",
       ],
-      image: AccountabilityPartner,
+      image: tile7,
     },
   ];
 
@@ -122,47 +117,58 @@ const LearningExperience = () => {
 
         {/* Content Grid */}
         <div className="flex flex-col md:flex-row gap-10 items-center">
-          {/* Left: Dynamic Image */}
-                  {/* LEFT IMAGE CONTAINER (FIXED SIZE) */}
-          <div className="w-[100%] md:w-[60%] bg-[#F0F0F0] lg:w-[741px] rounded-[20px] p-4 shadow-xl relative">
-            
-            {/* FIXED IMAGE FRAME */}
-            <div className="relative w-full h-[420px] overflow-hidden rounded-xl bg-white">
-              <Image
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
+            {/* Left: Dynamic Image with Background Peek */}
+          <div className="w-[100%] md:w-[60%] lg:w-[741px] relative">
 
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {slides.map((_, index) => (
-                <span
-                  key={index}
-                  className={`h-2 w-2 rounded-sm ${
-                    index === currentSlide ? "bg-[#0B64F4]" : "bg-black"
-                  }`}
+
+            {/* Main Container */}
+            <div className="relative z-10 bg-[#F0F0F0] rounded-[20px] p-4 shadow-xl">
+              {/* FIXED IMAGE FRAME */}
+              <div className="relative w-full h-[420px] overflow-hidden rounded-xl">
+                <div className="relative w-full lg:left-20 h-[350px] mt-6 rounded-[24px] shadow-2xl overflow-hidden">
+                <Image
+                  src={slides[currentSlide].image}
+                  alt="Background preview"
+                  fill
+                  className="object-cover opacity-90"
                 />
-              ))}
-            </div>
+              </div>
+                <Image
+                  src={slides[currentSlide].image}
+                  alt={slides[currentSlide].title}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
 
-            {/* Arrows */}
-            <div className="flex gap-4 justify-center mt-4">
-              <button
-                onClick={handlePrev}
-                className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
-              >
-                <ChevronLeft className="text-white font-bold" />
-              </button>
-              <button
-                onClick={handleNext}
-                className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
-              >
-                <ChevronRight className="text-white font-bold" />
-              </button>
+              {/* Dots */}
+              <div className="flex justify-center gap-2 mt-6">
+                {slides.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`h-2 w-2 rounded-sm ${
+                      index === currentSlide ? "bg-[#0B64F4]" : "bg-black"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Arrows */}
+              <div className="flex gap-4 justify-center mt-4">
+                <button
+                  onClick={handlePrev}
+                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
+                >
+                  <ChevronLeft className="text-white font-bold" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
+                >
+                  <ChevronRight className="text-white font-bold" />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -190,14 +196,8 @@ const LearningExperience = () => {
             </ul>
           </div>
         </div>
-{/* 
-        <div className="flex justify-center items-center">
-          <button>
-            Built from real
-          </button>
-        </div> */}
+
         <div className="flex justify-center items-center mt-8 md:mt-16 lg:translate-x-[-2%]">
-          {/* <Link href="#waitlist" scroll={true}> */}
           <button
           onClick={scrollToWaitlist}
             className="
@@ -214,7 +214,6 @@ const LearningExperience = () => {
           >
             Get Early Access
           </button>
-          {/* </Link> */}
         </div>
       </div>
     </section>
