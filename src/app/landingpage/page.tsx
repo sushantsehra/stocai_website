@@ -220,7 +220,6 @@ import CommonSituationsSectionForMarketing from "@/components/CommonSituationsSe
 import TestinomialSliderForMarketing from "@/components/TestinomialSliderForMarketing";
 import AuthForm from "@/components/auth/AuthForm";
 import { Metadata } from "next";
-import SectionViewTracker from "@/app/_components/SectionViewTracker";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -314,19 +313,10 @@ export default function Homepage() {
     <div className="min-h-screen bg-white">
       <JsonLd />
       <main className="container mx-auto">
-        <SectionViewTracker />
-        <section data-analytics-section="marketing_common_situations" data-analytics-section-label="Common Situations (Marketing)" data-analytics-section-order="1">
-          <CommonSituationsSectionForMarketing />
-        </section>
-        <section data-analytics-section="marketing_auth_form" data-analytics-section-label="Auth Form" data-analytics-section-order="2">
-          <AuthForm />
-        </section>
-        <section data-analytics-section="marketing_testimonial_slider" data-analytics-section-label="Testimonial Slider (Marketing)" data-analytics-section-order="3">
-          <TestinomialSliderForMarketing />
-        </section>
-        <section data-analytics-section="marketing_icf_framework" data-analytics-section-label="ICF Framework" data-analytics-section-order="4">
-          <ICFFrameworkSection />
-        </section>
+        <CommonSituationsSectionForMarketing />
+        <AuthForm />
+        <TestinomialSliderForMarketing />
+        <ICFFrameworkSection />
       </main>
     </div>
   );

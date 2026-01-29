@@ -15,7 +15,6 @@ import SeeTheDifference from "@/components/SeeTheDifference";
 import ProfessionalHeroSection from "@/components/ProfessionalHeroSection";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import { Metadata } from "next";
-import SectionViewTracker from "@/app/_components/SectionViewTracker";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -111,43 +110,18 @@ export default function Homepage() {
       <HeaderStocai />
       
       <main className="container mx-auto">
-        <SectionViewTracker />
-        <section data-analytics-section="hero" data-analytics-section-label="Hero" data-analytics-section-order="1">
-          <HeroSectionStocai />
-        </section>
-        <section data-analytics-section="built_by" data-analytics-section-label="Built By" data-analytics-section-order="2">
-          <BuiltBy />
-        </section>
-        <section data-analytics-section="growth_testimonial" data-analytics-section-label="Growth Testimonial" data-analytics-section-order="3">
-          <GrowthTestimonial />
-        </section>
-        <section data-analytics-section="declutter_mind" data-analytics-section-label="De-Clutter Mind" data-analytics-section-order="4">
-          <DeClutterMindComponent />
-        </section>
-        <section data-analytics-section="video_player" data-analytics-section-label="Video Player" data-analytics-section-order="5">
-          <VideoPlayer />
-        </section>
-        <section data-analytics-section="get_your_answers" data-analytics-section-label="Get Your Answers" data-analytics-section-order="6">
-          <GetYourAnswers />
-        </section>
-        <section data-analytics-section="common_situations" data-analytics-section-label="Common Situations" data-analytics-section-order="7">
-          <CommonSituationsSection />
-        </section>
-        <section data-analytics-section="icf_framework" data-analytics-section-label="ICF Framework" data-analytics-section-order="8">
-          <ICFFrameworkSection />
-        </section>
-        <section data-analytics-section="see_the_difference" data-analytics-section-label="See The Difference" data-analytics-section-order="9">
-          <SeeTheDifference />
-        </section>
-        <section data-analytics-section="testimonial_slider" data-analytics-section-label="Testimonial Slider" data-analytics-section-order="10">
-          <TestimonialSlider />
-        </section>
-        <section data-analytics-section="faq" data-analytics-section-label="FAQ" data-analytics-section-order="11">
-          <StocaiFAQ />
-        </section>
-        <section data-analytics-section="professional_hero" data-analytics-section-label="Professional Hero" data-analytics-section-order="12">
-          <ProfessionalHeroSection />
-        </section>
+        <HeroSectionStocai />
+        <BuiltBy />
+        <GrowthTestimonial />
+        <DeClutterMindComponent />
+        <VideoPlayer />
+        <GetYourAnswers />
+        <CommonSituationsSection />
+        <ICFFrameworkSection />
+        <SeeTheDifference />
+        <TestimonialSlider />
+        <StocaiFAQ />
+        <ProfessionalHeroSection />
         {/* <OverthinkingToClarity /> */}
       </main>
       
