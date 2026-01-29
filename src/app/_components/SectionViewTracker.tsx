@@ -41,9 +41,13 @@ export default function SectionViewTracker() {
           const label =
             element.dataset.analyticsSectionLabel || sectionId;
 
-          posthog.capture("section_viewed", {
+          const eventName = `section_viewed_${sectionId}`;
+
+          posthog.capture(eventName, {
             section_id: sectionId,
             section_label: label,
+            section: sectionId,
+            section_name: label,
             section_order: order,
             view_index: viewIndexRef.current,
             path: window.location.pathname,

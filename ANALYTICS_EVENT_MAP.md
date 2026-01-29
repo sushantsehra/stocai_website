@@ -43,11 +43,13 @@ Event name: $pageview (PostHog only)
   - (Attribution properties attached globally)
 
 ### Section viewed
-Event name: section_viewed
+Event name: section_viewed_{section_id}
 - Trigger: a tracked section becomes visible in the viewport (first time per page load)
 - Properties:
   - section_id
   - section_label
+  - section
+  - section_name
   - section_order
   - view_index (order the user saw sections in a session)
   - path
