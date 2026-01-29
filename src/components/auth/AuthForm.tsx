@@ -23,11 +23,11 @@ interface AuthResponseData {
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === 'undefined') return;
-  const dataLayer = (window as Window & { dataLayer?: unknown[] }).dataLayer;
-  if (!dataLayer) {
-    (window as Window & { dataLayer: unknown[] }).dataLayer = [];
+  const dataLayerWindow = window as unknown as Window & { dataLayer?: unknown[] };
+  if (!dataLayerWindow.dataLayer) {
+    dataLayerWindow.dataLayer = [];
   }
-  (window as Window & { dataLayer: unknown[] }).dataLayer.push(payload);
+  dataLayerWindow.dataLayer.push(payload);
 };
 
 const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {

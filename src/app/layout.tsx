@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Quattrocento, Plus_Jakarta_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/contexts/UserContext";
@@ -114,7 +115,9 @@ export default function RootLayout({
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         <PostHogInit />
-        <PostHogPageview />
+        <Suspense fallback={null}>
+          <PostHogPageview />
+        </Suspense>
         <UserProvider>
           <div suppressHydrationWarning>{children}</div>
           <WaitlistModalHost />
