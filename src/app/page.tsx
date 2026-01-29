@@ -28,19 +28,19 @@ export const dynamic = 'force-static';
 
 // SEO Metadata
 export const metadata: Metadata = {
-  title: "Stocai - Your AI-Powered Introspection & Clarity Partner",
-  description: "Stocai helps you uncover your own answers through guided introspection and mindful decision-making, providing clarity and personal growth.",
+  title: "Better Corporate Life - Clarity and Confidence at Work",
+  description: "Better Corporate Life helps professionals navigate corporate growth with clarity, confidence, and practical frameworks.",
   openGraph: {
-    title: "Stocai - Your AI-Powered Introspection & Clarity Partner",
-    description: "Stocai helps you uncover your own answers through guided introspection and mindful decision-making, providing clarity and personal growth.",
-    url: "https://mystocai.com",
-    siteName: "Stocai",
+    title: "Better Corporate Life - Clarity and Confidence at Work",
+    description: "Better Corporate Life helps professionals navigate corporate growth with clarity, confidence, and practical frameworks.",
+    url: "https://bettercorporatelife.com",
+    siteName: "Better Corporate Life",
     images: [
       {
-        url: "/og-image.jpg", 
+        url: "/og-bcl.png",
         width: 1200,
         height: 630,
-        alt: "Stocai - Your Introspection and Clarity Partner",
+        alt: "Better Corporate Life",
       },
     ],
     locale: "en_US",
@@ -48,13 +48,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stocai - Your AI-Powered Introspection & Clarity Partner",
-    description: "Stocai helps you uncover your own answers through guided introspection and mindful decision-making, providing clarity and personal growth.",
-    images: ["/twitter-image.jpg"],
-    creator: "@stocai",
+    title: "Better Corporate Life - Clarity and Confidence at Work",
+    description: "Better Corporate Life helps professionals navigate corporate growth with clarity, confidence, and practical frameworks.",
+    images: ["/twitter-bcl.png"],
   },
   alternates: {
-    canonical: "https://mystocai.com",
+    canonical: "https://bettercorporatelife.com",
   },
   // Explicitly ensure indexing
   robots: {
@@ -69,11 +68,11 @@ function JsonLd() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Stocai",
-    "url": "https://mystocai.com",
+    "name": "Better Corporate Life",
+    "url": "https://bettercorporatelife.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://mystocai.com/search?q={search_term_string}",
+      "target": "https://bettercorporatelife.com/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -81,14 +80,9 @@ function JsonLd() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Stocai",
-    "url": "https://mystocai.com",
-    "logo": "https://mystocai.com/logo.png",
-    "sameAs": [
-      "https://twitter.com/stocai",
-      "https://www.linkedin.com/company/stocai",
-      "https://www.facebook.com/stocai"
-    ]
+    "name": "Better Corporate Life",
+    "url": "https://bettercorporatelife.com",
+    "logo": "https://bettercorporatelife.com/bcl-logo.png"
   };
 
   const breadcrumbSchema = {
@@ -98,7 +92,7 @@ function JsonLd() {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://mystocai.com"
+      "item": "https://bettercorporatelife.com"
     }]
   };
 

@@ -33,25 +33,25 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mystocai.com"),
+  metadataBase: new URL("https://bettercorporatelife.com"),
   title: {
-    default: "StocAI",
-    template: "%s | StocAI",
+    default: "Better Corporate Life",
+    template: "%s | Better Corporate Life",
   },
   description:
-    "Stocai helps you uncover your own answers through guided introspection and mindful decision-making, providing clarity and personal growth.",
+    "Better Corporate Life helps professionals navigate corporate growth with clarity, confidence, and practical frameworks.",
   keywords: [
-    "introspection",
-    "AI assistant",
-    "mindfulness",
-    "clarity",
-    "personal growth",
-    "decision-making",
-    "self-reflection",
+    "career growth",
+    "corporate life",
+    "promotion",
+    "professional development",
+    "workplace strategy",
+    "leadership",
+    "communication",
   ],
-  authors: [{ name: "Stocai Team" }],
-  creator: "Stocai",
-  publisher: "Stocai",
+  authors: [{ name: "Better Corporate Life Team" }],
+  creator: "Better Corporate Life",
+  publisher: "Better Corporate Life",
   formatDetection: {
     email: false,
     address: false,
@@ -99,7 +99,7 @@ export default function RootLayout({
         </Script>
         {/* End Google Tag Manager */}
 
-        <link rel="icon" href="/stocailogoo.png" sizes="any" />
+        <link rel="icon" href="/bcl-logo.png" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
 
       </head>
