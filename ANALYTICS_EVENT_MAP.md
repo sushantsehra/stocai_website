@@ -64,6 +64,16 @@ Event name: waitlist_modal_opened
 - PostHog: yes
 - GTM dataLayer: yes (event name = waitlist_modal_opened)
 
+### Waitlist modal closed
+Event name: waitlist_modal_closed
+- Trigger: modal closed via close button or Escape key
+- Properties:
+  - source
+  - close_reason (x_button | escape)
+  - has_prefill_email (boolean)
+- PostHog: yes
+- GTM dataLayer: yes (event name = waitlist_modal_closed)
+
 ### Waitlist submit attempt
 Event name: waitlist_submit_attempt
 - Trigger: submit button clicked

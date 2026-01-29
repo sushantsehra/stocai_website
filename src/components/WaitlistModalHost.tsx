@@ -79,10 +79,27 @@ const WaitlistModalHost: React.FC = () => {
     return () => document.removeEventListener("click", handleClick, true);
   }, []);
 
+  const handleClose = (reason?: "x_button" | "escape") => {
+    if (reason) {
+      posthog.capture("waitlist_modal_closed", {
+        source,
+        close_reason: reason,
+        has_prefill_email: Boolean(prefillEmail),
+      });
+      pushToDataLayer({
+        event: "waitlist_modal_closed",
+        source,
+        close_reason: reason,
+        has_prefill_email: Boolean(prefillEmail),
+      });
+    }
+    setIsOpen(false);
+  };
+
   return (
     <HeroWaitlist
       isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={handleClose}
       initialEmail={prefillEmail}
       source={source}
     />

@@ -20,7 +20,7 @@ const pushToDataLayer = (payload: Record<string, unknown>) => {
 type HeroWaitlistProps = {
   bgImage?: string;
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (reason?: "x_button" | "escape") => void;
   initialEmail?: string;
   source?: string;
   onSubmit?: (data: {
@@ -84,7 +84,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        onClose("escape");
       }
     };
 
@@ -255,7 +255,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           type="button"
           onClick={(event) => {
             event.stopPropagation();
-            onClose();
+            onClose("x_button");
           }}
           className="absolute right-6 top-6 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-lg transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 pointer-events-auto"
           aria-label="Close waitlist"
