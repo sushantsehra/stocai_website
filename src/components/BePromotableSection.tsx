@@ -53,7 +53,7 @@ export default function BePromotableSection() {
       <div className="max-w-full mx-auto relative z-50">
         {/* Header always on top */}
         <div className="text-center mb-10 relative z-[60]">
-          <h2 className="text-3xl sm:text-5xl lg:text-[70px] font-jakarta font-bold text-[#0B64F4] relative z-[60]">
+          <h2 className="text-[32px] sm:text-5xl lg:text-[70px] font-jakarta font-bold text-[#0B64F4] relative z-[60]">
             #BePromotable.
           </h2>
           <h3 className="text-lg sm:text-2xl lg:text-[40px] font-jakarta font-bold text-black mt-3 lg:mt-5 mb-2 relative z-[60]">
