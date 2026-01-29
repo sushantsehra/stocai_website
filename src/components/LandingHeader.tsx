@@ -75,11 +75,11 @@ const Header = () => {
 
             <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col justify-center items-center gap-[4px]"
+            className="md:hidden flex flex-col justify-center items-center gap-[4px] rounded-[4px] shadow-3xl border border-gray-100 p-2"
           >
-            <span className="w-6 h-[2px] bg-[#7A7777]"></span>
-            <span className="w-6 h-[2px] bg-[#7A7777]"></span>
-            <span className="w-6 h-[2px] bg-[#7A7777]"></span>
+            <span className="w-5 h-[2.5px] bg-[#7A7777]"></span>
+            <span className="w-5 h-[2.5px] bg-[#7A7777]"></span>
+            <span className="w-5 h-[2.5px] bg-[#7A7777]"></span>
           </button>
           </div>
     
@@ -90,26 +90,30 @@ const Header = () => {
       {menuOpen && (
         <div className="md:hidden fixed top-20 right-14 bg-white rounded-[16px] shadow-xl p-2.5 w-[220px] z-[9999]">
           <div className="flex flex-col gap-2.5 text-[14px] font-medium">
-            <button onClick={() => scrollToSection("framework")} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => {setMenuOpen(false); scrollToSection("framework")}} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
               About Us
             </button>
-            <button onClick={() => scrollToSection("waitlist")} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => {setMenuOpen(false); scrollToSection("waitlist")}} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
               Program
             </button>
-            <button onClick={() => scrollToSection("faq")} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => {setMenuOpen(false); scrollToSection("faq")}} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
               FAQ
             </button>
 
             <hr />
 
             <button
-              onClick={scrollToWaitlist}
+              // onClick={scrollToWaitlist}
+              onClick={() => {
+                scrollToWaitlist();
+                setMenuOpen(false);
+              }}
               className="bg-[#0B64F4] text-white py-2 rounded-[4px] font-jakarta font-bold"
             >
               Get Early Access
             </button>
 
-            <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] text-[#3F3F3F] py-2 rounded-[4px] font-jakarta font-bold">
+            <button onClick={() => setMenuOpen(false)} className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] text-[#3F3F3F] py-2 rounded-[4px] font-jakarta font-bold">
               Sign In / Login
             </button>
           </div>
