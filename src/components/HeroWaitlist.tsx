@@ -5,12 +5,24 @@ import env from "@/utils/env";
 import certificate from "../assets/certificate.png"
 import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
+import posthog from "posthog-js";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
+
+const pushToDataLayer = (payload: Record<string, unknown>) => {
+  if (typeof window === "undefined") return;
+  const dataLayer = (window as Window & { dataLayer?: unknown[] }).dataLayer;
+  if (!dataLayer) {
+    (window as Window & { dataLayer: unknown[] }).dataLayer = [];
+  }
+  (window as Window & { dataLayer: unknown[] }).dataLayer.push(payload);
+};
 
 type HeroWaitlistProps = {
   bgImage?: string;
   isOpen: boolean;
   onClose: () => void;
   initialEmail?: string;
+  source?: string;
   onSubmit?: (data: {
     name: string;
     phone: string;
@@ -22,6 +34,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   isOpen,
   onClose,
   initialEmail,
+  source = "waitlist_modal",
   onSubmit,
 }) => {
   const [email, setEmail] = useState("");
@@ -132,6 +145,13 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     setMessage("");
 
     const fullPhone = `${countryCode}${phone}`;
+    posthog.capture("waitlist_submit_attempt", {
+      source,
+    });
+    pushToDataLayer({
+      event: "waitlist_submit_attempt",
+      source,
+    });
 
     try {
       const response = await fetch(`${env.apiUrl}/waitlist`, {
@@ -141,7 +161,8 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           name,
           phone: fullPhone,
           email,
-          source: "hero",
+          source,
+          attribution: getAttributionForApi(),
         }),
       });
 
@@ -157,12 +178,31 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       });
 
       const shouldStartPayment = true;
+      posthog.capture("waitlist_submitted", {
+        source,
+        payment_started: shouldStartPayment,
+      });
+      pushToDataLayer({
+        event: "waitlist_submitted",
+        source,
+        payment_started: shouldStartPayment,
+      });
+
       if (shouldStartPayment) {
         const shortUrl = await createPaymentLink({
           name,
           email,
           phone: fullPhone,
           reference_id: waitlistData?.reference_id,
+          amount: 399900,
+        });
+        posthog.capture("payment_redirected", {
+          source,
+          amount: 399900,
+        });
+        pushToDataLayer({
+          event: "payment_redirected",
+          source,
           amount: 399900,
         });
         window.location.href = shortUrl;
@@ -177,6 +217,15 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Something went wrong.");
+      posthog.capture("waitlist_submit_failed", {
+        source,
+        error: error instanceof Error ? error.message : "unknown_error",
+      });
+      pushToDataLayer({
+        event: "waitlist_submit_failed",
+        source,
+        error: error instanceof Error ? error.message : "unknown_error",
+      });
     }
   };
 

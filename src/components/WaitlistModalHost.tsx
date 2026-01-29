@@ -3,10 +3,22 @@
 import React, { useEffect, useState } from "react";
 import HeroWaitlist from "@/components/HeroWaitlist";
 import env from "@/utils/env";
+import posthog from "posthog-js";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
+
+const pushToDataLayer = (payload: Record<string, unknown>) => {
+  if (typeof window === "undefined") return;
+  const dataLayer = (window as Window & { dataLayer?: unknown[] }).dataLayer;
+  if (!dataLayer) {
+    (window as Window & { dataLayer: unknown[] }).dataLayer = [];
+  }
+  (window as Window & { dataLayer: unknown[] }).dataLayer.push(payload);
+};
 
 const WaitlistModalHost: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [prefillEmail, setPrefillEmail] = useState("");
+  const [source, setSource] = useState("waitlist");
 
   useEffect(() => {
     const handleClick = async (event: MouseEvent) => {
@@ -22,6 +34,7 @@ const WaitlistModalHost: React.FC = () => {
       }
 
       const emailInputId = trigger.getAttribute("data-waitlist-email-input");
+      const triggerSource = trigger.getAttribute("data-waitlist-source") || "waitlist";
       let emailValue = "";
       if (emailInputId) {
         const input = document.getElementById(emailInputId) as HTMLInputElement | null;
@@ -34,6 +47,16 @@ const WaitlistModalHost: React.FC = () => {
       }
 
       setPrefillEmail(emailValue);
+      setSource(triggerSource);
+      posthog.capture("waitlist_modal_opened", {
+        source: triggerSource,
+        has_prefill_email: Boolean(emailValue),
+      });
+      pushToDataLayer({
+        event: "waitlist_modal_opened",
+        source: triggerSource,
+        has_prefill_email: Boolean(emailValue),
+      });
       if (emailValue) {
         try {
           await fetch(`${env.apiUrl}/waitlist`, {
@@ -41,7 +64,8 @@ const WaitlistModalHost: React.FC = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               email: emailValue,
-              source: "hero",
+              source: triggerSource,
+              attribution: getAttributionForApi(),
             }),
           });
         } catch {
@@ -55,7 +79,14 @@ const WaitlistModalHost: React.FC = () => {
     return () => document.removeEventListener("click", handleClick, true);
   }, []);
 
-  return <HeroWaitlist isOpen={isOpen} onClose={() => setIsOpen(false)} initialEmail={prefillEmail} />;
+  return (
+    <HeroWaitlist
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      initialEmail={prefillEmail}
+      source={source}
+    />
+  );
 };
 
 export default WaitlistModalHost;

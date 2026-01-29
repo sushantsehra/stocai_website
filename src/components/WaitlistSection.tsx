@@ -67,6 +67,7 @@ const WaitlistSection = () => {
           <button
             data-waitlist-cta
             data-waitlist-email-input="waitlist-email"
+            data-waitlist-source="waitlist_section"
             className="w-full sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-semibold py-1 md:py-3 transition-all"
           >
             Request Access

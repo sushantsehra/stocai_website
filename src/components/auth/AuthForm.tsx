@@ -21,6 +21,15 @@ interface AuthResponseData {
   message?: string;
 }
 
+const pushToDataLayer = (payload: Record<string, unknown>) => {
+  if (typeof window === 'undefined') return;
+  const dataLayer = (window as Window & { dataLayer?: unknown[] }).dataLayer;
+  if (!dataLayer) {
+    (window as Window & { dataLayer: unknown[] }).dataLayer = [];
+  }
+  (window as Window & { dataLayer: unknown[] }).dataLayer.push(payload);
+};
+
 const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
@@ -99,10 +108,22 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
         // Dynamic import to avoid SSR issues
         import('posthog-js').then((posthog) => {
           if (posthog.default) {
+            const emailDomain = userData.email?.split("@")[1] || "unknown";
+            posthog.default.identify(userData.user_id, {
+              email: userData.email,
+              first_name: userData.firstName,
+              last_name: userData.lastName,
+            });
             posthog.default.capture('Authentication Success', {
               method: isLogin ? 'signin' : 'signup',
-              email: userData.email,
               user_id: userData.user_id,
+              email_domain: emailDomain,
+            });
+            pushToDataLayer({
+              event: "auth_success",
+              method: isLogin ? "signin" : "signup",
+              user_id: userData.user_id,
+              email_domain: emailDomain,
             });
           }
         }).catch(console.warn);
@@ -133,6 +154,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
             posthog.default.capture('Authentication Error', {
               method: isLogin ? 'signin' : 'signup',
               error: error,
+            });
+            pushToDataLayer({
+              event: "auth_error",
+              method: isLogin ? "signin" : "signup",
+              error,
             });
           }
         }).catch(console.warn);

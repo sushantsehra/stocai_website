@@ -1,6 +1,12 @@
 "use client";
 import { useEffect } from "react";
 import posthog, { PostHog } from "posthog-js";
+import env from "@/utils/env";
+import {
+  getAttributionProperties,
+  getFirstTouchProperties,
+  persistAttribution,
+} from "@/lib/analytics/attribution";
 
 type PostHogWithLoaded = PostHog & { __loaded?: boolean };
 
@@ -13,7 +19,7 @@ export default function PostHogInit() {
     const apiHost =
       process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://app.posthog.com";
 
-    if (!apiKey) {
+    if (!apiKey || !env.features.analytics) {
       console.warn(
         "[PostHog] Missing NEXT_PUBLIC_POSTHOG_KEY environment variable. PostHog not initialized."
       );
@@ -23,11 +29,17 @@ export default function PostHogInit() {
     posthog.init(apiKey, {
       api_host: apiHost,
       autocapture: true,
+      capture_pageview: false,
+      capture_pageleave: true,
       session_recording: { maskAllInputs: true },
       loaded: (phInstance) => {
         (phInstance as PostHogWithLoaded).__loaded = true;
       },
     });
+
+    persistAttribution();
+    posthog.register(getAttributionProperties());
+    posthog.register_once(getFirstTouchProperties());
   }, []);
 
   return null;
