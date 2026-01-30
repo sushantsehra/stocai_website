@@ -82,20 +82,20 @@ const Testimonial = () => {
     <>
       {/* HEADING */}
       <div id="testimonials" className="relative z-20 max-w-7xl mx-auto text-center mb-6">
-        <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-1">
+        <h2 className="text-[24px] sm:text-[36px] md:text-[48px] font-bold leading-tight mb-1">
           <span className="text-[#0B64F4] font-jakarta">Promotability is a skill.</span>
           {/* <br />
           <span className="text-black font-jakarta">
             And like any skill, it can be learnt.
           </span> */}
         </h2>
-          <h2 className="text-[36px] md:text-[48px] font-bold leading-tight mb-3">
+          <h2 className="text-[24px] sm:text-[36px] md:text-[48px] font-bold leading-tight mb-2 sm:mb-3">
           <span className="text-black font-jakarta leading-6">
             And like any skill, it can be learnt.
           </span>
         </h2>
 
-        <p className="text-[#6B7280] font-jakarta text-xl md:text-[20px] max-w-5xl mx-auto mb-8">
+        <p className="text-[#6B7280] font-jakarta text-[16px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto mb-8">
           Everything you need is already there, buried under deadlines, burnout,
           and unclear leadership.
         </p>
@@ -115,7 +115,7 @@ const Testimonial = () => {
 
         <div className="relative z-20 max-w-7xl mx-auto text-center">
           {/* CARD STACK */}
-          <div className="relative min-h-[450px] flex justify-center items-center">
+          <div className="relative min-h-[390px] sm:min-h-[450px] flex justify-center items-center">
             {testimonials.map((t, i) => {
               const p = getPos(i);
               if (p === null) return null;
@@ -141,11 +141,11 @@ const Testimonial = () => {
               return (
                 <div
                   key={i}
-                  className={`absolute w-[360px] lg:w-[420px] h-[560px] transition-all duration-700 ${styles}`}
+                  className={`absolute w-[320px] sm:w-[360px] lg:w-[420px] h-[450px] sm:h-[560px] transition-all duration-700 ${styles}`}
                 >
                   {p === 0 ? (
                     <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-t-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">
-                      <div className="bg-[#F5F5F5] rounded-t-[40px] p-8 h-full">
+                      <div className="bg-[#F5F5F5] rounded-t-[40px] p-4 sm:p-8 h-full">
                         {/* CONTENT */}
                         <div className="flex items-center gap-5 mb-8">
                           {/* <div className="w-16 h-16 md:w-[114px] md:h-[114px] rounded-full overflow-hidden">
@@ -167,13 +167,13 @@ const Testimonial = () => {
                         </div>
 
                           <div className="text-left">
-                            <h3 className="text-xl lg:text-[26px] font-bold font-jakarta text-[#0B64F4]">
+                            <h3 className="text-[18px] sm:text-xl lg:text-[26px] font-bold font-jakarta text-[#0B64F4]">
                               {t.name}
                             </h3>
-                            <p className="text-sm md:text-[14px] font-bold text-[#A8A8A8] font-jakarta">
+                            <p className="text-[13px] sm:text-sm md:text-[14px] font-bold text-[#A8A8A8] font-jakarta">
                               {t.role}
                             </p>
-                            <p className="font-bold text-black text-[16px] font-jakarta">
+                            <p className="font-bold text-black text-[14px] sm:text-[16px] font-jakarta">
                               {t.title}
                             </p>
                           </div>
@@ -181,15 +181,15 @@ const Testimonial = () => {
 
                         <div className="space-y-5 text-left">
                           <div className="p-3">
-                            <h4 className="font-bold text-[22px] font-jakarta text-black/60">
+                            <h4 className="font-bold text-[18px] sm:text-[22px] font-jakarta text-black/60">
                               Before:
                             </h4>
-                            <p className="font-jakarta font-medium text-[16px] leading-5 mt-1.5">{t.before}</p>
+                            <p className="font-jakarta font-medium text-[14px] sm:text-[16px] leading-5 mt-1.5">{t.before}</p>
                           </div>
 
-                          <div className="bg-[#2F66F3] rounded-2xl p-4 md:p-6">
-                            <h4 className="font-bold mb-1 font-jakarta text-white/90 text-[22px]">After:</h4>
-                            <p className="text-[16px] font-medium font-jakarta text-white leading-5">{t.after}</p>
+                          <div className="bg-[#2F66F3] rounded-2xl p-3 sm:p-4 md:p-6">
+                            <h4 className="font-bold mb-1 font-jakarta text-white/90 text-[18px] sm:text-[22px]">After:</h4>
+                            <p className="text-[14px] sm:text-[16px] font-medium font-jakarta text-white leading-4.5 sm:leading-5">{t.after}</p>
                           </div>
                         </div>
 

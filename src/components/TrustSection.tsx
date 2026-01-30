@@ -27,8 +27,8 @@ const TrustSection = () => {
   ];
 
   return (
-    <section id="true-section" className="py-8 bg-white font-jakarta lg:my-28">
-      <div className="max-w-full relative z-50 pb-8">
+    <section id="true-section" className="py-2 sm:py-8 bg-white font-jakarta lg:my-28">
+      <div className="max-w-full relative z-50 sm:pb-8">
         {/* Content with responsive margins */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
           {/* REDUCED GAP: gap-6 md:gap-8 instead of gap-10 md:gap-16 */}
@@ -88,7 +88,7 @@ const TrustSection = () => {
 
             {/* Right Section (Founder Card) - Responsive */}
             {/* <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[350px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500"> */}
-            <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] my-6 md:my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[330px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[3.81deg] md:rotate-[5.81deg] md:hover:rotate-0 transition-transform duration-500">
+            <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] mt-6 sm:my-6 md:my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[330px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[3.81deg] md:rotate-[5.81deg] md:hover:rotate-0 transition-transform duration-500">
               {/* Top White Section - FIXED HEIGHT */}
               <div className="bg-white text-center relative z-10 h-[120px] sm:h-[146px] flex justify-center">
                 <h3 className="font-montserrat mt-6 font-semibold text-[12px] sm:text-[14px] leading-[100%] tracking-[0.09em] text-black uppercase">
