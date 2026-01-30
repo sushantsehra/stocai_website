@@ -17,16 +17,16 @@ const Footer = () => {
   return (
     <footer className="bg-[#0e1729] text-white py-10 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6 sm:mb-8">
           {/* Column 1 */}
-          <div>
-            <h3 className="text-xl sm:text-2xl lg:text-[24px] font-bold font-jakarta mb-4">
+          <div className="text-center md:text-left">
+            <h3 className="text-xl sm:text-2xl lg:text-[24px] font-bold font-jakarta mb-3 md:mb-4">
               Be More <span className="text-[#2474F5]">Promotable</span>
             </h3>
-            <p className="text-white/70 mb-6 text-xs sm:text-sm lg:text-base font-jakarta font-normal leading-5.5">
+            <p className="text-white/70 mb-5 sm:mb-6 text-xs sm:text-sm lg:text-base font-jakarta font-normal leading-4.5 sm:leading-5.5">
               A career acceleration program by BCL. We help experienced professionals break through career plateaus using proven frameworks for visibility, credibility, and influence.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center md:justify-start">
               <Link
                 href="https://www.linkedin.com/company/betetrcorporatelife/posts/?feedView=all"
                 target="_blank"
@@ -49,7 +49,7 @@ const Footer = () => {
                 <Twitter className="w-5 h-5 text-black" />
               </Link> */}
               <Link   
-                href="mailto:team@bettercorporatelife.com?subject=Inquiry%20about%20Be%20More%20Promotable&body=Hi%20BCL%20Team,%0A%0AI'm%20interested%20in%20learning%20more."
+                href="mailto:team@bettercorporatelife.com"
                 aria-label="Email"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors">
                 <Mail className="w-5 h-5 text-black" />
@@ -58,9 +58,9 @@ const Footer = () => {
           </div>
 
           {/* Column 2 */}
-          <div>
-            <h4 className="mb-4 text-sm sm:text-base font-bold font-jakarta">Quick Links</h4>
-            <ul className="space-y-2 text-xs sm:text-sm lg:text-base">
+          <div className="text-center md:text-left">
+            <h4 className="mb-2 sm:mb-4 text-sm sm:text-base font-bold font-jakarta">Quick Links</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base">
             <li>
               <button onClick={() => scrollToSection("framework")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
                 About the Program
@@ -91,21 +91,32 @@ const Footer = () => {
           </div>
 
           {/* Column 3 */}
-          <div>
-            <h4 className="font-bold mb-4 text-sm sm:text-base font-jakarta">Contact Us</h4>
-            <p className="text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-2">
-              hello@bemorepromotable.com
+          <div className="text-center md:text-left">
+            <h4 className="font-bold mb-2 sm:mb-4 text-sm sm:text-base font-jakarta">Contact Us</h4>
+            <p className="hidden sm:block text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-2">
+              team@bettercorporatelife.com
               {/* director@mystocai.com */}
             </p>
-            <p className="text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-6">
+            <p className="hidden sm:block text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-6">
               Based in Pune, MH, India
             </p>
 
-            <div className="pt-4 border-t border-white/10">
+            <div className="flex gap-2 justify-center items-center sm:hidden block mb-4">
+                        <div className="sm:hidden block text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-2">
+                          team@bettercorporatelife.com 
+                        </div>
+                        <div className="sm:hidden block text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-2">
+                          |
+                        </div>
+                        <div className="sm:hidden block text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-2">
+                          Based in Pune, MH, India
+                        </div>
+            </div>
+            <div className="pt-2 sm:pt-4 border-t border-white/10">
               <p className="text-xs sm:text-sm md:text-[14px] font-normal font-jakarta text-white/50 mb-2">
                 Secure Payments
               </p>
-              <div className="flex flex-wrap items-center gap-3 text-xs md:text-[12px] text-white/50">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs md:text-[12px] text-white/50">
                 <span className="flex items-center gap-1 text-[12px] font-jakarta">
                   <MdOutlineSecurity className="w-3 h-3 text-white/50" />
                   SSL Secured
@@ -120,7 +131,7 @@ const Footer = () => {
         </div>
 
         {/* === BOTTOM FULL-WIDTH SECTION === */}
-        <div className="border-t border-white/10 pt-6 md:pt-8">
+        <div className="border-t border-white/10 pt-3 sm:pt-6 md:pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-jakarta text-xs sm:text-sm md:text-[14px] text-white/50">
             <p>© 2026 BCL Career Labs. All rights reserved.</p>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
