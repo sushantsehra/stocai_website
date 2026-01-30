@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import Image, { StaticImageData } from "next/image";
-import ReflicationModal from "../assets/ReflicationModal.png";
+import tileBgImg from "../assets/tileBgImg.png";
 import tile1 from "../assets/tile1.png";
 import tile2 from "../assets/tile2.png";
 import tile3 from "../assets/tile3.png";
@@ -77,15 +77,15 @@ const LearningExperience = () => {
       ],
       image: tile5,
     },
-    {
-      title: "Human coach support (Optional)",
-      points: [
-        "Work through blockers in real time with 1-on-1 calls",
-        "Leave each call with a clear next move",
-        "Get clarity when the stakes feel high",
-      ],
-      image: ReflicationModal,
-    },
+    // {
+    //   title: "Human coach support (Optional)",
+    //   points: [
+    //     "Work through blockers in real time with 1-on-1 calls",
+    //     "Leave each call with a clear next move",
+    //     "Get clarity when the stakes feel high",
+    //   ],
+    //   image: ReflicationModal,
+    // },
     {
       title: "Accountability partner",
       points: [
@@ -104,15 +104,19 @@ const LearningExperience = () => {
     setCurrentSlide((prev) => (prev < slides.length - 1 ? prev + 1 : 0));
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[48px] font-jakarta font-bold text-black mb-2">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="hidden sm:block text-2xl sm:text-3xl md:text-4xl lg:text-[48px] font-jakarta font-bold text-black mb-2">
             Built from real{" "}
             <span className="text-[#0B64F4] font-jakarta ">career experiences</span>,{" "}
             <br className="" />
             not theory
+          </h2>
+            <h2 className="sm:hidden block text-2xl sm:text-3xl md:text-4xl lg:text-[48px] leading-7 font-jakarta font-bold text-black mb-2">
+            Built from real{" "}
+            <span className="text-[#0B64F4] font-jakarta ">career experiences</span>,{" "} not theory
           </h2>
         </div>
 
@@ -120,32 +124,38 @@ const LearningExperience = () => {
         <div className="flex flex-col md:flex-row gap-10 items-center">
             {/* Left: Dynamic Image with Background Peek */}
           <div className="w-[100%] md:w-[60%] lg:w-[741px] relative">
-
-
             {/* Main Container */}
-            <div className="relative z-10 bg-[#A8A8A8] rounded-[20px] p-4 shadow-xl">
+            <div className="relative z-10 bg-[#A8A8A8] rounded-[20px] px-2 py-3 sm:p-4 shadow-xl overflow-hidden">
+              
               {/* FIXED IMAGE FRAME */}
-              <div className="relative w-full h-[420px] overflow-hidden rounded-xl">
-                <div className="relative w-full lg:left-20 h-[350px] mt-6 rounded-[24px] shadow-2xl overflow-hidden">
-                <Image
-                  // src={slides[currentSlide].image}
-                  src={modal}
-                  alt="Background preview"
-                  fill
-                  className="object-cover opacity-90"
-                />
-              </div>
-                <Image
-                  src={slides[currentSlide].image}
-                  alt={slides[currentSlide].title}
-                  fill
-                  className="object-contain"
-                  priority
-                />
+              <div className="relative w-full h-[280px] sm:h-[420px] overflow-hidden rounded-xl">
+
+                {/* Background Blur Image */}
+                <div className="hidden md:block absolute top-1/2 right-0 -translate-y-1/2 z-0 w-[80%] h-[390px] rounded-[16px] overflow-hidden ">
+                  <Image
+                    src={tileBgImg}
+                    alt="Background preview"
+                    fill
+                    className="object-cover scale-110 h-[300px] rounded-[16px] blur-[1px] opacity-60"
+                    priority
+                  />
+                </div>
+
+                {/* Foreground Slide Image */}
+                <div className="relative z-10 w-full sm:w-[97%] h-full flex items-center justify-center  rounded-[24px] overflow-hidden">
+                  <Image
+                    src={slides[currentSlide].image}
+                    alt={slides[currentSlide].title}
+                    fill
+                    className="object-contain sm:object-cover rounded-[24px]"
+                    priority
+                  />
+                </div>
+
               </div>
 
               {/* Dots */}
-              <div className="flex justify-center gap-2 mt-6">
+              <div className="flex justify-center gap-2 mt-2 sm:mt-6">
                 {slides.map((_, index) => (
                   <span
                     key={index}
@@ -157,18 +167,18 @@ const LearningExperience = () => {
               </div>
 
               {/* Arrows */}
-              <div className="flex gap-4 justify-center mt-4">
+              <div className="flex gap-4 justify-center mt-3 sm:mt-4">
                 <button
                   onClick={handlePrev}
-                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full hover:bg-[#F0F0F0] bg-gray-300 flex items-center justify-center"
+                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-gray-300 hover:bg-[#F0F0F0] flex items-center justify-center"
                 >
-                  <ChevronLeft className="text-white font-bold" />
+                  <ChevronLeft className="text-white" />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full hover:bg-[#F0F0F0] bg-gray-300 flex items-center justify-center"
+                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-gray-300 hover:bg-[#F0F0F0] flex items-center justify-center"
                 >
-                  <ChevronRight className="text-white font-bold" />
+                  <ChevronRight className="text-white" />
                 </button>
               </div>
             </div>
@@ -178,12 +188,12 @@ const LearningExperience = () => {
           <div className="relative md:w-[40%]">
             <h3
               key={slides[currentSlide].title}
-              className="text-xl sm:text-2xl lg:text-[24px] font-semibold font-jakarta text-[#0B64F4] mb-4 transition-all duration-300"
+              className="text-xl sm:text-2xl lg:text-[24px] font-semibold font-jakarta text-[#0B64F4] mb-3 sm:mb-4 transition-all duration-300"
             >
               {slides[currentSlide].title}
             </h3>
 
-            <ul className="space-y-4 mb-10">
+            <ul className="space-y-2.5 sm:space-y-4 mb-10">
               {slides[currentSlide].points.map((point, index) => (
                 <li
                   key={index}
@@ -199,7 +209,7 @@ const LearningExperience = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center mt-8 md:mt-16 lg:translate-x-[-2%]">
+        <div className="flex justify-center items-center mt-0.5 sm:mt-8 md:mt-16 lg:translate-x-[-2%]">
           <button
           onClick={scrollToWaitlist}
             className="
