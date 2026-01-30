@@ -20,6 +20,12 @@ const Header = () => {
   }
 };
 
+const handleLoginRedirect = () => {
+  window.location.href =
+    "https://os.bettercorporatelife.com/signUp?redirect=%2F";
+};
+
+
   return (
     <header className="w-full bg-white mt-2">
       <div className="max-w-full flex justify-between items-center pr-4">
@@ -46,16 +52,6 @@ const Header = () => {
             </button>
           </nav>
 
-        {/* Buttons */}
-        {/* <div className="flex items-center space-x-3 lg:space-x-4">
-          <button  onClick={scrollToWaitlist} className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
-            Get Early Access
-          </button>
-          <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
-            Sign In / Login
-          </button>
-        </div> */}
-
         <div className="flex items-center space-x-3 lg:space-x-4">
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
@@ -66,7 +62,7 @@ const Header = () => {
               Get Early Access
             </button>
 
-            <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] font-jakarta  cursor-pointer text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
+            <button onClick={handleLoginRedirect} className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] font-jakarta  cursor-pointer text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
               Sign In / Login
             </button>
           </div>
@@ -113,7 +109,7 @@ const Header = () => {
               Get Early Access
             </button>
 
-            <button onClick={() => setMenuOpen(false)} className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] text-[#3F3F3F] py-2 rounded-[4px] font-jakarta font-bold">
+            <button onClick={() => {setMenuOpen(false); handleLoginRedirect()}} className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] text-[#3F3F3F] py-2 rounded-[4px] font-jakarta font-bold">
               Sign In / Login
             </button>
           </div>
