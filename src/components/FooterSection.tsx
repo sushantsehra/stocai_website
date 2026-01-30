@@ -48,9 +48,12 @@ const Footer = () => {
                 aria-label="Twitter" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Twitter">
                 <Twitter className="w-5 h-5 text-black" />
               </Link> */}
-              <button className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Email">
+              <Link   
+                href="mailto:team@bettercorporatelife.com?subject=Inquiry%20about%20Be%20More%20Promotable&body=Hi%20BCL%20Team,%0A%0AI'm%20interested%20in%20learning%20more."
+                aria-label="Email"
+                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors">
                 <Mail className="w-5 h-5 text-black" />
-              </button>
+              </Link>
             </div>
           </div>
 

@@ -11,6 +11,7 @@ import tile3 from "../assets/tile3.png";
 import tile4 from "../assets/tile4.png";
 import tile5 from "../assets/tile5.png";
 import tile7 from "../assets/tile7.png";
+import modal from "../assets/Modal.png";
 
 // Type Definition
 interface Slide {
@@ -122,12 +123,13 @@ const LearningExperience = () => {
 
 
             {/* Main Container */}
-            <div className="relative z-10 bg-[#F0F0F0] rounded-[20px] p-4 shadow-xl">
+            <div className="relative z-10 bg-[#A8A8A8] rounded-[20px] p-4 shadow-xl">
               {/* FIXED IMAGE FRAME */}
               <div className="relative w-full h-[420px] overflow-hidden rounded-xl">
                 <div className="relative w-full lg:left-20 h-[350px] mt-6 rounded-[24px] shadow-2xl overflow-hidden">
                 <Image
-                  src={slides[currentSlide].image}
+                  // src={slides[currentSlide].image}
+                  src={modal}
                   alt="Background preview"
                   fill
                   className="object-cover opacity-90"
@@ -158,13 +160,13 @@ const LearningExperience = () => {
               <div className="flex gap-4 justify-center mt-4">
                 <button
                   onClick={handlePrev}
-                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
+                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full hover:bg-[#F0F0F0] bg-gray-300 flex items-center justify-center"
                 >
                   <ChevronLeft className="text-white font-bold" />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full bg-[#A8A8A8] hover:bg-gray-400 flex items-center justify-center"
+                  className="w-8 h-8 md:w-[27px] md:h-[27px] rounded-full hover:bg-[#F0F0F0] bg-gray-300 flex items-center justify-center"
                 >
                   <ChevronRight className="text-white font-bold" />
                 </button>

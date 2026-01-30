@@ -47,10 +47,10 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-12 md:py-20 lg:py-36 px-4 sm:px-6 bg--white">
+    <section id="faq" className="py-9 md:py-20 lg:py-36 px-4 sm:px-6 bg--white">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold font-jakarta text-[#1D1D1D] mb-2">
+        <div className="text-center mb-5 md:mb-12">
+          <h2 className="text-[22px] sm:text-3xl md:text-4xl lg:text-[42px] font-bold font-jakarta text-[#1D1D1D] mb-0.5 md:mb-2">
             Feeling some hesitation? It&apos;s natural.
           </h2>
           <p className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] font-bold font-jakarta text-[#0B64F4]">
@@ -58,7 +58,7 @@ const FAQ = () => {
           </p>
         </div>
 
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-2 sm:space-y-4">
           {faqs.map((faq: FAQItem, index: number) => (
             <div
               key={index}
@@ -66,10 +66,10 @@ const FAQ = () => {
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center gap-4"
+                className="w-full px-3 sm:px-6 py-3 sm:py-5 text-left flex justify-between items-center gap-4"
                 aria-expanded={openIndex === index}
               >
-                <span className="text-black text-[16px] text-sm sm:text-base md:text-[16px] font-bold font-jakarta pr-4">
+                <span className="text-black text-[12px] text-sm sm:text-base md:text-[16px] font-bold font-jakarta pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
@@ -83,7 +83,7 @@ const FAQ = () => {
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 }`}
               >
-                <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-sm sm:text-base text-slate-600 font-jakarta leading-relaxed">
+                <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-[12px] sm:text-base text-slate-600 font-jakarta leading-relaxed">
                   {faq.answer}
                 </div>
               </div>
