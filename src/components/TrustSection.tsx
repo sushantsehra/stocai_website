@@ -35,52 +35,60 @@ const TrustSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-[60%_40%] gap-6 md:gap-8 items-start">
 
             {/* Left Section - Responsive */}
-            <div className="pt-10 lg:pt-12">
-              <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-tight sm:leading-[48px] text-[#0F1729] mb-4 sm:mb-6">
+            {/* <div className="pt-10 lg:pt-12"> */}
+            <div className="pt-10 lg:pt-12 text-center md:text-left">
+              <h2 className="text-[20px] sm:text-[40px] md:text-[48px] font-bold leading-tight sm:leading-[48px] text-[#0F1729] mb-3 sm:mb-6">
                 Who are we and{" "}
                 <br />
                 <span className="text-[#0B64F4]">why should you trust us?</span>
               </h2>
               
-              <p className="text-[16px] sm:text-[18px] leading-[28px] font-normal text-[#000000] mb-2">
-                We&apos;re not motivational speakers or LinkedIn influencers
+              <p className="text-[14px] sm:text-[18px] leading-5.5 md:leading-[28px] font-normal text-[#000000] mb-2 max-w-2xl">
+                {/* We&apos;re not motivational speakers or LinkedIn influencers
                 peddling platitudes..
                 <br />
+                And we&apos;re not here to sell you empty confidence. */}
+                <span className="block md:inline">
+                  We&apos;re not motivational speakers or LinkedIn influencers peddling platitudes. And we&apos;re not here to sell you empty confidence. 
+              </span>
+              {/* <span className="block md:inline md:ml-1">
                 And we&apos;re not here to sell you empty confidence.
+              </span> */}
               </p>
               
-              <h3 className="text-[20px] sm:text-[24px] leading-[30px] font-bold text-[#000000] mb-2 mt-10 lg:mt-13">
+              <h3 className="text-[17px] sm:text-[24px] leading-6 md:leading-[30px] font-bold text-[#000000] mb-2 mt-6 md:mt-10 lg:mt-13">
                 We&apos;ve been overlooked. We&apos;ve figured out why.
               </h3>
               
-              <p className="text-[14px] sm:text-[16px] leading-[28px] font-normal text-[#000000] mb-2">
+              <p className="text-[12px] sm:text-[16px] leading-5 md:leading-[28px] font-normal font-jakarta text-[#000000] mb-2 max-w-2xl">
                 And we&apos;ve learnt how to unblock career growth, without becoming
-                someone we&apos;re
-                <br />
+                someone we&apos;re not. Now, we help capable professionals like you stop second-guessing
+                themselves and start moving forward with intent.
+                {/* <br />
                 not. Now, we help capable professionals like you stop second-guessing
                 themselves
                 <br />
-                and start moving forward with intent.
+                and start moving forward with intent. */}
               </p>
               
-              <p className="text-[14px] sm:text-[16px] leading-[28px] font-normal text-[#000000] mt-2 mb-2">
+              <p className="text-[14px] sm:text-[16px] leading-5 md:leading-[28px] font-normal text-[#000000] mt-4 md:mt-2 mb-2 max-w-xl">
                 Our team brings together expertise in{" "}
                 <span className="text-[#0B64F4] font-bold">
                   psychology, neuroscience,
-                  <br />
+                  {/* <br /> */}
                   marketing, HR, business strategy, coaching, behavioural science, and
                   more.
                 </span>
               </p>
               
-              <p className="text-[20px] sm:text-[25px] leading-[24px] font-bold text-[#000000] mt-8 sm:mt-10 md:mt-16 lg:mt-18">
+              <p className="text-[18px] sm:text-[25px] leading-[24px] font-bold text-[#000000] mt-8 md:mt-16 lg:mt-18">
                 We&apos;re rooting for you.
               </p>
             </div>
 
             {/* Right Section (Founder Card) - Responsive */}
-            <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[350px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500">
-
+            {/* <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[350px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[5.81deg] hover:rotate-0 transition-transform duration-500"> */}
+            <div className="relative z-50 lg:mr-[10%] rounded-[20px] lg:rounded-[25px] my-6 md:my-10 lg:my-0 shadow-2xl border border-[#D5D5D5] overflow-hidden w-full max-w-[330px] lg:max-w-[443px] mx-auto md:mx-0 md:ml-auto transform rotate-[3.81deg] md:rotate-[5.81deg] md:hover:rotate-0 transition-transform duration-500">
               {/* Top White Section - FIXED HEIGHT */}
               <div className="bg-white text-center relative z-10 h-[120px] sm:h-[146px] flex justify-center">
                 <h3 className="font-montserrat mt-6 font-semibold text-[12px] sm:text-[14px] leading-[100%] tracking-[0.09em] text-black uppercase">

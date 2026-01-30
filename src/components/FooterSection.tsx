@@ -1,6 +1,6 @@
 "use client"
 
-import { Linkedin, Mail } from "lucide-react";
+import { Linkedin, Mail, Instagram } from "lucide-react";
 // import { Linkedin, Mail, Twitter } from "lucide-react";
 import { MdOutlineSecurity } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
@@ -36,9 +36,18 @@ const Footer = () => {
               >
                 <Linkedin className="w-5 h-5 text-black" />
               </Link>
-              {/* <button className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Twitter">
+              <Link
+                    href="https://www.instagram.com/my_stocai/"
+                    aria-label="Social media"
+                    className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
+                  >
+                  <Instagram className="w-6 h-6 text-black" />
+              </Link>
+              {/* <Link href="https://x.com/my_stocai" target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Twitter">
                 <Twitter className="w-5 h-5 text-black" />
-              </button> */}
+              </Link> */}
               <button className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Email">
                 <Mail className="w-5 h-5 text-black" />
               </button>
@@ -83,9 +92,10 @@ const Footer = () => {
             <h4 className="font-bold mb-4 text-sm sm:text-base font-jakarta">Contact Us</h4>
             <p className="text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-2">
               hello@bemorepromotable.com
+              {/* director@mystocai.com */}
             </p>
             <p className="text-white/70 lg:text-base font-normal font-jakarta text-xs sm:text-sm mb-6">
-              Based in Bangalore, India
+              Based in Pune, MH, India
             </p>
 
             <div className="pt-4 border-t border-white/10">
