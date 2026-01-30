@@ -11,7 +11,7 @@ import tile3 from "../assets/tile3.png";
 import tile4 from "../assets/tile4.png";
 import tile5 from "../assets/tile5.png";
 import tile7 from "../assets/tile7.png";
-import modal from "../assets/Modal.png";
+// import modal from "../assets/Modal.png";
 
 // Type Definition
 interface Slide {
