@@ -12,6 +12,7 @@ import WaitlistSection from './WaitlistSection';
 import CareerStalledSection from './CareerStalledSection';
 import BePromotableSection from './BePromotableSection';
 import SectionViewTracker from '@/app/_components/SectionViewTracker';
+import StickyCTA from './StickyCTA';
 
 interface FAQ {
   question: string;
@@ -24,6 +25,7 @@ const BMPLandingComponents = () => {
     <div className="min-h-screen bg-white">
       {/* <PromotionBanner /> */}
       <Header />
+      <StickyCTA />
       <SectionViewTracker />
       <section data-analytics-section="bmp_be_promotable" data-analytics-section-label="Be Promotable" data-analytics-section-order="1">
         <BePromotableSection />

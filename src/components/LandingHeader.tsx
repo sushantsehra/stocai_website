@@ -35,10 +35,10 @@ const Header = () => {
         <div className="flex lg:mr-24">
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
-            <button onClick={() => scrollToSection("framework")} className="hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => scrollToSection("true-section")} className="hover:text-[#0B64F4] font-jakarta">
               About Us
             </button>
-            <button onClick={() => scrollToSection("waitlist")} className="hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => scrollToSection("framework")} className="hover:text-[#0B64F4] font-jakarta">
               Program
             </button>
             <button onClick={() => scrollToSection("faq")} className="hover:text-[#0B64F4] font-jakarta">

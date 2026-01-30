@@ -20,7 +20,7 @@ import { Metadata } from "next";
 // import PromoBanner from "@/components/PromoBanner";
 import Footer from "@/components/FooterSection";
 import BMPLandingComponents from "@/components/BMPLandingComponents";
-import PromotionBanner from "@/components/PromotionBanner";
+// import PromotionBanner from "@/components/PromotionBanner";
 // import Header from "@/components/Header";
 
 // This ensures the page is statically generated at build time
@@ -118,7 +118,7 @@ export default function Home() {
   return (
     <>
       {/* <PromoBanner /> */}
-      <PromotionBanner />
+      {/* <PromotionBanner /> */}
     <div className="min-h-screen bg-white">
       <JsonLd />
       {/* <Header /> */}
@@ -127,21 +127,6 @@ export default function Home() {
       
       {/* <main className="container mx-auto"> */}
       <main>
-        {/* <BePromotableHero />
-        <PromotionMyths />
-        <CareerProblemsCards />
-        <SuccessStories />
-        <PromotableDiagram />
-        <CourseCarousel />
-        <SevenWeekArc />
-        <BeforeAfterCompare />
-        <PromoSystemSection />
-        <TrustableCompanies />
-        <OutcomeContract />
-        <FounderBonus />
-        <FaqAccordion />
-        <RoiCards /> */}
-        {/* <HeroWaitlist /> */}
         <BMPLandingComponents />
       </main>
       {/* <Footer /> */}
