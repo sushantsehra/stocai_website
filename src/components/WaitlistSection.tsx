@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { IoCheckbox } from "react-icons/io5";
+// import { IoCheckbox } from "react-icons/io5";
 
 const WaitlistSection = () => {
 
@@ -54,39 +54,45 @@ const WaitlistSection = () => {
           Benefit from our early-bird offer, only available for a short time, for this special launch.
         </p>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col gap-3 sm:flex-row justify-center items-center">
         {/* Email Input & Button */}
-        <div className="flex lex-row px-4 md:px-0 items-center justify-center min-w-sm md:min-w-lg lg:min-w-3xl bg-[#F5F5F5] rounded-[20px] h-[43.49372482299805px] md:h-[90px] shadow-lg overflow-hidden mb-0 md:mb-2">
+        <div className="flex flex-row px-4 md:px-0 items-center justify-center min-w-sm md:min-w-lg lg:min-w-3xl lg:max-w-3xl bg-[#F5F5F5] rounded-[20px] h-[43.49372482299805px] md:h-[90px] shadow-lg overflow-hidden mb-0 md:mb-2">
           <input
             id="waitlist-email"
             type="email"
             placeholder="Enter email address"
-            className="w-full sm:w-[65%] px-4 py-3 text-[#C8C8C8] font-medium outline-none text-sm sm:text-base lg:text-[20px]"
+            className="w-full sm:w-[65%] px-4 py-3 text-black font-medium outline-none text-sm sm:text-base lg:text-[20px]"
             required
           />
           <button
             data-waitlist-cta
             data-waitlist-email-input="waitlist-email"
             data-waitlist-source="waitlist_section"
-            className="w-full ml-4 sm:ml-0 sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-semibold py-1 md:py-3 transition-all"
+            className="hidden sm:block w-full ml-4 sm:ml-0 sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-bold cursor-pointer py-1 md:py-3 transition-all"
           >
             Request Access
           </button>
         </div>
+          <button
+            data-waitlist-cta
+            data-waitlist-email-input="waitlist-email"
+            data-waitlist-source="waitlist_section"
+            className="block sm:hidden w-[60%] ml-4 bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] md:rounded-[12px] text-[18.71px] text-black lg:text-[20px] min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 md:py-3 transition-all"
+          >
+            Request Access
+          </button>
         </div>
 
         {/* Bottom Row */}
         {/* <div className="flex flex-col sm:flex-row items-center justify-start absolute left-[17%] lg:left-[25%] gap-4 lg:gap-20"> */}
-          <div className="flex items-center justify-center mt-3 md:mt-4">
-          {/* <div className="flex items-center justify-center w-full lg:translate-x-[90%] 2xl:translate-x-[130%]"> */}
-          <div className="flex items-center justify-center">
-            <p className="text-sm sm:text-base lg:text-[20px] font-medium">
-              <IoCheckbox className="inline-block w-5 h-5 lg:w-6.5 lg:h-6.5 text-[#87beff] mr-2 mb-1" />
-              Opt in to receive updates
-            </p>
-          </div>
-
-        </div>
+          {/* <div className="flex items-center justify-center mt-3 md:mt-4">
+            <div className="flex items-center justify-center">
+              <p className="text-sm sm:text-base lg:text-[20px] font-medium">
+                <IoCheckbox className="inline-block w-5 h-5 lg:w-6.5 lg:h-6.5 text-[#87beff] mr-2 mb-1" />
+                Opt in to receive updates
+              </p>
+            </div>
+          </div> */}
       </div>
     </section>
   );

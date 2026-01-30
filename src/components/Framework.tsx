@@ -620,7 +620,7 @@ const Framework = () => {
               Get Early Access
             </button> */}
             {/* <Link href="#waitlist" scroll={true}> */}
-            <button onClick={scrollToWaitlist} className="bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+            <button onClick={scrollToWaitlist} className=" cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
                 Get Early Access
               </button>
             {/* </Link> */}

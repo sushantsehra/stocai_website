@@ -35,13 +35,13 @@ const Header = () => {
         <div className="flex lg:mr-24">
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8 text-black/80 font-normal text-[14px] items-center mr-6">
-            <button onClick={() => scrollToSection("true-section")} className="hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => scrollToSection("true-section")} className="hover:text-[#0B64F4] font-jakarta cursor-pointer">
               About Us
             </button>
-            <button onClick={() => scrollToSection("framework")} className="hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => scrollToSection("framework")} className="hover:text-[#0B64F4] font-jakarta cursor-pointer">
               Program
             </button>
-            <button onClick={() => scrollToSection("faq")} className="hover:text-[#0B64F4] font-jakarta">
+            <button onClick={() => scrollToSection("faq")} className="hover:text-[#0B64F4] font-jakarta cursor-pointer">
               FAQ
             </button>
           </nav>
@@ -61,12 +61,12 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
             <button
               onClick={scrollToWaitlist}
-              className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-jakarta font-bold transition-all"
+              className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-jakarta  cursor-pointer font-bold transition-all"
             >
               Get Early Access
             </button>
 
-            <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] font-jakarta text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
+            <button className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] font-jakarta  cursor-pointer text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
               Sign In / Login
             </button>
           </div>

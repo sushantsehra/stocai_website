@@ -32,14 +32,14 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
+                className="w-9 h-9 cursor-pointer rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
               >
                 <Linkedin className="w-5 h-5 text-black" />
               </Link>
               <Link
                     href="https://www.instagram.com/my_stocai/"
                     aria-label="Social media"
-                    className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
+                    className="w-9 h-9 cursor-pointer rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
                   >
                   <Instagram className="w-6 h-6 text-black" />
               </Link>
@@ -51,7 +51,7 @@ const Footer = () => {
               <Link   
                 href="mailto:team@bettercorporatelife.com"
                 aria-label="Email"
-                className="w-9 h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors">
+                className="w-9 h-9 cursor-pointer rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors">
                 <Mail className="w-5 h-5 text-black" />
               </Link>
             </div>
@@ -62,27 +62,27 @@ const Footer = () => {
             <h4 className="mb-2 sm:mb-4 text-sm sm:text-base font-bold font-jakarta">Quick Links</h4>
             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base">
             <li>
-              <button onClick={() => scrollToSection("framework")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+              <button onClick={() => scrollToSection("framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
                 About the Program
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("framework")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+              <button onClick={() => scrollToSection("framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
                 Modules
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("testimonials")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+              <button onClick={() => scrollToSection("testimonials")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
                 Testimonials
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("waitlist")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+              <button onClick={() => scrollToSection("waitlist")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
                 Pricing
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("faq")} className="text-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
+              <button onClick={() => scrollToSection("faq")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[16px] hover:text-white transition-colors">
                 FAQ
               </button>
             </li>

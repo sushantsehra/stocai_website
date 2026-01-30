@@ -207,7 +207,7 @@ const LearningExperience = () => {
               rounded-[12px]
               bg-[radial-gradient(ellipse_at_top,_#FFFFFF_0%,_#ADADAD_220%)]
               shadow-[0_5px_20px_rgba(0,0,0,0.3)]
-              text-black
+              text-black cursor-pointer
               flex items-center justify-center
               transition-all duration-300
               hover:scale-[1.02]

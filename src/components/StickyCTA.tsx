@@ -16,7 +16,7 @@ const StickyCTA = () => {
         {/* CTA Button */}
         <button
           onClick={scrollToWaitlist}
-          className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-4 sm:px-6 py-2 rounded-[12px] font-jakarta font-bold transition-all shrink-0"
+          className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-4 sm:px-6 py-2 rounded-[12px] font-jakarta cursor-pointer font-bold transition-all shrink-0"
         >
           Get Early Access
         </button>
