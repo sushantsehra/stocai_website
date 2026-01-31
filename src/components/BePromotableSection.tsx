@@ -303,7 +303,7 @@ export default function BePromotableSection() {
         </h3>
         <p className="text-sm text-black mt-2 font-jakarta">
           A promotion strategy system for experienced professionals who feel
-          stuck despite doing everything 'right'.
+          stuck despite doing everything &apos;right&apos;.
         </p>
       </div>
 
