@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Brain, Eye, BarChart3, Network, MessageSquare, Repeat } from "lucide-react";
-// import { IoMdCheckboxOutline } from "react-icons/io";
 import cardBgImage from "../assets/cardBgImage.png";
 import Image from "next/image";
 import crown from "../assets/crown.png";
@@ -9,11 +8,9 @@ import crossbox from "../assets/crossbox.png";
 import cross from "../assets/cross.png";
 import tickbox from "../assets/tickbox.png";
 import correctsign from "../assets/correctsign.png";
-// import Link from "next/link";
 
 const Framework = () => {
   const [activeTab, setActiveTab] = useState("framework");
-  // const [stepPage, setStepPage] = useState(0);
 
   const scrollToWaitlist = () => {
     const element = document.getElementById('waitlist');
@@ -247,23 +244,14 @@ const Framework = () => {
           }
         }
         .animate-scroll {
-          animation: scroll 30s linear infinite;
+          animation: scroll 4s linear infinite;
         }
       `}} />
       
-      <div id="framework" className="bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-12 px-4 lg:px-8">
+      <div id="framework" className="bg-gradient-to-b from-[#0F1729] to-[#0B64F4] py-6 sm:py-12 px-1 sm:px-4 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12 md:mb-16">
-          {/* <div className="inline-flex items-center justify-center w-14 h-14 md:w-[64px] md:h-[64px] bg-[#0B64F4] text-white rounded-[16px] mb-6">
-            <svg
-              className="w-8 h-8"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          </div> */}
+          <div className="text-center mb-10 md:mb-16">
             <div className="inline-flex items-center justify-center
               w-14 h-14 md:w-[64px] md:h-[64px]
               bg-[#3B6FF5]
@@ -280,66 +268,310 @@ const Framework = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-              {/* main sparkle */}
                 <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
-
-              {/* top-right small sparkle — moved farther */}
                 <g transform="translate(2,-2)">
                   <path d="M18 5 V8 M16.5 6.5 H19.5" />
                 </g>
-
-              {/* bottom-left small sparkle — moved farther */}
                 <g transform="translate(-2,2)">
                   <path d="M6 16 V18 M5 17 H7" />
                 </g>
               </svg>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-11 md:leading-14">
+            <h2 className="text-3xl sm:text-4xl lg:text-[48px] text-white/50 font-jakarta font-bold leading-tight md:leading-14">
               Introducing <br />
-              <span className="text-white  font-jakarta">BMP – Be More Promotable</span>
+              <span className="text-white font-jakarta">BMP – Be More Promotable</span>
             </h2>
-            <p className="text-white mt-4 lg:mt-1 text-base sm:text-lg md:text-xl font-normal font-jakarta max-w-7xl mx-auto">
+            <p className="text-white mt-4 lg:mt-1 text-base sm:text-lg md:text-xl font-normal font-jakarta max-w-7xl mx-auto px-4">
               A proven blueprint for changing how you show up, speak, and are
               perceived at work, so you become more promotable.
             </p>
           </div>
 
-          {/* Main Content with Left Card */}
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start relative">
+          {/* MOBILE VERSION - Show only on mobile */}
+          <div className="block lg:hidden">
+            {/* Mobile Card */}
+            <div className="w-full max-w-[342px] mx-auto mb-8 rotate-[-3deg]">
+              <div className="bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[32px] p-0.5">
+                <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] rounded-[32px] shadow-2xl">
+                  {/* Top Section */}
+                  <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] text-center p-6 rounded-t-[32px] min-h-[100px]">
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#2F66FF] via-[#0B3FB8] to-[#02045E] rounded-t-[32px]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/25" />
+                    
+                    <div className="relative z-10">
+                      <h3 className="text-white text-xs font-montserrat font-semibold tracking-wide mb-3">
+                        BE MORE PROMOTABLE
+                      </h3>
+                    </div>
+
+                    {/* Crown Icon */}
+                    <div className="absolute -bottom-[40%] z-50 left-1/2 transform -translate-x-1/2 w-[80px] h-[80px] rounded-full bg-gradient-to-br from-[#4B8DFF] to-[#0A47FF] flex items-center justify-center shadow-xl border-4 border-white">
+                      <Image
+                        src={crown}
+                        alt="Crown"
+                        width={160}
+                        height={160}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Bottom Section */}
+                  <div className="relative rounded-b-[32px] overflow-hidden py-14">
+                    <div className="absolute inset-0">
+                      <Image
+                        src={cardBgImage}
+                        alt="Card Background"
+                        fill
+                        className="object-cover opacity-180 z-0"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-black/40 z-10"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent"></div>
+                    </div>
+
+                    <div className="relative z-10 px-6 py-4">
+                      {/* Achievements */}
+                      <div className="space-y-2.5 mb-5">
+                        {achievements.map((item, idx) => (
+                          <div key={idx} className="flex items-center gap-2.5">
+                            <div className="relative w-5 h-5 flex items-center justify-center flex-shrink-0">
+                              {item.checked ? (
+                                <>
+                                  <Image
+                                    src={tickbox}
+                                    alt="Checked box"
+                                    fill
+                                    className="object-contain"
+                                  />
+                                  <Image
+                                    src={correctsign}
+                                    alt="Tick"
+                                    width={20}
+                                    height={20}
+                                    className="absolute left-[20%] bottom-[20%]"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  <Image
+                                    src={crossbox}
+                                    alt="Unchecked box"
+                                    fill
+                                    className="object-contain"
+                                  />
+                                  <Image
+                                    src={cross}
+                                    alt="Cross"
+                                    width={10}
+                                    height={10}
+                                    className="absolute"
+                                  />
+                                </>
+                              )}
+                            </div>
+                            <span className="text-white text-sm font-jakarta font-semibold">
+                              {item.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Separator */}
+                      <div className="border-t border-white/30 my-5"></div>
+
+                      {/* Progress Bars */}
+                      <div className="space-y-3">
+                        {progressItems.map((item, idx) => (
+                          <div key={idx} className="space-y-1">
+                            <div className="flex justify-between items-center">
+                              <span className="text-white text-xs font-jakarta font-semibold">
+                                {item.label}
+                              </span>
+                              <span className="text-white/70 text-[10px] font-jakarta font-bold">
+                                {item.value}/100
+                              </span>
+                            </div>
+                            <div className="w-full bg-[#0E2E64] rounded-full h-2.5 shadow-inner">
+                              <div
+                                className="bg-gradient-to-r from-[#D3D3D3] to-[#79ACFF] h-2.5 rounded-full transition-all duration-700"
+                                style={{ width: `${item.value}%` }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Tabs */}
+            {/* <div className="mb-6">
+              <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide px-2">
+                {tabs.map((tab) => {
+                  const IconComponent = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex items-center gap-2 px-4 py-2.5 text-xs font-jakarta font-medium transition-all duration-300 whitespace-nowrap rounded-lg flex-shrink-0 ${
+                        activeTab === tab.id
+                          ? "bg-white text-[#0F1729] shadow-lg"
+                          : "bg-white/10 text-white backdrop-blur-sm"
+                      }`}
+                    >
+                      <IconComponent className="w-4 h-4" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div> */}
+            {/* Mobile Tabs */}
+            <div className="mb-3 px-0.5">
+              <div className="grid grid-cols-3 gap-2">
+                {tabs.map((tab) => {
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-3 py-3 text-sm font-jakarta font-medium transition-all duration-300 whitespace-nowrap rounded-[7.6px] ${
+                        activeTab === tab.id
+                          ? "bg-white text-[#0F1729] shadow-lg"
+                          : "bg-[#0B64F4]/20 text-white backdrop-blur-sm border border-white/10"
+                      }`}
+                    >
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile Content */}
+            <div className="bg-white rounded-2xl p-4.5 shadow-xl mb-2">
+              {currentTab && (
+                <div key={activeTab} className="animate-fadeIn">
+                  <h3 className="text-2xl font-jakarta font-bold text-black mb-2">
+                    {currentTab.heading}
+                  </h3>
+                  <p className="text-sm font-jakarta font-normal text-black/80 mb-6">
+                    {currentTab.subtext}
+                  </p>
+
+                  <div className="space-y-4">
+                    {currentTab.steps.map((step) => (
+                      <div
+                        key={step.number}
+                        className="bg-[#E9F0FB] rounded-lg p-4"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="flex-shrink-0">
+                            <div className="w-6 h-5 bg-[#0B64F433] text-xs text-[#0B64F4] rounded flex items-center justify-center font-jakarta font-bold">
+                              {step.number}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-base font-jakarta font-semibold text-black mb-1">
+                              {step.title}
+                            </h4>
+                            <p className="text-xs font-jakarta font-semibold text-[#686868]">
+                              {step.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Dots Indicator */}
+                  <div className="flex justify-center items-center gap-1.5 mt-6">
+                    {tabs.map((tab, index) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`transition-all duration-300 ${
+                          index === activeTabIndex
+                            ? "w-2.5 h-2.5 bg-[#0B64F4]"
+                            : "w-1.5 h-1.5 bg-black/30"
+                        }`}
+                        aria-label={`Go to ${tab.label}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Scrolling Text */}
+            <div className="relative overflow-hidden sm:my-6 py-3">
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
+
+              <div className="flex whitespace-nowrap animate-scroll">
+                <div className="flex items-center gap-3 px-3">
+                  <span className="text-white text-base font-jakarta font-medium">Rewire Non promotable habits</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Claim what you deserve</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Navigate with confidence</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Signal leadership readiness</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Build advocates</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Build your custom plan</span>
+                  <span className="text-white/50">|</span>
+                </div>
+                <div className="flex items-center gap-3 px-3">
+                  <span className="text-white text-base font-jakarta font-medium">Rewire Non promotable habits</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Claim what you deserve</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Navigate with confidence</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Signal leadership readiness</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Build advocates</span>
+                  <span className="text-white/50">|</span>
+                  <span className="text-white text-base font-jakarta font-medium">Build your custom plan</span>
+                  <span className="text-white/50">|</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile CTA */}
+            <div className="text-center mt-5">
+              <button 
+                onClick={scrollToWaitlist} 
+                className="w-full max-w-[250px] cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg px-8 py-4 rounded-xl shadow-xl hover:opacity-90 transition"
+              >
+                Get Early Access
+              </button>
+            </div>
+          </div>
+
+          {/* DESKTOP VERSION - Show only on large screens */}
+          <div className="hidden lg:flex flex-col lg:flex-row gap-6 lg:gap-10 items-start relative">
             {/* Left Side Card - Progress Tracker */}
             <div className="w-[390.14613978924467px] md:ml-[0%] lg:flex-shrink-0 bg-gradient-to-tl from-[#646464] to-[#D5D5D5] rounded-[40px] p-0.5 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 flex justify-center items-center lg:justify-start">
-            {/* <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] border-[2px] border-[#D5D5D5] rounded-[40px] p-0 shadow-2xl w-[420px] lg:w-[400px]"> */}
               <div className="relative bg-gradient-to-br from-[#0B64F4] to-[#00026E] rounded-[40px] p-0 shadow-2xl w-[390.14613978924467px]">
-              {/* Subtle border effect */}
                 <div className="absolute inset-0 rounded-[32px] pointer-events-none"></div>
                 
-              {/* <div className="relative bg-gradient-to-br from-[#1e5ddb] to-[#0d3d8f] rounded-[30px] p-6"> */}
-                <div className="relative  rounded-[30px] p-0 rounded-t-[40px]">
-                {/* Top Section with Title and Icon */}
+                <div className="relative rounded-[30px] p-0 rounded-t-[40px]">
                   <div className="relative bg-gradient-to-r from-[#0B64F4] to-[#00026E] text-center p-8 rounded-t-[40px] min-h-[140px]">
-                  {/* <h3 className="text-white text-sm md:text-[14px] lg:text-[14px] font-montserrat font-semibold tracking-wide mb-4">
-                    BE MORE PROMOTABLE
-                  </h3> */}
-                    {/* Base gradient */}
                     <div className="absolute inset-0 bg-gradient-to-r from-[#2F66FF] via-[#0B3FB8] to-[#02045E] rounded-t-[40px]" />
-
-                  {/* Soft top glow */}
-                  {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(120,170,255,0.45)_0%,_rgba(11,100,244,0.25)_35%,_rgba(0,0,0,0)_70%)]" /> */}
-
-                  {/* Subtle dark depth at bottom */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/25" />
 
-                  {/* Content */}
                     <div className="relative z-10">
                       <h3 className="text-white text-sm md:text-[14px] lg:text-[14px] font-montserrat font-semibold tracking-wide mb-4">
                         BE MORE PROMOTABLE
                       </h3>
                     </div>
 
-                  {/* Crown Icon Circle */}
                     <div className="absolute -bottom-[72%] z-50 left-[50%] transform -translate-x-1/2 -translate-y-1/2 mx-auto w-[100px] h-[100px] lg:w-[110px] lg:h-[110px] rounded-full bg-gradient-to-br from-[#4B8DFF] to-[#0A47FF] flex items-center justify-center shadow-xl border-4 border-white">
-                    {/* <Crown className="w-16 h-16 text-white" strokeWidth={2.5} fill="white" /> */}
                       <Image
                         src={crown}
                         alt="Crown"
@@ -349,10 +581,7 @@ const Framework = () => {
                     </div>
                   </div>
 
-                {/* Black Card with Achievements and Progress */}
-                {/* <div className="bg-gradient-to-b from-black/80 via-black/60 to-black/80 rounded-b-[40px] p-8 backdrop-blur-md shadow-xl py-20"> */}
                   <div className="relative rounded-b-[40px] overflow-hidden shadow-xl py-16">
-                  {/* Background Image */}
                     <div className="absolute inset-0 opactiy-40">
                       <Image
                         src={cardBgImage}
@@ -361,51 +590,12 @@ const Framework = () => {
                         className="object-cover opacity-180 z-0"
                         priority
                       />
-                      {/* Subtle dark shadow overlay for that depth effect */}
                       <div className="absolute inset-0 bg-black/40 z-10"></div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent"></div>
                     </div>
-                  {/* <Image
-                    src={cardBgImage}
-                    alt="Card Background"
-                    fill
-                    className="object-cover opacity-80 z-0"
-                    priority
-                  /> */}
 
-                  {/* Foreground content (above image) */}
                     <div className="relative z-10 p-8 lg:px-10">
-                    {/* Achievements Checklist */}
                       <div className="space-y-3 mb-6">
-                      {/* {achievements.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-3">
-                          <div
-                            className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
-                              item.checked
-                                ? "bg-transparent"
-                                : "bg-transparent border-2 border-white"
-                            }`}
-                          >
-                            {item.checked ? (
-                              <IoMdCheckboxOutline className="w-8 h-8 text-white" />
-                            ) : (
-                              <svg
-                                className="w-3.5 h-3.5 text-white"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth={2.5}
-                              >
-                                <line x1="6" y1="6" x2="18" y2="18" />
-                                <line x1="6" y1="18" x2="18" y2="6" />
-                              </svg>
-                            )}
-                          </div>
-                          <span className="text-white md:text-[15px] text-sm font-jakarta font-semibold">
-                            {item.label}
-                          </span>
-                        </div>
-                      ))} */}
                         {achievements.map((item, idx) => (
                           <div key={idx} className="flex items-center gap-3">
                             <div className="relative w-5 h-5 flex items-center justify-center">
@@ -451,10 +641,8 @@ const Framework = () => {
                         ))}
                       </div>
 
-                    {/* Separator Line */}
                       <div className="border-t border-[#FFFFFF] my-4 lg:my-6 lg:mb-8"></div>
 
-                    {/* Progress Bars Section */}
                       <div className="space-y-4">
                         {progressItems.map((item, idx) => (
                           <div key={idx} className="flex justify-between items-center">
@@ -472,9 +660,6 @@ const Framework = () => {
                                   </p>
                                 </div>
                               </div>
-                            {/* <p className="text-[#AFCBFF] font-bold text-[11px]">
-                              {item.value}/100
-                            </p> */}
                             </div>
                           </div>
                         ))}
@@ -488,8 +673,6 @@ const Framework = () => {
             {/* Main Content Card - Right Side */}
             <div className="flex-1 flex flex-col md:translate-x-[4.5%] mt-10 md:mt-0">
               <div className="backdrop-blur rounded-[17px] shadow-2xl overflow-hidden max-w-sm md:max-w-2xl md:max-w-xl lg:max-w-[776px] w-full">
-                {/* Tabs */}
-              {/* <div className="flex overflow-x-auto gap-2 scrollbar-hide"> */}
                 <div className="relative z-20 flex overflow-x-auto gap-2 scrollbar-hide">
                   {tabs.map((tab) => {
                     const IconComponent = tab.icon;
@@ -510,8 +693,6 @@ const Framework = () => {
                   })}
                 </div>
 
-                {/* Tab Content */}
-              {/* <div className="p-8 sm:p-10 bg-white"> */}
                 <div className="relative z-10 -mt-1 p-8 sm:p-10 bg-white pt-10">
                   {currentTab ? (
                     <div key={activeTab} className="animate-fadeIn">
@@ -522,12 +703,11 @@ const Framework = () => {
                         <p className="text-lg lg:text-[16px] font-jakarta font-normal text-black">{currentTab.subtext}</p>
                       </div>
 
-                      {/* Steps Grid */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {currentTab.steps.map((step) => (
                           <div
                             key={step.number}
-                            className="bg-[#E9F0FB]  rounded-[8px] p-6 lg:p-4 hover:shadow-lg transition-shadow duration-300"
+                            className="bg-[#E9F0FB] rounded-[8px] p-6 lg:p-4 hover:shadow-lg transition-shadow duration-300"
                           >
                             <div className="flex items-start gap-4">
                               <div className="flex-shrink-0">
@@ -548,7 +728,6 @@ const Framework = () => {
                         ))}
                       </div>
 
-                      {/* Dots Indicator */}
                       <div className="flex justify-center items-center gap-1.5 mt-6 lg:translate-y-[10px]">
                         {tabs.map((tab, index) => (
                           <button
@@ -568,68 +747,57 @@ const Framework = () => {
                     <p className="text-center text-gray-500">No tab data available.</p>
                   )}
                 </div>
-
               </div>
 
+              <div className="flex flex-col">
+                <div className="relative overflow-hidden my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-[776px]">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
 
-          <div className="flex flex-col">
-            <div className="relative overflow-hidden  my-6 py-4 max-w-sm md:max-w-2xl lg:max-w-[776px]">
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0F1729] to-transparent z-20"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0F1729] to-transparent z-20"></div>
-
-              <div className="flex whitespace-nowrap animate-scroll">
-                <div className="flex items-center gap-3 px-4">
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Rewire Non promotable habits</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Claim what you deserve</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Navigate with confidence in corporate structure</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Signal leadership readiness</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build advocates</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Multiply the impact without compromising work life balance</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build your custom plan</span>
-                  <span className="text-white/50">|</span>
+                  <div className="flex whitespace-nowrap animate-scroll">
+                    <div className="flex items-center gap-3 px-4">
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Rewire Non promotable habits</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Claim what you deserve</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Navigate with confidence in corporate structure</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Signal leadership readiness</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build advocates</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Multiply the impact without compromising work life balance</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build your custom plan</span>
+                      <span className="text-white/50">|</span>
+                    </div>
+                    <div className="flex items-center gap-3 px-4">
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Rewire Non promotable habits</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Claim what you deserve</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Navigate with confidence in corporate structure</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Signal leadership readiness</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build advocates</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Multiply the impact without compromising work life balance</span>
+                      <span className="text-white/50">|</span>
+                      <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build your custom plan</span>
+                      <span className="text-white/50">|</span>
+                    </div>
+                  </div>
                 </div>
-                {/* Duplicate for seamless loop */}
-                <div className="flex items-center gap-3 px-4">
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Rewire Non promotable habits</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Claim what you deserve</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Navigate with confidence in corporate structure</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Signal leadership readiness</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build advocates</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Multiply the impact without compromising work life balance</span>
-                  <span className="text-white/50">|</span>
-                  <span className="text-white text-lg lg:text-[25px] font-jakarta font-medium">Build your custom plan</span>
-                  <span className="text-white/50">|</span>
+
+                <div className="text-start mt-1">
+                  <button onClick={scrollToWaitlist} className="cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+                    Get Early Access
+                  </button>
                 </div>
               </div>
             </div>
-
-            {/* CTA Button */}
-            <div className="text-start mt-1">
-            {/* <button className="bg-gradient-to-r from-white to-[#CFCFCF] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
-              Get Early Access
-            </button> */}
-            {/* <Link href="#waitlist" scroll={true}> */}
-            <button onClick={scrollToWaitlist} className=" cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
-                Get Early Access
-              </button>
-            {/* </Link> */}
-            </div>
           </div>
-            </div>
-          </div>
-
-
         </div>
       </div>
     </>
