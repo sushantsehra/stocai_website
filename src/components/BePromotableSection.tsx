@@ -1,10 +1,14 @@
-import React from 'react';
+"use client"
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import bgColor from '../assets/bgCircle.png';
 import harshImg from '../assets/harshImg.jpg';
 import harshImage from '../assets/harshImage.png';
 
 export default function BePromotableSection() {
+  const [activeTab, setActiveTab] = useState('current');
+
   const profile = {
     name: "Harsh Agarwal",
     currentState: {
@@ -41,7 +45,7 @@ export default function BePromotableSection() {
 
   return (
     <>
-    <div className=" hidden md:block bg-white py-12 lg:py-12 lg:pt-12 px-4 relative overflow-hidden container mx-auto mt-6">
+    <div className=" hidden lg:block bg-white py-12 lg:py-12 lg:pt-12 px-4 relative overflow-hidden container mx-auto mt-6">
       {/* Background Glow moved below all text */}
       <div className="hidden md:block absolute inset-0 flex justify-center items-center">
         <Image
@@ -286,197 +290,192 @@ export default function BePromotableSection() {
       </div>
     </div>
 
-<div className="block md:hidden">
-  <div className="bg-white px-4 py-10 relative overflow-hidden">
-    
-    {/* Optional: Background glow for mobile */}
-    <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-      <div className="w-[400px] h-[400px] bg-blue-200 rounded-full blur-3xl opacity-30"></div>
-    </div>
+    {/* ================= MOBILE / SMALL SCREENS ================= */}
+    <div className="block lg:hidden bg-white px-4 py-10">
 
-    {/* HEADER */}
-    <div className="text-center mb-8 relative z-10">
-      <h2 className="text-3xl font-jakarta font-bold text-[#0B64F4]">
-        #BePromotable.
-      </h2>
-      <h3 className="text-lg font-jakarta font-bold mt-3">
-        Stop being the hard worker who gets overlooked.
-      </h3>
-      <p className="text-sm mt-2">
-        A promotion strategy system for experienced professionals who feel
-        stuck despite doing everything &apos;right&apos;.
-      </p>
-    </div>
+      {/* Header */}
+      <div className="text-center mb-6">
+        <h2 className="text-[32px] font-jakarta font-bold text-[#0B64F4]">
+          #BePromotable.
+        </h2>
+        <h3 className="text-lg font-jakarta font-bold text-black mt-1 leading-6">
+          Stop being the hard worker who gets overlooked.
+        </h3>
+        <p className="text-sm text-black mt-2 font-jakarta">
+          A promotion strategy system for experienced professionals who feel
+          stuck despite doing everything 'right'.
+        </p>
+      </div>
 
-    {/* Cards Container with relative positioning */}
-    <div className="relative min-h-[850px]">
-      
-      {/* ===== CURRENT STATE ===== */}
-      <div 
-        className="absolute left-1/2 top-0 w-[85%] max-w-[320px] bg-white rounded-[22px] border-2 border-[#D9D9D9] shadow-xl overflow-hidden"
-        style={{
-          transform: 'translateX(-50%) rotate(-8deg)',
-          transformOrigin: 'center center',
-          zIndex: 20
-        }}
-      >
-        <div className="bg-black pt-4 pb-14">
-          <p className="text-xs uppercase tracking-widest text-white text-center font-semibold font-montserrat">
-            Current State
-          </p>
-        </div>
+      {/* Tab Buttons */}
+      <div className="flex gap-3 mb-6 bg-white rounded-3xl border-2 border-[#A8A8A8] p-0.5">
+        <button
+          onClick={() => setActiveTab('current')}
+          className={`flex-1 py-3 px-6 rounded-full font-semibold font-jakarta text-sm border-2 border-white transition-all ${
+            activeTab === 'current'
+              ? 'bg-gradient-to-r from-[#1a1a1a] to-[#000000] text-white border-2 border-black shadow-lg'
+              : 'bg-white text-gray-500 border-2 border-gray-200'
+          }`}
+        >
+          Current State
+        </button>
+        <button
+          onClick={() => setActiveTab('future')}
+          className={`flex-1 py-3 px-6 rounded-full font-semibold font-jakarta text-sm transition-all ${
+            activeTab === 'future'
+              ? 'bg-gradient-to-r from-[#1a1a1a] to-[#000000] text-white border-2 border-blue-400 shadow-lg'
+              : 'bg-white text-gray-500 border-2 border-gray-200'
+          }`}
+        >
+          Future You
+        </button>
+      </div>
 
-        {/* Avatar */}
-        <div className="-mt-12 flex justify-center">
-          <div className="w-24 h-24 rounded-full overflow-hidden border-[3px] border-white bg-[#F1F1F1] shadow-lg">
-            <Image
-              src={profile.currentState.image}
-              alt="Current"
-              width={96}
-              height={96}
-              className="object-cover w-full h-full"
-            />
-          </div>
-        </div>
-
-        <div className="px-5 pt-4 pb-6">
-          <div className="text-center mb-4">
-            <h5 className="text-lg font-medium font-gotham">{profile.name}</h5>
-            <p className="text-xs font-gotham">{profile.currentState.title}</p>
+      {/* CURRENT STATE */}
+      {activeTab === 'current' && (
+        <div className="bg-white rounded-[25px] border-2 border-[#D9D9D9] shadow-xl overflow-hidden">
+          <div className="bg-black pt-5 pb-16">
+            <h4 className="text-xs uppercase text-white tracking-widest font-semibold font-montserrat text-center">
+              Current State
+            </h4>
           </div>
 
-          {/* META */}
-          <div className="border-y border-[#E3E3E3] py-4 space-y-2 text-xs mb-4">
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Status</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.currentState.status}</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Visibility</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.currentState.visibilityScore}</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Influence</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.currentState.influenceRating}</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Access</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.currentState.accessLevel}</span>
+          {/* Avatar */}
+          <div className="-mt-14 flex justify-center">
+            <div className="w-28 h-28 rounded-full border-[3px] border-white bg-[#F1F1F1] overflow-hidden shadow-lg">
+              <Image
+                src={profile.currentState.image}
+                alt="Current State"
+                width={112}
+                height={112}
+                className="object-cover w-full h-full"
+              />
             </div>
           </div>
 
-          {/* KNOWN FOR */}
-          <p className="text-xs uppercase font-bold font-montserrat tracking-wide mb-2">Known For</p>
-          <ul className="text-sm space-y-1 mb-4">
-            {profile.currentState.knownFor.map((item, i) => (
-              <li key={i} className="flex items-start">
-                <span className="w-1 h-1 bg-black rounded-full mt-2 mr-2 flex-shrink-0" />
-                <span className="font-jakarta">{item}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="px-5 pt-4 pb-6">
+            <div className="text-center mb-4">
+              <h5 className="text-lg font-jakarta font-medium">
+                {profile.name}
+              </h5>
+              <p className="text-xs mt-1 font-jakarta">{profile.currentState.title}</p>
+            </div>
 
-          {/* PQ */}
-          <div className="border-t border-gray-200 pt-4">
-            <p className="text-xs uppercase font-bold font-montserrat tracking-wide text-center mb-2">
-              Promotability Quotient <span className="text-base ml-1">{profile.currentState.promotabilityQuotient}</span>
+            <div className="border-y py-4 space-y-2 mb-4 font-jakarta">
+              {[
+                ["Status", profile.currentState.status],
+                ["Visibility Score", profile.currentState.visibilityScore],
+                ["Influence Rating", profile.currentState.influenceRating],
+                ["Access Level", profile.currentState.accessLevel],
+              ].map(([label, value], i) => (
+                <div key={i} className="flex justify-between text-xs">
+                  <span className="uppercase text-[#7A7777] font-semibold font-jakarta">
+                    {label}
+                  </span>
+                  <span className="font-semibold font-jakarta">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs uppercase font-bold font-montserrat mb-2">Known For</p>
+            <ul className="text-sm space-y-1 mb-5">
+              {profile.currentState.knownFor.map((item, i) => (
+                <li key={i} className="flex items-start">
+                  <span className="w-1 h-1 bg-black rounded-full mt-2 mr-2 font-jakarta" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-xs uppercase font-bold text-center mb-2 font-jakarta">
+              Promotability Quotient{" "}
+              <span className="ml-1 font-jakarta">
+                {profile.currentState.promotabilityQuotient}
+              </span>
             </p>
-            <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-2 w-full bg-gray-200 rounded-full">
               <div
-                className="h-full bg-black rounded-full transition-all duration-500"
+                className="h-full bg-black rounded-full"
                 style={{ width: profile.currentState.promotabilityQuotient }}
               />
             </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* ===== FUTURE YOU ===== */}
-      <div 
-        className="absolute left-1/2 top-[380px] w-[85%] max-w-[320px] bg-white rounded-[22px] border-2 border-[#E9E9E9] shadow-xl overflow-hidden"
-        style={{
-          transform: 'translateX(-50%) rotate(8deg)',
-          transformOrigin: 'center center',
-          zIndex: 30
-        }}
-      >
-        <div className="bg-[#0B64F4] pt-4 pb-14">
-          <p className="text-xs uppercase tracking-widest text-white text-center font-semibold font-montserrat">
-            Future You
-          </p>
-        </div>
-
-        <div className="-mt-12 flex justify-center">
-          <div className="w-24 h-24 rounded-full overflow-hidden border-[3px] border-white bg-[#F1F1F1] shadow-lg">
-            <Image
-              src={profile.futureState.image}
-              alt="Future"
-              width={96}
-              height={96}
-              className="object-cover w-full h-full"
-            />
-          </div>
-        </div>
-
-        <div className="px-5 pt-4 pb-6">
-          <div className="text-center mb-4">
-            <h5 className="text-lg font-medium font-gotham">{profile.name}</h5>
-            <p className="text-xs font-gotham">{profile.futureState.title}</p>
+      {/* FUTURE YOU */}
+      {activeTab === 'future' && (
+        <div className="bg-white rounded-[25px] border-2 border-[#E9E9E9] shadow-xl overflow-hidden">
+          <div className="bg-[#0B64F4] pt-5 pb-16">
+            <h4 className="text-xs uppercase text-white tracking-widest font-semibold font-montserrat text-center">
+              Future You
+            </h4>
           </div>
 
-          <div className="border-y border-[#E3E3E3] py-4 space-y-2 text-xs mb-4">
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Status</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.futureState.status}</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Visibility</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.futureState.visibilityScore}</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Influence</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.futureState.influenceRating}</span>
-            </div>
-            <div className="flex items-center">
-              <span className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta w-[100px]">Access</span>
-              <span className="text-[#B3B3B3] font-extrabold mx-2">:</span>
-              <span className="font-semibold font-jakarta flex-1">{profile.futureState.accessLevel}</span>
+          <div className="-mt-14 flex justify-center">
+            <div className="w-28 h-28 rounded-full border-[3px] border-white bg-[#F1F1F1] overflow-hidden shadow-lg">
+              <Image
+                src={profile.futureState.image}
+                alt="Future You"
+                width={112}
+                height={112}
+                className="object-cover w-full h-full"
+              />
             </div>
           </div>
 
-          <p className="text-xs uppercase font-bold font-montserrat tracking-wide text-[#0B64F4] mb-2">Known For</p>
-          <ul className="text-sm space-y-1 mb-4">
-            {profile.futureState.knownFor.map((item, i) => (
-              <li key={i} className="flex items-start">
-                <span className="w-1 h-1 bg-black rounded-full mt-2 mr-2 flex-shrink-0" />
-                <span className="font-jakarta">{item}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="px-5 pt-4 pb-6">
+            <div className="text-center mb-4">
+              <h5 className="text-lg font-jakarta font-medium">
+                {profile.name}
+              </h5>
+              <p className="text-xs mt-1 font-jakarta">{profile.futureState.title}</p>
+            </div>
 
-          <div className="border-t border-gray-200 pt-4">
-            <p className="text-xs uppercase font-bold font-montserrat tracking-wide text-center text-[#0B64F4] mb-2">
-              Promotability Quotient <span className="text-base ml-1">{profile.futureState.promotabilityQuotient}</span>
+            <div className="border-y py-4 space-y-2 mb-4 font-jakarta">
+              {[
+                ["Status", profile.futureState.status],
+                ["Visibility Score", profile.futureState.visibilityScore],
+                ["Influence Rating", profile.futureState.influenceRating],
+                ["Access Level", profile.futureState.accessLevel],
+              ].map(([label, value], i) => (
+                <div key={i} className="flex justify-between text-xs">
+                  <span className="uppercase text-[#7A7777] font-semibold font-jakarta">
+                    {label}
+                  </span>
+                  <span className="font-semibold font-jakarta">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs uppercase font-bold text-[#0B64F4] font-montserrat mb-2">
+              Known For
             </p>
-            <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+            <ul className="text-sm space-y-1 mb-5">
+              {profile.futureState.knownFor.map((item, i) => (
+                <li key={i} className="flex items-start">
+                  <span className="w-1 h-1 bg-black rounded-full mt-2 mr-2 font-jakarta" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <p className="text-xs uppercase font-bold text-center text-[#0B64F4] font-jakarta mb-2">
+              Promotability Quotient{" "}
+              <span className="ml-1 font-jakarta">
+                {profile.futureState.promotabilityQuotient}
+              </span>
+            </p>
+            <div className="h-2 w-full bg-gray-200 rounded-full">
               <div
-                className="h-full bg-[#0B64F4] rounded-full transition-all duration-500"
+                className="h-full bg-[#0B64F4] rounded-full"
                 style={{ width: profile.futureState.promotabilityQuotient }}
               />
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
-  </div>
-</div>
 
     </>
   );
