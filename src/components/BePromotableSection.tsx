@@ -307,30 +307,6 @@ export default function BePromotableSection() {
         </p>
       </div>
 
-      {/* Tab Buttons */}
-      <div className="flex gap-3 mb-6 bg-white rounded-3xl border-2 border-[#A8A8A8] p-0.5">
-        <button
-          onClick={() => setActiveTab('current')}
-          className={`flex-1 py-3 px-6 rounded-full font-semibold font-jakarta text-sm border-2 border-white transition-all ${
-            activeTab === 'current'
-              ? 'bg-gradient-to-r from-[#1a1a1a] to-[#000000] text-white border-2 border-black shadow-lg'
-              : 'bg-white text-gray-500 border-2 border-gray-200'
-          }`}
-        >
-          Current State
-        </button>
-        <button
-          onClick={() => setActiveTab('future')}
-          className={`flex-1 py-3 px-6 rounded-full font-semibold font-jakarta text-sm transition-all ${
-            activeTab === 'future'
-              ? 'bg-gradient-to-r from-[#1a1a1a] to-[#000000] text-white border-2 border-blue-400 shadow-lg'
-              : 'bg-white text-gray-500 border-2 border-gray-200'
-          }`}
-        >
-          Future You
-        </button>
-      </div>
-
       {/* CURRENT STATE */}
       {activeTab === 'current' && (
         <div className="bg-white rounded-[25px] border-2 border-[#D9D9D9] shadow-xl overflow-hidden">
@@ -475,6 +451,31 @@ export default function BePromotableSection() {
           </div>
         </div>
       )}
+
+
+      {/* Tab Buttons */}
+      <div className="flex gap-3 mb-6 bg-white rounded-3xl border-2 border-[#A8A8A8] p-0.5 mt-6">
+        <button
+          onClick={() => setActiveTab('current')}
+          className={`flex-1 py-3 px-6 rounded-full font-semibold font-jakarta text-sm border-2 border-white transition-all ${
+            activeTab === 'current'
+              ? 'bg-gradient-to-r from-[#1a1a1a] to-[#000000] text-white border-2 border-black shadow-lg'
+              : 'bg-white text-gray-500 border-2 border-gray-200'
+          }`}
+        >
+          Current State
+        </button>
+        <button
+          onClick={() => setActiveTab('future')}
+          className={`flex-1 py-3 px-6 rounded-full font-semibold font-jakarta text-sm transition-all ${
+            activeTab === 'future'
+              ? 'bg-gradient-to-r from-[#1a1a1a] to-[#000000] text-white border-2 border-blue-400 shadow-lg'
+              : 'bg-white text-gray-500 border-2 border-gray-200'
+          }`}
+        >
+          Future You
+        </button>
+      </div>
     </div>
 
     </>
