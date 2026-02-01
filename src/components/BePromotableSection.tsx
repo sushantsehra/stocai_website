@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import bgColor from '../assets/bgCircle.png';
 import harshImg from '../assets/harshImg.jpg';
@@ -8,6 +8,15 @@ import harshImage from '../assets/harshImage.png';
 
 export default function BePromotableSection() {
   const [activeTab, setActiveTab] = useState('current');
+
+  // Auto-switch tabs every 3 seconds on small devices
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTab((prev) => (prev === 'current' ? 'future' : 'current'));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const profile = {
     name: "Harsh Agarwal",
