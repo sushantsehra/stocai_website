@@ -68,7 +68,8 @@ const WaitlistSection = () => {
             data-waitlist-cta
             data-waitlist-email-input="waitlist-email"
             data-waitlist-source="waitlist_section"
-            className="hidden sm:block w-full ml-4 sm:ml-0 sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-bold cursor-pointer py-1 md:py-3 transition-all"
+            // className="hidden sm:block w-full ml-4 sm:ml-0 sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-bold cursor-pointer py-1 md:py-3 transition-all"
+            className="hidden sm:block w-full ml-4 sm:ml-0 sm:w-[30%] bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white lg:text-[20px] lg:min-h-[72px] font-bold cursor-pointer py-1 md:py-3 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
           >
             Request Access
           </button>
@@ -77,7 +78,8 @@ const WaitlistSection = () => {
             data-waitlist-cta
             data-waitlist-email-input="waitlist-email"
             data-waitlist-source="waitlist_section"
-            className="block sm:hidden w-[60%] ml-4 bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] md:rounded-[12px] text-[18.71px] text-black lg:text-[20px] min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 md:py-3 transition-all"
+            // className="block sm:hidden w-[60%] ml-4 bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] md:rounded-[12px] text-[18.71px] text-black lg:text-[20px] min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 md:py-3 transition-all"
+            className="block sm:hidden w-[60%] ml-4 bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] md:rounded-[12px] text-[18.71px] text-black lg:text-[20px] min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 md:py-3 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
           >
             Request Access
           </button>

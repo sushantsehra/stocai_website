@@ -546,7 +546,7 @@ const Framework = () => {
             <div className="text-center mt-5">
               <button 
                 onClick={scrollToWaitlist} 
-                className="w-full max-w-[250px] cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg px-8 py-4 rounded-xl shadow-xl hover:opacity-90 transition"
+                className="w-full max-w-[250px] cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg px-8 py-4 rounded-xl shadow-xl hover:opacity-90 transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
               >
                 Get Early Access
               </button>
@@ -791,7 +791,8 @@ const Framework = () => {
                 </div>
 
                 <div className="text-start mt-1">
-                  <button onClick={scrollToWaitlist} className="cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transition">
+                  <button onClick={scrollToWaitlist} 
+                    className="cursor-pointer bg-[radial-gradient(circle_at_center,_#FFFFFF_0%,_#ADADAD_200%)] text-black font-jakarta font-bold text-lg sm:text-xl md:text-[24px] px-8 sm:px-10 py-4 sm:py-5 rounded-xl shadow-xl hover:opacity-100 transform transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95">
                     Get Early Access
                   </button>
                 </div>

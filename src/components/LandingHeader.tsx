@@ -57,12 +57,14 @@ const handleLoginRedirect = () => {
           <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
             <button
               onClick={scrollToWaitlist}
-              className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-jakarta  cursor-pointer font-bold transition-all"
+              className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             >
               Get Early Access
             </button>
 
-            <button onClick={handleLoginRedirect} className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] font-jakarta  cursor-pointer text-[14px] px-4 py-2 rounded-[12px] font-bold transition-all">
+            <button onClick={handleLoginRedirect} 
+              className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] hover:bg-gray-200 text-[#3F3F3F] font-jakarta cursor-pointer text-[14px] px-4 py-2 rounded-[12px] font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+            >
               Sign In / Login
             </button>
           </div>
@@ -104,12 +106,14 @@ const handleLoginRedirect = () => {
                 scrollToWaitlist();
                 setMenuOpen(false);
               }}
-              className="bg-[#0B64F4] text-white py-2 rounded-[4px] font-jakarta font-bold"
+              className="bg-[#0B64F4] text-white py-2 rounded-[4px] font-jakarta font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             >
               Get Early Access
             </button>
 
-            <button onClick={() => {setMenuOpen(false); handleLoginRedirect()}} className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] text-[#3F3F3F] py-2 rounded-[4px] font-jakarta font-bold">
+            <button onClick={() => {setMenuOpen(false); handleLoginRedirect()}} 
+              className="bg-gradient-to-l from-[#C5C5C5] to-[#FFFFFF] text-[#3F3F3F] py-2 rounded-[4px] font-jakarta font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+            >
               Sign In / Login
             </button>
           </div>

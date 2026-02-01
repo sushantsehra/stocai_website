@@ -15,7 +15,7 @@ const testimonials = [
     name: "Diksha Jain",
     role: "AVP Marketing",
     title: "10+ Years of Experience",
-    before: " I was always reliable and online, but promotions kept getting delayed. ",
+    before: " I was always reliable and online, but promotions kept getting delayed. ",
     after:
       "I learned to be replaceable strategically, focusing on problems, gaining visibility, and evolving.",
     image: diksha,
@@ -61,11 +61,60 @@ const testimonials = [
 
 const Testimonial = () => {
   const [current, setCurrent] = useState(2);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const handlePrev = () =>
     setCurrent((p) => (p === 0 ? testimonials.length - 1 : p - 1));
   const handleNext = () =>
     setCurrent((p) => (p === testimonials.length - 1 ? 0 : p + 1));
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
+    
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  // Handle tap navigation on small screens
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only for small screens (md breakpoint se chhote)
+    if (window.innerWidth >= 768) return;
+    
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const cardWidth = rect.width;
+    
+    // Left half - Previous, Right half - Next
+    if (clickX < cardWidth / 2) {
+      handlePrev();
+    } else {
+      handleNext();
+    }
+  };
 
   const getPos = (i: number) => {
     const d = i - current;
@@ -115,7 +164,12 @@ const Testimonial = () => {
 
         <div className="relative z-20 max-w-7xl mx-auto text-center">
           {/* CARD STACK */}
-          <div className="relative min-h-[390px] sm:min-h-[450px] flex justify-center items-center">
+          <div 
+            className="relative min-h-[390px] sm:min-h-[450px] flex justify-center items-center touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {testimonials.map((t, i) => {
               const p = getPos(i);
               if (p === null) return null;
@@ -144,7 +198,10 @@ const Testimonial = () => {
                   className={`absolute w-[320px] sm:w-[360px] lg:w-[420px] h-[450px] sm:h-[560px] transition-all duration-700 ${styles}`}
                 >
                   {p === 0 ? (
-                    <div className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-t-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full">
+                    <div 
+                      className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] md:relative p-[2px] rounded-t-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full md:cursor-default cursor-pointer"
+                      onClick={handleCardClick}
+                    >
                       <div className="bg-[#F5F5F5] rounded-t-[40px] p-4 sm:p-8 h-full">
                         {/* CONTENT */}
                         <div className="flex items-center gap-5 mb-8">
@@ -193,7 +250,8 @@ const Testimonial = () => {
                           </div>
                         </div>
 
-                        <div className="flex justify-center gap-4 mt-8 md:mt-10 md:absolute md:bottom-[10%] md:left-[40%]">
+                        {/* BUTTONS - Hidden on small screens, visible on md and up */}
+                        <div className="hidden md:flex justify-center gap-4 mt-8 md:mt-10 md:absolute md:bottom-[10%] md:left-[40%]">
                           <button
                             onClick={handlePrev}
                             className="w-9 h-9 rounded-full bg-[#A8A8A8] flex items-center justify-center"
