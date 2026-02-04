@@ -18,6 +18,13 @@ export default function BePromotableFirstFold() {
     return () => clearInterval(interval);
   }, []);
 
+      const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const profile = {
     name: "Harsh Agarwal",
     currentState: {
@@ -82,7 +89,7 @@ export default function BePromotableFirstFold() {
             </p>
             
             {/* Get Early Access Button */}
-            <button className="bg-[#0B64F4] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-lg px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+            <button onClick={scrollToWaitlist} className="bg-[#0B64F4] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-lg px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
               Get Early Access
             </button>
           </div>
