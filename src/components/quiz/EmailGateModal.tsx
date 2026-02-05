@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, ArrowRight, X, Loader2, CheckCircle, ExternalLink, Send } from "lucide-react";
+import { Mail, ArrowRight, X, Loader2, CheckCircle, ExternalLink } from "lucide-react";
 import env from "@/utils/env";
 import { AssessmentData } from "./assessmentData";
 
@@ -17,7 +17,6 @@ const EmailGateModal = ({ isOpen, onClose, assessmentData }: EmailGateModalProps
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
     const [submittedEmail, setSubmittedEmail] = useState("");
-    const [assessmentId, setAssessmentId] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -57,7 +56,6 @@ const EmailGateModal = ({ isOpen, onClose, assessmentData }: EmailGateModalProps
 
             if (data.ok && data.assessment_id) {
                 setSubmittedEmail(email);
-                setAssessmentId(data.assessment_id);
                 setStatus("success");
             } else {
                 throw new Error("Invalid response from server");
@@ -65,12 +63,6 @@ const EmailGateModal = ({ isOpen, onClose, assessmentData }: EmailGateModalProps
         } catch (error) {
             setStatus("error");
             setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
-        }
-    };
-
-    const handleViewResults = () => {
-        if (assessmentId) {
-            window.location.href = `/quiz/results?id=${assessmentId}`;
         }
     };
 
