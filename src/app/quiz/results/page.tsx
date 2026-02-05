@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { RotateCcw, ExternalLink, Loader2 } from "lucide-react";
+import Link from "next/link";
 import env from "@/utils/env";
 import ScoreGauge from "@/components/quiz/ScoreGauge";
 import IndexCard from "@/components/quiz/IndexCard";
@@ -133,7 +134,7 @@ function ResultsContent() {
                             <p className="text-white/90 text-xl font-['Plus_Jakarta_Sans',sans-serif]">{persona.title}</p>
                         </div>
                         <div className="flex gap-3 flex-wrap">
-                            <a
+                            {/* <a
                                 href="/"
                                 className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 text-white font-['Plus_Jakarta_Sans',sans-serif] font-medium flex items-center gap-2 transition-colors"
                             >
@@ -146,7 +147,23 @@ function ResultsContent() {
                             >
                                 <RotateCcw className="h-4 w-4" />
                                 Retake Assessment
-                            </a>
+                            </a> */}
+                            <Link
+  href="/"
+  className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 text-white font-['Plus_Jakarta_Sans',sans-serif] font-medium flex items-center gap-2 transition-colors"
+>
+  <ExternalLink className="h-4 w-4" />
+  Learn About BCL
+</Link>
+
+<Link
+  href="/quiz"
+  className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 text-white font-['Plus_Jakarta_Sans',sans-serif] font-medium flex items-center gap-2 transition-colors"
+>
+  <RotateCcw className="h-4 w-4" />
+  Retake Assessment
+</Link>
+
                         </div>
                     </div>
                 </div>

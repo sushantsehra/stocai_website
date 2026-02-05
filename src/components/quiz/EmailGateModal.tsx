@@ -121,7 +121,7 @@ const EmailGateModal = ({ isOpen, onClose, assessmentData }: EmailGateModalProps
                     </div>
 
                     <p className="text-center text-xs text-gray-400 mt-6 font-['Plus_Jakarta_Sans',sans-serif]">
-                        You can access your results anytime using the link we'll send to your email.
+                        You can access your results anytime using the link we&apos;ll send to your email.
                     </p>
                 </div>
             </div>
