@@ -63,16 +63,8 @@ export default function BePromotableFirstFold() {
     <>
     {/* ================= DESKTOP VERSION ================= */}
     <div className="hidden lg:block bg-white py-12 px-4 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="hidden md:block absolute inset-0 flex justify-center items-center">
-        <Image
-          src={bgColor}
-          alt="Background Glow"
-          className="w-[750px] h-[730px] rotate-[135deg] lg:translate-x-[90%] 2xl:translate-x-[120%] opacity-50 pointer-events-none z-0"
-        />
-      </div>
-
-      <div className="container mx-auto relative z-50">
+      
+      <div className="container mx-auto relative z-10">
         {/* Main Flex Container: Text Left, Cards Right */}
         <div className="flex items-center gap-12 xl:gap-16">
           
@@ -96,11 +88,24 @@ export default function BePromotableFirstFold() {
           </div>
 
           {/* RIGHT SIDE: Cards Container */}
-          <div className="flex-1 relative flex justify-center items-center gap-8 min-h-[600px]">
+          <div className="flex-1 relative flex justify-center items-center gap-8 min-h-[700px]">
             
+            {/* Background Glow - Fixed positioning */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[50%] pointer-events-none">
+              <div className="relative w-[850px] h-[800px]">
+                <Image
+                  src={bgColor}
+                  alt="Background Glow"
+                  fill
+                  className="object-contain rotate-[5deg] opacity-50"
+                  style={{ transform: 'rotate(135deg)' }}
+                />
+              </div>
+            </div>
+
             {/* Current State Card */}
             <div
-              className="relative bg-white rounded-[20px] border-2 border-[#D9D9D9] w-[280px] xl:w-[320px] shadow-2xl overflow-hidden z-40"
+              className="relative bg-white rounded-[20px] border-2 border-[#D9D9D9] w-[280px] xl:w-[320px] shadow-2xl overflow-hidden z-10"
               style={{
                 transform: "rotate(-9deg) perspective(1000px) rotateY(0deg)",
               }}
@@ -188,7 +193,7 @@ export default function BePromotableFirstFold() {
 
             {/* Future You Card */}
             <div
-              className="relative mt-16 right-[5%] bg-white rounded-[20px] border-2 border-[#E9E9E9] w-[300px] xl:w-[340px] shadow-2xl overflow-hidden z-40"
+              className="relative mt-16 right-[5%] bg-white rounded-[20px] border-2 border-[#E9E9E9] w-[300px] xl:w-[340px] shadow-2xl overflow-hidden z-10"
               style={{
                 transform: "rotate(10deg) perspective(1000px) rotateY(0deg)",
               }}
@@ -274,6 +279,7 @@ export default function BePromotableFirstFold() {
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
