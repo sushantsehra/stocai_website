@@ -104,16 +104,8 @@ const EmailGateModal = ({ isOpen, onClose, assessmentData }: EmailGateModalProps
 
                     <div className="space-y-3">
                         <button
-                            onClick={handleViewResults}
-                            className="w-full h-12 bg-[#0B64F4] hover:bg-[#0B64F4]/90 text-white font-['Plus_Jakarta_Sans',sans-serif] font-semibold rounded-xl text-lg flex items-center justify-center gap-2 transition-colors"
-                        >
-                            <Send className="w-5 h-5" />
-                            View My Results
-                        </button>
-
-                        <button
                             onClick={handleLearnMore}
-                            className="w-full h-12 border-2 border-[#0B64F4] text-[#0B64F4] hover:bg-[#0B64F4]/10 font-['Plus_Jakarta_Sans',sans-serif] font-semibold rounded-xl text-lg flex items-center justify-center gap-2 transition-colors"
+                            className="w-full h-12 bg-[#0B64F4] hover:bg-[#0B64F4]/90 text-white font-['Plus_Jakarta_Sans',sans-serif] font-semibold rounded-xl text-lg flex items-center justify-center gap-2 transition-colors"
                         >
                             <ExternalLink className="w-5 h-5" />
                             Learn More About BCL
