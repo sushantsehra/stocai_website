@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+// import { ChevronRight, ChevronLeft } from "lucide-react";
+import { FaCircleChevronRight } from "react-icons/fa6";
 import EmailGateModal from "@/components/quiz/EmailGateModal";
 import { AssessmentData } from "@/components/quiz/assessmentData";
 
@@ -332,8 +333,10 @@ export default function AssessmentPage() {
             <div className="container max-w-6xl mx-auto px-4 py-12">
                 <div className="mb-8">
                     <div className="flex justify-between items-center mb-4">
-                        <h1 className="text-4xl font-bold font-['Montserrat',sans-serif] text-black">Promotion Readiness Assessment</h1>
-                        <span className="text-gray-600 font-['Plus_Jakarta_Sans',sans-serif]">
+                        {/* <h1 className="text-4xl font-bold font-['Montserrat',sans-serif] text-black">Promotion Readiness Assessment</h1> */}
+                        <h1 className="text-4xl font-bold font-montserrat text-black">Promotion Readiness Assessment</h1>
+                        {/* <span className="text-gray-600 font-['Plus_Jakarta_Sans',sans-serif]"> */}
+                        <span className="text-gray-600 font-jakarta">
                             Step {currentStep + 1} of {assessmentQuestions.length}
                         </span>
                     </div>
@@ -347,10 +350,12 @@ export default function AssessmentPage() {
 
                 <div className="p-10 bg-white/90 backdrop-blur-sm shadow-2xl rounded-[24px] border border-gray-100">
                     <div className="mb-8">
-                        <h2 className="text-3xl font-semibold mb-2 text-[#0B64F4] font-['Montserrat',sans-serif]">
+                        {/* <h2 className="text-3xl font-semibold mb-2 text-[#0B64F4] font-['Montserrat',sans-serif]"> */}
+                        <h2 className="text-3xl font-semibold mb-2 text-[#0B64F4] font-montserrat">
                             {currentCategory.title}
                         </h2>
-                        <p className="text-lg text-gray-600 font-['Plus_Jakarta_Sans',sans-serif]">
+                        {/* <p className="text-lg text-gray-600 font-['Plus_Jakarta_Sans',sans-serif]"> */}
+                        <p className="text-lg text-gray-600 font-jakarta">
                             Rate each statement based on your current situation
                         </p>
                     </div>
@@ -358,7 +363,8 @@ export default function AssessmentPage() {
                     <div className="space-y-8">
                     {currentCategory.questions.map((question, index) => (
                         <div key={question.id} className="space-y-4">
-                        <label className="text-xl font-medium font-['Plus_Jakarta_Sans',sans-serif] text-black block">
+                        {/* <label className="text-xl font-medium font-['Plus_Jakarta_Sans',sans-serif] text-black block"> */}
+                        <label className="text-xl font-medium font-jakarta text-black block">
                             {index + 1}. {question.text}
                         </label>
 
@@ -377,7 +383,8 @@ export default function AssessmentPage() {
                                 onChange={(e) => handleAnswer(question.id, e.target.value)}
                                 className="w-5 h-5 text-[#0B64F4] border-gray-300 focus:ring-[#0B64F4] cursor-pointer"
                                 />
-                                <span className="font-normal text-lg font-['Plus_Jakarta_Sans',sans-serif] text-gray-700">
+                                {/* <span className="font-normal text-lg font-['Plus_Jakarta_Sans',sans-serif] text-gray-700"> */}
+                                <span className="font-normal text-lg font-jakarta text-gray-700">
                                 {option.label}
                                 </span>
                             </label>
@@ -391,18 +398,18 @@ export default function AssessmentPage() {
                         <button
                             onClick={handleBack}
                             disabled={currentStep === 0}
-                            className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-['Plus_Jakarta_Sans',sans-serif] font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-2 cursor-pointer"
+                            className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-jakarta font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-2 cursor-pointer"
                         >
-                            <ChevronLeft className="h-4 w-4" />
+                            <FaCircleChevronRight className="h-4 w-4 md:h-4.5 md:w-4.5 rotate-180" />
                             Back
                         </button>
                         <button
                             onClick={handleNext}
                             disabled={!allQuestionsAnswered}
-                            className="px-6 py-3 rounded-xl bg-[#0B64F4] hover:bg-[#0B64F4]/90 text-white font-['Plus_Jakarta_Sans',sans-serif] font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 cursor-pointer"
+                            className="px-6 py-3 rounded-xl bg-[#0B64F4] hover:bg-[#0B64F4]/90 text-white font-jakarta font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 cursor-pointer"
                         >
                             {currentStep === assessmentQuestions.length - 1 ? "View Results" : "Next"}
-                            <ChevronRight className="h-4 w-4" />
+                            <FaCircleChevronRight className="h-4 w-4 md:h-4.5 md:w-4.5" />
                         </button>
                     </div>
                 </div>
