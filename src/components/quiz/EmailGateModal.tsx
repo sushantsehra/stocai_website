@@ -84,7 +84,7 @@ const EmailGateModal = ({ isOpen, onClose, assessmentData }: EmailGateModalProps
                             <CheckCircle className="w-10 h-10 text-green-500" />
                         </div>
                         <h2 className="text-2xl font-bold font-['Montserrat',sans-serif] text-gray-900 mb-2">
-                            Results Saved!
+                            Results Sent!
                         </h2>
                         <p className="text-gray-600 font-['Plus_Jakarta_Sans',sans-serif]">
                             Your promotion readiness report has been saved for
