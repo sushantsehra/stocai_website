@@ -356,33 +356,35 @@ export default function AssessmentPage() {
                     </div>
 
                     <div className="space-y-8">
-                        {currentCategory.questions.map((question, index) => (
-                            <div key={question.id} className="space-y-4">
-                                <label className="text-xl font-medium font-['Plus_Jakarta_Sans',sans-serif] text-black block">
-                                    {index + 1}. {question.text}
-                                </label>
-                                <div className="space-y-3">
-                                    {options.map((option) => (
-                                        <label
-                                            key={option.value}
-                                            className="flex items-center space-x-3 cursor-pointer"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name={question.id}
-                                                value={option.value}
-                                                checked={answers[question.id] === parseInt(option.value)}
-                                                onChange={(e) => handleAnswer(question.id, e.target.value)}
-                                                className="w-5 h-5 text-[#0B64F4] border-gray-300 focus:ring-[#0B64F4] cursor-pointer"
-                                            />
-                                            <span className="cursor-pointer font-normal text-lg font-['Plus_Jakarta_Sans',sans-serif] text-gray-700">
-                                                {option.label}
-                                            </span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
+                    {currentCategory.questions.map((question, index) => (
+                        <div key={question.id} className="space-y-4">
+                        <label className="text-xl font-medium font-['Plus_Jakarta_Sans',sans-serif] text-black block">
+                            {index + 1}. {question.text}
+                        </label>
+
+                        {/* OPTIONS ROW */}
+                        <div className="flex flex-wrap gap-6 md:gap-12">
+                            {options.map((option) => (
+                            <label
+                                key={option.value}
+                                className="flex items-center gap-3 cursor-pointer"
+                            >
+                                <input
+                                type="radio"
+                                name={question.id}
+                                value={option.value}
+                                checked={answers[question.id] === parseInt(option.value)}
+                                onChange={(e) => handleAnswer(question.id, e.target.value)}
+                                className="w-5 h-5 text-[#0B64F4] border-gray-300 focus:ring-[#0B64F4] cursor-pointer"
+                                />
+                                <span className="font-normal text-lg font-['Plus_Jakarta_Sans',sans-serif] text-gray-700">
+                                {option.label}
+                                </span>
+                            </label>
+                            ))}
+                        </div>
+                        </div>
+                    ))}
                     </div>
 
                     <div className="flex justify-between mt-10">
