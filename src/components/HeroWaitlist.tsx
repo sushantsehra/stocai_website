@@ -107,6 +107,15 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     if (initialEmail) setEmail(initialEmail);
   }, [initialEmail]);
 
+  // Add this useEffect after the other useEffects, around line 75
+  useEffect(() => {
+    // Dispatch custom event when modal opens/closes
+    if (isOpen) {
+      window.dispatchEvent(new CustomEvent('waitlist-modal-opened'));
+    } else {
+      window.dispatchEvent(new CustomEvent('waitlist-modal-closed'));
+    }
+  }, [isOpen]);
 
   const createPaymentLink = async (payload: {
     name?: string;
