@@ -87,7 +87,7 @@ const PreviewPromotableStickyCTA = () => {
     <div className="fixed -bottom-1 left-0 w-full z-[9999] bg-[#1B294B] text-white py-3">
       <div className="max-w-7xl mx-auto px-4">
         {!isExpanded ? (
-          <div className="flex justify-center">
+          <div className="flex justify-center py-1.5">
             <button
               onClick={() => setIsExpanded(true)}
               className="bg-[#0B64F4] hover:bg-blue-700 px-8 py-3 rounded-[12px] font-bold transition-transform hover:scale-105 active:scale-95"
@@ -96,8 +96,8 @@ const PreviewPromotableStickyCTA = () => {
             </button>
           </div>
         ) : (
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-10 justify-center items-center max-w-7xl">
-            <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto bg-[#F5F5F5] rounded-[20px] shadow-lg px-3 py-2 gap-2 md:gap-5">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-10 justify-center items-center max-w-7xl py-2">
+            <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto bg-[#F5F5F5] rounded-[20px] shadow-lg px-3 py-2.5 gap-2 md:gap-5">
 
               {/* Name */}
               <input
