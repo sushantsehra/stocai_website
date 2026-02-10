@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 
 const PreviewWaitlistSection = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [countryCode, setCountryCode] = useState("+91"); // Default India
+  const [countryCode, setCountryCode] = useState("+91");
 
-  // Popular country codes
   const countryCodes = [
     { code: "+91", country: "India", flag: "🇮🇳" },
     { code: "+1", country: "USA", flag: "🇺🇸" },
@@ -30,29 +31,33 @@ const PreviewWaitlistSection = () => {
     { code: "+66", country: "Thailand", flag: "🇹🇭" },
   ];
 
-  // Handle navigation to signin/login
+  const isFormValid =
+    name.trim() !== "" &&
+    email.trim() !== "" &&
+    phone.trim() !== "";
+
   const handleRequestAccess = () => {
-    if (phone.trim()) {
-      const fullPhone = `${countryCode}${phone}`;
-      
-      // Store mobile number in localStorage
-      localStorage.setItem('userMobile', fullPhone);
-      localStorage.setItem('userCountryCode', countryCode);
-      localStorage.setItem('userPhone', phone);
-      
-      // Redirect to signin/login page
-      window.location.href = "https://os.bettercorporatelife.com/signUp?redirect=%2F";
-    }
+    if (!isFormValid) return;
+
+    const fullPhone = `${countryCode}${phone}`;
+
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userMobile", fullPhone);
+    localStorage.setItem("userCountryCode", countryCode);
+    localStorage.setItem("userPhone", phone);
+
+    window.location.href =
+      "https://os.bettercorporatelife.com/signUp?redirect=%2F";
   };
 
   return (
-    <section id="waitlist" className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-12 lg:py-15 px-4 text-center mt-6">
-      <div className="inline-flex items-center justify-center
-        w-12 h-12 md:w-[64px] md:h-[64px]
-        bg-[#3B6FF5]
-        rounded-[12px] md:rounded-[20px]
-        mb-6 lg:mb-12"
-      >
+    <section
+      id="waitlist"
+      className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-12 px-4 text-center mt-6"
+    >
+      {/* Icon */}
+      <div className="inline-flex items-center justify-center w-12 h-12 md:w-[64px] md:h-[64px] bg-[#3B6FF5] rounded-[12px] md:rounded-[20px] mb-6 lg:mb-12">
         <svg
           width="32"
           height="32"
@@ -63,84 +68,86 @@ const PreviewWaitlistSection = () => {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* main sparkle */}
           <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
-
-          {/* top-right small sparkle — moved farther */}
           <g transform="translate(2,-2)">
             <path d="M18 5 V8 M16.5 6.5 H19.5" />
           </g>
-
-          {/* bottom-left small sparkle — moved farther */}
           <g transform="translate(-2,2)">
             <path d="M6 16 V18 M5 17 H7" />
           </g>
         </svg>
       </div>
-      <div className="max-w-full mx-auto">
-        {/* Title */}
-        <h2 className="text-[20px] sm:text-4xl md:text-[48px] text-white font-jakarta font-bold mb-3.5 lg:mb-4.5">
-          Ready to change your career trajectory?
-        </h2>
 
-        {/* Description */}
-        <div className="flex items-center justify-center">
-          <p className="lg:text-[20px] mb-6 md:mb-12 lg:mb-14 text-sm sm:text-base font-medium leading-4.5 md:leading-6 text-white/60 font-jakarta lg:max-w-3xl text-center">
-            After years of doing this privately and helping hundreds become promotable, we&apos;re scaling to our first paid launch.
-          </p>
-        </div>
+      <h2 className="text-[20px] sm:text-4xl md:text-[48px] font-bold mb-3.5">
+        Ready to change your career trajectory?
+      </h2>
 
-        {/* Description */}
-        <p className="lg:text-[22px] mb-5 md:mb-6 text-sm sm:text-base leading-4.5 font-jakarta font-medium">
-          Benefit from our early-bird offer, only available for a short time, for this special launch.
-        </p>
+      <p className="lg:text-[20px] mb-6 text-sm sm:text-base text-white/60 font-medium lg:max-w-3xl mx-auto">
+        After years of doing this privately and helping hundreds become promotable,
+        we&apos;re scaling to our first paid launch.
+      </p>
 
-        <div className="flex flex-col gap-3 sm:flex-row justify-center items-center">
-          {/* Mobile Number Input & Button */}
-          <div className="flex flex-row px-2 md:px-4 items-center justify-center min-w-sm md:min-w-lg lg:min-w-3xl lg:max-w-3xl bg-[#F5F5F5] rounded-[20px] h-auto md:h-[90px] shadow-lg overflow-hidden mb-0 md:mb-2 py-2 md:py-0 gap-2">
-            {/* Country Code Dropdown */}
-            <select
-              value={countryCode}
-              onChange={(e) => setCountryCode(e.target.value)}
-              className="rounded-[10px] bg-white px-2 md:px-3 py-2 md:py-3 text-gray-900 font-medium font-jakarta text-sm md:text-base lg:text-[18px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition cursor-pointer"
-            >
-              {countryCodes.map((country) => (
-                <option key={country.code} value={country.code}>
-                  {country.flag} {country.code}
-                </option>
-              ))}
-            </select>
+      <p className="lg:text-[22px] mb-8 text-sm sm:text-base font-medium">
+        Benefit from our early-bird offer, only available for a short time, for this special launch.
+      </p>
 
-            {/* Phone Number Input */}
-            <input
-              id="waitlist-mobile"
-              type="tel"
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))}
-              className="flex-1 px-3 md:px-4 py-2 md:py-3 text-black font-medium outline-none text-sm sm:text-base lg:text-[20px] bg-transparent"
-              pattern="[0-9]{7,15}"
-              title="Enter 7-15 digits"
-              required
-            />
+      {/* Inputs */}
+      <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-5xl bg-[#F5F5F5] rounded-[24px] px-4 py-4 gap-3 shadow-lg">
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full md:w-[22%] px-4 py-3 rounded-[14px] bg-gray-200 text-gray-800 outline-none"
+          />
 
-            {/* Desktop Request Access Button */}
-            <button
-              onClick={handleRequestAccess}
-              className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white text-base lg:text-[20px] lg:min-h-[72px] font-bold cursor-pointer px-4 md:px-6 py-2 md:py-3 mr-2 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 whitespace-nowrap"
-            >
-              Request Access
-            </button>
-          </div>
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full md:w-[28%] px-4 py-3 rounded-[14px] bg-gray-200 text-gray-800 outline-none"
+          />
 
-          {/* Mobile Request Access Button */}
-          <button
-            onClick={handleRequestAccess}
-            className="block sm:hidden w-[60%] ml-4 bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] md:rounded-[12px] text-[18.71px] text-black lg:text-[20px] min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 md:py-3 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+          <select
+            value={countryCode}
+            onChange={(e) => setCountryCode(e.target.value)}
+            className="w-full md:w-[14%] px-4 py-3 rounded-[14px] bg-white text-gray-800 outline-none cursor-pointer"
           >
-            Request Access
-          </button>
+            {countryCodes.map((country) => (
+              <option key={country.code} value={country.code}>
+                {country.flag} {country.code}
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) =>
+              setPhone(e.target.value.replace(/[^0-9]/g, ""))
+            }
+            className="w-full md:w-[26%] px-4 py-3 rounded-[14px] bg-gray-200 text-gray-800 outline-none"
+          />
         </div>
+
+        {/* Button */}
+        <button
+          onClick={handleRequestAccess}
+          disabled={!isFormValid}
+          className={`
+            px-12 py-4 rounded-[18px] text-lg font-bold shadow-lg transition-all
+            ${
+              isFormValid
+                ? "bg-gradient-to-r from-[#024BAB] to-[#3C83F6] text-white hover:scale-105 active:scale-95 cursor-pointer"
+                : "bg-gray-400 text-gray-700 cursor-not-allowed"
+            }
+          `}
+        >
+          Request Access
+        </button>
       </div>
     </section>
   );
