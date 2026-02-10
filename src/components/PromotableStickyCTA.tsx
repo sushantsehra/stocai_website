@@ -2,7 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 
-const PromotableStickyCTA = ({ onRequestAccess }) => {
+// ✅ Define prop types
+type PromotableStickyCTAProps = {
+  onRequestAccess?: (data: {
+    name: string;
+    email: string;
+    phone: string;
+    countryCode: string;
+    fullPhone: string;
+    source: string;
+  }) => void;
+};
+
+const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAccess }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -35,7 +47,7 @@ const PromotableStickyCTA = ({ onRequestAccess }) => {
     { code: "+66", country: "Thailand", flag: "🇹🇭" },
   ];
 
-  // Method 1: Listen for modal events
+  // Listen for modal events
   useEffect(() => {
     const handleModalOpen = () => {
       console.log("Modal opened event received");
@@ -46,19 +58,19 @@ const PromotableStickyCTA = ({ onRequestAccess }) => {
       setIsModalOpen(false);
     };
 
-    window.addEventListener('waitlist-modal-opened', handleModalOpen);
-    window.addEventListener('waitlist-modal-closed', handleModalClose);
+    window.addEventListener("waitlist-modal-opened", handleModalOpen);
+    window.addEventListener("waitlist-modal-closed", handleModalClose);
 
     return () => {
-      window.removeEventListener('waitlist-modal-opened', handleModalOpen);
-      window.removeEventListener('waitlist-modal-closed', handleModalClose);
+      window.removeEventListener("waitlist-modal-opened", handleModalOpen);
+      window.removeEventListener("waitlist-modal-closed", handleModalClose);
     };
   }, []);
 
-  // Method 2: Check DOM for modal presence (backup method)
+  // Check DOM for modal presence (backup)
   useEffect(() => {
     const checkModalPresence = () => {
-      const modalElement = document.querySelector('[data-waitlist-modal]');
+      const modalElement = document.querySelector("[data-waitlist-modal]");
       setIsModalOpen(!!modalElement);
     };
 
@@ -92,7 +104,7 @@ const PromotableStickyCTA = ({ onRequestAccess }) => {
         phone: phone.trim(),
         countryCode: countryCode,
         fullPhone: fullPhone,
-        source: "sticky_cta"
+        source: "sticky_cta",
       });
     }
   };
@@ -118,7 +130,6 @@ const PromotableStickyCTA = ({ onRequestAccess }) => {
         ) : (
           <div className="flex flex-col gap-3 sm:flex-row justify-center items-center py-2">
             <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto bg-[#F5F5F5] rounded-[20px] shadow-lg px-3 py-2.5 gap-2 md:gap-3">
-              
               {/* Name Input */}
               <input
                 type="text"
@@ -157,9 +168,7 @@ const PromotableStickyCTA = ({ onRequestAccess }) => {
                 type="tel"
                 placeholder="Phone Number"
                 value={phone}
-                onChange={(e) =>
-                  setPhone(e.target.value.replace(/[^0-9]/g, ""))
-                }
+                onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ""))}
                 className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 text-black text-sm outline-none bg-white rounded-md"
                 required
               />
@@ -172,11 +181,11 @@ const PromotableStickyCTA = ({ onRequestAccess }) => {
                 Request Access
               </button>
             </div>
-            
+
             {/* Mobile Request Access Button */}
             <button
               onClick={handleRequestAccess}
-              className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+              className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             >
               Request Access
             </button>

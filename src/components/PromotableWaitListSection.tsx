@@ -2,7 +2,21 @@
 
 import React, { useState } from "react";
 
-const PromotableWaitListSection = ({ onRequestAccess }) => {
+// ✅ Define prop types
+type PromotableWaitListSectionProps = {
+  onRequestAccess?: (data: {
+    name: string;
+    email: string;
+    phone: string;
+    countryCode: string;
+    fullPhone: string;
+    source: string;
+  }) => void;
+};
+
+const PromotableWaitListSection: React.FC<PromotableWaitListSectionProps> = ({
+  onRequestAccess,
+}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -45,16 +59,20 @@ const PromotableWaitListSection = ({ onRequestAccess }) => {
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
-        countryCode: countryCode,
-        fullPhone: fullPhone,
-        source: "waitlist_section"
+        countryCode,
+        fullPhone,
+        source: "waitlist_section",
       });
     }
   };
 
   return (
-    <section id="waitlist" className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-12 lg:py-15 px-4 text-center mt-6">
-      <div className="inline-flex items-center justify-center
+    <section
+      id="waitlist"
+      className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-12 lg:py-15 px-4 text-center mt-6"
+    >
+      <div
+        className="inline-flex items-center justify-center
         w-12 h-12 md:w-[64px] md:h-[64px]
         bg-[#3B6FF5]
         rounded-[12px] md:rounded-[20px]
@@ -79,7 +97,7 @@ const PromotableWaitListSection = ({ onRequestAccess }) => {
           </g>
         </svg>
       </div>
-      
+
       <div className="max-w-full mx-auto">
         <h2 className="text-[20px] sm:text-4xl md:text-[48px] text-white font-jakarta font-bold mb-3.5 lg:mb-4.5">
           Ready to change your career trajectory?
@@ -87,19 +105,19 @@ const PromotableWaitListSection = ({ onRequestAccess }) => {
 
         <div className="flex items-center justify-center">
           <p className="lg:text-[20px] mb-6 md:mb-12 lg:mb-14 text-sm sm:text-base font-medium leading-4.5 md:leading-6 text-white/60 font-jakarta lg:max-w-3xl text-center">
-            After years of doing this privately and helping hundreds become promotable, we're scaling to our first paid launch.
+            After years of doing this privately and helping hundreds become
+            promotable, we&apos;re scaling to our first paid launch.
           </p>
         </div>
 
         <p className="lg:text-[22px] mb-5 md:mb-6 text-sm sm:text-base leading-4.5 font-jakarta font-medium">
-          Benefit from our early-bird offer, only available for a short time, for this special launch.
+          Benefit from our early-bird offer, only available for a short time,
+          for this special launch.
         </p>
 
         <div className="flex flex-col gap-3 sm:gap-4 justify-center items-center max-w-6xl mx-auto">
-          
           {/* Input Fields Container */}
           <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto bg-[#F5F5F5] rounded-[20px] shadow-lg px-3 md:px-4 py-3 md:py-4 gap-2 md:gap-3">
-            
             {/* Name Input */}
             <input
               type="text"
@@ -153,11 +171,11 @@ const PromotableWaitListSection = ({ onRequestAccess }) => {
               Request Access
             </button>
           </div>
-          
+
           {/* Mobile Request Access Button */}
           <button
             onClick={handleRequestAccess}
-            className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.900848388671875px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+            className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
           >
             Request Access
           </button>
