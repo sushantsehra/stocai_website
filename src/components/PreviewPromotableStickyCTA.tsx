@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import env from "@/utils/env";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
 
 const PreviewPromotableStickyCTA = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -10,6 +12,8 @@ const PreviewPromotableStickyCTA = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91"); // Default India
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   // Popular country codes
   const countryCodes = [
@@ -66,19 +70,52 @@ const PreviewPromotableStickyCTA = () => {
   }, []);
 
   /* ---------- CTA ACTION ---------- */
-  const handleRequestAccess = () => {
-    if (!name.trim() || !email.trim() || !phone.trim()) return;
+  const isFormValid =
+    name.trim() !== "" && email.trim() !== "" && phone.trim() !== "";
 
+  const handleRequestAccess = async () => {
+    if (!isFormValid || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setError("");
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
     const fullPhone = `${countryCode}${phone}`;
 
-    localStorage.setItem("userName", name);
-    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userName", trimmedName);
+    localStorage.setItem("userEmail", trimmedEmail);
     localStorage.setItem("userMobile", fullPhone);
     localStorage.setItem("userCountryCode", countryCode);
     localStorage.setItem("userPhone", phone);
 
-    window.location.href =
-      "https://os.bettercorporatelife.com/signUp?redirect=%2F";
+    try {
+      const response = await fetch(`${env.apiUrl}/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          phone: fullPhone,
+          source: "preview_sticky_cta",
+          attribution: getAttributionForApi(),
+        }),
+      });
+
+      const waitlistData = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+
+      const redirectPath = `/?name=${encodeURIComponent(trimmedName)}&email=${encodeURIComponent(trimmedEmail)}`;
+      const signupUrl = new URL("/signUp", env.publicUrl);
+      signupUrl.searchParams.set("auth", "preview");
+      signupUrl.searchParams.set("redirect", redirectPath);
+      window.location.href = signupUrl.toString();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setIsSubmitting(false);
+    }
   };
 
   if (isModalOpen) return null;
@@ -144,24 +181,31 @@ const PreviewPromotableStickyCTA = () => {
                 required
               />
 
-              {/* Desktop Request Access Button */}
-              <button
-                onClick={handleRequestAccess}
-                className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] text-white px-5 py-2 rounded-[12px] font-bold transition-transform hover:scale-105 active:scale-95 whitespace-nowrap"
-              >
-                Request Access
-              </button>
-            </div>
-
-            {/* Mobile Request Access Button */}
+            {/* Desktop Request Access Button */}
             <button
               onClick={handleRequestAccess}
-              className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] text-black rounded-[10px] font-bold p-3 transition-transform hover:scale-105 active:scale-95"
+              disabled={!isFormValid || isSubmitting}
+              className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] text-white px-5 py-2 rounded-[12px] font-bold transition-transform hover:scale-105 active:scale-95 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Request Access
+              {isSubmitting ? "Submitting..." : "Request Access"}
             </button>
           </div>
-        )}
+
+          {/* Mobile Request Access Button */}
+          <button
+            onClick={handleRequestAccess}
+            disabled={!isFormValid || isSubmitting}
+            className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] text-black rounded-[10px] font-bold p-3 transition-transform hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Submitting..." : "Request Access"}
+          </button>
+          {error ? (
+            <p className="text-sm text-red-200" role="status" aria-live="polite">
+              {error}
+            </p>
+          ) : null}
+        </div>
+      )}
       </div>
     </div>
   );

@@ -1,12 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import env from "@/utils/env";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
 
 const PreviewWaitlistSection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const countryCodes = [
     { code: "+91", country: "India", flag: "🇮🇳" },
@@ -36,8 +40,11 @@ const PreviewWaitlistSection = () => {
     email.trim() !== "" &&
     phone.trim() !== "";
 
-  const handleRequestAccess = () => {
-    if (!isFormValid) return;
+  const handleRequestAccess = async () => {
+    if (!isFormValid || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setError("");
 
     const fullPhone = `${countryCode}${phone}`;
 
@@ -47,8 +54,35 @@ const PreviewWaitlistSection = () => {
     localStorage.setItem("userCountryCode", countryCode);
     localStorage.setItem("userPhone", phone);
 
-    window.location.href =
-      "https://os.bettercorporatelife.com/signUp?redirect=%2F";
+    try {
+      const response = await fetch(`${env.apiUrl}/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: fullPhone,
+          source: "preview_waitlist_section",
+          attribution: getAttributionForApi(),
+        }),
+      });
+
+      const waitlistData = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+
+      const trimmedName = name.trim();
+      const trimmedEmail = email.trim();
+      const redirectPath = `/?name=${encodeURIComponent(trimmedName)}&email=${encodeURIComponent(trimmedEmail)}`;
+      const signupUrl = new URL("/signUp", env.publicUrl);
+      signupUrl.searchParams.set("auth", "preview");
+      signupUrl.searchParams.set("redirect", redirectPath);
+      window.location.href = signupUrl.toString();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -136,18 +170,23 @@ const PreviewWaitlistSection = () => {
         {/* Button */}
         <button
           onClick={handleRequestAccess}
-          disabled={!isFormValid}
+          disabled={!isFormValid || isSubmitting}
           className={`
             px-12 py-4 rounded-[18px] text-lg font-bold shadow-lg transition-all
             ${
-              isFormValid
+              isFormValid && !isSubmitting
                 ? "bg-gradient-to-r from-[#024BAB] to-[#3C83F6] text-white hover:scale-105 active:scale-95 cursor-pointer"
                 : "bg-gray-400 text-gray-700 cursor-not-allowed"
             }
           `}
         >
-          Request Access
+          {isSubmitting ? "Submitting..." : "Request Access"}
         </button>
+        {error ? (
+          <p className="text-sm text-red-200" role="status" aria-live="polite">
+            {error}
+          </p>
+        ) : null}
       </div>
     </section>
   );
