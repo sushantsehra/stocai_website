@@ -347,7 +347,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
             </div>
 
             {/* Pricing Section */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8 md:mb-4 px-8">
+            {/* <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8 md:mb-4 px-8">
               <div className="flex flex-row justify-between gap-4">
                 <div className="flex text-center justify-center items-center">
                   <p className="text-lg md:text-lg 2xl:text-[20px] text-[#737373] font-jakarta font-bold">Program price</p>
@@ -364,7 +364,43 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                   <span className="text-3xl font-bold">₹3,999/-</span>
                 </div>
               </div>
+            </div> */}
+        {/* Pricing Section */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 mb-8 md:mb-4 px-4 md:px-8">
+
+            <div className="flex flex-row justify-between gap-3 md:gap-4 w-full md:w-auto">
+              
+              <div className="flex items-center">
+                <p className="text-sm md:text-lg 2xl:text-[20px] text-[#737373] font-jakarta font-bold">
+                  Program price
+                </p>
+              </div>
+
+              <div className="bg-[#737373] text-white px-4 md:px-8 py-2 md:py-3 rounded-[10px]">
+                <span className="text-xl md:text-3xl font-bold line-through">
+                  ₹19,999/-
+                </span>
+              </div>
+
             </div>
+
+            <div className="flex flex-row justify-between gap-3 md:gap-4 w-full md:w-auto lg:translate-x-[-70px] 2xl:translate-x-[-55px]">
+              
+              <div className="flex items-center">
+                <p className="text-sm md:text-lg 2xl:text-[20px] text-[#000000CC] font-jakarta font-bold">
+                  Early bird offer for you
+                </p>
+              </div>
+
+              <div className="bg-black text-white px-4 md:px-8 py-2 md:py-3 rounded-[10px]">
+                <span className="text-xl md:text-3xl font-bold">
+                  ₹3,999/-
+                </span>
+              </div>
+
+            </div>
+
+          </div>
 
             {/* Form Section */}
             <div className="bg-black rounded-b-[15px] py-10 md:py-7 max-w-full shadow-[0_0_60px_rgba(0,0,0,0.5)]">
@@ -404,7 +440,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                       placeholder="Phone Number"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ''))}
-                      className="flex-1 rounded-[10px] h-[48px] bg-white px-6 py-4 text-gray-900 placeholder:text-[#C1C1C1] font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+                      className="flex-1 rounded-[10px] h-[48px] max-w-[195px] md:max-w-full bg-white px-6 py-4 text-gray-900 placeholder:text-[#C1C1C1] font-medium font-jakarta text-[16px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
                       pattern="[0-9]{7,15}"
                       title="Enter 7-15 digits"
                       required
