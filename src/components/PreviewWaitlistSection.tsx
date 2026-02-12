@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 
@@ -11,6 +12,13 @@ const PreviewWaitlistSection = () => {
   const [countryCode, setCountryCode] = useState("+91");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const source = "preview_waitlist_section";
+
+  const trackRequestAccess = () => {
+    posthog.capture("request_access_clicked", {
+      source,
+    });
+  };
 
   const countryCodes = [
     { code: "+91", country: "India", flag: "🇮🇳" },
@@ -41,6 +49,7 @@ const PreviewWaitlistSection = () => {
     phone.trim() !== "";
 
   const handleRequestAccess = async () => {
+    trackRequestAccess();
     if (!isFormValid || isSubmitting) return;
 
     setIsSubmitting(true);
@@ -62,7 +71,7 @@ const PreviewWaitlistSection = () => {
           name: name.trim(),
           email: email.trim(),
           phone: fullPhone,
-          source: "preview_waitlist_section",
+          source,
           attribution: getAttributionForApi(),
         }),
       });

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import posthog from "posthog-js";
 
 // ✅ Define prop types
 type PromotableStickyCTAProps = {
@@ -23,6 +24,19 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
+  const source = "promotable_sticky_cta";
+
+  const trackGetEarlyAccess = () => {
+    posthog.capture("get_early_access_clicked", {
+      source,
+    });
+  };
+
+  const trackRequestAccess = () => {
+    posthog.capture("request_access_clicked", {
+      source,
+    });
+  };
 
   // Popular country codes
   const countryCodes = [
@@ -91,6 +105,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
 
   // ✅ Handle Request Access - now async
   const handleRequestAccess = async () => {
+    trackRequestAccess();
     if (!name.trim() || !email.trim() || !phone.trim()) {
       alert("Please fill in all fields");
       return;
@@ -127,7 +142,10 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
         {!isExpanded ? (
           <div className="flex items-center justify-center py-1.5">
             <button
-              onClick={() => setIsExpanded(true)}
+              onClick={() => {
+                trackGetEarlyAccess();
+                setIsExpanded(true);
+              }}
               className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 shrink-0"
             >
               Get Early Access

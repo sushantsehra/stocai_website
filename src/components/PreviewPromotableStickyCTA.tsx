@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 
@@ -14,6 +15,19 @@ const PreviewPromotableStickyCTA = () => {
   const [countryCode, setCountryCode] = useState("+91"); // Default India
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const source = "preview_promotable_sticky_cta";
+
+  const trackGetEarlyAccess = () => {
+    posthog.capture("get_early_access_clicked", {
+      source,
+    });
+  };
+
+  const trackRequestAccess = () => {
+    posthog.capture("request_access_clicked", {
+      source,
+    });
+  };
 
   // Popular country codes
   const countryCodes = [
@@ -74,6 +88,7 @@ const PreviewPromotableStickyCTA = () => {
     name.trim() !== "" && email.trim() !== "" && phone.trim() !== "";
 
   const handleRequestAccess = async () => {
+    trackRequestAccess();
     if (!isFormValid || isSubmitting) return;
 
     setIsSubmitting(true);
@@ -126,7 +141,10 @@ const PreviewPromotableStickyCTA = () => {
         {!isExpanded ? (
           <div className="flex justify-center py-1.5">
             <button
-              onClick={() => setIsExpanded(true)}
+              onClick={() => {
+                trackGetEarlyAccess();
+                setIsExpanded(true);
+              }}
               className="bg-[#0B64F4] hover:bg-blue-700 px-8 py-3 rounded-[12px] font-bold transition-transform hover:scale-105 active:scale-95"
             >
               Get Early Access
