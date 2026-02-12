@@ -15,6 +15,9 @@ import PromotableStickyCTA from './PromotableStickyCTA';
 import StickyCTA from './StickyCTA';
 import PromotableWaitListSection from './PromotableWaitListSection';
 import PromotableHeroWaitlist from './PromotableHeroWaitlist';
+import env from "@/utils/env";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
+import posthog from "posthog-js";
 
 // ✅ Define interface for full modal data
 interface UserData {
@@ -32,6 +35,24 @@ interface WaitlistSubmitData {
   email: string;
 }
 
+// ✅ Fetch with timeout helper
+const fetchWithTimeout = async (url: string, options: RequestInit, timeout = 10000) => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
+};
+
 // Main Component
 const BMPPromotableComponents: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,11 +64,72 @@ const BMPPromotableComponents: React.FC = () => {
     source: ""
   });
 
-  // ✅ Handle when user clicks “Request Access”
-  const handleRequestAccess = (userData: UserData) => {
+  // ✅ NEW: Save to database with timeout and better error handling
+  const handleRequestAccess = async (userData: UserData) => {
     console.log("Request Access Data:", userData);
+    
+    // Store user data for modal
     setModalInitialData(userData);
+    
+    // Open modal immediately (don't wait for DB save)
     setIsModalOpen(true);
+    
+    // Save to database in background
+    try {
+      const fullPhone = `${userData.countryCode}${userData.phone}`;
+      
+      posthog.capture("waitlist_submit_attempt", {
+        source: userData.source,
+      });
+
+      console.log("Attempting to save to database...");
+      console.log("API URL:", `${env.apiUrl}/waitlist`);
+
+      const response = await fetchWithTimeout(
+        `${env.apiUrl}/waitlist`,
+        {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify({
+            name: userData.name,
+            phone: fullPhone,
+            email: userData.email,
+            source: userData.source,
+            attribution: getAttributionForApi(),
+          }),
+        },
+        10000 // 10 second timeout
+      );
+
+      const waitlistData = await response.json().catch(() => ({}));
+      
+      if (!response.ok) {
+        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+
+      posthog.capture("waitlist_submitted", {
+        source: userData.source,
+        payment_started: false,
+      });
+
+      console.log("✅ Data saved to database successfully:", waitlistData);
+      
+    } catch (error) {
+      console.error("❌ Error saving to database:", error);
+      
+      posthog.capture("waitlist_submit_failed", {
+        source: userData.source,
+        error: error instanceof Error ? error.message : "unknown_error",
+      });
+      
+      // Show error but don't prevent modal from staying open
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.error("Request timed out after 10 seconds");
+      }
+    }
   };
 
   // ✅ Handle modal close
@@ -56,10 +138,10 @@ const BMPPromotableComponents: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  // ✅ Handle successful form submit (matching PromotableHeroWaitlist props)
+  // ✅ Handle successful modal form submit (for payment flow)
   const handleWaitlistSubmit = (data: WaitlistSubmitData) => {
-    console.log("Waitlist submitted successfully:", data);
-    // optional: analytics or success toast
+    console.log("Waitlist submitted successfully from modal:", data);
+    // This is now just for the payment flow after modal submission
   };
 
   return (

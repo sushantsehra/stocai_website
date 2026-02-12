@@ -11,12 +11,13 @@ type PromotableStickyCTAProps = {
     countryCode: string;
     fullPhone: string;
     source: string;
-  }) => void;
+  }) => Promise<void>; // ✅ Changed to async
 };
 
 const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAccess }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // ✅ NEW
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -88,8 +89,8 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
     return () => observer.disconnect();
   }, []);
 
-  // Handle Request Access
-  const handleRequestAccess = () => {
+  // ✅ Handle Request Access - now async
+  const handleRequestAccess = async () => {
     if (!name.trim() || !email.trim() || !phone.trim()) {
       alert("Please fill in all fields");
       return;
@@ -98,14 +99,19 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
     const fullPhone = `${countryCode}${phone}`;
 
     if (onRequestAccess) {
-      onRequestAccess({
-        name: name.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        countryCode: countryCode,
-        fullPhone: fullPhone,
-        source: "sticky_cta",
-      });
+      setIsLoading(true); // ✅ Show loading
+      try {
+        await onRequestAccess({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          countryCode: countryCode,
+          fullPhone: fullPhone,
+          source: "sticky_cta",
+        });
+      } finally {
+        setIsLoading(false); // ✅ Hide loading
+      }
     }
   };
 
@@ -138,6 +144,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
                 onChange={(e) => setName(e.target.value)}
                 className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 rounded-md text-black text-sm outline-none bg-white"
                 required
+                disabled={isLoading}
               />
 
               {/* Email Input */}
@@ -148,6 +155,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full sm:w-[160px] md:w-[180px] lg:w-[200px] px-3 py-2 rounded-md text-black text-sm outline-none bg-white"
                 required
+                disabled={isLoading}
               />
 
               {/* Country Code Dropdown */}
@@ -155,6 +163,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
                 className="px-2 py-2 rounded-md bg-white text-black text-sm outline-none"
+                disabled={isLoading}
               >
                 {countryCodes.map((c) => (
                   <option key={c.code} value={c.code}>
@@ -171,23 +180,26 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
                 onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ""))}
                 className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 text-black text-sm outline-none bg-white rounded-md"
                 required
+                disabled={isLoading}
               />
 
               {/* Desktop Request Access Button */}
               <button
                 onClick={handleRequestAccess}
-                className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white text-sm min-h-[40px] font-bold cursor-pointer px-4 md:px-5 py-2 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 whitespace-nowrap"
+                disabled={isLoading}
+                className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white text-sm min-h-[40px] font-bold cursor-pointer px-4 md:px-5 py-2 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Request Access
+                {isLoading ? "Saving..." : "Request Access"}
               </button>
             </div>
 
             {/* Mobile Request Access Button */}
             <button
               onClick={handleRequestAccess}
-              className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+              disabled={isLoading}
+              className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Request Access
+              {isLoading ? "Saving..." : "Request Access"}
             </button>
           </div>
         )}
