@@ -17,6 +17,15 @@ const PreviewPromotableStickyCTA = () => {
   const [error, setError] = useState("");
   const source = "preview_promotable_sticky_cta";
 
+  const pushToDataLayer = (payload: Record<string, unknown>) => {
+    if (typeof window === "undefined") return;
+    const dataLayerWindow = window as unknown as Window & { dataLayer?: unknown[] };
+    if (!dataLayerWindow.dataLayer) {
+      dataLayerWindow.dataLayer = [];
+    }
+    dataLayerWindow.dataLayer.push(payload);
+  };
+
   const trackGetEarlyAccess = () => {
     posthog.capture("get_early_access_clicked", {
       source,
@@ -24,7 +33,11 @@ const PreviewPromotableStickyCTA = () => {
   };
 
   const trackRequestAccess = () => {
-    posthog.capture("request_access_clicked", {
+    posthog.capture("waitlist_modal_opened", {
+      source,
+    });
+    pushToDataLayer({
+      event: "waitlist_modal_opened",
       source,
     });
   };

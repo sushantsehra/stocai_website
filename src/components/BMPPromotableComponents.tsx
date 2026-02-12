@@ -78,10 +78,6 @@ const BMPPromotableComponents: React.FC = () => {
     try {
       const fullPhone = `${userData.countryCode}${userData.phone}`;
       
-      posthog.capture("waitlist_submit_attempt", {
-        source: userData.source,
-      });
-
       console.log("Attempting to save to database...");
       console.log("API URL:", `${env.apiUrl}/waitlist`);
 

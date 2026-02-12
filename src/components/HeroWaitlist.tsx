@@ -159,14 +159,6 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     setMessage("");
 
     const fullPhone = `${countryCode}${phone}`;
-    posthog.capture("waitlist_submit_attempt", {
-      source,
-    });
-    pushToDataLayer({
-      event: "waitlist_submit_attempt",
-      source,
-    });
-
     try {
       const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
