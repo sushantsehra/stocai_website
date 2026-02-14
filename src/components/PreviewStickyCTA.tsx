@@ -104,8 +104,8 @@ const PreviewStickyCTA = () => {
 
   // Handle navigation to signin/login
   const handleRequestAccess = () => {
-    trackRequestAccess();
     if (phone.trim()) {
+      trackRequestAccess();
       const fullPhone = `${countryCode}${phone}`;
       
       // Store mobile number in localStorage

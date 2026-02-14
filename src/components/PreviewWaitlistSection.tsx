@@ -62,8 +62,8 @@ const PreviewWaitlistSection = () => {
     phone.trim() !== "";
 
   const handleRequestAccess = async () => {
-    trackRequestAccess();
     if (!isFormValid || isSubmitting) return;
+    trackRequestAccess();
 
     setIsSubmitting(true);
     setError("");

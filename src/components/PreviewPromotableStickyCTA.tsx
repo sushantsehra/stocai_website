@@ -101,8 +101,8 @@ const PreviewPromotableStickyCTA = () => {
     name.trim() !== "" && email.trim() !== "" && phone.trim() !== "";
 
   const handleRequestAccess = async () => {
-    trackRequestAccess();
     if (!isFormValid || isSubmitting) return;
+    trackRequestAccess();
 
     setIsSubmitting(true);
     setError("");

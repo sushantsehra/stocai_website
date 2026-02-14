@@ -118,11 +118,11 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
 
   // ✅ Handle Request Access - now async
   const handleRequestAccess = async () => {
-    trackRequestAccess();
     if (!name.trim() || !email.trim() || !phone.trim()) {
       alert("Please fill in all fields");
       return;
     }
+    trackRequestAccess();
 
     const fullPhone = `${countryCode}${phone}`;
 
