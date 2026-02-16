@@ -69,7 +69,7 @@ export default function BePromotableFirstFold() {
         <div className="flex items-center gap-12 xl:gap-16">
           
           {/* LEFT SIDE: Text Content */}
-          <div className="flex-1 max-w-xl">
+          <div className="flex-1 max-w-xl relative z-20">
             <h2 className="text-5xl xl:text-6xl font-jakarta font-bold text-[#0B64F4] mb-4">
               #BePromotable.
             </h2>
