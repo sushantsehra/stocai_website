@@ -9,6 +9,7 @@ import {
   Target,
   Users,
 } from "lucide-react";
+import { FiPlus } from "react-icons/fi";
 
 interface BenefitItem {
   icon: React.ReactNode;
@@ -86,8 +87,13 @@ const AdditionalBenefits = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Icon */}
         <div className="flex justify-center mb-6 sm:mb-8">
-          <div className="w-16 h-16 sm:w-[64px] sm:h-[64px] rounded-[16px] bg-[#0B64F4] rounded-2xl flex items-center justify-center shadow-[0_0_40px_0_rgba(11,100,244,0.3)] ">
-            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold">+</span>
+          <div   style={{
+    boxShadow: "0px 0px 40px rgba(11, 100, 244, 0.3)",
+  }} className="w-16 h-16 sm:w-[64px] sm:h-[64px] rounded-[16px] bg-[#0B64F4] rounded-2xl flex items-center justify-center shadow-[0_0_40px_0_rgba(11,100,244,0.3)] ">
+            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold">
+                {/* + */}
+                <FiPlus className="text-white text-[48px]" />
+                </span>
           </div>
         </div>
 
