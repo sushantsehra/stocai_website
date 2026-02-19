@@ -2,14 +2,21 @@
 "use client";
 
 import React, { useEffect } from "react";
-import {
-  Grid3x3,
-  BookOpen,
-  MessageSquare,
-  Target,
-  Users,
-} from "lucide-react";
+// import {
+//   Grid3x3,
+//   BookOpen,
+//   MessageSquare,
+//   Target,
+//   Users,
+// } from "lucide-react";
+import Image from "next/image";
 import { FiPlus } from "react-icons/fi";
+import applicationIcon from "../assets/applicationIcon.png";
+import bookIcon from "../assets/bookIcon.png";
+import connectionIcon from "../assets/connectionIcon.png";
+import achieveIcon from "../assets/achieveIcon.png";
+import aiIcon from "../assets/aiIcon.png";
+
 
 interface BenefitItem {
   icon: React.ReactNode;
@@ -37,7 +44,8 @@ const AdditionalBenefits = () => {
 
   const benefits: BenefitItem[] = [
     {
-      icon: <Grid3x3 className="w-6 h-6 sm:w-7 sm:h-7" />,
+    //   icon: <Grid3x3 className="w-6 h-6 sm:w-7 sm:h-7" />,
+      icon: <Image src={applicationIcon} alt="Application Icon" width={32} height={32} style={{ objectFit: "contain" }} />,
       title: "12 month access to apps for:",
       items: [
         "Delegation (LNO framework)",
@@ -48,21 +56,24 @@ const AdditionalBenefits = () => {
       currentPrice: "₹0",
     },
     {
-      icon: <BookOpen className="w-6 h-6 sm:w-7 sm:h-7" />,
+    //   icon: <BookOpen className="w-6 h-6 sm:w-7 sm:h-7" />,
+      icon: <Image src={bookIcon} alt="Book Icon" width={32} height={32} style={{ objectFit: "contain" }} />,
       title: "How to handle office politics - ",
       highlightedText: "Ebook",
       originalPrice: "₹750",
       currentPrice: "₹0",
     },
     {
-      icon: <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7" />,
+    //   icon: <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7" />,
+      icon: <Image src={aiIcon} alt="AI Icon" width={32} height={32} style={{ objectFit: "contain" }} />,
       title: "12 month access to agent to ",
       highlightedText: "practice promotion pitch",
       originalPrice: "₹1,000",
       currentPrice: "₹0",
     },
     {
-      icon: <Target className="w-6 h-6 sm:w-7 sm:h-7" />,
+    //   icon: <Target className="w-6 h-6 sm:w-7 sm:h-7" />,
+      icon: <Image src={achieveIcon} alt="Achieve Icon" width={32} height={32} style={{ objectFit: "contain" }} />,
       title: "12 month access to ",
       highlightedText: "personalized action plan",
       additionalText: " and training",
@@ -70,7 +81,8 @@ const AdditionalBenefits = () => {
       currentPrice: "₹0",
     },
     {
-      icon: <Users className="w-6 h-6 sm:w-7 sm:h-7" />,
+    //   icon: <Users className="w-6 h-6 sm:w-7 sm:h-7" />,
+      icon: <Image src={connectionIcon} alt="Connection Icon" width={32} height={32} style={{ objectFit: "contain" }} />,
       title: "Community access to ",
       highlightedText: "mentorship events",
       additionalText: " by senior",
@@ -84,7 +96,7 @@ const AdditionalBenefits = () => {
       id="additional-benefits"
       className="py-12 sm:py-16 lg:py-20 bg-white"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Icon */}
         <div className="flex justify-center mb-6 sm:mb-8">
           <div   style={{
