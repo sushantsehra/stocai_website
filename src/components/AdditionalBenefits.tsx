@@ -11,11 +11,11 @@ import React, { useEffect } from "react";
 // } from "lucide-react";
 import Image from "next/image";
 import { FiPlus } from "react-icons/fi";
-import applicationIcon from "../assets/applicationIcon.png";
-import bookIcon from "../assets/bookIcon.png";
-import connectionIcon from "../assets/connectionIcon.png";
-import achieveIcon from "../assets/achieveIcon.png";
-import aiIcon from "../assets/aiIcon.png";
+import applicationIcon from "../assets/application.png";
+import bookIcon from "../assets/book.png";
+import connectionIcon from "../assets/communities.png";
+import achieveIcon from "../assets/roadmap.png";
+import aiIcon from "../assets/chatbot.png";
 
 
 interface BenefitItem {
