@@ -21,6 +21,8 @@ import SuccessStories from './SuccessStoriesNew';
 import WorkThroughSection from './WorkThroughSection';
 import HearFromSection from './HearFromSection';
 import WhoIsThisFor from './WhoIsThisFor';
+import ReviewedByProfessionals from './ReviewedByProfessionals';
+import EightWeekArc from './EightWeekArc';
 
 interface FAQ {
   question: string;
@@ -44,6 +46,8 @@ const BMPLandingComponents = () => {
         <WorkThroughSection />
         <HearFromSection />
         <WhoIsThisFor />
+        <ReviewedByProfessionals />
+        <EightWeekArc />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
         <CareerStalledSection />
