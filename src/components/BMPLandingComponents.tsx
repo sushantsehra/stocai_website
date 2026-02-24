@@ -17,6 +17,7 @@ import AdditionalBenefits from './AdditionalBenefits';
 import BePromotableFirstFold from './BePromotableFirstFoldNew';
 import TestimonialFeatures from './TestimonialFeatures';
 import TrustedByProfessionals from './TrustedByProfessionals';
+import SuccessStories from './SuccessStoriesNew';
 
 interface FAQ {
   question: string;
@@ -36,6 +37,7 @@ const BMPLandingComponents = () => {
         <BePromotableFirstFold />
         <TrustedByProfessionals />
         <TestimonialFeatures />
+        <SuccessStories />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
         <CareerStalledSection />
