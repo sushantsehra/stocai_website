@@ -19,6 +19,7 @@ import TestimonialFeatures from './TestimonialFeatures';
 import TrustedByProfessionals from './TrustedByProfessionals';
 import SuccessStories from './SuccessStoriesNew';
 import WorkThroughSection from './WorkThroughSection';
+import HearFromSection from './HearFromSection';
 
 interface FAQ {
   question: string;
@@ -40,6 +41,7 @@ const BMPLandingComponents = () => {
         <TestimonialFeatures />
         <SuccessStories />
         <WorkThroughSection />
+        <HearFromSection />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
         <CareerStalledSection />
