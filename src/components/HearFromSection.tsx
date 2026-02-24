@@ -69,7 +69,7 @@ const HearFromSection = () => {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(380px, 2fr))",
-            gap: "70px 40px",
+            gap: "90px 40px",
           }}
         >
           {TESTIMONIALS.map((item, index) => (
