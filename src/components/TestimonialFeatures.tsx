@@ -23,129 +23,237 @@ const FEATURES = [
   {
     title: "ICF-Certified Coach Sessions",
     description:
-      "Support from coaches who've sat in promotion rooms and understand how decisions are actually made.",
+      "Support from coaches who’ve sat in promotion rooms and understand how decisions are actually made.",
   },
 ];
 
 const TestimonialFeatures: React.FC = () => {
   return (
-    <section className="w-full bg-[#F5F1EC] py-16 px-4 sm:px-8 lg:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-stretch">
+    <section className="w-full bg-[#F5F1EC]">
+      <div className="max-w-7xl mx-auto lg:px-16 py-10 md:py-20 flex flex-col md:flex-row gap-10 lg:gap-14 items-stretch">
 
-          {/* ───────── LEFT: Testimonial Card ───────── */}
-          <div className="w-full md:w-[38%] flex-shrink-0">
+        {/* LEFT — Testimonial Card */}
+        <div className="w-full md:w-[40%] flex-shrink-0 bg-[#014BAA]">
 
-            {/* MOBILE */}
-            <div className="relative bg-[#1A4EAB] rounded-2xl overflow-hidden md:hidden" style={{ minHeight: "320px" }}>
-              
-              <div className="relative z-10 pt-8 pl-5 pr-4 pb-8 w-[58%]">
-                <p className="text-white text-[13px] leading-relaxed">
-                  I knew that I was capable. I just didn&apos;t know what I needed to do to level up.
+          {/* MOBILE VERSION */}
+          <div className="relative bg-[#1A4EAB] rounded-2xl overflow-hidden md:hidden h-[420px] flex">
+            {/* Left text section */}
+            <div style={{
+                width: "50%",
+            }} className="absolute left-0 top-0 bottom-0 w-[50%] z-10 p-5 flex flex-col justify-center">
+              <p className="text-white text-[12px] font-jakarta font-normal leading-4">
+                I knew that I was capable. I just didn’t know what I needed to do to level up.
+              </p>
+              <p className="text-white text-[12px] font-jakarta font-normal leading-4 mt-3">
+                With every passing module, I saw where I was going wrong. I changed my beliefs and behaviour – and the action items brought me close to my promotion.
+              </p>
+
+              <div className="mt-6">
+                <p className="text-[#F8F3F0] font-medium font-jakarta text-[16px]">
+                  – Apoorva Malhotra
                 </p>
-                <p className="text-white text-[13px] leading-relaxed mt-3">
-                  With every passing module, I saw where I was going wrong. I changed my beliefs and behaviour - and the action items brought me close to my promotion.
+                <p className="text-white/50 font-medium font-jakarta text-[13px] mt-0.5 ml-[5%]">
+                  HR Business Partner
                 </p>
-
-                <div className="mt-8">
-                  <p className="text-white font-semibold text-[13px]">
-                    -Apoorva Malhotra
-                  </p>
-                  <p className="text-white/70 text-[11px] mt-0.5">
-                    HR Business Partner
-                  </p>
-                </div>
-              </div>
-
-              <div className="absolute top-0 right-0 h-full w-[52%]">
-                <Image
-                  src={ApoorvaMalhotra}
-                  alt="Apoorva Malhotra"
-                  fill
-                  className="object-cover object-top"
-                  sizes="52vw"
-                />
               </div>
             </div>
 
-            {/* DESKTOP */}
-            <div className="relative bg-[#1A4EAB] rounded-2xl overflow-hidden hidden md:flex flex-col h-full">
+            {/* Right image */}
+            <div className="absolute right-0 top-0 h-full w-[50%]">
+              <Image
+                src={ApoorvaMalhotra}
+                alt="Apoorva Malhotra"
+                // fill
+                width={350}
+                height={400}
+                sizes="40vw"
+                className="object-cover object-top translate-x-20"
+                priority
+              />
+            </div>
+          </div>
 
+          {/* DESKTOP VERSION */}
+          <div style={{
+            backgroundColor: "#014BAA",
+            borderRadius: "11px",
+          }} className="hidden md:flex flex-col bg-[#014BAA] rounded-[11px] overflow-hidden h-full">
+            {/* Text Content */}
+            <div style={{
+                borderRadius: "11px",
+            }} className="relative flex flex-col justify-start pt-16 px-7 pb-5 rounded-[11px]">
               {/* Decorative quote */}
               <div
-                className="absolute top-4 left-5 text-white/20 font-serif select-none pointer-events-none"
-                style={{ fontSize: "80px", lineHeight: 1 }}
+                className="absolute top-4 left-3 text-white font-serif select-none pointer-events-none"
+                style={{ fontSize: "80px", lineHeight: 1, borderRadius: "11px" }}
               >
                 &ldquo;
               </div>
 
-              {/* Text */}
-              <div className="relative z-10 pt-14 px-6 pb-4">
-                <p className="text-white text-[14px] leading-relaxed">
-                  I knew that I was capable. I just didn&apos;t know what I needed to do to level up.
-                </p>
-                <p className="text-white text-[14px] leading-relaxed mt-4">
-                  With every passing module, I saw where I was going wrong. I changed my beliefs and behaviour - and the action items brought me close to my promotion.
-                </p>
-
-                <div className="mt-6 mb-2">
-                  <p className="text-white font-semibold text-[14px]">
-                    -Apoorva Malhotra
-                  </p>
-                  <p className="text-white/70 text-[12px] mt-0.5">
-                    HR Business Partner
-                  </p>
-                </div>
-              </div>
-
-              {/* Image bottom fill */}
-              <div className="relative flex-1 w-full" style={{ minHeight: "260px" }}>
-                <Image
-                  src={ApoorvaMalhotra}
-                  alt="Apoorva Malhotra"
-                  fill
-                  className="object-cover object-top"
-                  sizes="38vw"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* ───────── RIGHT: Heading + Features ───────── */}
-          <div className="w-full md:flex-1 flex flex-col justify-start">
-
-            {/* Heading */}
-            <div>
-              <p className="text-[#1D1D1D] text-[16px]">
-                If your colleagues moved up while you moved work, don&apos;t worry.
+              <p style={{
+                fontSize: "17px",
+              }} 
+              className="text-white text-[15px] leading-6 relative z-10">
+                I knew that I was capable. I just didn’t know what I needed to do to level up.
+              </p>
+              <p style={{
+                fontSize: "17px",
+              }} 
+               className="text-white text-[15px] leading-6 mt-4 relative z-10">
+                With every passing module, I saw where I was going wrong. I changed my beliefs and behaviour – and the action items brought me close to my promotion.
               </p>
 
-              <h2
-                className="text-[#1D1D1D] leading-tight mt-2 font-serif"
-                style={{ fontSize: "clamp(34px, 4vw, 56px)", fontWeight: 600 }}
+              <div className="mt-8 relative z-10">
+                <p 
+                style={{
+                    fontSize: "17px",
+                }} 
+                className="text-[#F8F3F0] font-semibold text-[14px]">
+                  – Apoorva Malhotra
+                </p>
+                <p className="text-white/70 text-[12px] mt-0.5">
+                  HR Business Partner
+                </p>
+              </div>
+            </div>
+
+            {/* Image bottom */}
+            <div
+            className="relative flex-1 w-full min-h-[300px] flex justify-end items-end overflow-hidden"
+            style={{ borderBottomRightRadius: "16px", }}
+            >
+            <Image
+                src={ApoorvaMalhotra}
+                alt="Apoorva Malhotra"
+                height={520}
+                width={380}
+                sizes="30vw"
+                className="object-cover object-top"
+                priority
+                style={{
+                transform: "translateX(40px)",
+                maxWidth: "unset",
+                }}
+            />
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT — Heading + Features */}
+        <div className="hidden sm:block w-full md:flex-1 flex flex-col justify-start">
+          {/* Heading */}
+          <div>
+            <p
+            style={{
+                fontSize: "21.8px",
+            }} className="text-[#1D1D1D] font-medium font-jakarta p-2">
+              If your colleagues moved up while you moved work, don&apos;t worry.
+            </p>
+            <h2
+              className="text-[#1D1D1D] font-jakarta font-bold text-start leading-tight mt-2"
+              style={{ fontSize: "clamp(42px, 4vw, 56px)", fontWeight: 600 }}
+            >
+              That. Ends. Here.
+            </h2>
+          </div>
+
+          {/* Feature Cards */}
+          <div           
+           style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "24px",
+                marginTop: "20px",
+            }}
+            className="grid grid-cols-2  gap-6 mt-10">
+            {FEATURES.map((feature) => (
+              <div
+                key={feature.title}
+                style={{
+                    backgroundColor: "#EEE5DF",
+                    minHeight: "271px",
+                }}
+                className="bg-[#E6F1FF] rounded-2xl p-6 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
               >
-                That. Ends. Here.
-              </h2>
-            </div>
+                <h3
+                style={{
+                    fontSize: "24.85px",
+                }}
+                className="text-[#014BAA] font-normal font-quattrocento leading-8 mb-2 mt-16">
+                  {feature.title}
+                </h3>
+                <p style={{
+                    fontSize: "17px"
+                }} className="text-[#1D1D1D] font-normal font-jakarta leading-6">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
 
-            {/* Feature Grid */}
-            <div className="grid grid-cols-2 gap-6 mt-8">
-              {FEATURES.map((feature) => (
-                <div
-                  key={feature.title}
-                  className="rounded-2xl p-7 flex flex-col gap-3 bg-[#EDE7DF]"
-                >
-                  <h3 className="text-[#1A4EAB] font-semibold text-[16px] leading-snug">
-                    {feature.title}
-                  </h3>
+          {/* Footer Text */}
+          {/* <div className="text-center md:text-left text-[#1D1D1D] text-[13px] sm:text-[14px] mt-10">
+            <p>
+              25+ years of experience | 100+ teams led | ICF-certified coaching | 2 months of hands-on support
+            </p>
+          </div> */}
+        </div>
 
-                  <p className="text-[#1D1D1D] text-[14px] leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+        {/* Mobile version — Heading + Features */}
+        <div className="block sm:hidden w-full md:flex-1 flex flex-col justify-start">
+          {/* Heading */}
+          <div>
+            <p 
+            style={{
+                fontSize: "13px"
+            }}
+            className="text-[#1D1D1D] text-center font-medium font-jakarta sm:text-[12px] p-2">
+              If your colleagues moved up while you moved work, don&apos;t worry.
+            </p>
+            <h2
+              className="text-[#1D1D1D] font-jakarta font-medium text-center leading-tight mt-2"
+              style={{ fontSize: "clamp(32px, 4vw, 56px)", fontWeight: 600 }}
+            >
+              That. Ends. Here.
+            </h2>
+          </div>
 
+          {/* Feature Cards */}
+          <div
+            style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "24px",
+                marginTop: "20px",
+            }}
+            className="grid grid-cols-2  gap-6 mt-10 p-2 px-6">
+            {FEATURES.map((feature) => (
+              <div
+                key={feature.title}
+                style={{
+                    backgroundColor: "#E6F1FF",
+                }}
+                className="bg-[#E6F1FF] max-w-[200px] md:max-w-auto rounded-2xl p-6 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
+              >
+                <h3
+                 className="text-[#014BAA] font-bold font-quattrocento text-[12px] font-semibold leading-5 mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-[#1D1D1D] text-[10px] font-normal font-quattrocento leading-4">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer Text */}
+          <div className="text-center md:text-left text-[#1D1D1D] font-semibold font-jakarta px-6 sm:text-[14px] mt-4">
+            <p
+            style={{
+                fontSize: "11px"
+            }}>
+              25+ years of experience | 100+ teams led | ICF-certified coaching | 2 months of hands-on support
+            </p>
           </div>
         </div>
       </div>

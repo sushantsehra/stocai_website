@@ -15,7 +15,7 @@ import SectionViewTracker from '@/app/_components/SectionViewTracker';
 import StickyCTA from './StickyCTA';
 import AdditionalBenefits from './AdditionalBenefits';
 import BePromotableFirstFold from './BePromotableFirstFoldNew';
-// import TestimonialFeatures from './TestimonialFeatures';
+import TestimonialFeatures from './TestimonialFeatures';
 
 interface FAQ {
   question: string;
@@ -33,7 +33,7 @@ const BMPLandingComponents = () => {
       <section data-analytics-section="bmp_be_promotable" data-analytics-section-label="Be Promotable" data-analytics-section-order="1">
         {/* <BePromotableSection /> */}
         <BePromotableFirstFold />
-        {/* <TestimonialFeatures /> */}
+        <TestimonialFeatures />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
         <CareerStalledSection />
