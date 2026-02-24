@@ -61,7 +61,7 @@ export default function BePromotableFirstFold() {
   return (
     <>
     {/* ================= DESKTOP VERSION ================= */}
-    <div className="hidden lg:block bg-[#F5F0EB] py-12 px-8 relative overflow-hidden">
+    <div className="hidden lg:block bg-[#FFFFFF] py-12 px-8 relative overflow-hidden">
       <div className="container mx-auto relative z-10 max-w-7xl">
 
         {/* Top Heading */}
