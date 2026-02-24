@@ -35,7 +35,7 @@ const TrustedByProfessionals = () => {
     <section className="w-full py-6 bg-white overflow-hidden z-10 mt-10">
         <p className="text-[#1D1D1D] font-medium font-jakarta text-[20px] md:text-[30px] px-2 md:px-6">Trusted by professionals from</p>
 
-      <div className="relative w-full overflow-hidden flex justify-center bottom-4 lg:top-16 mt-10">
+      <div className="relative w-full overflow-hidden flex justify-center bottom-4 lg:top-4 mt-10">
         <motion.div
           className="flex gap-6"
           style={{ width: "max-content" }}

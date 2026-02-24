@@ -29,8 +29,8 @@ const FEATURES = [
 
 const TestimonialFeatures: React.FC = () => {
   return (
-    <section className="w-full bg-[#F5F1EC]">
-      <div className="max-w-7xl mx-auto lg:px-16 py-10 md:py-20 flex flex-col md:flex-row gap-10 lg:gap-14 items-stretch">
+    <section className="w-full bg-[#FFFFFF]">
+      <div className="max-w-7xl mx-auto  py-10 md:py-20 flex flex-col md:flex-row gap-10 lg:gap-14 items-stretch">
 
         {/* LEFT — Testimonial Card */}
         <div className="w-full md:w-[40%] flex-shrink-0 bg-[#014BAA]">
