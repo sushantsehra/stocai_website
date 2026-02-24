@@ -16,6 +16,7 @@ import StickyCTA from './StickyCTA';
 import AdditionalBenefits from './AdditionalBenefits';
 import BePromotableFirstFold from './BePromotableFirstFoldNew';
 import TestimonialFeatures from './TestimonialFeatures';
+import TrustedByProfessionals from './TrustedByProfessionals';
 
 interface FAQ {
   question: string;
@@ -33,6 +34,7 @@ const BMPLandingComponents = () => {
       <section data-analytics-section="bmp_be_promotable" data-analytics-section-label="Be Promotable" data-analytics-section-order="1">
         {/* <BePromotableSection /> */}
         <BePromotableFirstFold />
+        <TrustedByProfessionals />
         <TestimonialFeatures />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
