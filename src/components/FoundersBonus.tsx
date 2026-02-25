@@ -27,7 +27,7 @@ const bonusItems = [
 
 const FoundersBonus = () => {
   return (
-    <section className="w-full bg-[#FFFFFF] py-10 md:py-16 px-4 md:px-12">
+    <section className="w-full bg-[#FFFFFF] py-4 md:py-16 px-4 md:px-12">
       <div className="max-w-[1200px] mx-auto">
 
         {/* Heading */}

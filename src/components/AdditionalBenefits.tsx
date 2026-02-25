@@ -2,13 +2,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-// import {
-//   Grid3x3,
-//   BookOpen,
-//   MessageSquare,
-//   Target,
-//   Users,
-// } from "lucide-react";
 import Image from "next/image";
 import { FiPlus } from "react-icons/fi";
 import applicationIcon from "../assets/application.png";

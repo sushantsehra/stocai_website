@@ -29,6 +29,7 @@ import FoundersBonus from './FoundersBonus';
 import FromCommunity from './FromCommunity';
 import CareerTrajectorySection from './CareerTrajectorySection';
 import LearningExperienceNew from './LearningExperienceNew';
+import AdditionalBenefitsNew from './AdditionalBenefitsNew';
 
 
 interface FAQ {
@@ -59,6 +60,7 @@ const BMPLandingComponents = () => {
         <ScrollingFeatures />
         <OutcomeContract />
         <EightWeekArc />
+        <AdditionalBenefitsNew />
         <FoundersBonus />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
