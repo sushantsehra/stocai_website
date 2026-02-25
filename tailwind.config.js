@@ -15,6 +15,7 @@ module.exports = {
         // ✅ Add these two lines
         jakarta: ['var(--font-jakarta)', 'sans-serif'],
         montserrat: ['var(--font-montserrat)', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         primary: {
