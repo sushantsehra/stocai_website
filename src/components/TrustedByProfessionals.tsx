@@ -32,10 +32,13 @@ const TrustedByProfessionals = () => {
   ];
 
   return (
-    <section className="w-full py-6 bg-white overflow-hidden z-10 mt-10">
-        <p className="text-[#1D1D1D] font-medium font-jakarta text-[20px] md:text-[30px] px-2 md:px-6">Trusted by professionals from</p>
+    <section className="w-full md:py-6 bg-white overflow-hidden z-10 md:mt-10">
+        <p style={{
+          color: "#1D1D1D",
+          fontSize: "18px",
+        }} className="text-[#1D1D1D] font-medium text-center font-inter text-[18px] md:text-[30px] px-2 md:px-6">Trusted by professionals from</p>
 
-      <div className="relative w-full overflow-hidden flex justify-center bottom-4 lg:top-4 mt-10">
+      {/* <div className="relative w-full overflow-hidden flex justify-center bottom-4 lg:top-4 mt-6 md:mt-10">
         <motion.div
           className="flex gap-6"
           style={{ width: "max-content" }}
@@ -61,7 +64,7 @@ const TrustedByProfessionals = () => {
                   src={logo.url}
                   alt={logo.alt}
                   width={["Citi", "King's College London"].includes(logo.name) ? 100 : 480}
-                  height={["Citi", "King's College London"].includes(logo.name) ? 40 : 50}
+                  height={["Citi", "King's College London"].includes(logo.name) ? 35 : 50}
                   className={`object-contain group-hover:grayscale-0 transition-all duration-300 p-2
                     ${
                       ["Citi", "King's College London"].includes(logo.name)
@@ -70,6 +73,38 @@ const TrustedByProfessionals = () => {
                     }`}
                 />
               </div>
+            </div>
+          ))}
+        </motion.div>
+      </div> */}
+      <div className="relative w-full overflow-hidden flex justify-center mt-4 md:mt-10">
+        <motion.div
+          className="flex gap-4 md:gap-10 items-center"
+          style={{ width: "max-content" }}
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 25,
+            ease: "linear",
+          }}
+        >
+          {[...logos, ...logos].map((logo, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center
+                        w-28 sm:w-36 md:w-40 lg:w-44
+                        h-14 sm:h-16 md:h-18
+                        shrink-0"
+            >
+              <Image
+                src={logo.url}
+                alt={logo.alt}
+                width={140}
+                height={60}
+                className="object-contain w-auto h-8 sm:h-10 md:h-12
+                          mx-auto"
+              />
             </div>
           ))}
         </motion.div>
