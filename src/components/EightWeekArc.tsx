@@ -15,94 +15,66 @@ const modules = [
 
 const EightWeekArc = () => {
   return (
-    <section
-      style={{
-        background: "#FFFFFF",
-        padding: "40px 20px",
-      }}
-    >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <section className="bg-white py-2 md:py-10 px-4">
+      <div className="max-w-[1100px] mx-auto">
+
         {/* Heading */}
-        <h2
-          style={{
-            textAlign: "center",
-            fontFamily: "serif",
-            // fontSize: "clamp(36px, 5vw, 56px)",
-            marginBottom: "10px",
-          }}
-          className="text-[#000000] font-bold font-quattrocento text-[32px] md:text-[30px] lg:text-[40px]"
-        >
+        <h2 className="text-center font-quattrocento font-bold 
+                       text-[18px] md:text-[32px] lg:text-[40px] 
+                       text-black mb-0 md:mb-2">
           The 8-week Arc
         </h2>
 
         {/* Subtitle */}
-        <p
-          style={{
-            textAlign: "center",
-            // fontSize: "clamp(18px, 2.5vw, 26px)",
-            marginBottom: "30px",
-          }}
-          className="text-[#000000] font-medium font-quattrocento text-[20px] md:text-[30px] lg:text-[40px]"
-
-        >
+        <p className="text-center font-inter font-medium 
+                      text-[14px] md:text-[20px] lg:text-[24px] 
+                      text-black mb-4 md:mb-8">
           (With actionable outcomes every week)
         </p>
 
-        {/* Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "30px",
-          }}
-        >
+        {/* Grid*/}
+        <div className="grid grid-cols-2 gap-4 md:gap-6">
+
           {modules.map((module) => (
             <div
               key={module.id}
-              style={{
-                ...cardStyle,
-              }}
+              className="
+                relative
+                bg-[#4D4D4D]
+                rounded-[11px]
+                px-4 py-6 md:px-6 md:py-8
+                text-white
+                min-h-[100px] md:min-h-[150px]
+                flex flex-col justify-center
+                shadow-[0_10px_25px_rgba(0,0,0,0.08)]
+              "
             >
               {/* Module Label */}
-              <p style={moduleLabel}>Module {module.id}</p>
+              <p className="
+                text-[12px] md:text-[16px]
+                opacity-100 font-normal font-inter
+                mb-2 md:mb-2
+              ">
+                Module {module.id}
+              </p>
 
               {/* Title */}
-              <h3 style={moduleTitle}>{module.title}</h3>
+              <h3 className="
+                font-quattrocento font-bold
+                text-[12px] md:text-[22px] lg:text-[26px]
+                leading-4 md:leading-snug
+              ">
+                {module.title}
+              </h3>
 
             </div>
           ))}
+
         </div>
+
       </div>
     </section>
   );
 };
-
-/* ---------- Styles ---------- */
-
-const cardStyle: React.CSSProperties = {
-  position: "relative",
-  background: "#4D4D4D",
-  borderRadius: "25px",
-  padding: "20px",
-  color: "white",
-  minHeight: "120px",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-};
-
-const moduleLabel: React.CSSProperties = {
-  fontSize: "22px",
-  marginBottom: "5px",
-  opacity: 0.9,
-};
-
-const moduleTitle: React.CSSProperties = {
-  fontSize: "clamp(24px, 3vw, 34px)",
-  fontFamily: "serif",
-  lineHeight: 1.3,
-};
-
 
 export default EightWeekArc;
