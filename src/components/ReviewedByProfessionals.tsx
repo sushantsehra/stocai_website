@@ -27,107 +27,81 @@ const professionals = [
 
 const ReviewedByProfessionals = () => {
   return (
-    <section
-      style={{
-        background: "#FFFFFF",
-        padding: "40px 20px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
+    <section className="bg-white py-2 px-5 md:py-16">
+      <div className="max-w-[1200px] mx-auto">
+
         {/* Heading */}
-        <h2
-          style={{
-            textAlign: "center",
-            fontFamily: "serif",
-            // fontSize: "clamp(36px, 5vw, 56px)",
-            marginBottom: "20px",
-            color: "#1D1D1D",
-          }}
-          className="font-bold font-quattrocento text-[32px] md:text-[30px] lg:text-[40px]"
-        >
+        <h2 className="text-center font-quattrocento font-bold 
+                       text-[18px] md:text-[36px] lg:text-[44px] 
+                       text-[#1D1D1D] mb-2 md:mb-14">
           Reviewed by{" "}
-          <span style={{ color: "#014BAA" }}>professionals</span>
+          <span className="text-[#014BAA]">professionals</span>
         </h2>
 
-        {/* Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "40px",
-          }}
-        >
-          {professionals.map((item, index) => (
-            <div key={index} style={cardStyle}>
-              {/* Top Section (Avatar + Name) */}
-              <div style={topRowStyle}>
-                {/* Avatar Placeholder */}
-                <div style={avatarStyle} />
+        {/* Grid - Always 2 Columns */}
+        <div className="grid grid-cols-2 gap-3 md:gap-10">
 
+          {professionals.map((item, index) => (
+            <div
+              key={index}
+              className="
+                bg-white
+                rounded-[6px]
+                p-3 md:p-10
+                shadow-[0_45px_35px_rgba(0,0,0,0.06)]
+                flex flex-col
+                min-h-[120px] md:min-h-[300px]
+              "
+            >
+              {/* Top Row */}
+              <div className="flex items-center gap-3 md:gap-5 mb-5 md:mb-8">
+
+                {/* Avatar */}
+                <div className="
+                  w-[38px] h-[38px] 
+                  md:w-[90px] md:h-[90px] 
+                  rounded-full bg-[#D9D9D9] 
+                  shrink-0
+                " />
+
+                {/* Name + Role */}
                 <div>
-                  <h3 style={nameStyle} className="font-bold font-quattrocento">{item.name}</h3>
-                  <p style={roleStyle} className="font-medium font-quattrocento">{item.role}</p>
+                  <h3 className="font-inter font-bold 
+                                 text-[10px] md:text-[22px] lg:text-[24px] 
+                                 text-black">
+                    {item.name}
+                  </h3>
+
+                  <p 
+                  style={{
+                    fontWeight: 300,
+                  }}
+                  className="font-inter 
+                                text-[10px] md:text-[16px] 
+                                text-[#444]">
+                    {item.role}
+                  </p>
                 </div>
               </div>
 
               {/* Testimonial Text */}
-              <p style={textStyle} className="font-medium font-quattrocento text-[20px] md:text-[24px]">{item.text}</p>
+              <p
+              style={{
+                    fontWeight: 300,
+                  }}
+                   className="font-inter font-medium 
+                            text-[10px] md:text-[20px] lg:text-[22px] 
+                            leading-snug text-black">
+                {item.text}
+              </p>
+
             </div>
           ))}
+
         </div>
       </div>
     </section>
   );
-};
-
-/* ---------- Styles ---------- */
-
-const cardStyle: React.CSSProperties = {
-  background: "#FFFFFF",
-  borderRadius: "22px",
-  padding: "40px",
-  boxShadow: "0 15px 35px rgba(0,0,0,0.06)",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-};
-
-const topRowStyle: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: "20px",
-  marginBottom: "30px",
-};
-
-const avatarStyle: React.CSSProperties = {
-  width: "90px",
-  height: "90px",
-  borderRadius: "50%",
-  background: "#D9D9D9",
-  flexShrink: 0,
-};
-
-const nameStyle: React.CSSProperties = {
-  fontSize: "24px",
-  fontWeight: 700,
-  marginBottom: "5px",
-  color: "#000000",
-};
-
-const roleStyle: React.CSSProperties = {
-  fontSize: "18px",
-  color: "#444",
-};
-
-const textStyle: React.CSSProperties = {
-//   fontSize: "24px",
-  lineHeight: 1.3,
-  color: "#000000",
 };
 
 export default ReviewedByProfessionals;
