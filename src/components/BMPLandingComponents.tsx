@@ -24,6 +24,8 @@ import WhoIsThisFor from './WhoIsThisFor';
 import ReviewedByProfessionals from './ReviewedByProfessionals';
 import EightWeekArc from './EightWeekArc';
 import ScrollingFeatures from './ScrollingFeatures';
+import OutcomeContract from './OutcomeContractNew';
+import FoundersBonus from './FoundersBonus';
 
 interface FAQ {
   question: string;
@@ -49,7 +51,9 @@ const BMPLandingComponents = () => {
         <WhoIsThisFor />
         <ReviewedByProfessionals />
         <ScrollingFeatures />
+        <OutcomeContract />
         <EightWeekArc />
+        <FoundersBonus />
       </section>
       <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
         <CareerStalledSection />
