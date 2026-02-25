@@ -26,6 +26,8 @@ import EightWeekArc from './EightWeekArc';
 import ScrollingFeatures from './ScrollingFeatures';
 import OutcomeContract from './OutcomeContractNew';
 import FoundersBonus from './FoundersBonus';
+import FromCommunity from './FromCommunity';
+
 
 interface FAQ {
   question: string;
@@ -76,6 +78,8 @@ const BMPLandingComponents = () => {
       <section data-analytics-section="bmp_trust" data-analytics-section-label="Trust" data-analytics-section-order="8">
         <TrustSection />
       </section>
+      <FromCommunity />
+
       <section data-analytics-section="bmp_waitlist" data-analytics-section-label="Waitlist" data-analytics-section-order="9">
         <WaitlistSection />
       </section>
