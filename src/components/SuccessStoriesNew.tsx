@@ -72,11 +72,11 @@ const SuccessStories = () => {
             ★ ★ ★ ★
           </div>
 
-          <p className="font-medium font-jakarta text-[12px] md:text-[19px] text-[#F8F3F0]">
+          <p className="font-medium font-jakarta text-[9px] md:text-[19px] text-[#F8F3F0]">
             <span
               style={{
                 background: "#014BAA",
-                padding: "6px 10px",
+                padding: "3px 6px",
                 borderRadius: "6px",
                 marginRight: "8px",
                 fontWeight: 600,

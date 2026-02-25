@@ -39,8 +39,9 @@ const HearFromSection = () => {
     <section
       style={{
         background: "#FFFFFF",
-        padding: "20px",
+        // padding: "15px",
       }}
+      className="py-2 px-3"
     >
       <div
         style={{
@@ -94,7 +95,7 @@ const HearFromSection = () => {
                 // height: "100px",
                 maxWidth: "550px",
               }}
-              className="h-[150px] md:h-[270px] w-full pt-6 md:pt-16 px-4"
+              className="h-[135px] md:h-[270px] w-full pt-6 md:pt-16 px-4"
             >
               {/* Circular Image */}
               <div
@@ -126,7 +127,7 @@ const HearFromSection = () => {
                 style={{
                   // fontSize: "18px",
                   lineHeight: "1.4",
-                  marginBottom: "30px",
+                  marginBottom: "15px",
                   marginTop: "10px",
                 }}
                 className="font-medium font-inter text-white text-[8px] md:text-[18px]"

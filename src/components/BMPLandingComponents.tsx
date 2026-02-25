@@ -27,6 +27,8 @@ import ScrollingFeatures from './ScrollingFeatures';
 import OutcomeContract from './OutcomeContractNew';
 import FoundersBonus from './FoundersBonus';
 import FromCommunity from './FromCommunity';
+import CareerTrajectorySection from './CareerTrajectorySection';
+import LearningExperienceNew from './LearningExperienceNew';
 
 
 interface FAQ {
@@ -52,6 +54,8 @@ const BMPLandingComponents = () => {
         <HearFromSection />
         <WhoIsThisFor />
         <ReviewedByProfessionals />
+        <CareerTrajectorySection />
+        <LearningExperienceNew />
         <ScrollingFeatures />
         <OutcomeContract />
         <EightWeekArc />

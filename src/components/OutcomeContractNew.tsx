@@ -6,7 +6,7 @@ import privacy from "@/assets/privacy.png";
 
 const OutcomeContract = () => {
   return (
-    <section className="bg-white py-10 md:py-20 px-8 md:px-6">
+    <section className="bg-white py-7 md:py-20 px-8 md:px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Top Heading */}
         <h2 className="text-[18px] md:text-5xl font-quattrocento font-bold text-black">
@@ -21,7 +21,7 @@ const OutcomeContract = () => {
       </div>
 
       {/* Black Card */}
-      <div className="max-w-5xl mx-auto mt-10 md:mt-16">
+      <div className="max-w-5xl mx-auto mt-8 md:mt-16">
         <div className="bg-[#000000] text-white rounded-[11px] px-8 md:px-20 py-6 md:py-20 shadow-xl">
 
           {/* Icon Placeholder */}
