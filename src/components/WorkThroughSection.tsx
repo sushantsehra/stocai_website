@@ -20,11 +20,9 @@ const WorkThroughSection = () => {
           background: "#014BAA",
           color: "white",
           textAlign: "center",
-        //   padding: "22px 16px",
-          fontSize: "20px",
           fontWeight: 500,
         }}
-        className="px-2 font-medium font-gotham py-6 md:px-8] md:py-10"
+        className="px-2 text-[11px] md:text-[20px] font-medium font-inter py-3.5 md:px-8 md:py-10"
       >
         A strategy system to win your next promotion.....and the one after.
       </div>
@@ -33,7 +31,7 @@ const WorkThroughSection = () => {
       <div
         style={{
           background: "#FFFFFF",
-          padding: "40px 20px",
+          padding: "20px",
         }}
       >
         <div
@@ -51,45 +49,45 @@ const WorkThroughSection = () => {
               marginBottom: "25px",
               color: "#1D1D1D",
             }}
-            className="font-bold font-jakarta text-[30px]"
+            className="font-bold font-quattrocento text-[18px] md:text-[30px]"
           >
             What You’ll Work Through
           </h2>
 
           {/* Grid */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(380px, 2fr))",
-            //   gap: "30px",
-            }}
-            className="gap-6 md:gap-10"
+            className="
+              grid
+              grid-cols-2
+              md:grid-cols-2
+              gap-2 md:gap-10 px-2
+            "
           >
             {ITEMS.map((item, index) => (
               <div
                 key={index}
                 style={{
                   background: "#E6F1FF",
-                  padding: "28px 26px",
-                  borderRadius: "18px",
+                  // padding: "28px 26px",
+                  borderRadius: "6px",
                   display: "flex",
                   alignItems: "flex-start",
-                  gap: "16px",
+                  gap: "8px",
                   textAlign: "left",
                 }}
+                className="p-3 md:p-5"
               >
-                {/* Check Icon */}
-                <SiTicktick size={28} color="#161616" />
+                <SiTicktick size={20} color="#161616" />
 
-                {/* Text */}
                 <p
                   style={{
-                    fontSize: "18px",
+                    // fontSize: "16px",
                     lineHeight: "1.5",
                     margin: 0,
                     color: "#000000",
+                    fontWeight: 300,
                   }}
-                  className="font-normal font-jakarta"
+                  className="font-inter text-[9px] md:text-[18px]"
                 >
                   {item}
                 </p>

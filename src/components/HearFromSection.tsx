@@ -39,7 +39,7 @@ const HearFromSection = () => {
     <section
       style={{
         background: "#FFFFFF",
-        padding: "80px 20px",
+        padding: "20px",
       }}
     >
       <div
@@ -52,25 +52,34 @@ const HearFromSection = () => {
         <h2
           style={{
             textAlign: "center",
-            fontSize: "clamp(32px, 5vw, 48px)",
-            // fontFamily: "serif",
-            marginBottom: "70px",
+            // marginBottom: "70px",
             lineHeight: 1.2,
             color: "##1D1D1D",
           }}
-          className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[40px]"
+          className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[40px] mb-9 md:mb-10"
         >
-          Hear from those who experienced it{" "}
+          Hear from those who 
+          <br />
+          experienced it{" "}
           <span style={{ color: "#1A4EAB" }}>first hand</span>
         </h2>
 
         {/* Grid */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(380px, 2fr))",
-            gap: "90px 40px",
-          }}
+          // style={{
+          //   display: "grid",
+          //   gridTemplateColumns: "repeat(auto-fit, minmax(380px, 2fr))",
+          //   gap: "90px 40px",
+          // }}
+            className="
+            grid 
+            grid-cols-2 
+            md:grid-cols-2 
+            lg:grid-cols-2 
+            gap-y-[40px] md:gap-y-[90px] 
+            gap-x-[10px]
+            justify-items-center
+          "
         >
           {TESTIMONIALS.map((item, index) => (
             <div
@@ -78,28 +87,30 @@ const HearFromSection = () => {
               style={{
                 position: "relative",
                 background: "#4D4D4D",
-                borderRadius: "22px",
-                padding: "70px 30px 40px 30px",
+                borderRadius: "6px",
+                // padding: "70px 30px 40px 30px",
                 textAlign: "center",
                 color: "white",
-                height: "300px",
+                // height: "100px",
                 maxWidth: "550px",
               }}
-              className="h-[250px]"
+              className="h-[150px] md:h-[270px] w-full pt-6 md:pt-16 px-4"
             >
               {/* Circular Image */}
               <div
                 style={{
                   position: "absolute",
-                  top: "-65px",
+                  // top: "-65px",
                   left: "50%",
                   transform: "translateX(-50%)",
-                  width: "120px",
-                  height: "120px",
+                  // width: "120px",
+                  // height: "120px",
                   borderRadius: "50%",
                   overflow: "hidden",
                   border: "6px solid #FFFFFF",
                 }}
+                className="h-[44px] w-[44px] md:h-[120px] md:w-[120px] top-[-25px] md:top-[-65px]"
+
               >
                 <Image
                   src={item.image}
@@ -113,12 +124,12 @@ const HearFromSection = () => {
               {/* Text */}
               <p
                 style={{
-                  fontSize: "18px",
+                  // fontSize: "18px",
                   lineHeight: "1.4",
                   marginBottom: "30px",
                   marginTop: "10px",
                 }}
-                className="font-medium font-jakarta text-white"
+                className="font-medium font-inter text-white text-[8px] md:text-[18px]"
               >
                 {item.text}
               </p>
@@ -126,11 +137,12 @@ const HearFromSection = () => {
               {/* Name */}
               <h3
                 style={{
-                  fontSize: "20px",
+                  // fontSize: "20px",
                   fontWeight: 700,
                   marginBottom: "3px",
                   color: "#FFFFFF",
                 }}
+                className="font-bold font-inter text-white text-[8px] md:text-[18px]"
               >
                 {item.name}
               </h3>
@@ -138,10 +150,12 @@ const HearFromSection = () => {
               {/* Role */}
               <p
                 style={{
-                  fontSize: "16px",
+                  // fontSize: "16px",
                   color: "#FFFFFF",
-                  fontWeight: 700,
+                  fontWeight: 500,
                 }}
+                className="font-medium font-inter text-white text-[8px] md:text-[18px]"
+
               >
                 {item.role}
               </p>
