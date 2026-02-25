@@ -18,8 +18,8 @@ const FromCommunity = () => {
     ];
 
     return (
-        <section className="py-16 bg-white overflow-hidden">
-            <div className="max-w-6xl mx-auto px-4 flex flex-col items-center">
+        <section className="py-3 md:py-16 bg-white overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
 
                 {/* Title */}
                 <h2 className="title-from-community mb-14">

@@ -2,8 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
-import currentImg from "../assets/harshImg.jpg";
-import futureImg from "../assets/harshImage.png";
+import currentImg from "../assets/AnishaDateCI.jpg";
+import futureImg from "../assets/AnishaDateFI.png";
 
 export default function CareerTrajectorySection() {
   return (

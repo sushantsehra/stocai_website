@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { FiPlus } from "react-icons/fi";
+// import { FiPlus } from "react-icons/fi";
 
 import applicationIcon from "../assets/application.png";
 import bookIcon from "../assets/book.png";

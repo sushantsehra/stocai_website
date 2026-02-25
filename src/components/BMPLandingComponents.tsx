@@ -1,19 +1,19 @@
 import React from 'react';
-import KeyInsight from './KeyInsight';
-import Framework from './Framework';
-import LearningExperience from './LearningExperience';
+// import KeyInsight from './KeyInsight';
+// import Framework from './Framework';
+// import LearningExperience from './LearningExperience';
 import Testimonial from './Testimonial';
 import FAQ from './FAQ';
 // import Footer from './FooterSection';
-import TrustSection from './TrustSection';
+// import TrustSection from './TrustSection';
 import Header from './LandingHeader';
 // import PromotionBanner from './PromotionBanner';
 import WaitlistSection from './WaitlistSection';
-import CareerStalledSection from './CareerStalledSection';
+// import CareerStalledSection from './CareerStalledSection';
 // import BePromotableSection from './BePromotableSection';
 import SectionViewTracker from '@/app/_components/SectionViewTracker';
 import StickyCTA from './StickyCTA';
-import AdditionalBenefits from './AdditionalBenefits';
+// import AdditionalBenefits from './AdditionalBenefits';
 import BePromotableFirstFold from './BePromotableFirstFoldNew';
 import TestimonialFeatures from './TestimonialFeatures';
 import TrustedByProfessionals from './TrustedByProfessionals';
@@ -30,6 +30,7 @@ import FromCommunity from './FromCommunity';
 import CareerTrajectorySection from './CareerTrajectorySection';
 import LearningExperienceNew from './LearningExperienceNew';
 import AdditionalBenefitsNew from './AdditionalBenefitsNew';
+import TrustSectionNew from './TrustSectionNew';
 
 
 interface FAQ {
@@ -61,9 +62,11 @@ const BMPLandingComponents = () => {
         <OutcomeContract />
         <EightWeekArc />
         <AdditionalBenefitsNew />
+        <TrustSectionNew />
         <FoundersBonus />
+        <FromCommunity />
       </section>
-      <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
+      {/* <section data-analytics-section="bmp_career_stalled" data-analytics-section-label="Career Stalled" data-analytics-section-order="2">
         <CareerStalledSection />
       </section>
       <section data-analytics-section="bmp_key_insight" data-analytics-section-label="Key Insight" data-analytics-section-order="3">
@@ -77,14 +80,14 @@ const BMPLandingComponents = () => {
       </section>
       <section data-analytics-section="bmp_additional_benefits" data-analytics-section-label="Additional Benefits" data-analytics-section-order="6">
         <AdditionalBenefits />
-      </section>
+      </section> */}
       <section data-analytics-section="bmp_testimonial" data-analytics-section-label="Testimonial" data-analytics-section-order="7">
         <Testimonial />
       </section>
-      <section data-analytics-section="bmp_trust" data-analytics-section-label="Trust" data-analytics-section-order="8">
+      {/* <section data-analytics-section="bmp_trust" data-analytics-section-label="Trust" data-analytics-section-order="8">
         <TrustSection />
-      </section>
-      <FromCommunity />
+      </section> */}
+      {/* <FromCommunity /> */}
 
       <section data-analytics-section="bmp_waitlist" data-analytics-section-label="Waitlist" data-analytics-section-order="9">
         <WaitlistSection />
