@@ -6,7 +6,7 @@ import privacy from "@/assets/shield.png";
 
 const OutcomeContract = () => {
   return (
-    <section className="bg-white py-7 md:py-20 px-8 md:px-6">
+    <section className="bg-white py-7 md:pt-10 md:pb-20 px-8 md:px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Top Heading */}
         <h2 className="text-[18px] md:text-5xl font-quattrocento font-bold text-black">
@@ -21,12 +21,12 @@ const OutcomeContract = () => {
       </div>
 
       {/* Black Card */}
-      <div className="max-w-5xl mx-auto mt-8 md:mt-16">
-        <div className="bg-[#000000] text-white rounded-[11px] px-8 md:px-20 py-6 md:py-20 shadow-xl">
+      <div className="max-w-5xl mx-auto mt-8 md:mt-10">
+        <div className="bg-[#000000] text-white rounded-[11px] px-8 md:px-20 py-6 md:pt-14 md:pb-20 shadow-xl">
 
           {/* Icon Placeholder */}
           <div className="flex justify-center mb-1 md:mb-8">
-              <Image src={privacy} alt="Privacy Icon" width={44} height={44} />
+            <Image src={privacy} alt="Privacy Icon" width={44} height={44} />
           </div>
 
           {/* Title */}
@@ -39,10 +39,10 @@ const OutcomeContract = () => {
           </p>
 
           {/* Columns */}
-          <div className="flex flex-row gap-10 mt-4 md:mt-14 text-left">
+          <div className="flex flex-row md:justify-center gap-10 md:gap-24 mt-4 md:mt-14 text-left">
 
             {/* Left */}
-            <div>
+            <div className="md:w-[220px]">
               <h4 className="text-[12px] md:text-2xl font-medium font-inter mb-1 md:mb-6">
                 We provide
               </h4>
@@ -57,7 +57,7 @@ const OutcomeContract = () => {
             </div>
 
             {/* Right */}
-            <div>
+            <div className="md:w-[250px]">
               <h4 className="text-[12px] md:text-2xl font-medium font-inter mb-1 md:mb-6">
                 You Commit to
               </h4>
@@ -73,10 +73,9 @@ const OutcomeContract = () => {
           </div>
 
           {/* Refund Section */}
-          <div className="text-center mt-5 md:mt-16 max-w-3xl mx-auto">
+          <div className="text-center mt-5 md:mt-12 max-w-3xl md:max-w-5xl mx-auto">
             <p className="text-[#FFFFFF] text-[10px] font-normal font-inter md:text-xl leading-4 md:leading-relaxed">
-              If you complete your commitments and don&apos;t see clear movement,
-              email us for a full refund.
+              If you complete your commitments and don&apos;t see clear movement, email us for a full refund.
             </p>
 
             <p className="mt-0.5 md:mt-3 text-[#FFFFFF] text-[10px] font-bold font-inter md:text-xl">
@@ -85,7 +84,7 @@ const OutcomeContract = () => {
           </div>
 
           {/* CTA */}
-          <div className="flex justify-center mt-4 md:mt-14">
+          <div className="flex justify-center mt-4 md:mt-10">
             <button className="bg-white text-[#014BAA] px-6 md:px-12 py-2 md:py-4 rounded-full text-[12px] md:text-xl font-gotham font-semibold hover:scale-105 transition duration-300">
               Become more promotable
             </button>

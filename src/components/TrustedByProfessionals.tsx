@@ -28,87 +28,88 @@ const TrustedByProfessionals = () => {
     { name: "Deloitte", url: deloitte, alt: "Deloitte logo" },
     { name: "Edelweiss", url: edelweiss, alt: "Edelweiss logo" },
     { name: "Mahindra", url: mahindra, alt: "Mahindra logo" },
-
   ];
 
   return (
-    <section className="w-full md:py-6 bg-white overflow-hidden z-10 md:mt-10">
-        <p style={{
-          color: "#1D1D1D",
-          fontSize: "18px",
-        }} className="text-[#1D1D1D] font-medium text-center font-inter text-[18px] md:text-[30px] px-2 md:px-6">Trusted by professionals from</p>
+    <section className="w-full bg-white overflow-hidden z-10">
 
-      {/* <div className="relative w-full overflow-hidden flex justify-center bottom-4 lg:top-4 mt-6 md:mt-10">
-        <motion.div
-          className="flex gap-6"
-          style={{ width: "max-content" }}
-          animate={{ x: ["-50%", "0%"] }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 25,
-            ease: "linear",
-          }}
+      {/* ===== MOBILE VIEW (md:hidden) ===== */}
+      <div className="md:hidden py-4">
+        <p
+          style={{ color: "#1D1D1D", fontSize: "18px" }}
+          className="text-[#1D1D1D] font-medium text-center font-inter text-[18px] px-2"
         >
-          {[...logos, ...logos].map((logo, index) => (
-            <div
-              key={index}
-              className="group relative flex items-center justify-center
-                         w-32 sm:w-40 md:w-44 lg:w-48
-                         h-16 sm:h-20
-                         hover:shadow-md hover:scale-105
-                         transition-all duration-300"
-            >
-              <div className="relative w-full h-full flex items-center justify-center">
+          Trusted by professionals from
+        </p>
+
+        <div className="relative w-full overflow-hidden flex justify-center mt-4">
+          <motion.div
+            className="flex gap-4 items-center"
+            style={{ width: "max-content" }}
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 25,
+              ease: "linear",
+            }}
+          >
+            {[...logos, ...logos].map((logo, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-center w-28 sm:w-36 h-14 sm:h-16 shrink-0"
+              >
                 <Image
                   src={logo.url}
                   alt={logo.alt}
-                  width={["Citi", "King's College London"].includes(logo.name) ? 100 : 480}
-                  height={["Citi", "King's College London"].includes(logo.name) ? 35 : 50}
-                  className={`object-contain group-hover:grayscale-0 transition-all duration-300 p-2
-                    ${
-                      ["Citi", "King's College London"].includes(logo.name)
-                        ? "scale-100 lg:scale-75"
-                        : "scale-100 lg:scale-90"
-                    }`}
+                  width={140}
+                  height={60}
+                  className="object-contain w-auto h-8 sm:h-10 mx-auto"
                 />
               </div>
-            </div>
-          ))}
-        </motion.div>
-      </div> */}
-      <div className="relative w-full overflow-hidden flex justify-center mt-4 md:mt-10">
-        <motion.div
-          className="flex gap-4 md:gap-10 items-center"
-          style={{ width: "max-content" }}
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 25,
-            ease: "linear",
-          }}
-        >
-          {[...logos, ...logos].map((logo, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-center
-                        w-28 sm:w-36 md:w-40 lg:w-44
-                        h-14 sm:h-16 md:h-18
-                        shrink-0"
-            >
-              <Image
-                src={logo.url}
-                alt={logo.alt}
-                width={140}
-                height={60}
-                className="object-contain w-auto h-8 sm:h-10 md:h-12
-                          mx-auto"
-              />
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
+
+      {/* ===== DESKTOP VIEW (hidden md:block) ===== */}
+      <div className="hidden md:block py-6 mt-10">
+        <p
+          className="text-center px-6 font-inter font-medium text-[30px] leading-[100%] tracking-normal text-[#1D1D1D]"
+        >
+          Trusted by professionals from
+        </p>
+
+        <div className="relative w-full overflow-hidden flex justify-center mt-12">
+          <motion.div
+            className="flex gap-14 items-center"
+            style={{ width: "max-content" }}
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 30,
+              ease: "linear",
+            }}
+          >
+            {[...logos, ...logos, ...logos].map((logo, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-center shrink-0 w-[240px] h-[70px]"
+              >
+                <Image
+                  src={logo.url}
+                  alt={logo.alt}
+                  width={240}
+                  height={50}
+                  className="object-contain w-auto max-w-[240px] h-[50px]"
+                />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
     </section>
   );
 };
