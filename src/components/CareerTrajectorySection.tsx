@@ -51,9 +51,7 @@ export default function CareerTrajectorySection() {
           <span className="text-[#1554A5]">Change You</span>
         </h3>
 
-        {/* ============================================================ */}
         {/* MOBILE: Single Flip Card — hidden on md+                      */}
-        {/* ============================================================ */}
         <div className="flex justify-center md:hidden mb-6">
           <div
             className="relative cursor-pointer"
