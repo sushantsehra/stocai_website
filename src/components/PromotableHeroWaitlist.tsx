@@ -384,7 +384,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
                 <div className="bg-[#737373] text-white px-4 md:px-8 py-2 md:py-3 rounded-[10px]">
                   <span className="text-xl md:text-3xl font-bold line-through">
-                    ₹19,999/-
+                    ₹4,999/-
                   </span>
                 </div>
 
@@ -400,7 +400,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
                 <div className="bg-black text-white px-4 md:px-8 py-2 md:py-3 rounded-[10px]">
                   <span className="text-xl md:text-3xl font-bold">
-                    ₹3,999/-
+                    ₹950/-
                   </span>
                 </div>
 
