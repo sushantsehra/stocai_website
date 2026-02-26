@@ -25,7 +25,7 @@ const OutcomeContract = () => {
         <div className="bg-[#000000] text-white rounded-[11px] px-8 md:px-20 py-6 md:py-20 shadow-xl">
 
           {/* Icon Placeholder */}
-          <div className="flex justify-center md:mb-8">
+          <div className="flex justify-center mb-1 md:mb-8">
               <Image src={privacy} alt="Privacy Icon" width={44} height={44} />
           </div>
 
