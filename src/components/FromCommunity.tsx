@@ -2,11 +2,11 @@
 
 import React from 'react';
 import Image from 'next/image';
-import image10 from '../assets/image10.png';
-import image11 from '../assets/image11.png';
-import image12 from '../assets/image12.png';
-import image13 from '../assets/image13.png';
-import Group15 from '../assets/Group15.png';
+import image10 from '../assets/ss7.png';
+import image11 from '../assets/ss6.png';
+import image12 from '../assets/ss4.png';
+import image13 from '../assets/ss5.png';
+import Group15 from '../assets/ss3.png';
 
 const FromCommunity = () => {
     const reviews = [

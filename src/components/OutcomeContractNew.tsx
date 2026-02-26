@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import privacy from "@/assets/privacy.png";
+import privacy from "@/assets/shield.png";
 
 const OutcomeContract = () => {
   return (
