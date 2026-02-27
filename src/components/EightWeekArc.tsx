@@ -69,7 +69,7 @@ export default function EightWeekArc() {
 
             if (p === 0) return { transform: "translate(0, 0) rotate(0) scale(1)", className: base };
 
-            const factor = p > 0 ? 1 : -1;
+            // const factor = p > 0 ? 1 : -1;
             const absP = Math.abs(p);
 
             // MOBILE VALUES (Reduced to 125px x 165px)
