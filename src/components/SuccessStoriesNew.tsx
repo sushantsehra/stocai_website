@@ -65,7 +65,7 @@ const SuccessStories = () => {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-[5px] mt-[20px]">
             {CARDS.map((card, index) => (
               <div key={index} className="bg-[#2C2C2C] rounded-[10px] overflow-hidden flex flex-col border border-[#4D4D4D]">
-                <div className="relative h-[100px]">
+                <div className="relative h-[85px]">
                   <Image
                     src={card.image}
                     alt={card.name}
