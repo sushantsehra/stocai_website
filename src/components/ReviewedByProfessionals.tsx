@@ -66,7 +66,7 @@ const ReviewedByProfessionals = () => {
               <div className="flex items-center gap-3 md:gap-5 mb-5 md:mb-8">
 
                 {/* Avatar */}
-                <Image
+                {/* <Image
                   src={item.image.src}
                   alt={item.name}
                   className="
@@ -76,6 +76,13 @@ const ReviewedByProfessionals = () => {
                     object-cover 
                     shrink-0
                   "
+                /> */}
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={90}
+                  height={90}
+                  className="w-[38px] h-[38px] md:w-[90px] md:h-[90px] rounded-full object-cover shrink-0"
                 />
 
                 {/* Name + Role */}
