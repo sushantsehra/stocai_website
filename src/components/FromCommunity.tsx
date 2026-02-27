@@ -7,6 +7,9 @@ import image11 from '../assets/ss6.png';
 import image12 from '../assets/ss4.png';
 import image13 from '../assets/ss5.png';
 import Group15 from '../assets/ss3.png';
+import Group16 from '../assets/ss1.png';
+import Group17 from '../assets/ss2.png';
+
 
 const FromCommunity = () => {
     const reviews = [
@@ -14,7 +17,11 @@ const FromCommunity = () => {
         { name: "Pooja Kargatia", image: image11, width: 240, height: 90 },
         { name: "Eleena reginold", image: image13, width: 250, height: 105 },
         { name: "Deep Shah", image: image12, width: 270, height: 110 },
+        { name: "Samruddhi Patil", image: Group15, width: 220, height: 110 },
+        { name: "Samruddhi Patil", image: Group16, width: 220, height: 110 },
+        { name: "Samruddhi Patil", image: Group17, width: 220, height: 110 },
         { name: "Samruddhi Patil", image: Group15, width: 220, height: 110 }
+
     ];
 
     return (
@@ -72,12 +79,9 @@ const FromCommunity = () => {
                             className="object-contain"
                         />
                     </div>
-
-                </div>
-
-                {/* Last Card */}
-                <div className="w-full max-w-[860px]">
-                    <div className="transition-transform hover:scale-105 duration-300">
+                    
+                    {/* Row 3 */}
+                    <div className="flex justify-end transition-transform hover:scale-105 duration-300">
                         <Image
                             src={reviews[4].image}
                             alt={reviews[4].name}
@@ -86,6 +90,37 @@ const FromCommunity = () => {
                             className="object-contain"
                         />
                     </div>
+
+                    <div className="flex justify-start transition-transform hover:scale-105 duration-300">
+                        <Image
+                            src={reviews[5].image}
+                            alt={reviews[5].name}
+                            width={reviews[5].width}
+                            height={reviews[5].height}
+                            className="object-contain"
+                        />
+                    </div>
+                                        {/* Row 2 */}
+                    <div className="flex justify-end transition-transform hover:scale-105 duration-300">
+                        <Image
+                            src={reviews[6].image}
+                            alt={reviews[6].name}
+                            width={reviews[6].width}
+                            height={reviews[6].height}
+                            className="object-contain"
+                        />
+                    </div>
+
+                    <div className="flex justify-start transition-transform hover:scale-105 duration-300">
+                        <Image
+                            src={reviews[3].image}
+                            alt={reviews[3].name}
+                            width={reviews[3].width}
+                            height={reviews[3].height}
+                            className="object-contain"
+                        />
+                    </div>
+
                 </div>
 
             </div>
