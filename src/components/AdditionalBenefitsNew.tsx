@@ -63,34 +63,34 @@ const AdditionalBenefitsNew = () => {
   ];
 
   return (
-    <section className="bg-white py-8 md:py-12 px-4 container mx-auto max-w-7xl">
+    <section className="bg-white py-8 md:py-8 px-4 container mx-auto max-w-7xl">
 
       {/* Title */}
       <h2 className="text-center text-[#0F1729] font-quattrocento font-bold 
                      text-[18px] sm:text-[28px] md:text-[40px] 
-                     mb-4 md:mb-8">
+                     mb-4 md:mt-20 md:mb-8">
         1344 hours of strategic insights
       </h2>
 
       {/* Container */}
-      <div className="bg-[#E6F1FF] rounded-t-[12px] overflow-hidden">
+      <div className="bg-[#E6F1FF] rounded-t-[12px] overflow-hidden md:max-w-5xl mx-auto">
 
         {benefits.map((item, index) => (
           <div
             key={index}
-            className="flex gap-1 sm:gap-5 
-                       px-4 sm:px-8 md:px-12 
-                       py-4 sm:py-8 md:py-10
-                       border-b border-[#0B64F433]"
+            className={`flex items-center md:items-start gap-2 sm:gap-5 
+                       px-4 sm:px-8 md:px-8 
+                       py-4 sm:py-8 ${index === 0 ? "md:pt-6 md:pb-1.5" : "md:py-1.5"}
+                       border-b border-[#0B64F433]`}
           >
 
             {/* Icon */}
-            <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 mt-0">
+            <div className="w-8 h-8 md:w-8 md:h-8 flex-shrink-0 mt-0 md:mt-1 flex items-center justify-center">
               <Image
                 src={item.icon}
                 alt="icon"
-                width={20}
-                height={20}
+                width={28}
+                height={28}
                 className="object-contain"
               />
             </div>
@@ -99,16 +99,16 @@ const AdditionalBenefitsNew = () => {
             <div className="flex-1">
 
               <h3 className="font-inter font-semibold 
-                             text-[12px] sm:text-[18px] md:text-[22px]
+                             text-[12px] sm:text-[18px] md:text-[18px]
                              leading-snug">
                 {item.title}
                 {item.highlight && (
-                  <span className="text-[#014BAA] font-inter font-bold text-[12px] sm:text-[18px] md:text-[22px]">
+                  <span className="text-[#014BAA] font-inter font-bold text-[12px] sm:text-[18px] md:text-[18px]">
                     {item.highlight}
                   </span>
                 )}
                 {item.extra && (
-                  <span>{item.extra}</span>
+                  <span className="md:text-[18px]">{item.extra}</span>
                 )}
               </h3>
 
@@ -117,7 +117,7 @@ const AdditionalBenefitsNew = () => {
                   {item.items.map((bullet, i) => (
                     <li
                       key={i}
-                      className="text-[10px] font-jakarta font-normal sm:text-[15px] md:text-[18px]
+                      className="text-[10px] font-jakarta font-normal sm:text-[15px] md:text-[16px]
                                  text-black flex"
                     >
                       <span className="mr-2">•</span>
@@ -131,13 +131,13 @@ const AdditionalBenefitsNew = () => {
             {/* Pricing */}
             <div className="text-right flex flex-col items-end justify-center min-w-[60px]">
 
-              <span className="text-[12px] sm:text-[14px] md:text-[18px]
+              <span className="text-[12px] sm:text-[14px] md:text-base
                                text-black/30 font-inter font-medium line-through">
                 {item.originalPrice}
               </span>
 
               <span className="text-[#014BAA] font-jakarta
-                               text-[20px] sm:text-[28px] md:text-[34px]
+                               text-[20px] sm:text-[28px] md:text-2xl
                                font-extrabold">
                 {item.currentPrice}
               </span>
@@ -159,17 +159,17 @@ const AdditionalBenefitsNew = () => {
             REQUEST ACCESS
           </button>
         </div> */}
-        <div className="bg-black rounded-b-[28px] py-5 md:py-8 px-4 flex flex-col items-center">
+        <div className="bg-black rounded-b-[28px] py-5 md:py-4 px-4 flex flex-col items-center md:max-w-5xl mx-auto">
           {/* Price Section */}
-          <div className="flex items-center gap-4 mb-2 md:mb-6 flex-wrap justify-center">
-            
+          <div className="flex items-center gap-4 mb-2 md:mb-2 flex-wrap justify-center">
+
             {/* Old Price */}
             <p className="text-[#6E6E6E] font-bold font-quattrocento text-[12px] sm:text-lg md:text-xl line-through">
               At just ₹30,000
             </p>
 
             {/* New Price */}
-            <p className="text-white font-bold text-[24px] font-inter sm:text-5xl md:text-6xl">
+            <p className="text-white font-bold text-[18px] font-inter sm:text-5xl md:text-5xl">
               ₹949
             </p>
           </div>
@@ -179,10 +179,10 @@ const AdditionalBenefitsNew = () => {
             className="
               border-2 border-white 
               text-white 
-              px-10 sm:px-14 md:px-16
-              py-3 sm:py-4
+              px-10 sm:px-14 md:px-12
+              py-3 sm:py-4 md:py-3
               rounded-full
-              text-[10px] sm:text-base md:text-lg
+              text-[10px] sm:text-base md:text-base
               font-semibold font-jakarta
               tracking-wide
               transition-all duration-300

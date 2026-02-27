@@ -6,7 +6,7 @@ import blueBg from "../assets/FounderNoteSectionBackground.png";
 
 export default function FounderNoteSection() {
   return (
-    <section className="relative w-full aspect-[1640/924] overflow-hidden">
+    <section className="relative w-full mt-8 aspect-[1500/700] overflow-hidden">
       
       {/* Background Image */}
       <Image
@@ -14,7 +14,7 @@ export default function FounderNoteSection() {
         alt="Founder Background"
         fill
         priority
-        className="object-contain object-center"
+        className="object-cover object-center"
       />
 
       {/* Content */}

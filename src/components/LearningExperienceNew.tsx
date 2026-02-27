@@ -22,7 +22,7 @@ interface Slide {
 const LearningExperienceNew = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-    const scrollToWaitlist = () => {
+  const scrollToWaitlist = () => {
     const element = document.getElementById('waitlist');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -113,7 +113,7 @@ const LearningExperienceNew = () => {
             <br className="" />
             not theory
           </h2>
-            <h2 className="sm:hidden block text-[18px] text-center sm:text-3xl md:text-4xl lg:text-[48px] leading-7 font-jakarta font-bold text-black mb-2">
+          <h2 className="sm:hidden block text-[18px] text-center sm:text-3xl md:text-4xl lg:text-[48px] leading-7 font-jakarta font-bold text-black mb-2">
             Built from real{" "}
             <span className="text-[#0B64F4] font-jakarta ">career experiences</span>, <br />{" "} not theory
           </h2>
@@ -121,11 +121,11 @@ const LearningExperienceNew = () => {
 
         {/* Content Grid */}
         <div className="flex flex-col md:flex-row gap-10 items-center">
-            {/* Left: Dynamic Image with Background Peek */}
+          {/* Left: Dynamic Image with Background Peek */}
           <div className="w-[100%] md:w-[60%] lg:w-[741px] relative">
             {/* Main Container */}
             <div className="relative z-10 bg-[#F0F0F0] rounded-[20px] px-4 mx-3 md:mx-0 py-3 sm:p-4 shadow-xl overflow-hidden">
-              
+
               {/* FIXED IMAGE FRAME */}
               <div className="relative w-full h-[280px] sm:h-[420px] overflow-hidden rounded-xl">
 
@@ -158,9 +158,8 @@ const LearningExperienceNew = () => {
                 {slides.map((_, index) => (
                   <span
                     key={index}
-                    className={`h-2 w-2 rounded-sm ${
-                      index === currentSlide ? "bg-[#0B64F4]" : "bg-black"
-                    }`}
+                    className={`h-2 w-2 rounded-sm ${index === currentSlide ? "bg-[#0B64F4]" : "bg-black"
+                      }`}
                   />
                 ))}
               </div>
@@ -187,7 +186,7 @@ const LearningExperienceNew = () => {
           <div className="relative md:w-[40%]">
             <h3
               key={slides[currentSlide].title}
-              className="text-[13px] text-center sm:text-2xl lg:text-[24px] font-semibold font-jakarta text-[#014BAA] mb-3 sm:mb-4 transition-all duration-300"
+              className="text-[13px] text-center sm:text-left sm:text-2xl lg:text-[24px] font-semibold font-jakarta text-[#014BAA] mb-3 sm:mb-4 transition-all duration-300"
             >
               {slides[currentSlide].title}
             </h3>
@@ -210,7 +209,7 @@ const LearningExperienceNew = () => {
 
         <div className="flex justify-center items-center -mt-2  md:mt-16 lg:translate-x-[-2%]">
           <button
-          onClick={scrollToWaitlist}
+            onClick={scrollToWaitlist}
             className="w-[140px] md:w-[215px] h-[34px] md:h-[54px] py-4 md:py-8 rounded-[12px] bg-[radial-gradient(ellipse_at_top,_#FFFFFF_0%,_#ADADAD_220%)] shadow-[0_5px_20px_rgba(0,0,0,0.3)] text-black cursor-pointer flex items-center justify-center font-bold font-jakarta text-[12.07px] md:text-[20px] transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 hover:shadow-[0_0_15px_rgba(11,100,244,0.4)]"
           >
             Get Early Access

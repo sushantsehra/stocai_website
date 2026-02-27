@@ -70,19 +70,19 @@ const EightWeekArc = () => {
   return (
     <>
       {/* HEADING */}
-      <div className="relative z-20 max-w-7xl mx-auto text-center mb-6">
+      <div className="relative z-20 max-w-7xl mx-auto text-center mb-6 md:mb-4">
         <h2 className="text-[24px] sm:text-[36px] md:text-[48px] font-bold leading-tight md:mb-2">
           <span className="text-[#000000] font-quattrocento">
             The <span className="text-[#014BAA] font-bold">8-Week</span> Arc
           </span>
         </h2>
 
-        <p className="text-[#000000] font-inter text-[14px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-8">
+        <p className="text-[#000000] font-inter text-[14px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-4">
           (With actionable outcomes every week)
         </p>
       </div>
 
-      <section className="relative bg-white lg:pt-40 pb-6 overflow-hidden">
+      <section className="relative bg-white lg:pt-14 pb-6 overflow-hidden">
         <div className="relative z-20 max-w-7xl mx-auto text-center">
           <div
             className="relative min-h-[390px] sm:min-h-[450px] flex justify-center items-center touch-pan-y"
@@ -94,21 +94,44 @@ const EightWeekArc = () => {
               const p = getPos(i);
               if (p === null) return null;
 
-              const styles =
-                p === 0
-                  ? "translate-x-0 rotate-0 scale-100 z-50"
-                  : p === 1
-                  ? "translate-x-[55%] sm:translate-x-[65%] rotate-[15deg] scale-[0.9] z-40 mt-16 sm:mt-28"
-                  : p === 2
-                  ? "translate-x-[95%] sm:translate-x-[118%] rotate-[22deg] scale-[0.8] z-30 mt-28 sm:mt-80"
-                  : p === -1
-                  ? "translate-x-[-55%] sm:translate-x-[-65%] rotate-[-15deg] scale-[0.9] z-40 mt-16 sm:mt-28"
-                  : "translate-x-[-95%] sm:translate-x-[-118%] rotate-[-22deg] scale-[0.8] z-30 mt-28 sm:mt-80";
+              // Combined classes for non-transform properties
+              const baseClasses = "absolute w-[260px] sm:w-[360px] lg:w-[420px] h-[360px] sm:h-[500px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]";
+
+              const config = {
+                0: "z-50 opacity-100",
+                1: "z-40 opacity-80",
+                2: "z-30 opacity-60",
+                "-1": "z-40 opacity-80",
+                "-2": "z-30 opacity-60",
+              }[p];
+
+              const getTransforms = (pos: number) => {
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+
+                if (pos === 0) return "translate(0, 0) rotate(0) scale(1)";
+
+                const factorX = pos > 0 ? 1 : -1;
+                const absPos = Math.abs(pos);
+
+                let translateX = absPos === 1 ? "55%" : "95%";
+                let translateY = absPos === 1 ? "4rem" : "7rem"; // Corresponds to mt-16 and mt-28
+                let rotate = absPos === 1 ? "15deg" : "22deg";
+                let scale = absPos === 1 ? "0.9" : "0.8";
+
+                // Desktop Adjustments
+                if (!isMobile) {
+                  translateX = absPos === 1 ? "65%" : "118%";
+                  translateY = absPos === 1 ? "7rem" : "20rem"; // Corresponds to sm:mt-28 and sm:mt-80
+                }
+
+                return `translate(${pos > 0 ? '' : '-'}${translateX}, ${translateY}) rotate(${pos > 0 ? '' : '-'}${rotate}) scale(${scale})`;
+              };
 
               return (
                 <div
                   key={m.id}
-                  className={`absolute w-[260px] sm:w-[360px] lg:w-[420px] h-[360px] sm:h-[500px] transition-all duration-700 ${styles}`}
+                  className={`${baseClasses} ${config}`}
+                  style={{ transform: getTransforms(p) }}
                 >
                   {p === 0 ? (
                     <div

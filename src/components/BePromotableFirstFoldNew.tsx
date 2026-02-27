@@ -96,16 +96,16 @@ export default function BePromotableFirstFold() {
               >
                 <div style={{
                   width: "340px"
-                }} className="bg-white rounded-[25px] border-2 border-[#D9D9D9] w-[280px] xl:w-[300px] shadow-2xl overflow-hidden">
+                }} className="bg-white rounded-[25px] border-2 border-[#D9D9D9] w-[300px] xl:w-[320px] shadow-2xl overflow-hidden">
                   {/* Black Header */}
-                  <div className="bg-black pt-5 px-4 relative min-h-[120px]">
-                    <h4 className="text-[10px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
+                  <div className="bg-black pt-7 px-4 relative min-h-[140px]">
+                    <h4 className="text-[13px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
                       Current State
                     </h4>
                   </div>
 
                   {/* Avatar overlapping header */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-[45px]">
+                  <div className="absolute left-1/2 -translate-x-1/2 top-[60px]">
                     <div className="w-28 h-28 xl:w-32 xl:h-32 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
                       <div className="relative w-full h-full rounded-full flex items-center justify-center scale-[0.95]">
                         <div className="relative w-[100px] h-[100px] xl:w-[115px] xl:h-[115px] rounded-full overflow-hidden">
@@ -120,7 +120,7 @@ export default function BePromotableFirstFold() {
                     </div>
                   </div>
 
-                  <div className="bg-white px-4 py-5 mt-10 xl:mt-12">
+                  <div className="bg-white px-5 py-5 mt-10 xl:mt-12">
                     <div className="flex flex-col items-center mb-3">
                       <h5 className="text-base xl:text-lg font-medium font-gotham text-[#1C1C1C]">{profile.name}</h5>
                       <p className="text-xs xl:text-sm font-normal font-gotham text-[#1C1C1C] mt-1">{profile.currentState.title}</p>
@@ -194,14 +194,14 @@ export default function BePromotableFirstFold() {
                   width: "340px",
                 }} className="bg-white rounded-[25px] border-2 border-[#E9E9E9] w-[300px] xl:w-[320px] shadow-2xl overflow-hidden">
                   {/* Blue Header */}
-                  <div className="bg-[#0B64F4] pt-5 px-4 relative min-h-[140px]">
-                    <h4 className="text-[10px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
+                  <div className="bg-[#0B64F4] pt-7 px-4 relative min-h-[140px]">
+                    <h4 className="text-[13px] ml-2 font-montserrat uppercase text-white tracking-widest font-semibold text-center">
                       Future You
                     </h4>
                   </div>
 
                   {/* Avatar overlapping header */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-[65px]">
+                  <div className="absolute left-1/2 -translate-x-1/2 top-[60px]">
                     <div className="w-28 h-28 xl:w-32 xl:h-32 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
                       <div className="relative w-full h-full rounded-full flex items-center justify-center scale-[0.95]">
                         <div className="relative w-[100px] h-[100px] xl:w-[115px] xl:h-[115px] rounded-full overflow-hidden">
@@ -281,7 +281,7 @@ export default function BePromotableFirstFold() {
             <div className="w-[330px] md:w-[40%] shrink-0 relative z-20">
               <p className="text-[#014BAA] font-jakarta text-[28px]  mb-8 leading-9">
                 The exclusive 2-month intensive program that transforms{" "}
-                <span className="font-bold">8-18+ year professionals.</span>
+                <span className="font-bold">experienced professionals.</span>
               </p>
               <p className="text-[#464646] font-inter font-medium text-sm md:text-[19px] mb-8 leading-relaxed">
                 Triple your chances of getting promoted in the next 8 weeks by mastering how promotions actually work.
@@ -540,7 +540,7 @@ export default function BePromotableFirstFold() {
         <div className="text-center mb-4 px-4 md:px-2">
           <p className="text-[#014BAA] max-w-xs font-inter font-medium text-[18px] md:text-xl leading-6 mb-3">
             The exclusive 2-month intensive program that transforms{" "}
-            <span className="font-bold">8-18+ year professionals.</span>
+            <span className="font-bold">experienced professionals.</span>
           </p>
           <p className="text-[#464646] font-inter font-medium text-[12px] leading-4">
             Triple your chances of getting promoted in the next 8 weeks by mastering how promotions actually work.

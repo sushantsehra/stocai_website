@@ -233,35 +233,35 @@ export default function CareerTrajectorySection() {
             <div
               className="absolute bg-white rounded-[24px] overflow-hidden"
               style={{
-                width: '300px',
-                height: '550px',
-                bottom: '40px',
+                width: '320px',
+                height: '600px',
+                bottom: '10px',
                 left: '20px',
-                transform: 'rotate(-9.57deg)',
+                transform: 'rotate(-8.5deg)',
                 transformOrigin: 'bottom center',
-                boxShadow: '0px 0px 74px 0px #00000033',
+                boxShadow: '0px 0px 150px 0px #00000033',
                 zIndex: 10
               }}
             >
-              <div className="bg-black pt-3 pb-14 uppercase text-[13px] tracking-widest font-montserrat font-semibold text-center text-white">
+              <div className="bg-black pt-4 pb-14 uppercase text-[13px] tracking-widest font-montserrat font-semibold text-center text-white">
                 Current State
               </div>
-              <div className="flex justify-center -mt-14 relative z-20">
-                <div className="w-24 h-24 rounded-full border-4 border-white overflow-hidden shadow-md bg-white">
-                  <Image src={currentImg} alt="Current" width={150} height={150} className="object-cover w-full h-full scale-[1.5] origin-center object-top translate-y-[10%]" />
+              <div className="flex justify-center -mt-10 relative z-20">
+                <div className="w-28 h-28 rounded-full border-4 border-white overflow-hidden shadow-md bg-white">
+                  <Image src={currentImg} alt="Current" width={180} height={180} className="object-cover w-full h-full scale-[1.5] origin-center object-top translate-y-[10%]" />
                 </div>
               </div>
-              <div className="px-8 py-4 text-center">
-                <h4 style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 700, fontSize: '17px', lineHeight: '100%', color: '#1C1C1C' }}>Aarohi Mehta</h4>
-                <p style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 400, fontSize: '12px', lineHeight: '100%', textTransform: 'uppercase', color: '#1C1C1C', marginTop: '6px', marginBottom: '6px' }}>UI/UX DESIGNER</p>
-                <div className="border-y border-[#E3E3E3] py-3 text-left" style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 500, fontSize: '11px', lineHeight: '145%', letterSpacing: '0.03em', textTransform: 'uppercase', color: '#7A7777' }}>
+              <div className="px-10 py-5 text-center">
+                <h4 style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 700, fontSize: '19px', lineHeight: '100%', color: '#1C1C1C' }}>Aarohi Mehta</h4>
+                <p style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 400, fontSize: '13px', lineHeight: '100%', textTransform: 'uppercase', color: '#1C1C1C', marginTop: '7px', marginBottom: '10px' }}>UI/UX DESIGNER</p>
+                <div className="border-y border-[#E3E3E3] py-4 text-left" style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 500, fontSize: '12px', lineHeight: '145%', letterSpacing: '0.03em', textTransform: 'uppercase', color: '#7A7777' }}>
                   <div className="flex justify-between py-1.5"><span>STATUS</span><span>:</span><span style={{ fontWeight: 600, color: '#000000' }}>Invisible Contributor</span></div>
                   <div className="flex justify-between py-1.5"><span>VISIBILITY SCORE</span><span>:</span><span style={{ fontWeight: 600, color: '#000000' }}>42/100</span></div>
                   <div className="flex justify-between py-1.5"><span>INFLUENCE RATING</span><span>:</span><span style={{ fontWeight: 600, color: '#000000' }}>Tactical</span></div>
                   <div className="flex justify-between py-1.5"><span>ACCESS LEVEL</span><span>:</span><span style={{ fontWeight: 600, color: '#000000' }}>Restricted</span></div>
                 </div>
-                <div className="mt-2 border-b border-[#E3E3E3] py-2 text-left">
-                  <p style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: '13px', lineHeight: '100%', textTransform: 'uppercase', color: '#000000', marginBottom: '6px' }}>Known For</p>
+                <div className="mt-3 border-b border-[#E3E3E3] py-3 text-left">
+                  <p style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: '14px', lineHeight: '100%', textTransform: 'uppercase', color: '#000000', marginBottom: '8px' }}>Known For</p>
                   <ul style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 400, fontSize: '9.5px', lineHeight: '1.6', color: '#323232', listStyle: 'none', padding: 0 }}>
                     <li className="flex items-start gap-2"><span>•</span> <span>Executing defined design tasks</span></li>
                     <li className="flex items-start gap-2"><span>•</span> <span>Translating requirements into interfaces</span></li>
@@ -270,7 +270,7 @@ export default function CareerTrajectorySection() {
                   </ul>
                 </div>
                 <div className="mt-4">
-                  <p style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: '13px', lineHeight: '100%', textTransform: 'uppercase', color: '#000000', marginBottom: '8px' }}>PROMOTABLITY QUOTIENT 40%</p>
+                  <p style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: '14px', lineHeight: '100%', textTransform: 'uppercase', color: '#000000', marginBottom: '10px' }}>PROMOTABLITY QUOTIENT 40%</p>
                   <div className="h-2 bg-gray-200 rounded-full">
                     <div className="h-full bg-black rounded-full w-[40%]" />
                   </div>
@@ -286,16 +286,16 @@ export default function CareerTrajectorySection() {
                 height: '600px',
                 bottom: '10px',
                 left: '230px',
-                transform: 'rotate(8.33deg)',
+                transform: 'rotate(8.5deg)',
                 transformOrigin: 'bottom center',
                 boxShadow: '0px 0px 150px 0px #00000033',
                 zIndex: 20
               }}
             >
-              <div className="bg-[#0B64F4] pt-4 pb-14 uppercase text-[16px] tracking-widest font-montserrat font-semibold text-center text-white">
+              <div className="bg-[#0B64F4] pt-4 pb-14 uppercase text-[13px] tracking-widest font-montserrat font-semibold text-center text-white">
                 Future You
               </div>
-              <div className="flex justify-center -mt-14 relative z-20">
+              <div className="flex justify-center -mt-10 relative z-20">
                 <div className="w-28 h-28 rounded-full border-4 border-white overflow-hidden shadow-md bg-white">
                   <Image src={futureImg} alt="Future" width={180} height={180} className="object-cover w-full h-full scale-[1.5] origin-center object-top translate-y-[10%]" />
                 </div>
@@ -311,7 +311,7 @@ export default function CareerTrajectorySection() {
                 </div>
                 <div className="mt-3 border-b border-[#E3E3E3] py-3 text-left">
                   <p style={{ fontFamily: 'Montserrat', fontWeight: 700, fontSize: '14px', lineHeight: '100%', textTransform: 'uppercase', color: '#0B64F4', marginBottom: '8px' }}>Known For</p>
-                  <ul style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 400, fontSize: '10.5px', lineHeight: '1.6', color: '#323232', listStyle: 'none', padding: 0 }}>
+                  <ul style={{ fontFamily: 'Plus Jakarta Sans', fontWeight: 400, fontSize: '9.5px', lineHeight: '1.6', color: '#323232', listStyle: 'none', padding: 0 }}>
                     <li className="flex items-start gap-2"><span>•</span> <span>Driving product vision through design</span></li>
                     <li className="flex items-start gap-2"><span>•</span> <span>Influencing cross-functional decisions</span></li>
                     <li className="flex items-start gap-2"><span>•</span> <span>Owning end-to-end user experience</span></li>
