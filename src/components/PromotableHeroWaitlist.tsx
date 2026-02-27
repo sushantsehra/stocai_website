@@ -123,6 +123,20 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const hasPrefillEmail = Boolean(initialEmail?.trim());
+    posthog.capture("waitlist_modal_opened", {
+      source,
+      has_prefill_email: hasPrefillEmail,
+    });
+    pushToDataLayer({
+      event: "waitlist_modal_opened",
+      source,
+      has_prefill_email: hasPrefillEmail,
+    });
+  }, [isOpen, source, initialEmail]);
+
   const createPaymentLink = async (payload: {
     name?: string;
     email?: string;

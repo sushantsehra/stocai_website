@@ -68,15 +68,6 @@ const BMPLandingComponents = () => {
     // Store data to pre-fill modal, then open it immediately
     setModalInitialData(userData);
     setIsModalOpen(true);
-    posthog.capture("waitlist_modal_opened", {
-      source: userData.source,
-      has_prefill_email: Boolean(userData.email?.trim()),
-    });
-    pushToDataLayer({
-      event: "waitlist_modal_opened",
-      source: userData.source,
-      has_prefill_email: Boolean(userData.email?.trim()),
-    });
   };
 
   const handleCloseModal = (reason?: string) => {
