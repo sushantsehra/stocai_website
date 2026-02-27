@@ -1,27 +1,7 @@
 import React from "react";
-// import Header from "../components/Header";
-// import Footer from "@/components/Footer";
 import { Metadata } from "next";
-// import BePromotableHero from "@/components/BePromotableHero";
-// import PromotionMyths from "@/components/PromotionMyths";
-// import CareerProblemsCards from "@/components/CareerProblemsCards";
-// import SevenWeekArc from "@/components/SevenWeekArc";
-// import BeforeAfterCompare from "@/components/BeforeAfterCompare";
-// import PromoSystemSection from "@/components/PromoSystemSection";
-// import FaqAccordion from "@/components/FaqAccordion";
-// import RoiCards from "@/components/RoiCards";
-// import HeroWaitlist from "@/components/HeroWaitlist";
-// import FounderBonus from "@/components/FounderBonus";
-// import OutcomeContract from "@/components/OutcomeContract";
-// import SuccessStories from "@/components/SuccessStories";
-// import PromotableDiagram from "@/components/PromotableDiagram";
-// import TrustableCompanies from "@/components/TrustableCompanies";
-// import CourseCarousel from "@/components/CourseCarousel";
-// import PromoBanner from "@/components/PromoBanner";
 import Footer from "@/components/FooterSection";
 import BMPLandingComponents from "@/components/BMPLandingComponents";
-// import PromotionBanner from "@/components/PromotionBanner";
-// import Header from "@/components/Header";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -117,19 +97,11 @@ function JsonLd() {
 export default function Home() {
   return (
     <>
-      {/* <PromoBanner /> */}
-      {/* <PromotionBanner /> */}
     <div className="min-h-screen bg-white">
       <JsonLd />
-      {/* <Header /> */}
-      {/* <Header /> */}
-      {/* <Header /> */}
-      
-      {/* <main className="container mx-auto"> */}
       <main>
         <BMPLandingComponents />
       </main>
-      {/* <Footer /> */}
       <Footer />
     </div>
     </>

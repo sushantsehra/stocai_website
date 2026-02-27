@@ -69,7 +69,7 @@ const AdditionalBenefitsNew = () => {
       <h2 className="text-center text-[#0F1729] font-quattrocento font-bold 
                      text-[18px] sm:text-[28px] md:text-[40px] 
                      mb-4 md:mb-8">
-        What additional you are getting
+        1344 hours of strategic insights
       </h2>
 
       {/* Container */}
