@@ -7,17 +7,15 @@ const modules = [
   { id: 1, title: "Fundamentals of Being Promotable", summary: "Understand what promotion truly means for you." },
   { id: 2, title: "Claim What You Value", summary: "Learn to delegate effectively and multiply your impact." },
   { id: 3, title: "Gaining Visibility and Influence", summary: "Map your key stakeholders and understand what matters to them." },
-  { id: 4, title: "Navigate With Confidence", summary: "Identify what weakens your executive presence" },
+  { id: 4, title: "Navigate With Confidence", summary: "Identify what weakens your executive presence." },
   { id: 5, title: "Leverage - Impact Without Burnout", summary: "Learn to delegate effectively and multiply your impact." },
   { id: 6, title: "Personal Brand-Building Advocates", summary: "Step into the habits and behaviours of your next level." },
   { id: 7, title: "Psychology Of Promotion", summary: "Communicate your value with clarity, confidence, and conviction." },
   { id: 8, title: "My Action Plan", summary: "Create a personalized action plan to apply everything you've learned." },
 ];
 
-const EightWeekArc = () => {
+export default function EightWeekArc() {
   const [current, setCurrent] = useState(2);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const handlePrev = () =>
     setCurrent((p) => (p === 0 ? modules.length - 1 : p - 1));
@@ -25,173 +23,149 @@ const EightWeekArc = () => {
   const handleNext = () =>
     setCurrent((p) => (p === modules.length - 1 ? 0 : p + 1));
 
-  const minSwipeDistance = 50;
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > minSwipeDistance) handleNext();
-    if (distance < -minSwipeDistance) handlePrev();
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
-
-  const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (window.innerWidth >= 768) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    if (clickX < rect.width / 2) handlePrev();
-    else handleNext();
-  };
-
-  // ✅ UPDATED: Show 5 cards on small devices
   const getPos = (i: number) => {
-    const d = i - current;
-    const l = modules.length;
+    const diff = i - current;
+    const len = modules.length;
 
-    if (d === 0) return 0;
-    if (d === 1 || d === -(l - 1)) return 1;
-    if (d === 2 || d === -(l - 2)) return 2;
-    if (d === -1 || d === l - 1) return -1;
-    if (d === -2 || d === l - 2) return -2;
+    if (diff === 0) return 0;
+    if (diff === 1 || diff === -(len - 1)) return 1;
+    if (diff === 2 || diff === -(len - 2)) return 2;
+    if (diff === -1 || diff === len - 1) return -1;
+    if (diff === -2 || diff === len - 2) return -2;
 
     return null;
   };
 
   return (
-    <>
-      {/* HEADING */}
-      <div className="relative z-20 max-w-7xl mx-auto text-center mb-6 md:mb-4">
+    <section className="relative bg-white py-5 md:py-16 overflow-hidden">
+      <div className="relative z-20 max-w-7xl mx-auto text-center mb-6 md:mb-12">
         <h2 className="text-[24px] sm:text-[36px] md:text-[48px] font-bold leading-tight md:mb-2">
           <span className="text-[#000000] font-quattrocento">
             The <span className="text-[#014BAA] font-bold">8-Week</span> Arc
           </span>
         </h2>
 
-        <p className="text-[#000000] font-inter text-[14px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-4">
+        <p className="text-[#000000] font-inter text-[14px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto">
           (With actionable outcomes every week)
         </p>
       </div>
 
-      <section className="relative bg-white lg:pt-14 pb-6 overflow-hidden">
-        <div className="relative z-20 max-w-7xl mx-auto text-center">
-          <div
-            className="relative min-h-[390px] sm:min-h-[450px] flex justify-center items-center touch-pan-y"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {modules.map((m, i) => {
-              const p = getPos(i);
-              if (p === null) return null;
+      <div className="relative flex justify-center items-center h-[260px] sm:h-[500px] mt-10 md:mt-14">
+        {modules.map((m, i) => {
+          const pos = getPos(i);
+          if (pos === null) return null;
 
-              // Combined classes for non-transform properties
-              const baseClasses = "absolute w-[260px] sm:w-[360px] lg:w-[420px] h-[360px] sm:h-[500px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]";
+          const getCardStyle = (p: number) => {
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
-              const config = {
-                0: "z-50 opacity-100",
-                1: "z-40 opacity-80",
-                2: "z-30 opacity-60",
-                "-1": "z-40 opacity-80",
-                "-2": "z-30 opacity-60",
-              }[p];
+            // Base opacity and z-index logic
+            const base = {
+              0: "z-50 opacity-100",
+              1: "z-40 opacity-80",
+              2: "z-30 opacity-60",
+              "-1": "z-40 opacity-80",
+              "-2": "z-30 opacity-60",
+            }[p];
 
-              const getTransforms = (pos: number) => {
-                const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+            if (p === 0) return { transform: "translate(0, 0) rotate(0) scale(1)", className: base };
 
-                if (pos === 0) return "translate(0, 0) rotate(0) scale(1)";
+            const factor = p > 0 ? 1 : -1;
+            const absP = Math.abs(p);
 
-                const factorX = pos > 0 ? 1 : -1;
-                const absPos = Math.abs(pos);
+            // MOBILE VALUES (Reduced to 125px x 165px)
+            let tx = absP === 1 ? "60%" : "110%";
+            let ty = absP === 1 ? "4%" : "14%";
+            let r = absP === 1 ? "12deg" : "15deg";
+            let s = absP === 1 ? "0.9" : "0.75";
 
-                let translateX = absPos === 1 ? "55%" : "95%";
-                let translateY = absPos === 1 ? "4rem" : "7rem"; // Corresponds to mt-16 and mt-28
-                let rotate = absPos === 1 ? "15deg" : "22deg";
-                let scale = absPos === 1 ? "0.9" : "0.8";
+            // DESKTOP VALUES (Reduced to 380px x 440px)
+            if (!isMobile) {
+              tx = absP === 1 ? "65%" : "118%";
+              ty = absP === 1 ? "5.5rem" : "16rem"; // Vertical offset for arc
+              r = absP === 1 ? "15deg" : "22deg";
+              s = absP === 1 ? "0.9" : "0.8";
 
-                // Desktop Adjustments
-                if (!isMobile) {
-                  translateX = absPos === 1 ? "65%" : "118%";
-                  translateY = absPos === 1 ? "7rem" : "20rem"; // Corresponds to sm:mt-28 and sm:mt-80
-                }
-
-                return `translate(${pos > 0 ? '' : '-'}${translateX}, ${translateY}) rotate(${pos > 0 ? '' : '-'}${rotate}) scale(${scale})`;
+              const rotateStr = `${p > 0 ? '' : '-'}${r}`;
+              const transXStr = `${p > 0 ? '' : '-'}${tx}`;
+              return {
+                transform: `translate(${transXStr}, ${ty}) rotate(${rotateStr}) scale(${s})`,
+                className: base
               };
+            }
 
-              return (
-                <div
-                  key={m.id}
-                  className={`${baseClasses} ${config}`}
-                  style={{ transform: getTransforms(p) }}
-                >
-                  {p === 0 ? (
-                    <div
-                      className="bg-[linear-gradient(135deg,#FFFFFF_0%,#919191_100%)] p-[2px] rounded-[42px] shadow-[0_30px_80px_rgba(0,0,0,0.18)] h-full cursor-pointer md:cursor-default"
-                      onClick={handleCardClick}
-                    >
-                      <div className="bg-[#F5F5F5] rounded-[40px] p-6 sm:p-10 h-full flex flex-col justify-between text-left">
-                        <div>
-                          <p className="text-[#014BAA] font-bold text-[14px] sm:text-[22px] mb-3">
-                            Module {m.id}
-                          </p>
+            return {
+              transform: `translate(${p > 0 ? '' : '-'}${tx}, ${ty}) rotate(${p > 0 ? '' : '-'}${r}) scale(${s})`,
+              className: base
+            };
+          };
 
-                          <h3 className="text-[16px] sm:text-[26px] font-bold mb-4">
-                            {m.title}
-                          </h3>
+          const { transform, className } = getCardStyle(pos);
+          const isActive = pos === 0;
 
-                          <div className="bg-[#014BAA] rounded-xl p-4">
-                            <p className="text-white text-[12px] sm:text-[16px]">
-                              {m.summary}
-                            </p>
-                          </div>
-                        </div>
+          return (
+            <div
+              key={m.id}
+              className={`absolute w-[125px] sm:w-[300px] lg:w-[380px] h-[165px] sm:h-[420px] lg:h-[440px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${className}`}
+              style={{ transform }}
+            >
+              <div
+                className={`w-full h-full rounded-[25px] sm:rounded-[40px] p-[2px] transition-all duration-700
+                  ${isActive
+                    ? "bg-white shadow-[0_30px_80px_rgba(0,0,0,0.18)]"
+                    : "bg-[#F5F5F5] shadow-xl"
+                  }`}
+              >
+                <div className={`w-full h-full rounded-[23px] sm:rounded-[38px] p-2 sm:p-8 lg:p-10 flex flex-col justify-between text-left transition-all duration-700
+                  ${isActive ? "bg-white border border-gray-100" : "bg-[#F5F5F5] border border-gray-100/50"}
+                `}>
+                  <div>
+                    <p className={`font-jakarta font-bold mb-0.5 sm:mb-3 transition-colors duration-700
+                      ${isActive ? "text-[#014BAA] text-[7px] sm:text-[22px]" : "text-[#014BAA]/80 text-[6px] sm:text-[14px]"}
+                    `}>
+                      Module {m.id}
+                    </p>
 
-                        <div className="hidden md:flex justify-center gap-4 mt-6">
-                          <button
-                            onClick={handlePrev}
-                            className="w-9 h-9 rounded-full bg-[#A8A8A8] flex items-center justify-center"
-                          >
-                            <ChevronLeft className="text-white" />
-                          </button>
-                          <button
-                            onClick={handleNext}
-                            className="w-9 h-9 rounded-full bg-[#A8A8A8] flex items-center justify-center"
-                          >
-                            <ChevronRight className="text-white" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="w-full h-full rounded-[40px] p-8 bg-[#5A5A5A] text-white shadow-xl text-left">
-                      <p className="font-bold text-[16px] mb-2 text-white/80">
-                        Module {m.id}
-                      </p>
-                      <h3 className="text-[18px] font-bold mb-3">
-                        {m.title}
-                      </h3>
-                      <p className="text-[14px] text-white/90">
+                    <h3 className={`font-bold font-quattrocento mb-1 sm:mb-4 transition-all duration-700
+                      ${isActive ? "text-black text-[11px] sm:text-[26px]" : "text-black/80 text-[9px] sm:text-[16px]"}
+                    `}>
+                      {m.title}
+                    </h3>
+
+                    <div className={`rounded-md sm:rounded-xl p-1 sm:p-4 transition-colors duration-700
+                      ${isActive ? "bg-[#014BAA]" : "bg-[#014BAA]/90"}
+                    `}>
+                      <p className={`text-white transition-all duration-700
+                        ${isActive ? "text-[7.5px] sm:text-base leading-tight" : "text-[6.5px] sm:text-[13px] leading-tight"}
+                      `}>
                         {m.summary}
                       </p>
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
+                  </div>
 
-export default EightWeekArc;
+                  {/* Navigation - only visible on active card */}
+                  <div className={`flex justify-center gap-1.5 sm:gap-4 mt-1 sm:mt-6 transition-all duration-700
+                    ${isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+                  `}>
+                    <button
+                      onClick={handlePrev}
+                      className="w-4 h-4 sm:w-10 sm:h-10 rounded-full bg-gray-400 hover:bg-[#014BAA] transition-colors flex items-center justify-center group"
+                    >
+                      <ChevronLeft className="text-white w-2.5 h-2.5 sm:w-6 sm:h-6" />
+                    </button>
+
+                    <button
+                      onClick={handleNext}
+                      className="w-4 h-4 sm:w-10 sm:h-10 rounded-full bg-gray-400 hover:bg-[#014BAA] transition-colors flex items-center justify-center group"
+                    >
+                      <ChevronRight className="text-white w-2.5 h-2.5 sm:w-6 sm:h-6" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

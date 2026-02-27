@@ -5,6 +5,7 @@ import AnikaSharma from "../assets/AnikaSharma.jpg";
 import KavyaNair from "../assets/KavyaNair.jpg";
 import TanayMalhotra from "../assets/TanayMalhotra.png";
 import VinayDikshit from "../assets/VinayDikshit.jpg";
+import Image from "next/image";
 
 const professionals = [
   {
@@ -65,7 +66,7 @@ const ReviewedByProfessionals = () => {
               <div className="flex items-center gap-3 md:gap-5 mb-5 md:mb-8">
 
                 {/* Avatar */}
-                <img
+                {/* <Image
                   src={item.image.src}
                   alt={item.name}
                   className="
@@ -75,6 +76,13 @@ const ReviewedByProfessionals = () => {
                     object-cover 
                     shrink-0
                   "
+                /> */}
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={90}
+                  height={90}
+                  className="w-[38px] h-[38px] md:w-[90px] md:h-[90px] rounded-full object-cover shrink-0"
                 />
 
                 {/* Name + Role */}

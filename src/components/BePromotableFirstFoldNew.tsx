@@ -14,7 +14,7 @@ export default function BePromotableFirstFold() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsFlipped((prev) => !prev);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Testimonial from "./Testimonial";
+// import Testimonial from "./Testimonial";
 import FAQ from "./FAQ";
 import Header from "./LandingHeader";
 import WaitlistSection from "./WaitlistSection";
@@ -28,7 +28,7 @@ import PromotableHeroWaitlist from "./PromotableHeroWaitlist";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
-import FounderSection from "./FounderSection";
+// import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
 
 interface UserData {
