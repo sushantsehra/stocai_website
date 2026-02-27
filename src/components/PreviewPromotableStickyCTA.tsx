@@ -26,18 +26,12 @@ const PreviewPromotableStickyCTA = () => {
     dataLayerWindow.dataLayer.push(payload);
   };
 
-  const trackGetEarlyAccess = () => {
-    posthog.capture("get_early_access_clicked", {
-      source,
-    });
-  };
-
-  const trackRequestAccess = () => {
-    posthog.capture("waitlist_modal_opened", {
+  const trackSubmitAttempt = () => {
+    posthog.capture("waitlist_submit_attempt", {
       source,
     });
     pushToDataLayer({
-      event: "waitlist_modal_opened",
+      event: "waitlist_submit_attempt",
       source,
     });
   };
@@ -102,7 +96,7 @@ const PreviewPromotableStickyCTA = () => {
 
   const handleRequestAccess = async () => {
     if (!isFormValid || isSubmitting) return;
-    trackRequestAccess();
+    trackSubmitAttempt();
 
     setIsSubmitting(true);
     setError("");
@@ -125,7 +119,7 @@ const PreviewPromotableStickyCTA = () => {
           name: trimmedName,
           email: trimmedEmail,
           phone: fullPhone,
-          source: "preview_sticky_cta",
+          source,
           attribution: getAttributionForApi(),
         }),
       });
@@ -134,6 +128,15 @@ const PreviewPromotableStickyCTA = () => {
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
       }
+      posthog.capture("waitlist_submitted", {
+        source,
+        payment_started: false,
+      });
+      pushToDataLayer({
+        event: "waitlist_submitted",
+        source,
+        payment_started: false,
+      });
 
       const redirectPath = `/?name=${encodeURIComponent(trimmedName)}&email=${encodeURIComponent(trimmedEmail)}`;
       const signupUrl = new URL("/signUp", env.publicUrl);
@@ -141,6 +144,15 @@ const PreviewPromotableStickyCTA = () => {
       signupUrl.searchParams.set("redirect", redirectPath);
       window.location.href = signupUrl.toString();
     } catch (err) {
+      posthog.capture("waitlist_submit_failed", {
+        source,
+        error: err instanceof Error ? err.message : "unknown_error",
+      });
+      pushToDataLayer({
+        event: "waitlist_submit_failed",
+        source,
+        error: err instanceof Error ? err.message : "unknown_error",
+      });
       setError(err instanceof Error ? err.message : "Something went wrong.");
       setIsSubmitting(false);
     }
@@ -155,7 +167,6 @@ const PreviewPromotableStickyCTA = () => {
           <div className="flex justify-center py-1.5">
             <button
               onClick={() => {
-                trackGetEarlyAccess();
                 setIsExpanded(true);
               }}
               className="bg-[#0B64F4] hover:bg-blue-700 px-8 py-3 rounded-[12px] font-bold transition-transform hover:scale-105 active:scale-95"

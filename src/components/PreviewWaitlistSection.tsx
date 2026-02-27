@@ -23,12 +23,12 @@ const PreviewWaitlistSection = () => {
     dataLayerWindow.dataLayer.push(payload);
   };
 
-  const trackRequestAccess = () => {
-    posthog.capture("waitlist_modal_opened", {
+  const trackSubmitAttempt = () => {
+    posthog.capture("waitlist_submit_attempt", {
       source,
     });
     pushToDataLayer({
-      event: "waitlist_modal_opened",
+      event: "waitlist_submit_attempt",
       source,
     });
   };
@@ -63,7 +63,7 @@ const PreviewWaitlistSection = () => {
 
   const handleRequestAccess = async () => {
     if (!isFormValid || isSubmitting) return;
-    trackRequestAccess();
+    trackSubmitAttempt();
 
     setIsSubmitting(true);
     setError("");
@@ -93,6 +93,15 @@ const PreviewWaitlistSection = () => {
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
       }
+      posthog.capture("waitlist_submitted", {
+        source,
+        payment_started: false,
+      });
+      pushToDataLayer({
+        event: "waitlist_submitted",
+        source,
+        payment_started: false,
+      });
 
       const trimmedName = name.trim();
       const trimmedEmail = email.trim();
@@ -102,6 +111,15 @@ const PreviewWaitlistSection = () => {
       signupUrl.searchParams.set("redirect", redirectPath);
       window.location.href = signupUrl.toString();
     } catch (err) {
+      posthog.capture("waitlist_submit_failed", {
+        source,
+        error: err instanceof Error ? err.message : "unknown_error",
+      });
+      pushToDataLayer({
+        event: "waitlist_submit_failed",
+        source,
+        error: err instanceof Error ? err.message : "unknown_error",
+      });
       setError(err instanceof Error ? err.message : "Something went wrong.");
       setIsSubmitting(false);
     }

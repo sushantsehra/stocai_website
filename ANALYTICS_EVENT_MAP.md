@@ -59,7 +59,7 @@ Event name: section_viewed_{section_id}
 
 ### Waitlist modal opened
 Event name: waitlist_modal_opened
-- Trigger: click on any waitlist CTA
+- Trigger: a waitlist modal is actually opened
 - Properties:
   - source (e.g. waitlist_section, waitlist_modal)
   - has_prefill_email (boolean)
@@ -78,7 +78,7 @@ Event name: waitlist_modal_closed
 
 ### Waitlist submit attempt
 Event name: waitlist_submit_attempt
-- Trigger: submit button clicked
+- Trigger: user clicks the final submit/request-access action
 - Properties:
   - source
 - PostHog: yes

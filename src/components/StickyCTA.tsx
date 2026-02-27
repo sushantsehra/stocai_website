@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import posthog from "posthog-js";
 
 type StickyCTAProps = {
   onRequestAccess?: (data: {
@@ -74,8 +73,6 @@ const StickyCTA: React.FC<StickyCTAProps> = ({ onRequestAccess }) => {
       return;
     }
 
-    posthog.capture("get_early_access_clicked", { source: "sticky_cta" });
-
     if (!onRequestAccess) return;
 
     setIsLoading(true);
@@ -104,7 +101,6 @@ const StickyCTA: React.FC<StickyCTAProps> = ({ onRequestAccess }) => {
           <div className="flex items-center justify-center py-1.5">
             <button
               onClick={() => {
-                posthog.capture("sticky_cta_expanded", { source: "sticky_cta" });
                 setIsExpanded(true);
               }}
               className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"

@@ -25,8 +25,6 @@ import LearningExperienceNew from "./LearningExperienceNew";
 import AdditionalBenefitsNew from "./AdditionalBenefitsNew";
 import TrustSectionNew from "./TrustSectionNew";
 import PromotableHeroWaitlist from "./PromotableHeroWaitlist";
-import env from "@/utils/env";
-import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
@@ -46,21 +44,13 @@ interface WaitlistSubmitData {
   email: string;
 }
 
-const fetchWithTimeout = async (
-  url: string,
-  options: RequestInit,
-  timeout = 10000
-) => {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
-    clearTimeout(id);
-    return response;
-  } catch (error) {
-    clearTimeout(id);
-    throw error;
+const pushToDataLayer = (payload: Record<string, unknown>) => {
+  if (typeof window === "undefined") return;
+  const dataLayerWindow = window as unknown as Window & { dataLayer?: unknown[] };
+  if (!dataLayerWindow.dataLayer) {
+    dataLayerWindow.dataLayer = [];
   }
+  dataLayerWindow.dataLayer.push(payload);
 };
 
 const BMPLandingComponents = () => {
@@ -78,50 +68,31 @@ const BMPLandingComponents = () => {
     // Store data to pre-fill modal, then open it immediately
     setModalInitialData(userData);
     setIsModalOpen(true);
-
-    // Save to DB in background (non-blocking)
-    try {
-      const fullPhone = userData.fullPhone ?? `${userData.countryCode}${userData.phone}`;
-
-      const response = await fetchWithTimeout(
-        `${env.apiUrl}/waitlist`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name: userData.name,
-            phone: fullPhone,
-            email: userData.email,
-            source: userData.source,
-            attribution: getAttributionForApi(),
-          }),
-        },
-        10000
-      );
-
-      const waitlistData = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
-      }
-
-      posthog.capture("waitlist_submitted", {
-        source: userData.source,
-        payment_started: false,
-      });
-    } catch (error) {
-      console.error("Error saving to DB:", error);
-      posthog.capture("waitlist_submit_failed", {
-        source: userData.source,
-        error: error instanceof Error ? error.message : "unknown_error",
-      });
-    }
+    posthog.capture("waitlist_modal_opened", {
+      source: userData.source,
+      has_prefill_email: Boolean(userData.email?.trim()),
+    });
+    pushToDataLayer({
+      event: "waitlist_modal_opened",
+      source: userData.source,
+      has_prefill_email: Boolean(userData.email?.trim()),
+    });
   };
 
   const handleCloseModal = (reason?: string) => {
-    console.log("Modal closed:", reason);
+    if (reason === "x_button" || reason === "escape") {
+      posthog.capture("waitlist_modal_closed", {
+        source: modalInitialData.source || "waitlist_modal",
+        close_reason: reason,
+        has_prefill_email: Boolean(modalInitialData.email?.trim()),
+      });
+      pushToDataLayer({
+        event: "waitlist_modal_closed",
+        source: modalInitialData.source || "waitlist_modal",
+        close_reason: reason,
+        has_prefill_email: Boolean(modalInitialData.email?.trim()),
+      });
+    }
     setIsModalOpen(false);
   };
 

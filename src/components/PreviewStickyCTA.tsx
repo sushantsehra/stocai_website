@@ -19,18 +19,12 @@ const PreviewStickyCTA = () => {
     dataLayerWindow.dataLayer.push(payload);
   };
 
-  const trackGetEarlyAccess = () => {
-    posthog.capture("get_early_access_clicked", {
-      source,
-    });
-  };
-
-  const trackRequestAccess = () => {
-    posthog.capture("waitlist_modal_opened", {
+  const trackSubmitAttempt = () => {
+    posthog.capture("waitlist_submit_attempt", {
       source,
     });
     pushToDataLayer({
-      event: "waitlist_modal_opened",
+      event: "waitlist_submit_attempt",
       source,
     });
   };
@@ -105,7 +99,7 @@ const PreviewStickyCTA = () => {
   // Handle navigation to signin/login
   const handleRequestAccess = () => {
     if (phone.trim()) {
-      trackRequestAccess();
+      trackSubmitAttempt();
       const fullPhone = `${countryCode}${phone}`;
       
       // Store mobile number in localStorage
@@ -131,7 +125,6 @@ const PreviewStickyCTA = () => {
           <div className="flex items-center justify-center">
             <button
               onClick={() => {
-                trackGetEarlyAccess();
                 setIsExpanded(true);
               }}
               className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 shrink-0"
