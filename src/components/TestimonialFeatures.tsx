@@ -36,7 +36,7 @@ const TestimonialFeatures: React.FC = () => {
         <div className="w-full md:w-[40%] flex-shrink-0">
 
           {/* MOBILE VERSION */}
-          <div className="relative bg-[#1A4EAB] rounded-2xl overflow-hidden md:hidden h-[400px] flex">
+          <div className="relative bg-[#1A4EAB] md:rounded-2xl overflow-hidden md:hidden h-[400px] flex">
             {/* Left text section */}
             <div style={{
               width: "50%",
