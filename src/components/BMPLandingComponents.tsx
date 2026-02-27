@@ -29,6 +29,7 @@ import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
 import FounderSection from "./FounderSection";
+import FounderNoteSection from "./FounderNoteSection";
 
 interface UserData {
   name: string;
@@ -156,6 +157,7 @@ const BMPLandingComponents = () => {
         <OutcomeContract />
         <EightWeekArc />
         <AdditionalBenefitsNew />
+        <FounderNoteSection />
         <TrustSectionNew />
         <FounderSection />
         <FoundersBonus />
