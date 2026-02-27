@@ -22,9 +22,21 @@ const PreviewStickyCTA = () => {
   const trackSubmitAttempt = () => {
     posthog.capture("waitlist_submit_attempt", {
       source,
+      path: window.location.pathname,
     });
     pushToDataLayer({
       event: "waitlist_submit_attempt",
+      source,
+    });
+  };
+
+  const trackGetEarlyAccess = () => {
+    posthog.capture("get_early_access_clicked", {
+      source,
+      path: window.location.pathname,
+    });
+    pushToDataLayer({
+      event: "get_early_access_clicked",
       source,
     });
   };
@@ -107,8 +119,10 @@ const PreviewStickyCTA = () => {
       localStorage.setItem('userCountryCode', countryCode);
       localStorage.setItem('userPhone', phone);
       
-      // Redirect to signin/login page
-      window.location.href = "https://os.bettercorporatelife.com/signUp?redirect=%2F";
+      // Small delay gives analytics transport time to flush before hard navigation.
+      window.setTimeout(() => {
+        window.location.href = "https://os.bettercorporatelife.com/signUp?redirect=%2F";
+      }, 250);
     }
   };
 
@@ -125,6 +139,7 @@ const PreviewStickyCTA = () => {
           <div className="flex items-center justify-center">
             <button
               onClick={() => {
+                trackGetEarlyAccess();
                 setIsExpanded(true);
               }}
               className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 shrink-0"

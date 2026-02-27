@@ -26,6 +26,7 @@ const PreviewWaitlistSection = () => {
   const trackSubmitAttempt = () => {
     posthog.capture("waitlist_submit_attempt", {
       source,
+      path: window.location.pathname,
     });
     pushToDataLayer({
       event: "waitlist_submit_attempt",
@@ -109,7 +110,10 @@ const PreviewWaitlistSection = () => {
       const signupUrl = new URL("/signUp", env.publicUrl);
       signupUrl.searchParams.set("auth", "preview");
       signupUrl.searchParams.set("redirect", redirectPath);
-      window.location.href = signupUrl.toString();
+      // Small delay gives analytics transport time to flush before hard navigation.
+      window.setTimeout(() => {
+        window.location.href = signupUrl.toString();
+      }, 250);
     } catch (err) {
       posthog.capture("waitlist_submit_failed", {
         source,

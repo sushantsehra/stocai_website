@@ -29,9 +29,21 @@ const PreviewPromotableStickyCTA = () => {
   const trackSubmitAttempt = () => {
     posthog.capture("waitlist_submit_attempt", {
       source,
+      path: window.location.pathname,
     });
     pushToDataLayer({
       event: "waitlist_submit_attempt",
+      source,
+    });
+  };
+
+  const trackGetEarlyAccess = () => {
+    posthog.capture("get_early_access_clicked", {
+      source,
+      path: window.location.pathname,
+    });
+    pushToDataLayer({
+      event: "get_early_access_clicked",
       source,
     });
   };
@@ -142,7 +154,10 @@ const PreviewPromotableStickyCTA = () => {
       const signupUrl = new URL("/signUp", env.publicUrl);
       signupUrl.searchParams.set("auth", "preview");
       signupUrl.searchParams.set("redirect", redirectPath);
-      window.location.href = signupUrl.toString();
+      // Small delay gives analytics transport time to flush before hard navigation.
+      window.setTimeout(() => {
+        window.location.href = signupUrl.toString();
+      }, 250);
     } catch (err) {
       posthog.capture("waitlist_submit_failed", {
         source,
@@ -167,6 +182,7 @@ const PreviewPromotableStickyCTA = () => {
           <div className="flex justify-center py-1.5">
             <button
               onClick={() => {
+                trackGetEarlyAccess();
                 setIsExpanded(true);
               }}
               className="bg-[#0B64F4] hover:bg-blue-700 px-8 py-3 rounded-[12px] font-bold transition-transform hover:scale-105 active:scale-95"
