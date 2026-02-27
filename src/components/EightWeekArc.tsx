@@ -5,12 +5,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const modules = [
   { id: 1, title: "Fundamentals of Being Promotable", summary: "Understand what promotion truly means for you." },
-  { id: 2, title: "Claim What You Value", summary: "Learn how to effectively communicate and claim your value in the workplace." },
-  { id: 3, title: "Gaining Visibility and Influence", summary: "Discover strategies to increase your visibility and influence within your organization." },
-  { id: 4, title: "Navigate With Confidence", summary: "Develop confidence in navigating workplace challenges and opportunities." },
-  { id: 5, title: "Leverage - Impact Without Burnout", summary: "Learn how to maximize your impact while maintaining work-life balance." },
-  { id: 6, title: "Personal Brand-Building Advocates", summary: "Understand how to build a strong personal brand that supports your career growth." },
-  { id: 7, title: "Psychology Of Promotion", summary: "Explore the psychological factors that influence promotion decisions." },
+  { id: 2, title: "Claim What You Value", summary: "Learn to delegate effectively and multiply your impact." },
+  { id: 3, title: "Gaining Visibility and Influence", summary: "Map your key stakeholders and understand what matters to them." },
+  { id: 4, title: "Navigate With Confidence", summary: "Identify what weakens your executive presence" },
+  { id: 5, title: "Leverage - Impact Without Burnout", summary: "Learn to delegate effectively and multiply your impact." },
+  { id: 6, title: "Personal Brand-Building Advocates", summary: "Step into the habits and behaviours of your next level." },
+  { id: 7, title: "Psychology Of Promotion", summary: "Communicate your value with clarity, confidence, and conviction." },
   { id: 8, title: "My Action Plan", summary: "Create a personalized action plan to apply everything you've learned." },
 ];
 
