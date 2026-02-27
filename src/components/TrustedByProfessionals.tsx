@@ -42,9 +42,9 @@ const TrustedByProfessionals = () => {
           Trusted by professionals from
         </p>
 
-        <div className="relative w-full overflow-hidden flex justify-center mt-4">
+        <div className="relative w-full overflow-hidden flex justify-start mt-6">
           <motion.div
-            className="flex gap-4 items-center"
+            className="flex gap-8 items-center"
             style={{ width: "max-content" }}
             animate={{ x: ["0%", "-50%"] }}
             transition={{
@@ -57,14 +57,14 @@ const TrustedByProfessionals = () => {
             {[...logos, ...logos].map((logo, index) => (
               <div
                 key={index}
-                className="flex items-center justify-center w-28 sm:w-36 h-14 sm:h-16 shrink-0"
+                className="flex items-center justify-center w-40 sm:w-48 h-20 sm:h-24 shrink-0"
               >
                 <Image
                   src={logo.url}
                   alt={logo.alt}
-                  width={140}
-                  height={60}
-                  className="object-contain w-auto h-8 sm:h-10 mx-auto"
+                  width={200}
+                  height={80}
+                  className="object-contain w-auto h-12 sm:h-16 mx-auto"
                 />
               </div>
             ))}
@@ -80,29 +80,29 @@ const TrustedByProfessionals = () => {
           Trusted by professionals from
         </p>
 
-        <div className="relative w-full overflow-hidden flex justify-center mt-12">
+        <div className="relative w-full overflow-hidden flex justify-start mt-12">
           <motion.div
-            className="flex gap-14 items-center"
+            className="flex gap-20 items-center"
             style={{ width: "max-content" }}
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               repeat: Infinity,
               repeatType: "loop",
-              duration: 30,
+              duration: 35,
               ease: "linear",
             }}
           >
-            {[...logos, ...logos, ...logos].map((logo, index) => (
+            {[...logos, ...logos].map((logo, index) => (
               <div
                 key={index}
-                className="flex items-center justify-center shrink-0 w-[240px] h-[70px]"
+                className="flex items-center justify-center shrink-0 w-[320px] h-[100px]"
               >
                 <Image
                   src={logo.url}
                   alt={logo.alt}
-                  width={240}
-                  height={50}
-                  className="object-contain w-auto max-w-[240px] h-[50px]"
+                  width={320}
+                  height={100}
+                  className="object-contain w-auto max-w-[320px] h-[75px]"
                 />
               </div>
             ))}

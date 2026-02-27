@@ -39,7 +39,7 @@ const ScrollingFeatures = () => {
       {/* Row 1 */}
       <div className="marquee p-2">
         <div className="track left">
-          {[...row1, ...row1].map((item, index) => (
+          {[...row1, ...row1, ...row1, ...row1].map((item, index) => (
             <Card key={index} {...item} />
           ))}
         </div>
@@ -48,7 +48,7 @@ const ScrollingFeatures = () => {
       {/* Row 2 */}
       <div className="marquee mt-2 md:mt-6 p-2">
         <div className="track right">
-          {[...row2, ...row2].map((item, index) => (
+          {[...row2, ...row2, ...row2, ...row2].map((item, index) => (
             <Card key={index} {...item} />
           ))}
         </div>
@@ -86,13 +86,13 @@ const ScrollingFeatures = () => {
             transform: translateX(0);
           }
           to {
-            transform: translateX(-50%);
+            transform: translateX(-25%);
           }
         }
 
         @keyframes scrollRight {
           from {
-            transform: translateX(-50%);
+            transform: translateX(-25%);
           }
           to {
             transform: translateX(0);
