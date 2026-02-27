@@ -166,10 +166,10 @@ const SuccessStories = () => {
                     className="mb-4"
                     style={{ width: '21.27px', height: '18.1px' }}
                   />
-                  <p className="text-[#F8F3F0] font-medium font-inter text-[21px] leading-[1.2] mb-4">
+                  <p className="text-[#F8F3F0] font-medium font-inter text-[21px] leading-[1.2] mb-2 md:mb-4">
                     {card.text}
                   </p>
-                  <h3 className="text-[#F8F3F0] font-medium font-inter text-[21px] mb-1">
+                  <h3 className="text-[#F8F3F0] font-medium font-inter text-[21px] mb-0 md:mb-1">
                     {card.name}
                   </h3>
                   <p className="text-[#8B8B8B] font-inter font-medium text-[13px] leading-[100%]">
