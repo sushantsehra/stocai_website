@@ -5,6 +5,14 @@ import Image from "next/image";
 import privacy from "@/assets/shield.png";
 
 const OutcomeContract = () => {
+
+    const scrollToWaitlist = () => {
+    const element = document.getElementById('waitlist');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section className="bg-white py-7 md:pt-10 md:pb-20 px-8 md:px-6">
       <div className="max-w-7xl mx-auto text-center">
@@ -26,7 +34,7 @@ const OutcomeContract = () => {
 
           {/* Icon Placeholder */}
           <div className="flex justify-center mb-1 md:mb-8">
-            <Image src={privacy} alt="Privacy Icon" width={44} height={44} />
+            <Image src={privacy} alt="Privacy Icon" width={40} height={40} />
           </div>
 
           {/* Title */}
@@ -85,7 +93,7 @@ const OutcomeContract = () => {
 
           {/* CTA */}
           <div className="flex justify-center mt-4 md:mt-10">
-            <button className="bg-white text-[#014BAA] px-6 md:px-12 py-2 md:py-4 rounded-full text-[12px] md:text-xl font-gotham font-semibold hover:scale-105 transition duration-300">
+            <button onClick={scrollToWaitlist} className="bg-white text-[#014BAA] px-6 md:px-12 py-2 md:py-4 rounded-full text-[12px] md:text-xl font-gotham font-semibold hover:scale-105 transition duration-300">
               Become more promotable
             </button>
           </div>

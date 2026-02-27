@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import currentImg from "../assets/AnishaDateCI.jpg";
-import futureImg from "../assets/AnishaDateFI.png";
+import currentImg from "../assets/AarohiMehtaImg.jpg";
+import futureImg from "../assets/ArohiMehtaFI.png";
 
 export default function CareerTrajectorySection() {
 
