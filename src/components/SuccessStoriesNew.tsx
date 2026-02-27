@@ -57,7 +57,7 @@ const SuccessStories = () => {
               <span className="bg-[#014BAA] px-[6px] py-[3px] rounded-[6px] mr-[8px] font-semibold">
                 87%
               </span>
-              of our beta graduates get promoted within 12 months
+              of our beta graduates get promoted within 6 months
             </p>
           </div>
 
@@ -79,7 +79,7 @@ const SuccessStories = () => {
                   </div>
                 </div>
                 <div className="p-2 bg-[#181818] flex-grow">
-                  <p className="text-[#F8F3F0] font-medium font-inter text-[5px] mt-2 mb-[10px] leading-[1.5]">
+                  <p className="text-[#F8F3F0] font-medium font-inter text-[9px] mt-2 mb-[10px] leading-[9px]">
                     {card.text}
                   </p>
                   <h3 className="text-[#F8F3F0] font-medium font-inter text-[10px] mb-1">
@@ -106,9 +106,9 @@ const SuccessStories = () => {
       </div>
 
       {/* ===== DESKTOP VIEW (hidden md:block) ===== */}
-      <div className="hidden md:block py-20 bg-white">
+      <div className="hidden md:block bg-white">
         <div
-          className="mx-auto bg-[#4D4D4D] rounded-[11px] flex flex-col items-center justify-center relative overflow-hidden py-[80px] px-[60px] max-w-[1800px]"
+          className="mx-auto bg-[#4D4D4D] flex flex-col items-center justify-center relative overflow-hidden py-[80px] px-[60px] max-w-[1800px]"
         >
           {/* Header Section */}
           <div className="flex flex-col items-center mt-[-40px]">
@@ -130,7 +130,7 @@ const SuccessStories = () => {
               <span className="bg-[#014BAA] px-2 py-1 rounded-[6px] mr-3 font-semibold text-[19px]">
                 87%
               </span>
-              of our beta graduates get promoted within 12 months
+              of our beta graduates get promoted within 6 months
             </p>
           </div>
 

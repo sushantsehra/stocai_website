@@ -41,7 +41,7 @@ const HearFromSection = () => {
         background: "#FFFFFF",
         // padding: "15px",
       }}
-      className="py-2 px-3"
+      className="py-6 px-3 md:mt-12"
     >
       <div
         style={{
@@ -59,7 +59,7 @@ const HearFromSection = () => {
           }}
           className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[40px] mb-9 md:mb-10"
         >
-          Hear from those who 
+          Hear from those who
           <br />
           experienced it{" "}
           <span style={{ color: "#1A4EAB" }}>first hand</span>
@@ -72,7 +72,7 @@ const HearFromSection = () => {
           //   gridTemplateColumns: "repeat(auto-fit, minmax(380px, 2fr))",
           //   gap: "90px 40px",
           // }}
-            className="
+          className="
             grid 
             grid-cols-2 
             md:grid-cols-2 

@@ -35,7 +35,7 @@ const professionals = [
 
 const ReviewedByProfessionals = () => {
   return (
-    <section className="bg-white py-2 px-5 md:py-16">
+    <section className="bg-white py-2 px-5 md:py-12">
       <div className="max-w-[1200px] mx-auto">
 
         {/* Heading */}
@@ -153,8 +153,8 @@ export default ReviewedByProfessionals;
 //       <div className="max-w-[1200px] mx-auto">
 
 //         {/* Heading */}
-//         <h2 className="text-center font-quattrocento font-bold 
-//                        text-[18px] md:text-[36px] lg:text-[44px] 
+//         <h2 className="text-center font-quattrocento font-bold
+//                        text-[18px] md:text-[36px] lg:text-[44px]
 //                        text-[#1D1D1D] mb-2 md:mb-14">
 //           Reviewed by{" "}
 //           <span className="text-[#014BAA]">professionals</span>
@@ -180,26 +180,26 @@ export default ReviewedByProfessionals;
 
 //                 {/* Avatar */}
 //                 <div className="
-//                   w-[38px] h-[38px] 
-//                   md:w-[90px] md:h-[90px] 
-//                   rounded-full bg-[#D9D9D9] 
+//                   w-[38px] h-[38px]
+//                   md:w-[90px] md:h-[90px]
+//                   rounded-full bg-[#D9D9D9]
 //                   shrink-0
 //                 " />
 
 //                 {/* Name + Role */}
 //                 <div>
-//                   <h3 className="font-inter font-bold 
-//                                  text-[10px] md:text-[22px] lg:text-[24px] 
+//                   <h3 className="font-inter font-bold
+//                                  text-[10px] md:text-[22px] lg:text-[24px]
 //                                  text-black">
 //                     {item.name}
 //                   </h3>
 
-//                   <p 
+//                   <p
 //                   style={{
 //                     fontWeight: 300,
 //                   }}
-//                   className="font-inter 
-//                                 text-[10px] md:text-[16px] 
+//                   className="font-inter
+//                                 text-[10px] md:text-[16px]
 //                                 text-[#444]">
 //                     {item.role}
 //                   </p>
@@ -211,8 +211,8 @@ export default ReviewedByProfessionals;
 //               style={{
 //                     fontWeight: 300,
 //                   }}
-//                    className="font-inter font-medium 
-//                             text-[10px] md:text-[20px] lg:text-[22px] 
+//                    className="font-inter font-medium
+//                             text-[10px] md:text-[20px] lg:text-[22px]
 //                             leading-snug text-black">
 //                 {item.text}
 //               </p>

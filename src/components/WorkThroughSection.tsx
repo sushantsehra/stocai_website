@@ -13,7 +13,7 @@ const ITEMS = [
 const WorkThroughSection = () => {
   return (
     <section style={{ width: "100%" }}>
-      
+
       {/* Top Blue Banner */}
       <div
         style={{
@@ -45,7 +45,7 @@ const WorkThroughSection = () => {
           <h2
             style={{
               fontFamily: "serif",
-            //   fontSize: "48px",
+              //   fontSize: "48px",
               marginBottom: "25px",
               color: "#1D1D1D",
             }}
@@ -60,7 +60,7 @@ const WorkThroughSection = () => {
               grid
               grid-cols-2
               md:grid-cols-2
-              gap-2 md:gap-10 px-2
+              gap-2 md:gap-4 px-2
             "
           >
             {ITEMS.map((item, index) => (
