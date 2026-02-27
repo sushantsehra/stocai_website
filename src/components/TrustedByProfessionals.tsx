@@ -31,85 +31,53 @@ const TrustedByProfessionals = () => {
   ];
 
   return (
-    <section className="w-full bg-white overflow-hidden z-10">
+    <section className="w-full bg-white overflow-hidden z-10 py-6 sm:py-10">
+      <p className="text-center px-6 font-inter font-medium text-[24px] sm:text-[30px] leading-tight tracking-normal text-[#1D1D1D] mb-8 sm:mb-12">
+        Trusted by professionals from
+      </p>
 
-      {/* ===== MOBILE VIEW (md:hidden) ===== */}
-      <div className="md:hidden py-4">
-        <p
-          style={{ color: "#1D1D1D", fontSize: "18px" }}
-          className="text-[#1D1D1D] font-medium text-center font-inter text-[18px] px-2"
+      <div className="relative w-full overflow-hidden flex justify-center">
+        <motion.div
+          className="flex gap-4 sm:gap-6 items-center"
+          style={{ width: "max-content" }}
+          animate={{ x: ["-33.333%", "0%"] }}
+          transition={{
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 25,
+            ease: "linear",
+          }}
         >
-          Trusted by professionals from
-        </p>
+          {/* Using 3 sets of logos to ensure perfect loop continuity on all screen sizes */}
+          {[...logos, ...logos, ...logos].map((logo, index) => {
+            // Adopted BuiltBy's sizing logic for perfectly balanced weight & alignment
+            const isSmallLogo = ["Citi", "King's College London", "IIM Calcutta", "IMT Ghaziabad"].includes(logo.name);
+            const customWidth = isSmallLogo ? 80 : 300;
 
-        <div className="relative w-full overflow-hidden flex justify-start mt-6">
-          <motion.div
-            className="flex gap-8 items-center"
-            style={{ width: "max-content" }}
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 25,
-              ease: "linear",
-            }}
-          >
-            {[...logos, ...logos].map((logo, index) => (
+            return (
               <div
                 key={index}
-                className="flex items-center justify-center w-40 sm:w-48 h-20 sm:h-24 shrink-0"
+                className="
+                  group flex items-center justify-center
+                  w-20 sm:w-32 md:w-40 lg:w-48
+                  h-12 sm:h-16 md:h-20
+                  shrink-0 transition-all duration-300
+                "
               >
-                <Image
-                  src={logo.url}
-                  alt={logo.alt}
-                  width={200}
-                  height={80}
-                  className="object-contain w-auto h-12 sm:h-16 mx-auto"
-                />
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <Image
+                    src={logo.url}
+                    alt={logo.alt}
+                    width={customWidth}
+                    height={40}
+                    className="object-contain transition-all duration-300 p-1 sm:p-2"
+                  />
+                </div>
               </div>
-            ))}
-          </motion.div>
-        </div>
+            );
+          })}
+        </motion.div>
       </div>
-
-      {/* ===== DESKTOP VIEW (hidden md:block) ===== */}
-      <div className="hidden md:block py-6 mt-10">
-        <p
-          className="text-center px-6 font-inter font-medium text-[30px] leading-[100%] tracking-normal text-[#1D1D1D]"
-        >
-          Trusted by professionals from
-        </p>
-
-        <div className="relative w-full overflow-hidden flex justify-start mt-12">
-          <motion.div
-            className="flex gap-20 items-center"
-            style={{ width: "max-content" }}
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 35,
-              ease: "linear",
-            }}
-          >
-            {[...logos, ...logos].map((logo, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-center shrink-0 w-[320px] h-[100px]"
-              >
-                <Image
-                  src={logo.url}
-                  alt={logo.alt}
-                  width={320}
-                  height={100}
-                  className="object-contain w-auto max-w-[320px] h-[75px]"
-                />
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
-
     </section>
   );
 };

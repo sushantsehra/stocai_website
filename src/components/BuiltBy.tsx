@@ -31,7 +31,7 @@ const BuiltBy = () => {
         <motion.div
           className="flex gap-4 sm:gap-6"
           style={{ width: "max-content" }}
-          animate={{ x: ["-50%", "0%"] }}
+          animate={{ x: ["-33.333%", "0%"] }}
           transition={{
             repeat: Infinity,
             repeatType: "loop",
@@ -39,7 +39,8 @@ const BuiltBy = () => {
             ease: "linear",
           }}
         >
-          {[...logos, ...logos].map((logo, index) => (
+          {/* Using 3 sets of logos to ensure perfect loop continuity on all screen sizes */}
+          {[...logos, ...logos, ...logos].map((logo, index) => (
             <div
               key={index}
               className="

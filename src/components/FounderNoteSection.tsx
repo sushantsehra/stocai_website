@@ -6,7 +6,7 @@ import blueBg from "../assets/FounderNoteSectionBackground.png";
 
 export default function FounderNoteSection() {
   return (
-    <section className="relative w-full h-[280px] sm:h-[560px] lg:h-[600px] overflow-hidden">
+    <section className="relative w-full aspect-[1640/924] overflow-hidden">
       
       {/* Background Image */}
       <Image
@@ -22,20 +22,20 @@ export default function FounderNoteSection() {
         
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
           
-          <div className="max-w-[185px] md:max-w-xl ml-auto text-white">
+          <div className="max-w-[185px] md:max-w-xl lg:max-w-2xl xl:max-w-2xl ml-auto text-white lg:-translate-y-12 xl:-translate-y-16">
 
-            <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl leading-6 md:leading-tight translate-x-[-25%]">
+            <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[56px] leading-6 md:leading-tight translate-x-[-25%] lg:translate-x-[-8%]">
               A note from <br />
               <span className="font-bold">
                 Sushant Sehra
               </span>
             </h2>
 
-            <p className="md:mt-1 text-[8px] font-inter font-medium sm:text-base opacity-100 translate-x-[-25%]">
+            <p className="md:mt-1 text-[8px] font-inter font-medium sm:text-base lg:text-lg xl:text-lg opacity-100 translate-x-[-25%] lg:translate-x-[-8%]">
               Founder, Better Corporate Life
             </p>
 
-            <div className="mt-3 md:mt-6 space-y-2 md:space-y-5 font-inter font-normal text-[8px] sm:text-base leading-relaxed opacity-100">
+            <div className="mt-3 md:mt-6 space-y-2 md:space-y-4 lg:space-y-4 xl:space-y-6 font-inter font-normal text-[8px] sm:text-base lg:text-lg xl:text-lg leading-relaxed opacity-100">
               
               <p>
                 <span className="font-bold">Be Promotable</span> is designed
