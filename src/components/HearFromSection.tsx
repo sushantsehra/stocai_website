@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import KavitaG from "@/assets/KavitaG.jpg";
-import NikhilS from "@/assets/NikhilS.jpg";
+import NikhilS from "@/assets/NikhilSSeniorPM.jpg";
 import ReetaD from "@/assets/ReetaD.jpg";
 import AmitS from "@/assets/AmitS.jpg";
 
@@ -108,7 +108,7 @@ const HearFromSection = () => {
                   // height: "120px",
                   borderRadius: "50%",
                   overflow: "hidden",
-                  border: "6px solid #FFFFFF",
+                  border: "3px solid #FFFFFF",
                 }}
                 className="h-[44px] w-[44px] md:h-[120px] md:w-[120px] top-[-25px] md:top-[-65px]"
 

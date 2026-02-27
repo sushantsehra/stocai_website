@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import harshImg from '../assets/harshImg.jpg';
 import harshImage from '../assets/harshImage.png';
+import { GoArrowRight } from "react-icons/go";
 
 export default function BePromotableFirstFold() {
 
@@ -550,9 +551,9 @@ export default function BePromotableFirstFold() {
         <div className="flex justify-center mt-2">
           <button
             onClick={scrollToWaitlist}
-            className="bg-[#014BAA] hover:bg-[#0952d4] text-white font-inter font-medium text-[12px] px-5 py-2 rounded-[8px] shadow-lg transition-all duration-300 hover:shadow-xl flex items-center gap-3"
+            className="bg-[#014BAA] hover:bg-[#0952d4] text-white font-inter font-medium text-[12px] px-5 py-2 rounded-[8px] shadow-lg transition-all duration-300 hover:shadow-xl flex items-center gap-1.5 md:gap-3"
           >
-            Request Access <span>→</span>
+            Request Access <span className="translate-y-[-1px]"><GoArrowRight size={14} className="inline" /></span>
           </button>
         </div>
       </div>

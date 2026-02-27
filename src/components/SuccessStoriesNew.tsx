@@ -66,7 +66,7 @@ const SuccessStories = () => {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-[5px] mt-[20px]">
             {CARDS.map((card, index) => (
               <div key={index} className="bg-[#2C2C2C] rounded-[10px] overflow-hidden flex flex-col border border-[#4D4D4D]">
-                <div className="relative h-[85px]">
+                <div className="relative h-[80px]">
                   <Image
                     src={card.image}
                     alt={card.name}
@@ -100,7 +100,7 @@ const SuccessStories = () => {
               onClick={scrollToWaitlist}
               className="font-medium font-inter p-2 text-[8px] rounded-md bg-[#014BAA] text-white hover:bg-[#013A7A] transition-colors duration-200"
             >
-              Request Access <span className="-mt-1"><GoArrowRight size={11} className="inline" /></span>
+              Request Access <span className="translate-y-[-3px]"><GoArrowRight size={11} className="inline" /></span>
             </button>
           </div>
         </div>
