@@ -80,7 +80,7 @@ const FromCommunity = () => {
                             className="object-contain"
                         />
                     </div>
-                    
+
                     {/* Row 3 */}
                     <div className="flex justify-end transition-transform hover:scale-105 duration-300">
                         <Image
@@ -101,7 +101,7 @@ const FromCommunity = () => {
                             className="object-contain"
                         />
                     </div>
-                                        {/* Row 2 */}
+                    {/* Row 2 */}
                     <div className="flex justify-end transition-transform hover:scale-105 duration-300">
                         <Image
                             src={reviews[6].image}
@@ -176,7 +176,7 @@ const FromCommunity = () => {
                     display: flex;
                     gap: 60px;
                     width: max-content;
-                    animation: scroll-community 25s linear infinite;
+                    animation: scroll-community 70s linear infinite;
                     align-items: center;
                     padding: 10px 0;
                 }

@@ -35,7 +35,7 @@ const BuiltBy = () => {
           transition={{
             repeat: Infinity,
             repeatType: "loop",
-            duration: 25,
+            duration: 120,
             ease: "linear",
           }}
         >

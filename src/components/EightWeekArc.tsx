@@ -61,10 +61,10 @@ export default function EightWeekArc() {
             // Base opacity and z-index logic
             const base = {
               0: "z-50 opacity-100",
-              1: "z-40 opacity-80",
-              2: "z-30 opacity-60",
-              "-1": "z-40 opacity-80",
-              "-2": "z-30 opacity-60",
+              1: "z-40 opacity-80 lg:opacity-90",
+              2: "z-30 opacity-60 lg:opacity-75",
+              "-1": "z-40 opacity-80 lg:opacity-90",
+              "-2": "z-30 opacity-60 lg:opacity-75",
             }[p];
 
             if (p === 0) return { transform: "translate(0, 0) rotate(0) scale(1)", className: base };
@@ -72,9 +72,9 @@ export default function EightWeekArc() {
             // const factor = p > 0 ? 1 : -1;
             const absP = Math.abs(p);
 
-            // MOBILE VALUES (Reduced to 125px x 165px)
+            // MOBILE VALUES (Restored completely to original 140x180 layout)
             let tx = absP === 1 ? "60%" : "110%";
-            let ty = absP === 1 ? "4%" : "14%";
+            let ty = absP === 1 ? "3%" : "13%";
             let r = absP === 1 ? "12deg" : "15deg";
             let s = absP === 1 ? "0.9" : "0.75";
 
@@ -105,37 +105,37 @@ export default function EightWeekArc() {
           return (
             <div
               key={m.id}
-              className={`absolute w-[125px] sm:w-[300px] lg:w-[380px] h-[165px] sm:h-[420px] lg:h-[440px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${className}`}
+              className={`absolute w-[140px] sm:w-[360px] lg:w-[380px] h-[180px] sm:h-[480px] lg:h-[440px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${className}`}
               style={{ transform }}
             >
               <div
-                className={`w-full h-full rounded-[25px] sm:rounded-[40px] p-[2px] transition-all duration-700
+                className={`w-full h-full transition-all duration-700
                   ${isActive
-                    ? "bg-white shadow-[0_30px_80px_rgba(0,0,0,0.18)]"
-                    : "bg-[#F5F5F5] shadow-xl"
+                    ? "bg-white p-[2px] rounded-[40px] shadow-[0_30px_80px_rgba(0,0,0,0.18)]"
+                    : "rounded-[40px] p-4 pt-8 bg-[#F5F5F5] shadow-xl text-left border border-gray-100"
                   }`}
               >
-                <div className={`w-full h-full rounded-[23px] sm:rounded-[38px] p-2 sm:p-8 lg:p-10 flex flex-col justify-between text-left transition-all duration-700
-                  ${isActive ? "bg-white border border-gray-100" : "bg-[#F5F5F5] border border-gray-100/50"}
+                <div className={`w-full h-full flex flex-col justify-between text-left transition-all duration-700
+                  ${isActive ? "bg-[#FFFFFF] rounded-[40px] p-4 sm:p-10 border border-gray-100" : ""}
                 `}>
                   <div>
-                    <p className={`font-jakarta font-bold mb-0.5 sm:mb-3 transition-colors duration-700
-                      ${isActive ? "text-[#014BAA] text-[7px] sm:text-[22px]" : "text-[#014BAA]/80 text-[6px] sm:text-[14px]"}
+                    <p className={`font-jakarta font-bold transition-colors duration-700
+                      ${isActive ? "text-[#014BAA] text-[10px] sm:text-[22px] mb-1 sm:mb-3" : "text-[#014BAA]/80 text-[10px] md:text-sm mb-2"}
                     `}>
                       Module {m.id}
                     </p>
 
-                    <h3 className={`font-bold font-quattrocento mb-1 sm:mb-4 transition-all duration-700
-                      ${isActive ? "text-black text-[11px] sm:text-[26px]" : "text-black/80 text-[9px] sm:text-[16px]"}
+                    <h3 className={`font-bold font-quattrocento transition-all duration-700
+                      ${isActive ? "text-[14px] sm:text-[26px] mb-2 sm:mb-4 text-black" : "text-[14px] md:text-base mb-3 text-black"}
                     `}>
                       {m.title}
                     </h3>
 
-                    <div className={`rounded-md sm:rounded-xl p-1 sm:p-4 transition-colors duration-700
-                      ${isActive ? "bg-[#014BAA]" : "bg-[#014BAA]/90"}
+                    <div className={`transition-colors duration-700
+                      ${isActive ? "bg-[#014BAA] rounded-xl p-2 sm:p-4" : "bg-[#014BAA] rounded-lg p-2 md:p-4"}
                     `}>
                       <p className={`text-white transition-all duration-700
-                        ${isActive ? "text-[7.5px] sm:text-base leading-tight" : "text-[6.5px] sm:text-[13px] leading-tight"}
+                        ${isActive ? "text-[11px] sm:text-base" : "text-[11px] md:text-sm"}
                       `}>
                         {m.summary}
                       </p>
@@ -143,21 +143,21 @@ export default function EightWeekArc() {
                   </div>
 
                   {/* Navigation - only visible on active card */}
-                  <div className={`flex justify-center gap-1.5 sm:gap-4 mt-1 sm:mt-6 transition-all duration-700
-                    ${isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+                  <div className={`flex justify-center gap-4 transition-all duration-700
+                    ${isActive ? "mt-2 sm:mt-6 opacity-100 pointer-events-auto" : "mt-0 opacity-0 pointer-events-none h-0 overflow-hidden"}
                   `}>
                     <button
                       onClick={handlePrev}
-                      className="w-4 h-4 sm:w-10 sm:h-10 rounded-full bg-gray-400 hover:bg-[#014BAA] transition-colors flex items-center justify-center group"
+                      className="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gray-400 hover:bg-[#014BAA] transition-colors flex items-center justify-center group"
                     >
-                      <ChevronLeft className="text-white w-2.5 h-2.5 sm:w-6 sm:h-6" />
+                      <ChevronLeft className="text-white w-4 h-4 sm:w-6 sm:h-6" />
                     </button>
 
                     <button
                       onClick={handleNext}
-                      className="w-4 h-4 sm:w-10 sm:h-10 rounded-full bg-gray-400 hover:bg-[#014BAA] transition-colors flex items-center justify-center group"
+                      className="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gray-400 hover:bg-[#014BAA] transition-colors flex items-center justify-center group"
                     >
-                      <ChevronRight className="text-white w-2.5 h-2.5 sm:w-6 sm:h-6" />
+                      <ChevronRight className="text-white w-4 h-4 sm:w-6 sm:h-6" />
                     </button>
                   </div>
                 </div>

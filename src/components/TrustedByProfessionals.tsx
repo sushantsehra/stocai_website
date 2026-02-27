@@ -117,17 +117,19 @@ const TrustedByProfessionals = () => {
   ];
 
   return (
-    <div className="w-full overflow-hidden py-1 md:pt-6 bg-white">
-      <p className="text-center text-[#1D1D1D] text-[18px] md:text-[30px] font-medium font-inter tracking-widest">
+    <div className="w-full overflow-hidden py-1 md:pt-12 bg-white">
+      <p className="text-center text-[#1D1D1D] text-[18px] md:text-[30px] font-medium font-inter">
         Trusted by professionals from
       </p>
-      <div className="relative flex overflow-hidden -mt-3 md:-mt-10">
+      <div className="relative flex overflow-hidden -mt-3 md:-mt-16">
         <motion.div
           className="flex gap-1 md:gap-5 items-center"
           animate={{ x: ["0%", "-33.333%"] }}
           transition={{
-            duration: 20,
+            // duration: 60,
             repeat: Infinity,
+            repeatType: "loop",
+            duration: 20,
             ease: "linear",
           }}
           style={{ willChange: "transform" }}
