@@ -90,66 +90,28 @@ const FromCommunity = () => {
 
             </div>
 
-            {/* ===== DESKTOP VIEW (hidden md:block) — 3-Row Grid ===== */}
-            <div className="hidden md:flex flex-col items-center max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
+            {/* ===== DESKTOP VIEW (hidden md:block) — Moving Image Band ===== */}
+            <div className="hidden md:flex flex-col items-center w-full mx-auto">
 
                 {/* Title */}
-                <h2 className="font-bold font-quattrocento text-[30px] lg:text-[40px] text-[#1D1D1D] text-center mb-16">
+                <h2 className="font-bold font-quattrocento text-[24px] lg:text-[40px] text-[#1D1D1D] text-center mb-0">
                     From The Community
                 </h2>
 
-                {/* Row 1 */}
-                <div className="grid grid-cols-2 gap-x-10 gap-y-6 w-full max-w-[1100px] mb-6">
-                    <div className="flex justify-start transition-transform hover:scale-105 duration-300">
-                        <Image
-                            src={reviews[0].image}
-                            alt={reviews[0].name}
-                            width={Math.round(reviews[0].width * 1.8)}
-                            height={Math.round(reviews[0].height * 1.8)}
-                            className="object-contain"
-                        />
-                    </div>
-                    <div className="flex justify-start transition-transform hover:scale-105 duration-300">
-                        <Image
-                            src={reviews[1].image}
-                            alt={reviews[1].name}
-                            width={Math.round(reviews[1].width * 1.8)}
-                            height={Math.round(reviews[1].height * 1.8)}
-                            className="object-contain"
-                        />
-                    </div>
-
-                    {/* Row 2 */}
-                    <div className="flex justify-start transition-transform hover:scale-105 duration-300">
-                        <Image
-                            src={reviews[2].image}
-                            alt={reviews[2].name}
-                            width={Math.round(reviews[2].width * 1.8)}
-                            height={Math.round(reviews[2].height * 1.8)}
-                            className="object-contain"
-                        />
-                    </div>
-                    <div className="flex justify-start transition-transform hover:scale-105 duration-300">
-                        <Image
-                            src={reviews[3].image}
-                            alt={reviews[3].name}
-                            width={Math.round(reviews[3].width * 1.8)}
-                            height={Math.round(reviews[3].height * 1.8)}
-                            className="object-contain"
-                        />
-                    </div>
-                </div>
-
-                {/* Row 3 — Left Aligned */}
-                <div className="w-full max-w-[1100px]">
-                    <div className="transition-transform hover:scale-105 duration-300 inline-block">
-                        <Image
-                            src={reviews[4].image}
-                            alt={reviews[4].name}
-                            width={Math.round(reviews[4].width * 2.3)}
-                            height={Math.round(reviews[4].height * 2.3)}
-                            className="object-contain"
-                        />
+                {/* Marquee Container */}
+                <div className="marquee-community w-full">
+                    <div className="track-community">
+                        {[...reviews, ...reviews, ...reviews].map((item, index) => (
+                            <div key={index} className="flex-shrink-0 transition-transform hover:scale-105 duration-300">
+                                <Image
+                                    src={item.image}
+                                    alt={item.name}
+                                    width={Math.round(item.width * 1.5)}
+                                    height={Math.round(item.height * 1.5)}
+                                    className="object-contain"
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -165,6 +127,31 @@ const FromCommunity = () => {
                     text-align: center;
                     color: #0F1729;
                     margin: 0;
+                }
+
+                /* ---- Marquee Styles ---- */
+                .marquee-community {
+                    width: 100%;
+                    overflow: hidden;
+                    position: relative;
+                }
+
+                .track-community {
+                    display: flex;
+                    gap: 60px;
+                    width: max-content;
+                    animation: scroll-community 25s linear infinite;
+                    align-items: center;
+                    padding: 10px 0;
+                }
+
+                @keyframes scroll-community {
+                    from {
+                        transform: translateX(-33.33%);
+                    }
+                    to {
+                        transform: translateX(0);
+                    }
                 }
             `}</style>
         </section>

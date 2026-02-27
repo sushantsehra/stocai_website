@@ -17,17 +17,17 @@ import mahindra from "@/assets/mahindra.png";
 
 const TrustedByProfessionals = () => {
   const logos = [
-    { name: "University of Texas", url: texas, alt: "University of Texas logo" },
-    { name: "King's College London", url: kingscollege, alt: "King's College London logo" },
-    { name: "IIM Calcutta", url: iimc, alt: "IIM Calcutta logo" },
-    { name: "IMT Ghaziabad", url: imtgd, alt: "IMT Ghaziabad logo" },
-    { name: "NVIDIA", url: nvidia, alt: "NVIDIA logo" },
-    { name: "Citi", url: citi, alt: "Citi logo" },
-    { name: "Accenture", url: accenture, alt: "Accenture logo" },
-    { name: "Morgan Stanley", url: morganstanley, alt: "Morgan Stanley logo" },
-    { name: "Deloitte", url: deloitte, alt: "Deloitte logo" },
-    { name: "Edelweiss", url: edelweiss, alt: "Edelweiss logo" },
-    { name: "Mahindra", url: mahindra, alt: "Mahindra logo" },
+    { name: "University of Texas", url: texas, alt: "University of Texas logo", width: 180, height: 60 },
+    { name: "King's College London", url: kingscollege, alt: "King's College London logo", width: 100, height: 60 },
+    { name: "IIM Calcutta", url: iimc, alt: "IIM Calcutta logo", width: 300, height: 80 },
+    { name: "IMT Ghaziabad", url: imtgd, alt: "IMT Ghaziabad logo", width: 360, height: 120 },
+    { name: "NVIDIA", url: nvidia, alt: "NVIDIA logo", width: 240, height: 60 },
+    { name: "Citi", url: citi, alt: "Citi logo", width: 80, height: 60 },
+    { name: "Accenture", url: accenture, alt: "Accenture logo", width: 180, height: 60 },
+    { name: "Morgan Stanley", url: morganstanley, alt: "Morgan Stanley logo", width: 260, height: 60 },
+    { name: "Deloitte", url: deloitte, alt: "Deloitte logo", width: 240, height: 60 },
+    { name: "Edelweiss", url: edelweiss, alt: "Edelweiss logo", width: 240, height: 60 },
+    { name: "Mahindra", url: mahindra, alt: "Mahindra logo", width: 120, height: 60 },
   ];
 
   return (
@@ -38,7 +38,7 @@ const TrustedByProfessionals = () => {
 
       <div className="relative w-full overflow-hidden flex justify-center">
         <motion.div
-          className="flex gap-4 sm:gap-6 items-center"
+          className="flex gap-4 sm:gap-6 items-top"
           style={{ width: "max-content" }}
           animate={{ x: ["-33.333%", "0%"] }}
           transition={{
@@ -50,10 +50,6 @@ const TrustedByProfessionals = () => {
         >
           {/* Using 3 sets of logos to ensure perfect loop continuity on all screen sizes */}
           {[...logos, ...logos, ...logos].map((logo, index) => {
-            // Adopted BuiltBy's sizing logic for perfectly balanced weight & alignment
-            const isSmallLogo = ["Citi", "King's College London", "IIM Calcutta", "IMT Ghaziabad"].includes(logo.name);
-            const customWidth = isSmallLogo ? 80 : 300;
-
             return (
               <div
                 key={index}
@@ -68,8 +64,8 @@ const TrustedByProfessionals = () => {
                   <Image
                     src={logo.url}
                     alt={logo.alt}
-                    width={customWidth}
-                    height={40}
+                    width={logo.width}
+                    height={logo.height}
                     className="object-contain transition-all duration-300 p-1 sm:p-2"
                   />
                 </div>
