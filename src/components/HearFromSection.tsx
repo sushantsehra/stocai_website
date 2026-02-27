@@ -23,13 +23,13 @@ const TESTIMONIALS = [
   {
     text: "The stakeholder management framework alone was worth the entire program",
     name: "Reeta D.",
-    role: "Finance Lead",
+    role: "Finance Head",
     image: ReetaD,
   },
   {
     text: "Practicing my promotion pitch with the AI coach before the actual conversation. That is what made the difference",
     name: "Amit S.",
-    role: "Engineering Lead",
+    role: "Engineering Head",
     image: AmitS,
   },
 ];

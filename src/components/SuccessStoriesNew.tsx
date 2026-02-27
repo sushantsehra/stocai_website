@@ -10,19 +10,19 @@ import quote from "@/assets/quote.png";
 const CARDS = [
   {
     name: "Eleena R.",
-    role: "Tech Lead",
+    role: "Senior Manager",
     text: "Promoted to Senior Manager after 3 years of being overlooked.",
     image: EleenaR,
   },
   {
     name: "M. Hussain",
-    role: "Marketing Manager",
+    role: "Associate Director",
     text: "Finally broke from Mid into Senior level with 40% salary increase.",
     image: MHussain,
   },
   {
     name: "Venkatraman A.",
-    role: "Product Manager",
+    role: "SVP",
     text: "Gained the confidence to negotiate and bag my target role.",
     image: VenkatramanA,
   },

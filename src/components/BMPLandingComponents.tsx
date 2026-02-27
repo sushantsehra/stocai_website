@@ -159,18 +159,18 @@ const BMPLandingComponents = () => {
         <AdditionalBenefitsNew />
         <FounderNoteSection />
         <TrustSectionNew />
-        <FounderSection />
+        {/* <FounderSection /> */}
         <FoundersBonus />
         <FromCommunity />
       </section>
 
-      <section
+      {/* <section
         data-analytics-section="bmp_testimonial"
         data-analytics-section-label="Testimonial"
         data-analytics-section-order="7"
       >
         <Testimonial />
-      </section>
+      </section> */}
 
       {/* WaitlistSection — accepts onRequestAccess to open modal */}
       <section
