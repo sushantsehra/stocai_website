@@ -3,27 +3,59 @@
 import React from "react";
 import Image from "next/image";
 import ApoorvaMalhotra from "../assets/ApoorvaMalhotra.png";
+import learning from "../assets/learning.png";
+import helpingHand from "../assets/helpingHand.png";
+import qualityCertificate from "../assets/qualityCertificate.png";
+import realtor from "../assets/realtor.png";
+
+
+// const FEATURES = [
+//   {
+//     title: "Scientific Training System",
+//     description:
+//       "Research-backed frameworks that decode leadership competencies and decision-maker psychology.",
+//   },
+//   {
+//     title: "Clarity & Confidence Coaching",
+//     description:
+//       "Customized 1:1 sessions to identify your unique promotion path and eliminate self-doubt.",
+//   },
+//   {
+//     title: "Executive Accountability Partner",
+//     description:
+//       "Thoughtful check-ins to help you reflect, recalibrate, and move forward, without pressure.",
+//   },
+//   {
+//     title: "ICF-Certified Coach Sessions",
+//     description:
+//       "Support from coaches who’ve sat in promotion rooms and understand how decisions are actually made.",
+//   },
+// ];
 
 const FEATURES = [
   {
     title: "Scientific Training System",
     description:
       "Research-backed frameworks that decode leadership competencies and decision-maker psychology.",
+    icon: learning,
   },
   {
     title: "Clarity & Confidence Coaching",
     description:
       "Customized 1:1 sessions to identify your unique promotion path and eliminate self-doubt.",
+    icon: helpingHand,
   },
   {
     title: "Executive Accountability Partner",
     description:
       "Thoughtful check-ins to help you reflect, recalibrate, and move forward, without pressure.",
+    icon: realtor,
   },
   {
     title: "ICF-Certified Coach Sessions",
     description:
       "Support from coaches who’ve sat in promotion rooms and understand how decisions are actually made.",
+    icon: qualityCertificate,
   },
 ];
 
@@ -135,14 +167,37 @@ const TestimonialFeatures: React.FC = () => {
           {/* Feature Cards */}
           <div className="grid grid-cols-2 gap-6 mt-4">
             {FEATURES.map((feature) => (
+              // <div
+              //   key={feature.title}
+              //   className="bg-[#EEE5DF] min-h-[271px] rounded-2xl p-6 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
+              // >
+              //   <h3 className="text-[#014BAA] font-normal font-quattrocento text-[24.85px] leading-8 mb-2 mt-16">
+              //     {feature.title}
+              //   </h3>
+              //   <p className="text-[#1D1D1D] font-normal font-jakarta text-[17px] leading-6">
+              //     {feature.description}
+              //   </p>
+              // </div>
               <div
                 key={feature.title}
-                className="bg-[#EEE5DF] min-h-[271px] rounded-2xl p-6 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
+                className="relative bg-[#EEE5DF] min-h-[271px] rounded-2xl p-6 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
               >
-                <h3 className="text-[#014BAA] font-normal font-quattrocento text-[24.85px] leading-8 mb-2 mt-16">
+                {/* ICON TOP RIGHT */}
+                <div className="absolute top-5 right-5">
+                  <Image
+                    src={feature.icon}
+                    alt="icon"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+
+                <h3 className="text-[#014BAA] font-quattrocento text-[24.85px] leading-8 mb-2 mt-10">
                   {feature.title}
                 </h3>
-                <p className="text-[#1D1D1D] font-normal font-jakarta text-[17px] leading-6">
+
+                <p className="text-[#1D1D1D] font-jakarta text-[17px] leading-6">
                   {feature.description}
                 </p>
               </div>
@@ -191,26 +246,49 @@ const TestimonialFeatures: React.FC = () => {
             }}
             className="grid grid-cols-2  gap-2 mt-10 p-2 px-6">
             {FEATURES.map((feature) => (
+              // <div
+              //   key={feature.title}
+              //   style={{
+              //     backgroundColor: "#E6F1FF",
+              //     borderRadius: "5px",
+              //   }}
+              //   className="bg-[#E6F1FF] flex flex-col gap-1 max-w-[200px] md:max-w-auto rounded-[5px] p-4 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
+              // >
+              //   <div>
+              //     <h3
+              //       className="text-[#014BAA] font-bold font-quattrocento text-[12px] font-semibold leading-4 mb-1">
+              //       {feature.title}
+              //     </h3>
+              //   </div>
+              //   <div>
+              //     <p className="text-[#1D1D1D] text-[8px] font-normal font-inter leading-3">
+              //       {feature.description}
+              //     </p>
+              //   </div>
+
+              // </div>
               <div
                 key={feature.title}
-                style={{
-                  backgroundColor: "#E6F1FF",
-                  borderRadius: "5px",
-                }}
-                className="bg-[#E6F1FF] flex flex-col gap-1 max-w-[200px] md:max-w-auto rounded-[5px] p-4 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
+                className="relative bg-[#E6F1FF] rounded-[8px] p-4 flex flex-col gap-2"
               >
-                <div>
-                  <h3
-                    className="text-[#014BAA] font-bold font-quattrocento text-[12px] font-semibold leading-4 mb-1">
-                    {feature.title}
-                  </h3>
-                </div>
-                <div>
-                  <p className="text-[#1D1D1D] text-[8px] font-normal font-inter leading-3">
-                    {feature.description}
-                  </p>
+                {/* ICON TOP RIGHT */}
+                <div className="absolute top-3 right-3">
+                  <Image
+                    src={feature.icon}
+                    alt="icon"
+                    width={22}
+                    height={22}
+                    className="object-contain"
+                  />
                 </div>
 
+                <h3 className="text-[#014BAA] font-quattrocento text-[12px] font-semibold leading-4 pr-6">
+                  {feature.title}
+                </h3>
+
+                <p className="text-[#1D1D1D] text-[9px] font-inter leading-3 pr-6">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>

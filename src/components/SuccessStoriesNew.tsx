@@ -6,6 +6,7 @@ import EleenaR from "@/assets/EleenaR.jpg";
 import MHussain from "@/assets/MHussain.jpg";
 import VenkatramanA from "@/assets/VenkatramanA.jpg";
 import quote from "@/assets/quote.png";
+import { GoArrowRight } from "react-icons/go";
 
 const CARDS = [
   {
@@ -99,7 +100,7 @@ const SuccessStories = () => {
               onClick={scrollToWaitlist}
               className="font-medium font-inter p-2 text-[8px] rounded-md bg-[#014BAA] text-white hover:bg-[#013A7A] transition-colors duration-200"
             >
-              Request Access →
+              Request Access <span className="-mt-1"><GoArrowRight size={11} className="inline" /></span>
             </button>
           </div>
         </div>
