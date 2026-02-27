@@ -99,16 +99,16 @@ export default function CareerTrajectorySection() {
                   </div>
 
                   <div className="px-5 py-2 text-center flex flex-col flex-1">
-                    <h4 className="font-bold text-[#1C1C1C] text-[16px]">Anisha Date</h4>
+                    <h4 className="font-bold text-[#1C1C1C] text-[16px]">Aarohi Mehta</h4>
                     <p className="text-[12px] text-[#1C1C1C] font-normal font-jakarta mb-1.5">
-                      Senior Product Manager
+                      UI/UX Designer
                     </p>
 
                     <div className="border-y border-[#E3E3E3] py-2 text-[12px] space-y-0.5 text-left">
                       {[
                         { label: "Status", value: "Invisible Contributor" },
-                        { label: "Visibility Score", value: "34/100" },
-                        { label: "Influence Rating", value: "Operational" },
+                        { label: "Visibility Score", value: "42/100" },
+                        { label: "Influence Rating", value: "Tactical" },
                         { label: "Access Level", value: "Restricted" },
                       ].map((item, i) => (
                         <div key={i} className="flex justify-between font-jakarta font-medium text-[#7A7777]">
@@ -123,16 +123,16 @@ export default function CareerTrajectorySection() {
                         Known For
                       </p>
                       <ul className="text-[12px] font-normal font-jakarta text-[#323232] space-y-0.5">
-                        <li>• Task Management</li>
-                        <li>• Fixing Problems Quietly</li>
-                        <li>• Subject Matter Expertise</li>
-                        <li>• Tactical Execution</li>
+                        <li>• Executing defined design tasks</li>
+                        <li>• Translating requirements into interfaces</li>
+                        <li>• Maintaining design consistency</li>
+                        <li>• Supporting product delivery</li>
                       </ul>
                     </div>
 
                     <div className="mt-0 pb-2 mt-auto">
                       <p className="text-[11px] font-bold font-montserrat uppercase text-center mb-2">
-                        Promotability Quotient 34%
+                        Promotability Quotient 40%
                       </p>
                       <div className="h-1.5 bg-gray-200 rounded-full">
                         <div className="h-full bg-black rounded-full w-[34%]" />
@@ -174,16 +174,16 @@ export default function CareerTrajectorySection() {
                   </div>
 
                   <div className="px-5 py-2 text-center flex flex-col flex-1">
-                    <h4 className="font-bold text-[#1C1C1C] text-[16px]">Anisha Date</h4>
+                    <h4 className="font-bold text-[#1C1C1C] text-[16px]">Aarohi Mehta</h4>
                     <p className="text-[12px] text-[#1C1C1C] font-normal font-jakarta mb-1.5">
-                      Senior Product Manager
+                      Product Design Lead
                     </p>
 
                     <div className="border-y border-[#E3E3E3] py-2 text-[12px] space-y-0.5 text-left">
                       {[
-                        { label: "Status", value: "Business Driver" },
-                        { label: "Visibility Score", value: "92/100" },
-                        { label: "Influence Rating", value: "Strategic" },
+                        { label: "Status", value: "Design Leader" },
+                        { label: "Visibility Score", value: "96/100" },
+                        { label: "Influence Rating", value: "Vision-Led" },
                         { label: "Access Level", value: "Unrestricted" },
                       ].map((item, i) => (
                         <div key={i} className="flex justify-between font-jakarta font-medium text-[#7A7777]">
@@ -198,16 +198,16 @@ export default function CareerTrajectorySection() {
                         Known For
                       </p>
                       <ul className="text-[12px] font-normal font-jakarta text-[#323232] space-y-0.5">
-                        <li>• Stakeholder Management</li>
-                        <li>• Executive Communication</li>
-                        <li>• Cross-functional Leadership</li>
-                        <li>• Big-picture Thinking</li>
+                        <li>• Driving product vision through design</li>
+                        <li>• Influencing cross-functional decisions</li>
+                        <li>• Owning end-to-end user experience</li>
+                        <li>• Developing high-impact design teams</li>
                       </ul>
                     </div>
 
                     <div className="mt-3 pb-2 mt-auto">
                       <p className="text-[11px] font-bold font-montserrat uppercase text-[#0B64F4] text-center mb-2">
-                        Promotability Quotient 94%
+                        Promotability Quotient 92%
                       </p>
                       <div className="h-1.5 bg-gray-200 rounded-full">
                         <div className="h-full bg-[#0B64F4] rounded-full w-[94%]" />
