@@ -313,7 +313,7 @@ export default function BePromotableFirstFold() {
         {/* Flip Card Container */}
         <div
           className="relative mx-auto mb-4 cursor-pointer"
-          style={{ width: '300px', height: '500px', perspective: '1200px' }}
+          style={{ width: '300px', height: '550px', perspective: '1200px' }}
           onClick={() => setIsFlipped((prev) => !prev)}
         >
           {/* Inner wrapper that flips */}
