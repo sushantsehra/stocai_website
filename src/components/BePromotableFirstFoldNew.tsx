@@ -29,7 +29,7 @@ export default function BePromotableFirstFold() {
     currentState: {
       image: harshImg,
       status: "Invisible Contributor",
-      title: "SENIOR PRODUCT MANAGER",
+      title: "SOFTWARE DEVELOPER",
       visibilityScore: "34/100",
       influenceRating: "Operational",
       accessLevel: "Restricted",
