@@ -148,13 +148,47 @@ const AdditionalBenefitsNew = () => {
         ))}
 
         {/* CTA */}
-        <div className="bg-black rounded-b-[28px] py-6 flex justify-center">
+        {/* <div className="bg-black rounded-b-[28px] py-6 flex justify-center">
           <button
             onClick={scrollToWaitlist}
             className="border border-white text-white 
                        px-12 py-2 md:py-3 rounded-full 
                        font-semibold font-jakarta text-[10px] sm:text-[16px]
                        hover:scale-[1.03] transition"
+          >
+            REQUEST ACCESS
+          </button>
+        </div> */}
+        <div className="bg-black rounded-b-[28px] py-5 md:py-8 px-4 flex flex-col items-center">
+          {/* Price Section */}
+          <div className="flex items-center gap-4 mb-2 md:mb-6 flex-wrap justify-center">
+            
+            {/* Old Price */}
+            <p className="text-[#6E6E6E] font-bold font-quattrocento text-[12px] sm:text-lg md:text-xl line-through">
+              At just ₹30,000
+            </p>
+
+            {/* New Price */}
+            <p className="text-white font-bold text-[24px] font-inter sm:text-5xl md:text-6xl">
+              ₹949
+            </p>
+          </div>
+          {/* Button */}
+          <button
+            onClick={scrollToWaitlist}
+            className="
+              border-2 border-white 
+              text-white 
+              px-10 sm:px-14 md:px-16
+              py-3 sm:py-4
+              rounded-full
+              text-[10px] sm:text-base md:text-lg
+              font-semibold font-jakarta
+              tracking-wide
+              transition-all duration-300
+              hover:bg-white hover:text-black
+              hover:scale-[1.05]
+            "
           >
             REQUEST ACCESS
           </button>

@@ -28,6 +28,7 @@ import PromotableHeroWaitlist from "./PromotableHeroWaitlist";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
+import FounderSection from "./FounderSection";
 
 interface UserData {
   name: string;
@@ -156,6 +157,7 @@ const BMPLandingComponents = () => {
         <EightWeekArc />
         <AdditionalBenefitsNew />
         <TrustSectionNew />
+        <FounderSection />
         <FoundersBonus />
         <FromCommunity />
       </section>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Crown } from "lucide-react";
 import accenture from "../assets/founderaccenture.png";
-import founder from "../assets/founder.jpg";
+import founder from "../assets/SushantSehra.jpg";
 import founderKing from "../assets/kcl.png";
 import iimcwhitelogo from "../assets/iimcwhitelogo.png";  
 import edelweisswhitelogo from "../assets/edelweisswhitelogo.png";  
