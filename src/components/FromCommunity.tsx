@@ -2,25 +2,26 @@
 
 import React from 'react';
 import Image from 'next/image';
-import image10 from '../assets/ss7.png';
-import image11 from '../assets/ss6.png';
-import image12 from '../assets/ss4.png';
-import image13 from '../assets/ss5.png';
-import Group15 from '../assets/ss3.png';
-import Group16 from '../assets/ss1.png';
-import Group17 from '../assets/ss2.png';
+import img1 from '../assets/cp1.png';
+import img2 from '../assets/cp2.png';
+import img3 from '../assets/cp3.png';
+import img4 from '../assets/cp4.png';
+import img5 from '../assets/cp5.png';
+import img6 from '../assets/cp6.png';
+import img7 from '../assets/cp7.png';
+import img8 from '../assets/cp8.png';
 
 
 const FromCommunity = () => {
     const reviews = [
-        { name: "Divank Jain", image: image10, width: 280, height: 110 },
-        { name: "Pooja Kargatia", image: image11, width: 240, height: 90 },
-        { name: "Eleena reginold", image: image13, width: 250, height: 105 },
-        { name: "Deep Shah", image: image12, width: 270, height: 110 },
-        { name: "Samruddhi Patil", image: Group15, width: 220, height: 110 },
-        { name: "Samruddhi Patil", image: Group16, width: 220, height: 110 },
-        { name: "Samruddhi Patil", image: Group17, width: 220, height: 110 },
-        { name: "Samruddhi Patil", image: Group15, width: 220, height: 110 }
+        { name: "Divank Jain", image: img1, width: 280, height: 110 },
+        { name: "Pooja Kargatia", image: img2, width: 240, height: 90 },
+        { name: "Eleena reginold", image: img3, width: 250, height: 105 },
+        { name: "Deep Shah", image: img4, width: 270, height: 110 },
+        { name: "Samruddhi Patil", image: img5, width: 220, height: 110 },
+        { name: "Samruddhi Patil", image: img6, width: 220, height: 110 },
+        { name: "Samruddhi Patil", image: img7, width: 220, height: 110 },
+        { name: "Samruddhi Patil", image: img8, width: 220, height: 110 }
 
     ];
 
@@ -113,10 +114,10 @@ const FromCommunity = () => {
 
                     <div className="flex justify-start transition-transform hover:scale-105 duration-300">
                         <Image
-                            src={reviews[3].image}
-                            alt={reviews[3].name}
-                            width={reviews[3].width}
-                            height={reviews[3].height}
+                            src={reviews[7].image}
+                            alt={reviews[7].name}
+                            width={reviews[7].width}
+                            height={reviews[7].height}
                             className="object-contain"
                         />
                     </div>

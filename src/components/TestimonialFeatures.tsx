@@ -62,7 +62,7 @@ const FEATURES = [
 const TestimonialFeatures: React.FC = () => {
   return (
     <section className="w-full bg-[#FFFFFF]">
-      <div className="max-w-7xl mx-auto py-10 md:py-20 flex flex-col md:flex-row gap-4 md:gap-0 items-end">
+      <div className="max-w-7xl mx-auto py-5 md:py-20 flex flex-col md:flex-row gap-4 md:gap-0 items-end">
 
         {/* LEFT — Testimonial Card */}
         <div className="w-full md:w-[40%] flex-shrink-0">

@@ -14,7 +14,7 @@ export default function FounderNoteSection() {
         alt="Founder Background"
         fill
         priority
-        className="object-cover object-center"
+        className="object-cover object-center lg:h-auto"
       />
 
       {/* Content */}

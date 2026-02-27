@@ -58,7 +58,7 @@ const TrustedByProfessionals = () => {
       width: 200,
       height: 250,
       mobileWidth: 110,
-      mobileHeight: 28,
+      mobileHeight: 110,
     },
     {
       name: "Citi",
@@ -67,16 +67,16 @@ const TrustedByProfessionals = () => {
       width: 80,
       height: 40,
       mobileWidth: 44,
-      mobileHeight: 25,
+      mobileHeight: 22,
     },
     {
       name: "Accenture",
       url: accenture,
       alt: "Accenture logo",
       width: 180,
-      height: 60,
+      height: 90,
       mobileWidth: 100,
-      mobileHeight: 34,
+      mobileHeight: 54,
     },
     {
       name: "Morgan Stanley",
@@ -93,17 +93,17 @@ const TrustedByProfessionals = () => {
       alt: "Deloitte logo",
       width: 240,
       height: 60,
-      mobileWidth: 150,
-      mobileHeight: 100,
+      mobileWidth: 130,
+      mobileHeight: 80,
     },
     {
       name: "Edelweiss",
       url: edelweiss,
       alt: "Edelweiss logo",
       width: 240,
-      height: 60,
+      height: 80,
       mobileWidth: 120,
-      mobileHeight: 30,
+      mobileHeight: 50,
     },
     {
       name: "Mahindra",
@@ -112,21 +112,21 @@ const TrustedByProfessionals = () => {
       width: 120,
       height: 50,
       mobileWidth: 65,
-      mobileHeight: 34,
+      mobileHeight: 28,
     },
   ];
 
   return (
-    <div className="w-full overflow-hidden py-1 md:py-8 bg-white">
-      <p className="text-center text-[#1D1D1D] md:mb-6 text-[18px] font-medium font-inter tracking-widest">
+    <div className="w-full overflow-hidden py-1 md:pt-6 bg-white">
+      <p className="text-center text-[#1D1D1D] text-[18px] md:text-[30px] font-medium font-inter tracking-widest">
         Trusted by professionals from
       </p>
-      <div className="relative flex overflow-hidden">
+      <div className="relative flex overflow-hidden -mt-3 md:-mt-10">
         <motion.div
-          className="flex gap-2 md:gap-8 items-center"
+          className="flex gap-1 md:gap-5 items-center"
           animate={{ x: ["0%", "-33.333%"] }}
           transition={{
-            duration: 10,
+            duration: 20,
             repeat: Infinity,
             ease: "linear",
           }}
