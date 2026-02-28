@@ -2,12 +2,12 @@
 
 import React from 'react';
 import Image from 'next/image';
-import img1 from '../assets/cp1.png';
-import img2 from '../assets/cp2.png';
-import img3 from '../assets/cp3.png';
-import img4 from '../assets/cp4.png';
-import img5 from '../assets/cp5.png';
-import img6 from '../assets/cp6.png';
+import img1 from '../assets/fcp1.png';
+import img2 from '../assets/fcp2.png';
+import img3 from '../assets/fcp3.png';
+import img4 from '../assets/fcp4.png';
+import img5 from '../assets/fcp5.png';
+import img6 from '../assets/fcp6.png';
 import img7 from '../assets/cp7.png';
 import img8 from '../assets/cp8.png';
 
