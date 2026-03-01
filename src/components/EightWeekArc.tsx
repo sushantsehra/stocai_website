@@ -50,7 +50,7 @@ export default function EightWeekArc() {
          </p>
        </div>
 
-      <div className="relative flex justify-center items-center min-h-[115px] mt-14 md:mt-20">
+      <div className="relative flex justify-center items-center min-h-[115px] md:min-h-[450px] mt-14 md:mt-20">
 
         {modules.map((m, i) => {
           const pos = getPos(i);
@@ -77,22 +77,22 @@ export default function EightWeekArc() {
           return (
             <div
               key={m.id}
-              className={`absolute w-[140px] sm:w-[340px] lg:w-[420px] h-[180px] sm:h-[480px] transition-all duration-700 ease-in-out ${style}`}
+              className={`absolute w-[140px] sm:w-[340px] lg:w-[420px] h-[180px] sm:h-[450px] transition-all duration-700 ease-in-out ${style}`}
             >
               {pos === 0 ? (
-                <div className="bg-white p-[2px] rounded-[40px] shadow-2xl h-full">
+                <div className="bg-white p-[2px] rounded-[11.11px] shadow-2xl h-full">
                   <div className="bg-[#FFFFFF] rounded-[11.11px] p-2 sm:p-10 h-full flex flex-col justify-between text-left">
                     <div className="pt-3">
-                    <p className="text-[#014BAA] text-[7.22px] font-jakarta font-bold mb-1 md:mb-3">
+                    <p className="text-[#014BAA] text-[7.22px] lg:text-2xl font-jakarta font-bold mb-1 md:mb-3 lg:mb-5">
                         Module {m.id}
                       </p>
 
-                      <h3 className="text-[12px] sm:text-2xl font-bold font-quattrocento mb-4">
+                      <h3 className="text-[12px] sm:text-2xl lg:text-4xl font-bold font-quattrocento mb-4">
                         {m.title}
                       </h3>
 
-                      <div className="bg-[#014BAA] rounded-[5.56px] p-1.5 md:p-4">
-                        <p className="text-white text-[7.45px] sm:text-base">
+                      <div className="bg-[#014BAA] rounded-[5.56px] md:rounded-[10px] p-1.5 md:p-4 md:mt-6">
+                        <p className="text-white text-[7.45px] md:text-xl sm:text-base">
                           {m.summary}
                         </p>
                       </div>
@@ -116,15 +116,15 @@ export default function EightWeekArc() {
                   </div>
                 </div>
               ) : (
-                <div className="w-full h-full rounded-[11.11px] p-3 pt-6 bg-[#FFFFFF] text-white shadow-xl text-left">
-                  <p className="text-[7.22px] md:text-sm font-bold font-quattrocento text-[#014BAA] mb-2">
+                <div className="w-full h-full rounded-[11.11px] p-3 pt-6 bg-[#FFFFFF] text-white shadow-xl text-left md:p-6">
+                  <p className="text-[7.22px] md:text-sm lg:text-2xl font-bold font-quattrocento text-[#014BAA] mb-2 md:mb-4 md:mt-3">
                     Module {m.id}
                   </p>
-                  <h3 className="text-[12px] md:text-base font-quattrocento text-black font-bold mb-3">
+                  <h3 className="text-[12px] md:text-base lg:text-4xl font-quattrocento text-black font-bold mb-3">
                     {m.title}
                   </h3>
-                  <div className="bg-[#014BAA] rounded-[5.56px] p-1.5 md:p-4">
-                    <p className="text-white text-[7.45px] sm:text-sm">
+                  <div className="bg-[#014BAA] rounded-[5.56px] md:rounded-[10px] p-1.5 md:p-4 md:mt-8">
+                    <p className="text-white text-[7.45px] sm:text-sm md:text-2xl">
                       {m.summary}
                     </p>
                   </div>
