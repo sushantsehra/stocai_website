@@ -8,8 +8,8 @@ import img3 from '../assets/fcp3.png';
 import img4 from '../assets/fcp4.png';
 import img5 from '../assets/fcp5.png';
 import img6 from '../assets/fcp6.png';
-import img7 from '../assets/cp7.png';
-import img8 from '../assets/cp8.png';
+import img7 from '../assets/fcp7.jpg';
+import img8 from '../assets/fcp8.jpg';
 
 
 const FromCommunity = () => {
