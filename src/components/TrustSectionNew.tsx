@@ -31,16 +31,24 @@ const TrustSection = () => {
       <div className="max-w-full relative z-50 sm:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
 
-          {/* ✅ Always 2 columns: on mobile [55%_45%], on md+ [60%_40%] */}
-          <div className="grid grid-cols-[55%_45%] md:grid-cols-[60%_40%] gap-3 sm:gap-6 md:gap-8 items-start">
-
-            {/* ====== Left Section ====== */}
-            <div className="pt-6 lg:pt-12 text-start pl-3">
-              <h2 className="text-[12px] sm:text-[40px] md:text-[48px] font-bold font-quattrocento leading-tight sm:leading-[48px] text-[#0F1729] mb-5 sm:mb-6">
+          <div className="text-center pt-3 md:pt-0 md:pb-8">
+                <h2 className="text-[12px] sm:text-[40px] md:text-[48px] font-bold font-quattrocento leading-tight sm:leading-[48px] text-[#0F1729] mb-1 sm:mb-6">
                 Who are we and{" "}
                 <br />
                 <span className="text-[#014BAA]">why should you trust us?</span>
               </h2>
+          </div>
+
+          {/* ✅ Always 2 columns: on mobile [55%_45%], on md+ [60%_40%] */}
+          <div className="grid grid-cols-[55%_45%] md:grid-cols-[60%_40%] gap-3 sm:gap-6 md:gap-8 items-start">
+
+            {/* ====== Left Section ====== */}
+            <div className="pt-12 lg:pt-12 text-start pl-3">
+              {/* <h2 className="text-[12px] sm:text-[40px] md:text-[48px] font-bold font-quattrocento leading-tight sm:leading-[48px] text-[#0F1729] mb-5 sm:mb-6">
+                Who are we and{" "}
+                <br />
+                <span className="text-[#014BAA]">why should you trust us?</span>
+              </h2> */}
 
               <p className="text-[7px] sm:text-[18px] md:max-w-2xl leading-[1.8] md:leading-[28px] font-inter font-normal text-[#000000] mb-1 sm:mb-2 max-w-[150px]">
                 We&apos;re not motivational speakers or LinkedIn influencers peddling platitudes. And we&apos;re not here to sell you empty confidence.
