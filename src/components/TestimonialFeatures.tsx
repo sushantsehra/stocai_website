@@ -221,17 +221,15 @@ const TestimonialFeatures: React.FC = () => {
                 fontSize: "11px",
                 color: "#1D1D1D",
               }}
-              className="text-[#1D1D1D] text-center font-medium font-inter sm:text-[12px] p-2">
+              className="text-[#1D1D1D] text-center font-medium font-inter text-[14px] sm:text-[14px] p-2">
               If your colleagues moved up while you moved work, don&apos;t worry.
             </p>
             <h2
               style={{
                 color: "#1D1D1D",
-                fontSize: "24px",
+                // fontSize: "24px",
               }}
-              className="text-[#1D1D1D] font-quattrocento font-bold text-center leading-tight mt-0"
-            // style={{ fontSize: "clamp(32px, 4vw, 56px)", fontWeight: 600 }}
-            >
+              className="text-[#1D1D1D] font-quattrocento font-bold text-center leading-tight mt-0 text-[18px] sm:text-[24px]">
               That. Ends. Here.
             </h2>
           </div>

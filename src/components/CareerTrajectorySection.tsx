@@ -46,7 +46,7 @@ export default function CareerTrajectorySection() {
         </div>
 
         {/* Heading */}
-        <h3 className="text-center font-quattrocento font-bold text-[20px] md:text-[36px] lg:text-[48px] text-[#1D1D1D] mb-4 md:mb-12">
+        <h3 className="text-center font-quattrocento font-bold text-[18px] md:text-[36px] lg:text-[48px] text-[#1D1D1D] mb-4 md:mb-12">
           We Aim to{" "}
           <span className="text-[#1554A5]">Change You</span>
         </h3>

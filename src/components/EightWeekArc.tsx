@@ -39,13 +39,13 @@ export default function EightWeekArc() {
   return (
     <section className="relative bg-white py-5 md:py-20 overflow-hidden">
        <div className="relative z-20 max-w-7xl mx-auto text-center mb-2 md:mb-6">
-         <h2 className="text-[24px] sm:text-[36px] md:text-[48px] font-bold leading-tight md:mb-2">
+         <h2 className="text-[18px] sm:text-[36px] md:text-[48px] font-bold leading-tight md:mb-2">
            <span className="text-[#000000] font-quattrocento">
              The <span className="text-[#014BAA] font-bold">8-Week</span> Arc
            </span>
          </h2>
 
-         <p className="text-[#000000] font-inter text-[14px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-8">
+         <p className="text-[#000000] font-inter text-[12px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-8">
            (With actionable outcomes every week)
          </p>
        </div>

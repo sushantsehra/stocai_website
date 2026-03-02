@@ -32,7 +32,7 @@ const TrustSection = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8">
 
           <div className="text-center pt-3 md:pt-0 md:pb-8">
-                <h2 className="text-[12px] sm:text-[40px] md:text-[48px] font-bold font-quattrocento leading-tight sm:leading-[48px] text-[#0F1729] mb-1 sm:mb-6">
+                <h2 className="text-[18px] sm:text-[40px] md:text-[48px] font-bold font-quattrocento leading-tight sm:leading-[48px] text-[#0F1729] mb-1 sm:mb-6">
                 Who are we and{" "}
                 <br />
                 <span className="text-[#014BAA]">why should you trust us?</span>
