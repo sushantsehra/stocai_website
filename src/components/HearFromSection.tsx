@@ -57,7 +57,7 @@ const HearFromSection = () => {
             lineHeight: 1.2,
             color: "##1D1D1D",
           }}
-          className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[40px] mb-9 md:mb-10"
+          className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[48px] mb-9 md:mb-10 lg:mb-28"
         >
           Hear from those who
           <br />

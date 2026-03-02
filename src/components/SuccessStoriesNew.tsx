@@ -113,7 +113,7 @@ const SuccessStories = () => {
         >
           {/* Header Section */}
           <div className="flex flex-col items-center mt-[-40px]">
-            <h2 className="font-inter font-medium text-[42px] leading-[100%] text-[#F8F3F0] text-center mb-6">
+            <h2 className="font-inter font-medium text-[48px] leading-[100%] text-[#F8F3F0] text-center mb-6">
               Success Stories
             </h2>
 

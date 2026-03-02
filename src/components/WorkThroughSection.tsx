@@ -22,7 +22,7 @@ const WorkThroughSection = () => {
           textAlign: "center",
           fontWeight: 500,
         }}
-        className="px-2 text-[11px] md:text-[20px] font-medium font-inter py-3.5 md:px-8 md:py-10"
+        className="px-2 text-[11px] md:text-[20px] lg:text-[28px] font-medium font-inter py-3.5 md:px-8 md:py-10"
       >
         A strategy system to win your next promotion.....and the one after.
       </div>
@@ -49,7 +49,7 @@ const WorkThroughSection = () => {
               marginBottom: "25px",
               color: "#1D1D1D",
             }}
-            className="font-bold font-quattrocento text-[18px] md:text-[30px]"
+            className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[48px] mb-9 md:mb-10 lg:mb-24 lg:mt-4"
           >
             What You’ll Work Through
           </h2>
@@ -75,7 +75,7 @@ const WorkThroughSection = () => {
                   gap: "8px",
                   textAlign: "left",
                 }}
-                className="p-3 md:p-5"
+                className="p-3 md:p-5 lg:min-h-[90px]"
               >
                 <SiTicktick size={20} color="#161616" />
 

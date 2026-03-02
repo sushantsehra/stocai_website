@@ -118,10 +118,10 @@ const TrustedByProfessionals = () => {
 
   return (
     <div className="w-full overflow-hidden py-1 md:pt-12 bg-white">
-      <p className="text-center text-[#1D1D1D] text-[18px] md:text-[30px] font-medium font-inter">
+      <p className="text-center text-[#1D1D1D] text-[18px] md:text-[30px] lg:text-[48px] font-medium font-inter">
         Trusted by professionals from
       </p>
-      <div className="relative flex overflow-hidden -mt-3 md:-mt-16">
+      <div className="relative flex overflow-hidden -mt-3 md:-mt-16 lg:-mt-8">
         <motion.div
           className="flex gap-1 md:gap-5 items-center"
           animate={{ x: ["0%", "-33.333%"] }}

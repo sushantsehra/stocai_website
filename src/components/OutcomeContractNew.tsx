@@ -17,7 +17,7 @@ const OutcomeContract = () => {
     <section className="bg-white py-7 md:pt-6 md:pb-20 px-8 md:px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Top Heading */}
-        <h2 className="text-[18px] md:text-4xl font-quattrocento font-bold text-black">
+        <h2 className="text-[18px] md:text-4xl lg:text-[48px] font-quattrocento font-bold text-black">
           That’s not all.
         </h2>
 

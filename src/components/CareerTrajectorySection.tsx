@@ -23,7 +23,7 @@ export default function CareerTrajectorySection() {
 
       {/* Top Blue Banner */}
       <div className="bg-[#014BAA] text-white text-center py-3 md:py-2 px-4">
-        <h2 className="font-quattrocento font-bold text-[18px] md:text-[32px] lg:text-[42px]">
+        <h2 className="font-quattrocento font-bold text-[18px] md:text-[32px] lg:text-[48px] lg:py-3">
           Ready to change your career trajectory?
         </h2>
       </div>
@@ -33,12 +33,12 @@ export default function CareerTrajectorySection() {
 
         {/* Sub Text */}
         <div className="text-center mb-4 md:mb-10">
-          <p className="font-semibold font-inter text-black text-[10px] md:text-[18px]">
+          <p className="font-semibold font-inter text-black text-[10px] md:text-[18px] lg:text-[28px]">
             Join professionals who already have!
           </p>
           <p
             style={{ fontWeight: 300 }}
-            className="text-black font-inter text-[10px] md:text-[16px] mt-1 md:mt-2 leading-4 md:leading-relaxed max-w-[280px] md:max-w-none mx-auto"
+            className="text-black font-inter text-[10px] md:text-[16px] lg:text-[24px] mt-1 md:mt-1 leading-4 md:leading-relaxed max-w-[280px] md:max-w-none mx-auto"
           >
             From Fortune 500 companies to fast-growing startups –
             real people, real promotions
@@ -46,7 +46,7 @@ export default function CareerTrajectorySection() {
         </div>
 
         {/* Heading */}
-        <h3 className="text-center font-quattrocento font-bold text-[20px] md:text-[36px] text-[#1D1D1D] mb-4 md:mb-12">
+        <h3 className="text-center font-quattrocento font-bold text-[20px] md:text-[36px] lg:text-[48px] text-[#1D1D1D] mb-4 md:mb-12">
           We Aim to{" "}
           <span className="text-[#1554A5]">Change You</span>
         </h3>

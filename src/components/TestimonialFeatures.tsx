@@ -156,7 +156,7 @@ const TestimonialFeatures: React.FC = () => {
         <div className="hidden sm:block w-full md:flex-1 flex flex-col justify-start">
           {/* Heading */}
           <div>
-            <p className="font-inter font-medium text-[21.8px] leading-normal tracking-normal text-[#1D1D1D] p-2">
+            <p className="font-inter font-medium text-[21.8px] md:text-[25px] leading-normal tracking-normal text-[#1D1D1D] p-2">
               If your colleagues moved up while you moved work, don&apos;t worry.
             </p>
             <h2 className="text-[#1D1D1D] font-quattrocento font-bold text-start leading-tight mt-0 text-[clamp(42px,4vw,56px)]">

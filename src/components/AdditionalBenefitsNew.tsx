@@ -67,7 +67,7 @@ const AdditionalBenefitsNew = () => {
 
       {/* Title */}
       <h2 className="text-center text-[#0F1729] font-quattrocento font-bold 
-                     text-[18px] sm:text-[28px] md:text-[40px] 
+                     text-[18px] sm:text-[28px] md:text-[40px] lg:text-[48px] 
                      mb-4 md:mt-20 md:mb-8">
         1344 hours of strategic insights
       </h2>

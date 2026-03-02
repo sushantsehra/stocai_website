@@ -32,7 +32,7 @@ const FromCommunity = () => {
             <div className="md:hidden max-w-6xl mx-auto px-4 flex flex-col items-center">
 
                 {/* Title */}
-                <h2 className="title-from-community mb-28">
+                <h2 className="title-from-community mb-28 lg:text-[48px]">
                     From the community
                 </h2>
 
@@ -130,7 +130,7 @@ const FromCommunity = () => {
             <div className="hidden md:flex flex-col items-center w-full mx-auto">
 
                 {/* Title */}
-                <h2 className="font-bold font-quattrocento text-[24px] lg:text-[40px] text-[#1D1D1D] text-center mb-0">
+                <h2 className="font-bold font-quattrocento text-[24px] lg:text-[48px] text-[#1D1D1D] text-center mb-0">
                     From The Community
                 </h2>
 

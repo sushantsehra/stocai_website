@@ -41,7 +41,7 @@ const ReviewedByProfessionals = () => {
 
         {/* Heading */}
         <h2 className="text-center font-quattrocento font-bold 
-                       text-[18px] md:text-[36px] lg:text-[44px] 
+                       text-[18px] md:text-[36px] lg:text-[48px] 
                        text-[#1D1D1D] mb-2 md:mb-14">
           Reviewed by{" "}
           <span className="text-[#014BAA]">professionals</span>
