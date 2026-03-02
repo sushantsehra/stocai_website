@@ -3,10 +3,10 @@
 import React from "react";
 
 const row1 = [
-  {
-    title: "2-month intensive program",
-    subtitle: "(self-paced modules)",
-  },
+  // {
+  //   title: "2-month intensive program",
+  //   subtitle: "(self-paced modules)",
+  // },
   {
     title: "12 months of ongoing support",
     subtitle: "and community access",
@@ -26,10 +26,10 @@ const row2 = [
     title: "2-month intensive program",
     subtitle: "(self-paced modules)",
   },
-  {
-    title: "2-month intensive program",
-    subtitle: "(self-paced modules)",
-  },
+  // {
+  //   title: "2-month intensive program",
+  //   subtitle: "(self-paced modules)",
+  // },
 ];
 
 const ScrollingFeatures = () => {
