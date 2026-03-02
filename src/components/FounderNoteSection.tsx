@@ -7,7 +7,7 @@ import founderPicture from "../assets/SushantPicture.png";
 
 export default function FounderNoteSection() {
   return (
-    <section className="relative w-full mt-8 aspect-[1000/660] md:aspect-[1500/650] overflow-hidden">
+    <section className="relative w-full mt-8 aspect-[1000/660] md:aspect-[1500/600] overflow-hidden">
       
       {/* Background Image */}
       <Image
@@ -36,10 +36,10 @@ export default function FounderNoteSection() {
                   sm:h-[80%]
                   md:h-[80%]
                   lg:h-[85%]
-                  // xl:h-[100%]
+                  2xl:h-[150%]
                   w-auto
                   object-contain
-                  translate-y-3.5
+                  translate-y-3.5 2xl:translate-y-60
                 "
               />
             </div>
@@ -47,20 +47,20 @@ export default function FounderNoteSection() {
             {/* RIGHT SIDE TEXT */}
             <div className="w-full lg:w-1/2 text-white lg:pl-10 pb-6 lg:pb-12">
 
-              <div className="translate-x-[-15%] lg:mb-[15%]">
-                <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[66px] leading-6 md:leading-tight lg:leading-[70px]">
+              <div className="translate-x-[-15%] lg:mb-[15%] 2xl:mb-[10%]">
+                <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[66px] 2xl:text-[80px] leading-6 md:leading-tight lg:leading-[70px] 2xl:leading-[80px]">
                 A note from <br />
                 <span className="font-bold">
                   Sushant Sehra
                 </span>
               </h2>
 
-              <p className="md:mt-0 text-[8px] font-inter font-medium sm:text-base lg:text-lg xl:text-2xl opacity-100">
+              <p className="2xl:mt-1 text-[8px] font-inter font-medium sm:text-base lg:text-lg xl:text-2xl 2xl:text-3xl opacity-100">
                 Founder, Better Corporate Life
               </p>
               </div>
 
-              <div className="mt-3 md:mt-2 space-y-2 md:space-y-4 lg:space-y-4 xl:space-y-6 font-inter font-normal text-[8px] sm:text-base lg:text-lg xl:text-lg leading-relaxed opacity-100">
+              <div className="mt-3 md:mt-2 2xl:mt-4 space-y-2 md:space-y-4 lg:space-y-4 xl:space-y-6 font-inter font-normal text-[8px] sm:text-base lg:text-lg xl:text-lg 2xl:text-2xl leading-relaxed opacity-100">
                 
                 <p>
                   <span className="font-bold">Be Promotable</span> is designed
