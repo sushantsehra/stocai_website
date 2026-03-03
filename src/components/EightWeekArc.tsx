@@ -15,7 +15,7 @@ const modules = [
 ];
 
 export default function EightWeekArc() {
-  const [current, setCurrent] = useState(2);
+  const [current, setCurrent] = useState(0);
 
   const handlePrev = () =>
     setCurrent((p) => (p === 0 ? modules.length - 1 : p - 1));
