@@ -80,7 +80,7 @@ const SuccessStories = () => {
                   </div>
                 </div>
                 <div className="p-2 bg-[#181818] flex-grow">
-                  <p className="text-[#F8F3F0] font-medium font-inter text-[9px] mt-2 mb-[10px] leading-[9px]">
+                  <p className="text-[#F8F3F0] font-medium font-inter text-[9px] mt-2 mb-[10px] leading-[10px] md:leading-[9px]">
                     {card.text}
                   </p>
                   <h3 className="text-[#F8F3F0] font-medium font-inter text-[10px] mb-1">
