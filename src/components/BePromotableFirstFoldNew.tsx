@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import harshImg from '../assets/harshImg.jpg';
-import harshImage from '../assets/HarshAFI.png';
+// import harshImg from '../assets/harshImg.jpg';
+// import harshImage from '../assets/HarshAFI.png';
+import harshImg from '../assets/harshMehtaCI.png';
+import harshImage from '../assets/harshMehtaFI.png';
 import { GoArrowRight } from "react-icons/go";
 
 export default function BePromotableFirstFold() {
