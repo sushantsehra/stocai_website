@@ -20,7 +20,7 @@ export default function FounderNoteSection() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="max-w-7xl mx-auto px-2 sm:px-10 lg:px-16 w-full h-full">
+        <div className="max-w-7xl lg:max-w-none mx-auto px-2 sm:px-10 lg:px-[11.5vw] w-full h-full">
           
           {/* Main Row */}
           <div className="flex flex-row items-end justify-between h-full">
@@ -36,31 +36,33 @@ export default function FounderNoteSection() {
                   sm:h-[80%]
                   md:h-[80%]
                   lg:h-[85%]
-                  2xl:h-[150%]
+                  xl:h-[88%]
+                  2xl:h-[92%]
                   w-auto
                   object-contain
-                  translate-y-3.5 2xl:translate-y-60
+                  lg:object-bottom lg:object-left-bottom
+                  translate-y-3.5 lg:translate-y-0
                 "
               />
             </div>
 
             {/* RIGHT SIDE TEXT */}
-            <div className="w-full lg:w-1/2 text-white lg:pl-10 pb-6 lg:pb-12">
+            <div className="w-full lg:w-1/2 text-white lg:pl-[3vw] pb-6 lg:pb-[5vw]">
 
-              <div className="translate-x-[-15%] lg:mb-[15%] 2xl:mb-[10%]">
-                <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[66px] 2xl:text-[80px] leading-6 md:leading-tight lg:leading-[70px] 2xl:leading-[80px]">
+              <div className="translate-x-[-15%] lg:mb-[1vw] 2xl:mb-[1vw]">
+                <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[2.8vw] xl:text-[3.2vw] 2xl:text-[3.8vw] leading-6 md:leading-tight lg:leading-[1.1] xl:leading-[1.1] 2xl:leading-[1.1]">
                 A note from <br />
                 <span className="font-bold">
                   Sushant Sehra
                 </span>
               </h2>
 
-              <p className="2xl:mt-1 text-[8px] font-inter font-medium sm:text-base lg:text-lg xl:text-2xl 2xl:text-3xl opacity-100">
+              <p className="mt-1 2xl:mt-[1vw] text-[8px] font-inter font-medium sm:text-base lg:text-[1vw] xl:text-[1.2vw] 2xl:text-[1.4vw] opacity-100">
                 Founder, Better Corporate Life
               </p>
               </div>
 
-              <div className="mt-3 md:mt-2 2xl:mt-4 space-y-2 md:space-y-4 lg:space-y-4 xl:space-y-6 font-inter font-normal text-[8px] sm:text-base lg:text-lg xl:text-lg 2xl:text-2xl leading-relaxed opacity-100">
+              <div className="mt-3 md:mt-2 lg:mt-0 2xl:mt-0 space-y-2 md:space-y-4 lg:space-y-[1.5vw] xl:space-y-[2vw] font-inter font-normal text-[8px] sm:text-base lg:text-[0.9vw] xl:text-[1.1vw] 2xl:text-[1.3vw] leading-relaxed opacity-100">
                 
                 <p>
                   <span className="font-bold">Be Promotable</span> is designed
