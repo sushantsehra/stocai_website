@@ -26,6 +26,8 @@ import AdditionalBenefitsNew from "./AdditionalBenefitsNew";
 import TrustSectionNew from "./TrustSectionNew";
 import PromotableHeroWaitlist from "./PromotableHeroWaitlist";
 import posthog from "posthog-js";
+import env from "@/utils/env";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
 
@@ -65,7 +67,70 @@ const BMPLandingComponents = () => {
 
   // Called by both StickyCTA and WaitlistSection when user clicks "Request Access"
   const handleRequestAccess = async (userData: UserData) => {
-    // Store data to pre-fill modal, then open it immediately
+    // ── Call waitlist API immediately 
+    try {
+      const fullPhone =
+        userData.fullPhone || `${userData.countryCode}${userData.phone}`;
+
+      posthog.capture("waitlist_submit_attempt", {
+        source: userData.source,
+        path: typeof window !== "undefined" ? window.location.pathname : "",
+      });
+      pushToDataLayer({
+        event: "waitlist_submit_attempt",
+        source: userData.source,
+      });
+
+      const response = await fetch(`${env.apiUrl}/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: userData.name.trim(),
+          email: userData.email.trim(),
+          phone: fullPhone,
+          source: userData.source,
+          attribution: getAttributionForApi(),
+        }),
+      });
+
+      const waitlistData = await response.json().catch(() => ({}));
+
+      if (response.ok) {
+        posthog.capture("waitlist_submitted", {
+          source: userData.source,
+          payment_started: true,
+        });
+        pushToDataLayer({
+          event: "waitlist_submitted",
+          source: userData.source,
+          payment_started: true,
+        });
+      } else {
+        posthog.capture("waitlist_submit_failed", {
+          source: userData.source,
+          error: waitlistData?.error || "unknown_error",
+        });
+        pushToDataLayer({
+          event: "waitlist_submit_failed",
+          source: userData.source,
+          error: waitlistData?.error || "unknown_error",
+        });
+      }
+    } catch (err) {
+      // Log but do not block — still open the modal for payment
+      posthog.capture("waitlist_submit_failed", {
+        source: userData.source,
+        error: err instanceof Error ? err.message : "unknown_error",
+      });
+      pushToDataLayer({
+        event: "waitlist_submit_failed",
+        source: userData.source,
+        error: err instanceof Error ? err.message : "unknown_error",
+      });
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
+    // Store data to pre-fill modal, then open it
     setModalInitialData(userData);
     setIsModalOpen(true);
   };
