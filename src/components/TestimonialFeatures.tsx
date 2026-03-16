@@ -215,6 +215,72 @@ const TestimonialFeatures: React.FC = () => {
         {/* Mobile version — Heading + Features */}
         <div className="block sm:hidden w-full md:flex-1 flex flex-col justify-start">
           {/* Heading */}
+
+          <div className="w-full py-5 px-4">
+            <div className="max-w-full">
+              {/* Heading */}
+              <h2 className="text-center font-quattrocento font-bold text-[16px] leading-[22px] text-[#1D1D1D] mb-4">
+                Triple your chances of promotion in the next 6–12 months.
+              </h2>
+
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-2 gap-6 items-start w-full">
+
+                {/* LEFT SIDE */}
+                <div className="">
+
+                  <p className="text-[9px] font-inter text-[#1D1D1D] mb-3 ml-1">
+                    Most professionals believe promotions depend on:
+                  </p>
+
+                  <div className="bg-[#D9D9D9] rounded-[8px] p-4 w-full">
+
+                    <ul className="list-disc pl-1 text-[8px] font-inter space-y-1 text-[#1D1D1D]">
+                      <li>Working harder</li>
+                      <li>Waiting longer</li>
+                      <li>Pleasing their manager</li>
+                    </ul>
+
+                  </div>
+
+                  <p className="text-[9px] font-normal font-inter mt-4 text-[#1D1D1D]">
+                    None of these move the needle.
+                  </p>
+
+                  <div className="text-[#014BAA] text-[20px]">
+                    →
+                  </div>
+
+                </div>
+
+
+                {/* RIGHT SIDE */}
+                <div className="border-l border-gray-400 pl-4">
+
+                  <p className="text-[9px] font-inter font-normal text-[#1D1D1D] mb-3 ml-1">
+                    Promotions happen when leadership sees three signals:
+                  </p>
+
+                  <div className="bg-[#014BAA] text-white rounded-xl p-3 w-full">
+
+                    <ul className="list-disc pl-5 text-[8px] font-inter font-normal space-y-1">
+                      <li>Influence across teams</li>
+                      <li>Strategic thinking</li>
+                      <li>Visible impact on business outcomes</li>
+                    </ul>
+
+                  </div>
+
+                  <p className="text-[9px] mt-3 font-inter font-regular text-[#1D1D1D]">
+                    This program teaches you how to build those signals intentionally.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
           <div>
             <p
               style={{
@@ -244,27 +310,6 @@ const TestimonialFeatures: React.FC = () => {
             }}
             className="grid grid-cols-2  gap-2 mt-10 p-2 px-6">
             {FEATURES.map((feature) => (
-              // <div
-              //   key={feature.title}
-              //   style={{
-              //     backgroundColor: "#E6F1FF",
-              //     borderRadius: "5px",
-              //   }}
-              //   className="bg-[#E6F1FF] flex flex-col gap-1 max-w-[200px] md:max-w-auto rounded-[5px] p-4 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
-              // >
-              //   <div>
-              //     <h3
-              //       className="text-[#014BAA] font-bold font-quattrocento text-[12px] font-semibold leading-4 mb-1">
-              //       {feature.title}
-              //     </h3>
-              //   </div>
-              //   <div>
-              //     <p className="text-[#1D1D1D] text-[8px] font-normal font-inter leading-3">
-              //       {feature.description}
-              //     </p>
-              //   </div>
-
-              // </div>
               <div
                 key={feature.title}
                 className="relative bg-[#E6F1FF] rounded-[8px] p-4 flex flex-col gap-2"
@@ -301,7 +346,76 @@ const TestimonialFeatures: React.FC = () => {
             </p>
           </div>
         </div>
+
+
       </div>
+
+        <div className="w-full py-4 pb-10 px-1 hidden md:block">
+            <div className="max-w-7xl mx-auto">
+
+              {/* Heading */}
+              <h2 className="text-center font-quattrocento font-bold text-[48px] leading-[49px] text-[#1D1D1D] mb-10">
+                Triple your chances of promotion in the next 6–12 months.
+              </h2>
+
+              {/* Two Column Layout */}
+              <div className="grid md:grid-cols-2 gap-10 items-start">
+
+                {/* LEFT SIDE */}
+                <div>
+
+                  <p className="text-[22px] font-inter text-[#1D1D1D] mb-6">
+                    Most professionals believe promotions depend on:
+                  </p>
+
+                  <div className="bg-[#D9D9D9] rounded-xl p-6 w-full">
+
+                    <ul className="list-disc pl-5 text-[22px] font-inter space-y-1 text-[#1D1D1D]">
+                      <li>Working harder</li>
+                      <li>Waiting longer</li>
+                      <li>Pleasing their manager</li>
+                    </ul>
+
+                  </div>
+
+                  <p className="text-[22px] font-inter mt-6 text-[#1D1D1D]">
+                    None of these move the needle.
+                  </p>
+
+                  <div className="text-[#014BAA] font-inter text-[30px] mt-3">
+                    →
+                  </div>
+
+                </div>
+
+
+                {/* RIGHT SIDE */}
+                <div className="border-l border-gray-400 pl-10">
+
+                  <p className="text-[22px] font-inter text-[#1D1D1D] mb-6">
+                    Promotions happen when leadership sees three signals:
+                  </p>
+
+                  <div className="bg-[#014BAA] text-white rounded-xl p-6 w-full">
+
+                    <ul className="list-disc pl-5 text-[22px] font-inter space-y-1">
+                      <li>Influence across teams</li>
+                      <li>Strategic thinking</li>
+                      <li>Visible impact on business outcomes</li>
+                    </ul>
+
+                  </div>
+
+                  <p className="text-[22px] mt-6 font-inter text-[#1D1D1D]">
+                    This program teaches you how to build those signals intentionally.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+        </div>
     </section>
   );
 };
