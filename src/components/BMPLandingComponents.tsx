@@ -176,7 +176,7 @@ const BMPLandingComponents = () => {
         <SuccessStories />
         <WorkThroughSection />
         <HearFromSection />
-        <WhoIsThisFor />
+        {/* <WhoIsThisFor /> */}
         <ReviewedByProfessionals />
         <CareerTrajectorySection />
         <LearningExperienceNew />

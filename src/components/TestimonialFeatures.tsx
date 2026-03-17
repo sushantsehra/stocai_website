@@ -7,6 +7,7 @@ import learning from "../assets/learning.png";
 import helpingHand from "../assets/helpingHand.png";
 import qualityCertificate from "../assets/qualityCertificate.png";
 import realtor from "../assets/realtor.png";
+import WhoIsThisFor from "./WhoIsThisFor";
 
 
 // const FEATURES = [
@@ -218,9 +219,11 @@ const TestimonialFeatures: React.FC = () => {
 
           <div className="w-full py-5 px-4">
             <div className="max-w-full">
+
+              <WhoIsThisFor />
               {/* Heading */}
               <h2 className="text-center font-quattrocento font-bold text-[16px] leading-[22px] text-[#1D1D1D] mb-4">
-                Triple your chances of promotion in the next 6–12 months.
+                Triple your chances of promotion in the next 8 weeks.
               </h2>
 
               {/* Two Column Layout */}
@@ -353,9 +356,11 @@ const TestimonialFeatures: React.FC = () => {
         <div className="w-full py-4 pb-10 px-1 hidden md:block">
             <div className="max-w-7xl mx-auto">
 
+              <WhoIsThisFor />
+
               {/* Heading */}
               <h2 className="text-center font-quattrocento font-bold text-[48px] leading-[49px] text-[#1D1D1D] mb-10">
-                Triple your chances of promotion in the next 6–12 months.
+                Triple your chances of promotion in the next 8 weeks.
               </h2>
 
               {/* Two Column Layout */}
