@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SiTicktick } from "react-icons/si";
+// import { SiTicktick } from "react-icons/si";
 
 const ITEMS = [
   // "How decision-makers think at your level",

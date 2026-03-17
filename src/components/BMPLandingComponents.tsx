@@ -13,7 +13,7 @@ import TrustedByProfessionals from "./TrustedByProfessionals";
 import SuccessStories from "./SuccessStoriesNew";
 import WorkThroughSection from "./WorkThroughSection";
 import HearFromSection from "./HearFromSection";
-import WhoIsThisFor from "./WhoIsThisFor";
+// import WhoIsThisFor from "./WhoIsThisFor";
 import ReviewedByProfessionals from "./ReviewedByProfessionals";
 import EightWeekArc from "./EightWeekArc";
 import ScrollingFeatures from "./ScrollingFeatures";

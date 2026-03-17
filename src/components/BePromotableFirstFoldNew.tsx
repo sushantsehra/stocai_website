@@ -1,1140 +1,350 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 import Image from 'next/image';
-// import harshImg from '../assets/harshImg.jpg';
-// import harshImage from '../assets/HarshAFI.png';
 import harshImg from '../assets/harshMehtaCI.png';
 import harshImage from '../assets/harshMehtaFI.png';
-import { GoArrowRight } from "react-icons/go";
+import type { StaticImageData } from "next/image";
 
-export default function BePromotableFirstFold() {
+interface IDCardProps {
+  variant: "current" | "future";
+  name: string;
+  role: string;
+  status: string;
+  visibilityScore: string;
+  influenceRating: string;
+  accessLevel: string;
+  knownFor: string[];
+  promotabilityQuotient: number;
+  avatarInitials: string;
+  // profile?: any;
+  profile?: StaticImageData | string;
+}
 
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  // Auto-flip every 3 seconds on small devices
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsFlipped((prev) => !prev);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const scrollToWaitlist = () => {
-    const element = document.getElementById('waitlist');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const profile = {
-    name: "Harsh Agarwal",
-    currentState: {
-      image: harshImg,
-      status: "Invisible Contributor",
-      title: "SOFTWARE DEVELOPER",
-      visibilityScore: "34/100",
-      influenceRating: "Operational",
-      accessLevel: "Restricted",
-      knownFor: [
-        "Task Management",
-        "Fixing Problems Quietly",
-        "Subject Matter Expertise",
-        "Tactical Execution"
-      ],
-      promotabilityQuotient: "34%"
-    },
-    futureState: {
-      image: harshImage,
-      status: "Business Driver",
-      title: "SENIOR PRODUCT MANAGER",
-      visibilityScore: "92/100",
-      influenceRating: "Strategic",
-      accessLevel: "Unrestricted",
-      knownFor: [
-        "Stakeholder Management",
-        "Executive Communication",
-        "Cross-functional Leadership",
-        "Big-picture Thinking"
-      ],
-      promotabilityQuotient: "94%"
-    }
-  };
+function IDCard({
+  variant,
+  name,
+  role,
+  status,
+  visibilityScore,
+  influenceRating,
+  accessLevel,
+  knownFor,
+  promotabilityQuotient,
+  avatarInitials,
+  profile
+}: IDCardProps) {
+  const isCurrent = variant === "current";
 
   return (
-    <>
-      {/* ================= DESKTOP VERSION ================= */}
-      <div className="hidden lg:block bg-[#FFFFFF] py-12 px-8 relative overflow-hidden">
-        <div className="container mx-auto relative z-10 max-w-7xl">
+    <div className="relative w-[300px] md:w-[420px] bg-white rounded-[20px] border-2 border-[#E5E5E5] shadow-2xl overflow-hidden">
 
-          {/* Top Heading */}
-          <div className="mb-12" style={{
-            transform: "translateX(-50px)"
-          }}>
-            <h2 className="text-5xl xl:text-[64px] font-jakarta font-normal text-black mb-1">
-              #BePromotable.
-            </h2>
-            <h3 className="text-5xl xl:text-[68px] font-jakarta font-semibold text-[#014BAA] leading-tight">
-              Stop Being Overlooked.
-            </h3>
-          </div>
+      {/* Header */}
+      <div
+        className={`pt-3 sm:pt-6 px-4 relative min-h-[60px] sm:min-h-[100px] ${
+          isCurrent ? "bg-black" : "bg-[#0B64F4]"
+        }`}
+      >
+        <h4 className="text-[5px] sm:text-[11px] font-semibold font-montserrat uppercase tracking-widest text-center text-white">
+          {isCurrent ? "Current State" : "Future You"}
+        </h4>
+      </div>
 
-          {/* Main Flex: Cards Left, Text Right */}
-          <div className="flex items-center gap-8 xl:gap-12">
+      {/* Avatar overlapping header */}
+      <div className="relative flex justify-center mt-[-30px] md:mt-[-44px]" 
+      // style={{ marginTop: "-30px" }}
+      >
+        <div className="w-12 h-12 sm:w-24 sm:h-24 rounded-full border-[3px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
 
-            {/* LEFT: Cards — side by side, overlapping, with tilt */}
-            <div className="flex-1 relative" style={{ height: '600px', width: '70%' }}>
-
-              {/* Current State Card — behind, tilted slightly left, offset left */}
-              <div
-                className="absolute"
-                style={{
-                  transform: "rotate(-8deg)",
-                  transformOrigin: "bottom center",
-                  left: '0px',
-                  top: '30px',
-                  zIndex: 10,
-                }}
-              >
-                <div style={{
-                  width: "340px"
-                }} className="bg-white rounded-[25px] border-2 border-[#D9D9D9] w-[300px] xl:w-[320px] shadow-2xl overflow-hidden">
-                  {/* Black Header */}
-                  <div className="bg-black pt-7 px-4 relative min-h-[140px]">
-                    <h4 className="text-[13px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
-                      Current State
-                    </h4>
-                  </div>
-
-                  {/* Avatar overlapping header */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-[60px]">
-                    <div className="w-28 h-28 xl:w-32 xl:h-32 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
-                      <div className="relative w-full h-full rounded-full flex items-center justify-center scale-[0.95]">
-                        <div className="relative w-[100px] h-[100px] xl:w-[115px] xl:h-[115px] rounded-full overflow-hidden">
-                          <Image
-                            src={profile.currentState.image}
-                            alt="Current State"
-                            fill
-                            className="object-cover rounded-full scale-[1.05]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white px-5 py-5 mt-10 xl:mt-12">
-                    <div className="flex flex-col items-center mb-3">
-                      <h5 className="text-base xl:text-lg font-medium font-gotham text-[#1C1C1C]">{profile.name}</h5>
-                      <p className="text-xs xl:text-sm font-normal font-gotham text-[#1C1C1C] mt-1">{profile.currentState.title}</p>
-                    </div>
-
-                    <div className="text-sm space-y-1.5 mb-5 border-y py-3 border-[#E3E3E3]">
-                      {[
-                        { label: "Status", value: profile.currentState.status },
-                        { label: "Visibility Score", value: profile.currentState.visibilityScore },
-                        { label: "Influence Rating", value: profile.currentState.influenceRating },
-                        { label: "Access Level", value: profile.currentState.accessLevel },
-                      ].map((item, index) => (
-                        <div key={index} className="flex items-center">
-                          <span className="text-[#7A7777] font-semibold text-[10px] uppercase tracking-wide font-jakarta w-[110px]">
-                            {item.label}
-                          </span>
-                          <span className="text-[#B3B3B3] text-[10px] font-extrabold w-[8px] text-center ml-3">:</span>
-                          <span className="text-black font-semibold text-[10px] font-jakarta flex-1 ml-3">
-                            {item.value}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="text-left mb-4">
-                      <p className="font-montserrat text-[10px] text-black mb-2 uppercase tracking-wide font-bold">
-                        Known For
-                      </p>
-                      <ul className="text-xs font-normal text-[#323232] space-y-1">
-                        {profile.currentState.knownFor.map((item, index) => (
-                          <li key={index} className="flex items-start">
-                            <div className="mr-2 h-1 bg-black w-1 rounded-full mt-[3%] shrink-0"></div>
-                            <span className="font-jakarta">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="border-t border-gray-200 pt-4 pb-2">
-                      <div className="flex justify-center items-center mb-2">
-                        <span className="text-[10px] uppercase font-montserrat tracking-wide font-bold text-black">
-                          Promotability Quotient{" "}
-                          <span className="font-bold ml-1 text-black text-sm font-montserrat">
-                            {profile.currentState.promotabilityQuotient}
-                          </span>
-                        </span>
-                      </div>
-                      <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-black rounded-full transition-all duration-500"
-                          style={{ width: profile.currentState.promotabilityQuotient }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Future You Card — front, tilted slightly right, offset right */}
-              <div
-                className="absolute"
-                style={{
-                  transform: "rotate(8deg)",
-                  transformOrigin: "bottom center",
-                  left: '230px',
-                  top: '0px',
-                  zIndex: 20,
-                }}
-              >
-                <div style={{
-                  width: "340px",
-                }} className="bg-white rounded-[25px] border-2 border-[#E9E9E9] w-[300px] xl:w-[320px] shadow-2xl overflow-hidden">
-                  {/* Blue Header */}
-                  <div className="bg-[#0B64F4] pt-7 px-4 relative min-h-[140px]">
-                    <h4 className="text-[13px] ml-2 font-montserrat uppercase text-white tracking-widest font-semibold text-center">
-                      Future You
-                    </h4>
-                  </div>
-
-                  {/* Avatar overlapping header */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-[60px]">
-                    <div className="w-28 h-28 xl:w-32 xl:h-32 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
-                      <div className="relative w-full h-full rounded-full flex items-center justify-center scale-[0.95]">
-                        <div className="relative w-[100px] h-[100px] xl:w-[115px] xl:h-[115px] rounded-full overflow-hidden">
-                          <Image
-                            src={profile.futureState.image}
-                            alt="Future State"
-                            fill
-                            className="object-cover rounded-full scale-[1.1]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white px-5 py-5 mt-10 xl:mt-12">
-                    <div className="flex flex-col items-center mb-3">
-                      <h5 className="text-base xl:text-lg font-medium text-[#1C1C1C] font-gotham">{profile.name}</h5>
-                      <p className="text-xs xl:text-sm font-normal text-[#1C1C1C] font-gotham mt-1">{profile.futureState.title}</p>
-                    </div>
-
-                    <div className="text-sm space-y-1.5 mb-5 border-y py-3 border-[#E3E3E3]">
-                      {[
-                        { label: "Status", value: profile.futureState.status },
-                        { label: "Visibility Score", value: profile.futureState.visibilityScore },
-                        { label: "Influence Rating", value: profile.futureState.influenceRating },
-                        { label: "Access Level", value: profile.futureState.accessLevel },
-                      ].map((item, index) => (
-                        <div key={index} className="flex items-center">
-                          <span className="text-[#7A7777] font-semibold text-[10px] uppercase tracking-wide font-jakarta w-[110px]">
-                            {item.label}
-                          </span>
-                          <span className="text-[#B3B3B3] font-extrabold text-[10px] w-[8px] text-center ml-3">:</span>
-                          <span className="text-black font-semibold text-[10px] font-jakarta flex-1 ml-3">
-                            {item.value}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="text-left mb-3">
-                      <p className="font-montserrat text-[10px] text-[#0B64F4] mb-2 uppercase tracking-wide font-bold">
-                        Known For
-                      </p>
-                      <ul className="text-xs font-normal text-[#323232] space-y-1">
-                        {profile.futureState.knownFor.map((item, index) => (
-                          <li key={index} className="flex items-start">
-                            <div className="mr-2 h-1 bg-black w-1 rounded-full mt-[3%] shrink-0"></div>
-                            <span className="font-jakarta">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="border-t border-gray-200 pt-4 pb-2">
-                      <div className="flex justify-center items-center mb-2">
-                        <span className="text-[10px] font-montserrat uppercase tracking-wide font-bold text-[#0B64F4]">
-                          Promotability Quotient{" "}
-                          <span className="font-bold text-[#0B64F4] ml-1 text-sm font-montserrat">
-                            {profile.futureState.promotabilityQuotient}
-                          </span>
-                        </span>
-                      </div>
-                      <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-[#0B64F4] rounded-full transition-all duration-500"
-                          style={{ width: profile.futureState.promotabilityQuotient }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+          {profile ? (
+            <Image
+              src={profile}
+              alt={name}
+              className="w-10 h-10 sm:w-[86px] sm:h-[86px] rounded-full object-cover"
+            />
+          ) : (
+            <div
+              className={`w-10 h-10 sm:w-[86px] sm:h-[86px] rounded-full flex items-center justify-center text-xl font-bold ${
+                isCurrent ? "bg-gray-900 text-white" : "bg-blue-600 text-white"
+              }`}
+            >
+              {avatarInitials}
             </div>
+          )}
 
-            {/* RIGHT: Text */}
-            <div className="w-[330px] md:w-[40%] shrink-0 relative z-20">
-              <p className="text-[#014BAA] font-jakarta text-[28px]  mb-8 leading-9">
-                The exclusive 2-month intensive program that transforms{" "}
-                <span className="font-bold">experienced professionals.</span>
-              </p>
-              <p className="text-[#464646] font-inter font-medium text-sm md:text-[19px] mb-8 leading-relaxed">
-                Triple your chances of getting promoted in the next 8 weeks by mastering how promotions actually work.
-              </p>
-              <button
-                onClick={scrollToWaitlist}
-                className="bg-[#014BAA] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-lg px-8 py-4 rounded-[12px] shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center gap-3"
-              >
-                Request Access <span>→</span>
-              </button>
-            </div>
-
-          </div>
         </div>
       </div>
 
-      {/* ================= MOBILE VERSION ================= */}
-      <div className="block lg:hidden bg-white px-2 py-6">
+      <div className="bg-white px-5 py-1 sm:py-4">
 
-        {/* Header */}
-        <div className="text-center mb-4">
-          <h2 className="text-[24px] md:text-[30px] font-quattrocento font-normal text-black leading-tight">
-            #BePromotable.
-          </h2>
-          <h3 className="text-[28px] font-jakarta font-medium text-[#014BAA] mt-0.5 leading-tight">
-            Stop Being Overlooked.
-          </h3>
+        {/* Name + Role */}
+        <div className="flex flex-col items-center mb-1 sm:mb-3">
+          <h5 className="text-[8px] sm:text-base text-[#1C1C1C] font-semibold font-jakarta">{name}</h5>
+
+          <p className="text-[5.5px] sm:text-[11px] text-[#1C1C1C] mt-0.5 sm:mt-1 font-normal font-jakarta uppercase tracking-wide">
+            {role}
+          </p>
         </div>
 
-        {/* Flip Card Container */}
-        <div
-          className="relative mx-auto mb-4 cursor-pointer"
-          style={{ width: '300px', height: '550px', perspective: '1200px' }}
-          onClick={() => setIsFlipped((prev) => !prev)}
-        >
-          {/* Inner wrapper that flips */}
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'relative',
-              transformStyle: 'preserve-3d',
-              transition: 'transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1)',
-              transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-            }}
+        {/* Stats */}
+        <div className="space-y-0 md:space-y-1.5 mb-4 border-y-[0.5px] md:py-3 border-[#E3E3E3]">
+
+          {[
+            { label: "Status", value: status },
+            { label: "Visibility Score", value: visibilityScore },
+            { label: "Influence Rating", value: influenceRating },
+            { label: "Access Level", value: accessLevel },
+          ].map((item, index) => (
+            <div key={index} className="flex items-center justify-between">
+
+              <span className="text-[#7A7777] font-semibold font-jakarta text-[4px] sm:text-[10px] uppercase tracking-wide w-[40px] md:w-[110px]">
+                {item.label}
+              </span>
+
+              <span className="text-[#B3B3B3] text-[10px] font-extrabold w-[8px] text-center ml-2">
+                :
+              </span>
+
+              <span className="text-black font-semibold font-jakarta text-[4px] sm:text-[10px] flex-1 ml-2">
+                {item.value}
+              </span>
+
+            </div>
+          ))}
+
+        </div>
+
+        {/* Known For */}
+        <div className="text-left mb-0 md:mb-4 pb-2">
+
+          <p
+            className={`text-[4px] sm:text-[10px] mb-0 md:mb-2 uppercase tracking-wide font-bold font-montserrat ${
+              isCurrent ? "text-black" : "text-[#0B64F4]"
+            }`}
           >
+            Known For
+          </p>
 
-            {/* ── FRONT FACE: Current State ── */}
-            <div
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-              }}
+          <ul className="text-[4px] md:text-xs text-[#323232] font-jakarta font-normal md:space-y-1">
+
+            {knownFor.map((item) => (
+              <li key={item} className="flex items-start">
+
+                <div className="mr-2 h-0.5 sm:h-1 bg-black w-0.5 sm:w-1 rounded-full mt-[5px] shrink-0"></div>
+
+                <span className="mt-0.5">{item}</span>
+
+              </li>
+            ))}
+
+          </ul>
+
+        </div>
+
+        {/* Promotability Quotient */}
+        <div className="border-t border-gray-200 pt-3 pb-1">
+
+          <div className="flex justify-center items-center mb-2">
+
+            <span
+              className={`text-[5px] sm:text-[10px] font-montserrat uppercase tracking-wide font-bold ${
+                isCurrent ? "text-black" : "text-[#0B64F4]"
+              }`}
             >
-              <div className="bg-white rounded-[20px] border-2 border-[#D9D9D9] shadow-2xl overflow-hidden h-full flex flex-col">
-                {/* Black Header */}
-                <div className="bg-black pt-5 px-4 relative" style={{ minHeight: '100px' }}>
-                  <h4 className="text-[10px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
-                    Current State
-                  </h4>
-                </div>
-
-                {/* Avatar overlapping header */}
-                <div className="relative flex justify-center" style={{ marginTop: '-44px' }}>
-                  <div className="w-24 h-24 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl overflow-hidden">
-                    <div className="relative w-[86px] h-[86px] rounded-full overflow-hidden">
-                      <Image
-                        src={profile.currentState.image}
-                        alt="Current State"
-                        fill
-                        className="object-cover rounded-full scale-[1.05]"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white px-5 py-4 flex flex-col flex-1">
-                  <div className="flex flex-col items-center mb-3">
-                    <h5 className="text-base font-medium font-gotham text-[#1C1C1C]">{profile.name}</h5>
-                    <p className="text-[11px] font-normal font-gotham text-[#1C1C1C] mt-1">{profile.currentState.title}</p>
-                  </div>
-
-                  <div className="space-y-1.5 mb-4 border-y py-3 border-[#E3E3E3]">
-                    {[
-                      { label: "Status", value: profile.currentState.status },
-                      { label: "Visibility Score", value: profile.currentState.visibilityScore },
-                      { label: "Influence Rating", value: profile.currentState.influenceRating },
-                      { label: "Access Level", value: profile.currentState.accessLevel },
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center">
-                        <span className="text-[#7A7777] font-semibold text-[10px] uppercase tracking-wide font-jakarta w-[110px]">
-                          {item.label}
-                        </span>
-                        <span className="text-[#B3B3B3] text-[10px] font-extrabold w-[8px] text-center ml-2">:</span>
-                        <span className="text-black font-semibold text-[10px] font-jakarta flex-1 ml-2">
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-left mb-4">
-                    <p className="font-montserrat text-[10px] text-black mb-2 uppercase tracking-wide font-bold">
-                      Known For
-                    </p>
-                    <ul className="text-xs font-normal text-[#323232] space-y-1">
-                      {profile.currentState.knownFor.map((item, index) => (
-                        <li key={index} className="flex items-start">
-                          <div className="mr-2 h-1 bg-black w-1 rounded-full mt-[5px] shrink-0"></div>
-                          <span className="font-jakarta">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-3 pb-1 mt-auto">
-                    <div className="flex justify-center items-center mb-2">
-                      <span className="text-[10px] uppercase font-montserrat tracking-wide font-bold text-black">
-                        Promotability Quotient{" "}
-                        <span className="font-bold ml-1 text-black text-sm font-montserrat">
-                          {profile.currentState.promotabilityQuotient}
-                        </span>
-                      </span>
-                    </div>
-                    <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-black rounded-full"
-                        style={{ width: profile.currentState.promotabilityQuotient }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── BACK FACE: Future You ── */}
-            <div
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
-              }}
-            >
-              <div className="bg-white rounded-[20px] border-2 border-[#E9E9E9] shadow-2xl overflow-hidden h-full flex flex-col">
-                {/* Blue Header */}
-                <div className="bg-[#0B64F4] pt-5 px-4 relative" style={{ minHeight: '100px' }}>
-                  <h4 className="text-[10px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
-                    Future You
-                  </h4>
-                </div>
-
-                {/* Avatar overlapping header */}
-                <div className="relative flex justify-center" style={{ marginTop: '-44px' }}>
-                  <div className="w-24 h-24 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl overflow-hidden">
-                    <div className="relative w-[86px] h-[86px] rounded-full overflow-hidden">
-                      <Image
-                        src={profile.futureState.image}
-                        alt="Future State"
-                        fill
-                        className="object-cover rounded-full scale-[1.1]"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white px-5 py-4 flex flex-col flex-1">
-                  <div className="flex flex-col items-center mb-3">
-                    <h5 className="text-base font-medium text-[#1C1C1C] font-gotham">{profile.name}</h5>
-                    <p className="text-[11px] font-normal text-[#1C1C1C] font-gotham mt-1">{profile.futureState.title}</p>
-                  </div>
-
-                  <div className="space-y-1.5 mb-4 border-y py-3 border-[#E3E3E3]">
-                    {[
-                      { label: "Status", value: profile.futureState.status },
-                      { label: "Visibility Score", value: profile.futureState.visibilityScore },
-                      { label: "Influence Rating", value: profile.futureState.influenceRating },
-                      { label: "Access Level", value: profile.futureState.accessLevel },
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center">
-                        <span className="text-[#7A7777] font-semibold text-[10px] uppercase tracking-wide font-jakarta w-[110px]">
-                          {item.label}
-                        </span>
-                        <span className="text-[#B3B3B3] font-extrabold text-[10px] w-[8px] text-center ml-2">:</span>
-                        <span className="text-black font-semibold text-[10px] font-jakarta flex-1 ml-2">
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-left mb-4">
-                    <p className="font-montserrat text-[10px] text-[#0B64F4] mb-2 uppercase tracking-wide font-bold">
-                      Known For
-                    </p>
-                    <ul className="text-xs font-normal text-[#323232] space-y-1">
-                      {profile.futureState.knownFor.map((item, index) => (
-                        <li key={index} className="flex items-start">
-                          <div className="mr-2 h-1 bg-black w-1 rounded-full mt-[5px] shrink-0"></div>
-                          <span className="font-jakarta">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-3 pb-1 mt-auto">
-                    <div className="flex justify-center items-center mb-2">
-                      <span className="text-[10px] font-montserrat uppercase tracking-wide font-bold text-[#0B64F4]">
-                        Promotability Quotient{" "}
-                        <span className="font-bold text-[#0B64F4] ml-1 text-sm font-montserrat">
-                          {profile.futureState.promotabilityQuotient}
-                        </span>
-                      </span>
-                    </div>
-                    <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[#0B64F4] rounded-full"
-                        style={{ width: profile.futureState.promotabilityQuotient }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              Promotability Quotient{" "}
+              <span className="ml-1 text-sm text-[5px] sm:text-[10px] font-montserrat">
+                {promotabilityQuotient}%
+              </span>
+            </span>
 
           </div>
+
+          {/* Progress Bar */}
+          <div className="w-full h-1 md:h-2.5 bg-[#AFB0B0] rounded-full overflow-hidden">
+
+            <div
+              className={`h-full rounded-full  ${
+                isCurrent ? "bg-black" : "bg-[#0B64F4]"
+              }`}
+              style={{ width: `${promotabilityQuotient}%` }}
+            />
+
+          </div>
+
         </div>
 
-        {/* Flip Indicator Dots */}
-        {/* <div className="flex justify-center items-center gap-2 mb-6">
-        <button
-          onClick={() => setIsFlipped(false)}
-          className={`h-2 rounded-full transition-all duration-300 ${
-            !isFlipped ? 'w-6 bg-black' : 'w-2 bg-gray-300'
-          }`}
-        />
-        <button
-          onClick={() => setIsFlipped(true)}
-          className={`h-2 rounded-full transition-all duration-300 ${
-            isFlipped ? 'w-6 bg-[#0B64F4]' : 'w-2 bg-gray-300'
-          }`}
-        />
-      </div> */}
-
-        {/* Tap hint */}
-        {/* <p className="text-center text-[11px] text-gray-400 font-jakarta mb-6">
-        Tap card to flip
-      </p> */}
-
-        {/* Text Content */}
-        <div className="text-center mb-4 px-4 md:px-2">
-          <p className="text-[#014BAA] max-w-xs font-inter font-medium text-[18px] md:text-xl leading-6 mb-3">
-            The exclusive 2-month intensive program that transforms{" "}
-            <span className="font-bold">experienced professionals.</span>
-          </p>
-          <p className="text-[#464646] font-inter font-medium text-[12px] leading-4">
-            Triple your chances of getting promoted in the next 8 weeks by mastering how promotions actually work.
-          </p>
-        </div>
-
-        {/* Button */}
-        <div className="flex justify-center mt-2">
-          <button
-            onClick={scrollToWaitlist}
-            className="bg-[#014BAA] hover:bg-[#0952d4] text-white font-inter font-medium text-[12px] px-5 py-2 rounded-[8px] shadow-lg transition-all duration-300 hover:shadow-xl flex items-center gap-1.5 md:gap-3"
-          >
-            Request Access <span className="translate-y-[-1px]"><GoArrowRight size={14} className="inline" /></span>
-          </button>
-        </div>
       </div>
-    </>
+    </div>
   );
 }
 
-// "use client"
+export default function BePromotableFirstFold() {
+  const [activeTab, setActiveTab] = useState<"current" | "future">("current");
 
-// import React from 'react';
-// // import React, { useState, useEffect } from 'react';
-// import Image from 'next/image';
-// import harshImg from '../assets/harshImg.jpg';
-// import harshImage from '../assets/harshImage.png';
+  const currentCard: IDCardProps = {
+    variant: "current",
+    profile: harshImg,
+    name: "Harsh Agarwal",
+    role: "Software Developer",
+    status: "Invisible Contributor",
+    visibilityScore: "34/100",
+    influenceRating: "Operational",
+    accessLevel: "Restricted",
+    knownFor: ["Task Management", "Fixing Problems Quietly", "Subject Matter Expertise", "Tactical Execution"],
+    promotabilityQuotient: 37,
+    avatarInitials: "HA",
+  };
 
-// export default function BePromotableFirstFold() {
-// //   const [activeTab, setActiveTab] = useState('current');
+  const futureCard: IDCardProps = {
+    variant: "future",
+    profile: harshImage,
+    name: "Harsh Agarwal",
+    role: "Senior Product Manager",
+    status: "Business Driver",
+    visibilityScore: "92/100",
+    influenceRating: "Strategic",
+    accessLevel: "Unrestricted",
+    knownFor: ["Stakeholder Management", "Executive Communication", "Cross-functional Leadership", "Big-picture Thinking"],
+    promotabilityQuotient: 94,
+    avatarInitials: "HA",
+  };
 
-// //   // Auto-switch tabs every 3 seconds on small devices
-// //   useEffect(() => {
-// //     const interval = setInterval(() => {
-// //       setActiveTab((prev) => (prev === 'current' ? 'future' : 'current'));
-// //     }, 3000);
-// //     return () => clearInterval(interval);
-// //   }, []);
+  return (
+    <main className="min-h-screen bg-white font-sans text-gray-900">
 
-//   const scrollToWaitlist = () => {
-//     const element = document.getElementById('waitlist');
-//     if (element) {
-//       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-//     }
-//   };
+      {/* ── Hero ── */}
+      <section className="max-w-2xl mx-auto px-5 pt-6 md:pt-14 pb-10 text-center">
+        <p className="sm:text-base text-[14px] font-quattrocento text-[#000000] font-normal leading-snug">
+          You&apos;re Not Stuck Because You&apos;re Bad At Your Job.
+        </p>
+        <h1 className="text-[16px] sm:text-3xl md:text-4xl font-bold font-inter leading-tight text-gray-900 mb-1">
+          You&apos;re Stuck Because Nobody Taught You{" "}
+          <span className="text-[#014BAA]">How Promotions Actually Work.</span>
+        </h1>
+        <p className="mt-5 text-sm sm:text-base text-[#464646] font-inter font-medium leading-4.5 max-w-xl mx-auto">
+          A focused{" "}
+          <strong className="text-[#014BAA]">8-week program</strong> for professionals with{" "}
+          <strong className="text-[#014BAA]">8+ years</strong> of experience who deliver great
+          work but still get passed over when leadership roles open up. Learn the systems
+          behind visibility, influence, and executive decision making so the right people
+          start seeing your impact.
+        </p>
+        <a
+          href="#apply"
+          className="inline-flex items-center gap-2 mt-6 md:mt-8 px-3 md:px-7 py-2.5 md:py-3.5 rounded-[8px] bg-[#014BAA] text-white font-semibold text-sm sm:text-base
+            hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-200"
+        >
+          Apply for Program
+          <span className="text-lg leading-none">→</span>
+        </a>
+      </section>
 
-//   const profile = {
-//     name: "Harsh Agarwal",
-//     currentState: {
-//       image: harshImg,
-//       status: "Invisible Contributor",
-//       title: "SENIOR PRODUCT MANAGER",
-//       visibilityScore: "34/100",
-//       influenceRating: "Operational",
-//       accessLevel: "Restricted",
-//       knownFor: [
-//         "Task Management",
-//         "Fixing Problems Quietly",
-//         "Subject Matter Expertise",
-//         "Tactical Execution"
-//       ],
-//       promotabilityQuotient: "34%"
-//     },
-//     futureState: {
-//       image: harshImage,
-//       status: "Business Driver",
-//       title: "SENIOR PRODUCT MANAGER",
-//       visibilityScore: "92/100",
-//       influenceRating: "Strategic",
-//       accessLevel: "Unrestricted",
-//       knownFor: [
-//         "Stakeholder Management",
-//         "Executive Communication",
-//         "Cross-functional Leadership",
-//         "Big-picture Thinking"
-//       ],
-//       promotabilityQuotient: "94%"
-//     }
-//   };
+      {/* ── Current / Future State ── */}
+      <section className="max-w-7xl mx-auto px-5 pb-16">
 
-//   return (
-//     <>
-//     {/* ================= DESKTOP VERSION ================= */}
-//     <div className="hidden lg:block bg-[#FFFFFF] py-12 px-8 relative overflow-hidden">
-//       <div className="container mx-auto relative z-10 max-w-7xl">
+        {/* Mobile: Tabs */}
+        <div className="flex md:hidden justify-center gap-3 mb-6">
+          {(["current", "future"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 max-w-[160px] py-2.5 rounded-lg text-sm font-semibold border transition-all
+                ${activeTab === tab
+                  ? tab === "current"
+                    ? "bg-gray-950 text-white border-gray-950"
+                    : "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
+                }`}
+            >
+              {tab === "current" ? "Current State" : "Future State"}
+            </button>
+          ))}
+        </div>
 
-//         {/* Top Heading */}
-//         <div className="mb-12" style={{
-//             transform: "translateX(-50px)"
-//         }}>
-//           <h2 className="text-5xl xl:text-[64px] font-jakarta font-normal text-black mb-1">
-//             #BePromotable.
-//           </h2>
-//           <h3 className="text-5xl xl:text-[68px] font-jakarta font-semibold text-[#014BAA] leading-tight">
-//             Stop Being Overlooked.
-//           </h3>
-//         </div>
+        {/* Mobile: Single card */}
+        <div className="md:hidden">
+          {activeTab === "current" ? (
+            <div className="flex flex-row sm:flex-row gap-1 items-center sm:items-start">
+              <IDCard {...currentCard} />
+              <CurrentStateText />
+            </div>
+          ) : (
+            <div className="flex flex-row sm:flex-row gap-1 items-center sm:items-start">
+              <IDCard {...futureCard} />
+              <FutureStateText />
+            </div>
+          )}
+        </div>
 
-//         {/* Main Flex: Cards Left, Text Right */}
-//         <div className="flex items-center gap-8 xl:gap-12">
+        {/* Desktop: Both side by side */}
+        <div className="hidden md:grid md:grid-cols-2 gap-10 w-full">
+          {/* Current */}
+          <div className="flex flex-row gap-6">
+            <IDCard {...currentCard} />
+            <CurrentStateText />
+          </div>
+          {/* Future */}
+          <div className="flex flex-row gap-6">
+            <IDCard {...futureCard} />
+            <FutureStateText />
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
 
-//           {/* LEFT: Cards — side by side, overlapping, with tilt */}
-//           <div className="flex-1 relative" style={{ height: '600px', width: '70%' }}>
+function CurrentStateText() {
+  return (
+    <div className="w-full md:w-[400px] px-1">
+      <h2 className="text-[14px] sm:text-2xl font-extrabold text-black font-inter font-bold leading-4 md:leading-8 mb-2 md:mb-4 md:mt-6">
+        Right now your work speaks for itself.
+      </h2>
+      <p className="text-sm text-[8px] md:text-lg font-inter font-normal leading-2.5 md:leading-5 mb-3 md:mb-6">Unfortunately promotions don&apos;t work that way.</p>
 
-//             {/* Current State Card — behind, tilted slightly left, offset left */}
-//             <div
-//               className="absolute"
-//               style={{
-//                 transform: "rotate(-8deg)",
-//                 transformOrigin: "bottom center",
-//                 left: '0px',
-//                 top: '30px',
-//                 zIndex: 10,
-//               }}
-//             >
-//               <div style={{
-//                 width: "340px"
-//               }} className="bg-white rounded-[25px] border-2 border-[#D9D9D9] w-[280px] xl:w-[300px] shadow-2xl overflow-hidden">
-//                 {/* Black Header */}
-//                 <div className="bg-black pt-5 px-4 relative min-h-[120px]">
-//                   <h4 className="text-[10px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
-//                     Current State
-//                   </h4>
-//                 </div>
+      <h3 className="text-[12px] md:text-xl font-bold text-[#014BAA] font-inter">Current State</h3>
+      <p className="text-[10px] sm:text-sm md:text-xl font-bold font-inter text-black mb-1">You are known as:</p>
+      <ul className="space-y-0 sm:space-y-1 text-[8px] sm:text-sm  md:text-base text-[#000000] mb-2 md:mb-4">
+        {["The person who gets things done", "The person people rely on quietly", "The expert who fixes problems"].map((item) => (
+          <li key={item} className="flex items-start gap-1 sm:gap-2">
+            <span className="mt-0.5 text-[#000000] font-inter font-normal">•</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <p className="text-[8px] sm:text-sm  md:text-base text-[#000000] font-inter font-normal mb-3 md:mb-6">
+        But inside leadership discussions you are rarely mentioned.
+      </p>
+      <p className="text-[8px] sm:text-sm  md:text-lg text-black font-inter font-semibold mb-1">Why?</p>
+      <p className="text-[8px] sm:text-sm  md:text-base text-black font-inter font-normal">
+        Because decision makers promote influence and visibility, not just execution.
+      </p>
+    </div>
+  );
+}
 
-//                 {/* Avatar overlapping header */}
-//                 <div className="absolute left-1/2 -translate-x-1/2 top-[45px]">
-//                   <div className="w-28 h-28 xl:w-32 xl:h-32 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
-//                     <div className="relative w-full h-full rounded-full flex items-center justify-center scale-[0.95]">
-//                       <div className="relative w-[100px] h-[100px] xl:w-[115px] xl:h-[115px] rounded-full overflow-hidden">
-//                         <Image
-//                           src={profile.currentState.image}
-//                           alt="Current State"
-//                           fill
-//                           className="object-cover rounded-full scale-[1.05]"
-//                         />
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-
-//                 <div className="bg-white px-4 py-5 mt-10 xl:mt-12">
-//                   <div className="flex flex-col items-center mb-3">
-//                     <h5 className="text-base xl:text-lg font-medium font-gotham text-[#1C1C1C]">{profile.name}</h5>
-//                     <p className="text-xs xl:text-sm font-normal font-gotham text-[#1C1C1C] mt-1">{profile.currentState.title}</p>
-//                   </div>
-
-//                   <div className="text-sm space-y-1.5 mb-5 border-y py-3 border-[#E3E3E3]">
-//                     {[
-//                       { label: "Status", value: profile.currentState.status },
-//                       { label: "Visibility Score", value: profile.currentState.visibilityScore },
-//                       { label: "Influence Rating", value: profile.currentState.influenceRating },
-//                       { label: "Access Level", value: profile.currentState.accessLevel },
-//                     ].map((item, index) => (
-//                       <div key={index} className="flex items-center">
-//                         <span className="text-[#7A7777] font-semibold text-[10px] uppercase tracking-wide font-jakarta w-[110px]">
-//                           {item.label}
-//                         </span>
-//                         <span className="text-[#B3B3B3] text-[10px] font-extrabold w-[8px] text-center ml-3">:</span>
-//                         <span className="text-black font-semibold text-[10px] font-jakarta flex-1 ml-3">
-//                           {item.value}
-//                         </span>
-//                       </div>
-//                     ))}
-//                   </div>
-
-//                   <div className="text-left mb-4">
-//                     <p className="font-montserrat text-[10px] text-black mb-2 uppercase tracking-wide font-bold">
-//                       Known For
-//                     </p>
-//                     <ul className="text-xs font-normal text-[#323232] space-y-1">
-//                       {profile.currentState.knownFor.map((item, index) => (
-//                         <li key={index} className="flex items-start">
-//                           <div className="mr-2 h-1 bg-black w-1 rounded-full mt-[3%] shrink-0"></div>
-//                           <span className="font-jakarta">{item}</span>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   </div>
-
-//                   <div className="border-t border-gray-200 pt-4 pb-2">
-//                     <div className="flex justify-center items-center mb-2">
-//                       <span className="text-[10px] uppercase font-montserrat tracking-wide font-bold text-black">
-//                         Promotability Quotient{" "}
-//                         <span className="font-bold ml-1 text-black text-sm font-montserrat">
-//                           {profile.currentState.promotabilityQuotient}
-//                         </span>
-//                       </span>
-//                     </div>
-//                     <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-//                       <div
-//                         className="h-full bg-black rounded-full transition-all duration-500"
-//                         style={{ width: profile.currentState.promotabilityQuotient }}
-//                       ></div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Future You Card — front, tilted slightly right, offset right */}
-//             <div
-//               className="absolute"
-//               style={{
-//                 transform: "rotate(8deg)",
-//                 transformOrigin: "bottom center",
-//                 left: '230px',
-//                 top: '0px',
-//                 zIndex: 20,
-//               }}
-//             >
-//               <div style={{
-//                 width: "340px",
-//               }} className="bg-white rounded-[25px] border-2 border-[#E9E9E9] w-[300px] xl:w-[320px] shadow-2xl overflow-hidden">
-//                 {/* Blue Header */}
-//                 <div className="bg-[#0B64F4] pt-5 px-4 relative min-h-[140px]">
-//                   <h4 className="text-[10px] font-montserrat uppercase text-white tracking-widest font-semibold text-center">
-//                     Future You
-//                   </h4>
-//                 </div>
-
-//                 {/* Avatar overlapping header */}
-//                 <div className="absolute left-1/2 -translate-x-1/2 top-[65px]">
-//                   <div className="w-28 h-28 xl:w-32 xl:h-32 rounded-full border-[2.5px] border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl">
-//                     <div className="relative w-full h-full rounded-full flex items-center justify-center scale-[0.95]">
-//                       <div className="relative w-[100px] h-[100px] xl:w-[115px] xl:h-[115px] rounded-full overflow-hidden">
-//                         <Image
-//                           src={profile.futureState.image}
-//                           alt="Future State"
-//                           fill
-//                           className="object-cover rounded-full scale-[1.1]"
-//                         />
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-
-//                 <div className="bg-white px-5 py-5 mt-10 xl:mt-12">
-//                   <div className="flex flex-col items-center mb-3">
-//                     <h5 className="text-base xl:text-lg font-medium text-[#1C1C1C] font-gotham">{profile.name}</h5>
-//                     <p className="text-xs xl:text-sm font-normal text-[#1C1C1C] font-gotham mt-1">{profile.futureState.title}</p>
-//                   </div>
-
-//                   <div className="text-sm space-y-1.5 mb-5 border-y py-3 border-[#E3E3E3]">
-//                     {[
-//                       { label: "Status", value: profile.futureState.status },
-//                       { label: "Visibility Score", value: profile.futureState.visibilityScore },
-//                       { label: "Influence Rating", value: profile.futureState.influenceRating },
-//                       { label: "Access Level", value: profile.futureState.accessLevel },
-//                     ].map((item, index) => (
-//                       <div key={index} className="flex items-center">
-//                         <span className="text-[#7A7777] font-semibold text-[10px] uppercase tracking-wide font-jakarta w-[110px]">
-//                           {item.label}
-//                         </span>
-//                         <span className="text-[#B3B3B3] font-extrabold text-[10px] w-[8px] text-center ml-3">:</span>
-//                         <span className="text-black font-semibold text-[10px] font-jakarta flex-1 ml-3">
-//                           {item.value}
-//                         </span>
-//                       </div>
-//                     ))}
-//                   </div>
-
-//                   <div className="text-left mb-3">
-//                     <p className="font-montserrat text-[10px] text-[#0B64F4] mb-2 uppercase tracking-wide font-bold">
-//                       Known For
-//                     </p>
-//                     <ul className="text-xs font-normal text-[#323232] space-y-1">
-//                       {profile.futureState.knownFor.map((item, index) => (
-//                         <li key={index} className="flex items-start">
-//                           <div className="mr-2 h-1 bg-black w-1 rounded-full mt-[3%] shrink-0"></div>
-//                           <span className="font-jakarta">{item}</span>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   </div>
-
-//                   <div className="border-t border-gray-200 pt-4 pb-2">
-//                     <div className="flex justify-center items-center mb-2">
-//                       <span className="text-[10px] font-montserrat uppercase tracking-wide font-bold text-[#0B64F4]">
-//                         Promotability Quotient{" "}
-//                         <span className="font-bold text-[#0B64F4] ml-1 text-sm font-montserrat">
-//                           {profile.futureState.promotabilityQuotient}
-//                         </span>
-//                       </span>
-//                     </div>
-//                     <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
-//                       <div
-//                         className="h-full bg-[#0B64F4] rounded-full transition-all duration-500"
-//                         style={{ width: profile.futureState.promotabilityQuotient }}
-//                       ></div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//           </div>
-
-//           {/* RIGHT: Text */}
-//           <div className="w-[330px] md:w-[40%] shrink-0 relative z-20">
-//             <p className="text-[#014BAA] font-jakarta text-[28px]  mb-8 leading-9">
-//               The exclusive 2-month intensive program that transforms{" "}
-//               <span className="font-bold">8-18+ year professionals.</span>
-//             </p>
-//             <p className="text-[#464646] font-jakarta text-sm md:text-[19px] mb-8 leading-relaxed">
-//               Triple your chances of getting promoted in the next 8 weeks by mastering how promotions actually work.
-//             </p>
-//             <button
-//               onClick={scrollToWaitlist}
-//               className="bg-[#014BAA] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-lg px-8 py-4 rounded-[12px] shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 flex items-center gap-3"
-//             >
-//               Request Access <span>→</span>
-//             </button>
-//           </div>
-
-//         </div>
-//       </div>
-//     </div>
-
-//     {/* ================= MOBILE VERSION ================= */}
-//     <div className="block lg:hidden bg-white px-5 py-10">
-
-//       {/* Header */}
-//       <div className="text-center mb-8">
-//         <h2 className="text-[30px] font-jakarta font-bold text-black leading-tight">
-//           #BePromotable.
-//         </h2>
-//         <h3 className="text-[28px] font-jakarta font-bold text-[#0B64F4] mt-0.5 leading-tight">
-//           Stop Being Overlooked.
-//         </h3>
-//       </div>
-
-//       {/* Cards — side by side, overlapping, tilted — SMALLER for mobile */}
-//       <div className="relative mb-10" style={{ height: '380px' }}>
-
-//         {/* Current State Card — behind, tilted left */}
-//         <div
-//           className="absolute"
-//           style={{
-//             transform: "rotate(-6deg)",
-//             transformOrigin: "bottom center",
-//             left: '20px',
-//             top: '20px',
-//             zIndex: 10,
-//           }}
-//         >
-//           <div
-//             className="bg-white rounded-[14px] border-2 border-[#D9D9D9] shadow-2xl overflow-hidden"
-//             style={{ width: '185px' }}
-//           >
-//             {/* Black Header */}
-//             <div className="bg-black pt-4 px-3 relative" style={{ minHeight: '88px' }}>
-//               <h4 className="font-montserrat uppercase text-white tracking-widest font-semibold text-center" style={{ fontSize: '8px' }}>
-//                 Current State
-//               </h4>
-//             </div>
-
-//             {/* Avatar overlapping header */}
-//             <div className="absolute left-1/2 -translate-x-1/2" style={{ top: '45px' }}>
-//               <div
-//                 className="rounded-full border-2 border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl overflow-hidden"
-//                 style={{ width: '70px', height: '70px' }}
-//               >
-//                 <div className="relative rounded-full overflow-hidden" style={{ width: '63px', height: '63px' }}>
-//                   <Image
-//                     src={profile.currentState.image}
-//                     alt="Current State"
-//                     fill
-//                     className="object-cover rounded-full scale-[1.05]"
-//                   />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="bg-white px-3 py-3" style={{ marginTop: '35px' }}>
-//               <div className="flex flex-col items-center" style={{ marginBottom: '8px' }}>
-//                 <h5 className="font-medium font-gotham text-[#1C1C1C]" style={{ fontSize: '10px' }}>{profile.name}</h5>
-//                 <p className="font-normal font-gotham text-[#1C1C1C]" style={{ fontSize: '7px', marginTop: '2px' }}>{profile.currentState.title}</p>
-//               </div>
-
-//               <div className="border-y border-[#E3E3E3]" style={{ paddingTop: '6px', paddingBottom: '6px', marginBottom: '7px' }}>
-//                 {[
-//                   { label: "Status", value: profile.currentState.status },
-//                   { label: "Visibility Score", value: profile.currentState.visibilityScore },
-//                   { label: "Influence Rating", value: profile.currentState.influenceRating },
-//                   { label: "Access Level", value: profile.currentState.accessLevel },
-//                 ].map((item, index) => (
-//                   <div key={index} className="flex items-center" style={{ marginBottom: index < 3 ? '3px' : 0 }}>
-//                     <span
-//                       className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta"
-//                       style={{ fontSize: '7px', width: '72px', flexShrink: 0 }}
-//                     >
-//                       {item.label}
-//                     </span>
-//                     <span
-//                       className="text-[#B3B3B3] font-extrabold text-center"
-//                       style={{ fontSize: '7px', width: '6px', marginLeft: '2px', flexShrink: 0 }}
-//                     >:</span>
-//                     <span
-//                       className="text-black font-semibold font-jakarta"
-//                       style={{ fontSize: '7px', marginLeft: '4px' }}
-//                     >
-//                       {item.value}
-//                     </span>
-//                   </div>
-//                 ))}
-//               </div>
-
-//               <div className="text-left" style={{ marginBottom: '7px' }}>
-//                 <p
-//                   className="font-montserrat text-black uppercase tracking-wide font-bold"
-//                   style={{ fontSize: '7px', marginBottom: '4px' }}
-//                 >
-//                   Known For
-//                 </p>
-//                 <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-//                   {profile.currentState.knownFor.map((item, index) => (
-//                     <li key={index} className="flex items-start" style={{ marginBottom: '2px' }}>
-//                       <div
-//                         className="bg-black rounded-full shrink-0"
-//                         style={{ width: '3px', height: '3px', marginRight: '4px', marginTop: '3px' }}
-//                       ></div>
-//                       <span className="font-jakarta text-[#323232]" style={{ fontSize: '7px' }}>{item}</span>
-//                     </li>
-//                   ))}
-//                 </ul>
-//               </div>
-
-//               <div className="border-t border-gray-200" style={{ paddingTop: '7px', paddingBottom: '4px' }}>
-//                 <div className="flex justify-center items-center" style={{ marginBottom: '4px' }}>
-//                   <span
-//                     className="uppercase font-montserrat tracking-wide font-bold text-black"
-//                     style={{ fontSize: '7px' }}
-//                   >
-//                     Promotability Quotient{" "}
-//                     <span className="font-bold text-black" style={{ fontSize: '9px' }}>
-//                       {profile.currentState.promotabilityQuotient}
-//                     </span>
-//                   </span>
-//                 </div>
-//                 <div className="w-full bg-gray-200 rounded-full overflow-hidden" style={{ height: '6px' }}>
-//                   <div
-//                     className="h-full bg-black rounded-full"
-//                     style={{ width: profile.currentState.promotabilityQuotient }}
-//                   ></div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Future You Card — in front, tilted right */}
-//         <div
-//           className="absolute"
-//           style={{
-//             transform: "rotate(8deg)",
-//             transformOrigin: "bottom center",
-//             right: '45px',
-//             top: '5px',
-//             zIndex: 20,
-//           }}
-//         >
-//           <div
-//             className="bg-white rounded-[14px] border-2 border-[#E9E9E9] shadow-2xl overflow-hidden"
-//             style={{ width: '185px',
-//             height: "385px"
-//              }}
-//           >
-//             {/* Blue Header */}
-//             <div className="bg-[#0B64F4] pt-4 px-3 relative" style={{ minHeight: '88px' }}>
-//               <h4 className="font-montserrat uppercase text-white tracking-widest font-semibold text-center" style={{ fontSize: '8px' }}>
-//                 Future You
-//               </h4>
-//             </div>
-
-//             {/* Avatar overlapping header */}
-//             <div className="absolute left-1/2 -translate-x-1/2" style={{ top: '45px' }}>
-//               <div
-//                 className="rounded-full border-2 border-[#E8E8E8] bg-[#F1F1F1] flex items-center justify-center shadow-xl overflow-hidden"
-//                 style={{ width: '70px', height: '70px' }}
-//               >
-//                 <div className="relative rounded-full overflow-hidden" style={{ width: '63px', height: '63px' }}>
-//                   <Image
-//                     src={profile.futureState.image}
-//                     alt="Future State"
-//                     fill
-//                     className="object-cover rounded-full scale-[1.1]"
-//                   />
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="bg-white px-3 py-3" style={{ marginTop: '35px' }}>
-//               <div className="flex flex-col items-center" style={{ marginBottom: '8px' }}>
-//                 <h5 className="font-medium font-gotham text-[#1C1C1C]" style={{ fontSize: '10px' }}>{profile.name}</h5>
-//                 <p className="font-normal font-gotham text-[#1C1C1C]" style={{ fontSize: '7px', marginTop: '2px' }}>{profile.futureState.title}</p>
-//               </div>
-
-//               <div className="border-y border-[#E3E3E3]" style={{ paddingTop: '6px', paddingBottom: '6px', marginBottom: '7px' }}>
-//                 {[
-//                   { label: "Status", value: profile.futureState.status },
-//                   { label: "Visibility Score", value: profile.futureState.visibilityScore },
-//                   { label: "Influence Rating", value: profile.futureState.influenceRating },
-//                   { label: "Access Level", value: profile.futureState.accessLevel },
-//                 ].map((item, index) => (
-//                   <div key={index} className="flex items-center" style={{ marginBottom: index < 3 ? '3px' : 0 }}>
-//                     <span
-//                       className="text-[#7A7777] font-semibold uppercase tracking-wide font-jakarta"
-//                       style={{ fontSize: '7px', width: '72px', flexShrink: 0 }}
-//                     >
-//                       {item.label}
-//                     </span>
-//                     <span
-//                       className="text-[#B3B3B3] font-extrabold text-center"
-//                       style={{ fontSize: '7px', width: '6px', marginLeft: '2px', flexShrink: 0 }}
-//                     >:</span>
-//                     <span
-//                       className="text-black font-semibold font-jakarta"
-//                       style={{ fontSize: '7px', marginLeft: '4px' }}
-//                     >
-//                       {item.value}
-//                     </span>
-//                   </div>
-//                 ))}
-//               </div>
-
-//               <div className="text-left" style={{ marginBottom: '7px' }}>
-//                 <p
-//                   className="font-montserrat text-[#0B64F4] uppercase tracking-wide font-bold"
-//                   style={{ fontSize: '7px', marginBottom: '4px' }}
-//                 >
-//                   Known For
-//                 </p>
-//                 <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-//                   {profile.futureState.knownFor.map((item, index) => (
-//                     <li key={index} className="flex items-start" style={{ marginBottom: '2px' }}>
-//                       <div
-//                         className="bg-black rounded-full shrink-0"
-//                         style={{ width: '3px', height: '3px', marginRight: '4px', marginTop: '3px' }}
-//                       ></div>
-//                       <span className="font-jakarta text-[#323232]" style={{ fontSize: '7px' }}>{item}</span>
-//                     </li>
-//                   ))}
-//                 </ul>
-//               </div>
-
-//               <div className="border-t border-gray-200" style={{ paddingTop: '7px', paddingBottom: '4px' }}>
-//                 <div className="flex justify-center items-center" style={{ marginBottom: '4px' }}>
-//                   <span
-//                     className="uppercase font-montserrat tracking-wide font-bold text-[#0B64F4]"
-//                     style={{ fontSize: '7px' }}
-//                   >
-//                     Promotability Quotient{" "}
-//                     <span className="font-bold text-[#0B64F4]" style={{ fontSize: '9px' }}>
-//                       {profile.futureState.promotabilityQuotient}
-//                     </span>
-//                   </span>
-//                 </div>
-//                 <div className="w-full bg-gray-200 rounded-full overflow-hidden" style={{ height: '6px' }}>
-//                   <div
-//                     className="h-full bg-[#0B64F4] rounded-full"
-//                     style={{ width: profile.futureState.promotabilityQuotient }}
-//                   ></div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//       </div>
-
-//       {/* Text Content */}
-//       <div className="text-center mb-6 px-6">
-//         <p className="text-[#014BAA] font-jakarta font-medium text-xl leading-6 mb-3">
-//           The exclusive 2-month intensive program that transforms{" "}
-//           <span className="font-bold">8-18+ year professionals.</span>
-//         </p>
-//         <p className="text-[#555] font-jakarta text-sm leading-5">
-//           Triple your chances of getting promoted in the next 8 weeks by mastering how promotions actually work.
-//         </p>
-//       </div>
-
-//       {/* Button */}
-//       <div className="flex justify-center mt-6">
-//         <button
-//           onClick={scrollToWaitlist}
-//           className="bg-[#014BAA] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-base px-8 py-4 rounded-[8px] shadow-lg transition-all duration-300 hover:shadow-xl flex items-center gap-3"
-//         >
-//           Request Access <span>→</span>
-//         </button>
-//       </div>
-//     </div>
-//     </>
-//   );
-// }
+function FutureStateText() {
+  return (
+    <div className="w-full md:w-[400px] px-1">
+      <h3 className="text-[12px] md:text-xl font-bold font-inter text-[#014BAA] mb-3 md:mt-5">Future State</h3>
+      <p className="text-[10px] sm:text-sm md:text-xl  font-bold font-inter text-black mb-2">You become known as someone who:</p>
+      <ul className="md:space-y-1 text-[8px] sm:text-sm md:text-base text-black font-inter font-normal mb-5">
+        {[
+          "Drives outcomes across teams",
+          "Shapes decisions before meetings happen",
+          "Communicates impact clearly to leadership",
+          "Gets pulled into strategic conversations",
+        ].map((item) => (
+          <li key={item} className="flex items-start gap-2">
+            <span className="mt-0.5 text-black">•</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <p className="text-[8px] sm:text-sm md:text-base text-black font-inter font-normal mb-3">
+        But inside leadership discussions you are rarely mentioned.
+      </p>
+      <p className="text-[8px] sm:text-sm md:text-base text-black font-inter font-normal">That shift changes everything.</p>
+    </div>
+  );
+}
