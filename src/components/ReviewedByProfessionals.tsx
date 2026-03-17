@@ -82,7 +82,7 @@ const ReviewedByProfessionals = () => {
                   alt={item.name}
                   width={90}
                   height={90}
-                  className="w-[38px] h-[38px] md:w-[90px] md:h-[90px] rounded-full object-cover shrink-0"
+                  className="w-[40px] h-[40px] md:w-[90px] md:h-[90px] rounded-full object-cover shrink-0 border-3 border-[#D9D9D9]"
                 />
 
                 {/* Name + Role */}

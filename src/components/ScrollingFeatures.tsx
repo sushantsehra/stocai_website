@@ -34,7 +34,19 @@ const row2 = [
 
 const ScrollingFeatures = () => {
   return (
-    <section className="bg-white py-1 md:py-10 overflow-hidden">
+    <section className="bg-white py-1 md:py-6 overflow-hidden">
+
+      <div className="mx-auto w-full flex justify-center items-center flex-col py-4 md:mb-6">
+        <p className="font-semibold font-inter text-[10px] md:text-[32px] text-black">
+          Join professionals who already have!
+        </p>
+        <p className="font-normal font-inter text-[10px] md:text-[27px] text-black mx-16">
+          From Fortune 500 companies to fast-growing startups -
+        </p>
+                <p className="font-normal font-inter text-[10px] md:text-[27px] text-black mx-16">
+          real people, real promotions
+        </p>
+      </div>
 
       {/* Row 1 */}
       <div className="marquee p-2">

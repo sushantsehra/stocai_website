@@ -68,30 +68,38 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
   return (
     <section
       id="waitlist"
-      className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-12 lg:py-15 px-4 text-center mt-6"
+      className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-8 lg:py-15 px-4 text-center mt-6"
     >
       {/* Icon */}
-      <div className="inline-flex items-center justify-center w-12 h-12 md:w-[64px] md:h-[64px] bg-[#3B6FF5] rounded-[12px] md:rounded-[20px] mb-6 lg:mb-12">
+      {/* <div className="inline-flex items-center justify-center w-12 h-12 md:w-[64px] md:h-[64px] bg-[#3B6FF5] rounded-[12px] md:rounded-[20px] mb-6 lg:mb-12">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
           <g transform="translate(2,-2)"><path d="M18 5 V8 M16.5 6.5 H19.5" /></g>
           <g transform="translate(-2,2)"><path d="M6 16 V18 M5 17 H7" /></g>
         </svg>
-      </div>
+      </div> */}
 
-      <div className="max-w-full mx-auto">
-        <h2 className="text-[20px] sm:text-4xl md:text-[48px] text-white font-jakarta font-bold mb-3.5 lg:mb-4.5">
+      <div className="max-w-full">
+
+          <h3 className="text-[12px] sm:text-[30px] text-white font-quattrocento font-bold mb-3 lg:mb-4.5">
+          If you keep doing great work silently, nothing changes.
+          <br />
+          If you learn how promotions actually work, everything changes.
+        </h3>
+
+
+        <h2 className="text-[18px] sm:text-4xl md:text-[48px] text-white font-quattrocento font-bold mb-3.5 lg:mb-4.5">
           Ready to change your career trajectory?
         </h2>
 
         <div className="flex items-center justify-center">
-          <p className="lg:text-[20px] mb-6 md:mb-12 lg:mb-14 text-sm sm:text-base font-medium leading-4.5 md:leading-6 text-white/60 font-jakarta lg:max-w-3xl text-center">
+          <p className="lg:text-[20px] mb-1  md:mb-12 lg:mb-14 text-[10px] sm:text-base font-inter font-medium leading-3.5 md:leading-6 text-white/60 lg:max-w-3xl text-center">
             After years of doing this privately and helping hundreds become promotable,
             we&apos;re scaling to our first paid launch.
           </p>
         </div>
 
-        <p className="lg:text-[22px] mb-5 md:mb-6 text-sm sm:text-base leading-4.5 font-jakarta font-medium">
+        <p className="lg:text-[22px] mb-5 md:mb-6 text-[8px] sm:text-base leading-4.5 font-jakarta font-medium">
           Benefit from our early-bird offer, only available for a short time, for this special launch.
         </p>
 
@@ -119,6 +127,7 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
               className="w-full sm:w-[160px] md:w-[180px] lg:w-[200px] px-3 py-2.5 md:py-3 rounded-md text-black text-sm md:text-base outline-none bg-white disabled:opacity-50"
             />
 
+            <div className="flex gap-2 w-full">
             {/* Country code */}
             <select
               value={countryCode}
@@ -142,6 +151,7 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
               disabled={isLoading}
               className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2.5 md:py-3 text-black text-sm md:text-base outline-none bg-white rounded-md disabled:opacity-50"
             />
+            </div>
 
             {/* Desktop button */}
             <button
@@ -157,7 +167,7 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
           <button
             onClick={handleRequestAccess}
             disabled={isLoading}
-            className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="block sm:hidden w-[40%] sm:w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] rounded-[9.36px] text-[10px] sm:text-[18.71px] text-black min-h-[40px] sm:min-h-[49.9px] cursor-pointer font-bold font-jakarta p-1 sm:p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Saving..." : "Request Access"}
           </button>

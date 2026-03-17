@@ -106,7 +106,7 @@ const LearningExperienceNew = () => {
     <section className="py-6 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto relative px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-4 sm:mb-12">
+        {/* <div className="text-center mb-4 sm:mb-12">
           <h2 className="hidden sm:block text-[18px] sm:text-3xl md:text-4xl lg:text-[48px] font-jakarta font-bold text-black mb-2">
             Built from real{" "}
             <span className="text-[#0B64F4] font-jakarta ">career experiences</span>,{" "}
@@ -117,6 +117,19 @@ const LearningExperienceNew = () => {
             Built from real{" "}
             <span className="text-[#0B64F4] font-jakarta ">career experiences</span>, <br />{" "} not theory
           </h2>
+        </div> */}
+
+            <div className="text-center mb-4 sm:mb-12">
+          <h2 className="text-[18px] sm:text-3xl md:text-4xl lg:text-[48px] font-quattrocento font-bold text-black mb-1 md:mb-3">
+           This is not another leadership course.
+          </h2>
+          <p className="text-[10px] sm:text-[18px] lg:text-[30px] font-jakarta font-normal text-black mb-3 md:mb-5">Most career programs give you motivation.
+            <br />
+This one gives you {" "} <span className="text-[#014BAA] ">a system.</span> 
+</p>
+         <h2 className="text-[10px] sm:text-[18px] lg:text-[38px] font-inter font-bold text-black mb-2">
+          YOU GET
+         </h2>
         </div>
 
         {/* Content Grid */}

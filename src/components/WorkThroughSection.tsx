@@ -4,10 +4,15 @@ import React from "react";
 import { SiTicktick } from "react-icons/si";
 
 const ITEMS = [
-  "How decision-makers think at your level",
-  "How visibility actually works (without self-promotion)",
-  "How decisions get made when you’re not in the room",
-  "How to communicate impact without sounding uncomfortable",
+  // "How decision-makers think at your level",
+  // "How visibility actually works (without self-promotion)",
+  // "How decisions get made when you’re not in the room",
+  // "How to communicate impact without sounding uncomfortable",
+  "How promotion decisions actually happen behind closed doors",
+  "How leaders evaluate “potential” vs “performance”",
+  "How to communicate impact without sounding like you are bragging",
+  "How to build influence across stakeholders",
+  // "How to position yourself for the next role before it opens",
 ];
 
 const WorkThroughSection = () => {
@@ -42,7 +47,7 @@ const WorkThroughSection = () => {
           }}
         >
           {/* Heading */}
-          <h2
+          {/* <h2
             style={{
               fontFamily: "serif",
               //   fontSize: "48px",
@@ -52,7 +57,25 @@ const WorkThroughSection = () => {
             className="font-bold font-quattrocento text-[18px] md:text-[30px] lg:text-[48px] mb-9 md:mb-10 lg:mb-24 lg:mt-4"
           >
             What You’ll Work Through
+          </h2> */}
+
+                    <h2
+            style={{
+              fontFamily: "serif",
+              //   fontSize: "48px",
+              marginBottom: "1px",
+              color: "#1D1D1D",
+            }}
+            className="font-bold font-quattrocento text-[16px] md:text-[30px] lg:text-[48px] "
+          >
+            The real mechanics of career growth.
           </h2>
+
+          <p  style={{
+              marginBottom: "15px",
+            }} className="text-[#1D1D1D] text-[12px] md:text-[24px] lg:text-[38px] font-normal font-inter mb-9 md:mb-10 lg:mb-24 lg:mt-4">
+            Inside the program you will learn:
+          </p>
 
           {/* Grid */}
           <div
@@ -77,7 +100,7 @@ const WorkThroughSection = () => {
                 }}
                 className="p-3 md:p-5 lg:min-h-[90px]"
               >
-                <SiTicktick size={20} color="#161616" />
+                {/* <SiTicktick size={20} color="#161616" /> */}
 
                 <p
                   style={{
@@ -94,6 +117,43 @@ const WorkThroughSection = () => {
               </div>
             ))}
           </div>
+
+             <div
+                style={{
+                  background: "#E6F1FF",
+                  padding: "20px",
+                  borderRadius: "6px",
+                  marginLeft: "9px",
+                  marginRight: "9px",
+                  marginTop: "10px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  textAlign: "left",
+                }}
+                className="p-3 md:p-5 lg:min-h-[80px] md:items-center md:flex md:justify-center"
+              >
+                <p
+                  style={{
+                    // fontSize: "16px",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    color: "#000000",
+                    fontWeight: 300,
+                  }}
+                  className="font-inter text-[9px] md:text-[18px]"
+                >
+                  How to position yourself for the next role before it opens
+                </p>
+              </div>
+
+              <div className="mt-4 md:mt-10">
+                <p className="font-inter font-bold text-[9px] sm:text-[18px] md:text-[24px] text-[#1D1D1D]">
+                  These are the skills most professionals only discover <span className="text-[#014BAA]">
+                    after 15-20 years
+                  </span>
+                </p>
+              </div>
         </div>
       </div>
     </section>

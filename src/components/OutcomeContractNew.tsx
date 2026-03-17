@@ -17,20 +17,22 @@ const OutcomeContract = () => {
     <section className="bg-white py-7 md:pt-6 md:pb-20 px-8 md:px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Top Heading */}
-        <h2 className="text-[18px] md:text-4xl lg:text-[48px] font-quattrocento font-bold text-black">
+        {/* <h2 className="text-[18px] md:text-4xl lg:text-[48px] font-quattrocento font-bold text-black">
           That’s not all.
-        </h2>
+        </h2> */}
 
-        <p className="mt-1 md:mt-6 text-[10px] md:text-lg font-normal font-inter text-black leading-4 md:leading-relaxed">
-          You’re guided by an AI-powered reflection coach throughout.
+        <p className="mt-1 md:mt-6 text-[10px] md:text-lg lg:text-2xl font-normal font-inter text-black leading-4 md:leading-relaxed">
+          {/* You’re guided by an AI-powered reflection coach throughout. */}
+            You know you are capable of more.
           <br className="" />
-          A private thinking partner, free of judgement
+          {/* A private thinking partner, free of judgement */}
+            You just need the playbook.
         </p>
       </div>
 
       {/* Black Card */}
-      <div className="max-w-4xl mx-auto mt-8 md:mt-6">
-        <div className="bg-[#000000] text-white rounded-[11px] px-8 md:px-20 py-6 md:pt-8 md:pb-12 shadow-xl">
+      <div className="max-w-4xl mx-auto mt-4 md:mt-6 lg:mt-12">
+        <div className="bg-[#000000] text-white rounded-[11px] px-4 md:px-20 py-6 md:pt-8 md:pb-12 shadow-xl">
 
           {/* Icon Placeholder */}
           <div className="flex justify-center mb-1 md:mb-8">
@@ -39,7 +41,12 @@ const OutcomeContract = () => {
 
           {/* Title */}
           <h3 className="text-[18px] md:text-3xl font-quattrocento font-normal text-center font-medium">
-            <span className="font-inter font-medium">Your</span> Outcome Contract
+            <span className="font-inter font-medium">
+              {/* Your */}
+              A simple guarantee.
+
+              </span> 
+              {/* Outcome Contract */}
           </h3>
 
           <p className="text-white  font-inter font-normal text-center text-[9px] md:text-lg mt-1 md:mt-2">
@@ -47,10 +54,10 @@ const OutcomeContract = () => {
           </p>
 
           {/* Columns */}
-          <div className="flex flex-row md:justify-center gap-10 md:gap-24 mt-4 md:mt-10 text-left">
+          <div className="flex flex-row md:justify-center gap-2 md:gap-24 mt-4 md:mt-10 text-left">
 
             {/* Left */}
-            <div className="md:w-[220px]">
+            <div className="w-full md:w-[220px]">
               <h4 className="text-[12px] md:text-xl font-medium font-inter mb-1 md:mb-6">
                 We provide
               </h4>
@@ -65,7 +72,7 @@ const OutcomeContract = () => {
             </div>
 
             {/* Right */}
-            <div className="md:w-[250px]">
+            <div className="w-full md:w-[250px]">
               <h4 className="text-[12px] md:text-xl font-medium font-inter mb-1 md:mb-6">
                 You Commit to
               </h4>
@@ -83,12 +90,13 @@ const OutcomeContract = () => {
           {/* Refund Section */}
           <div className="text-center mt-5 md:mt-12 max-w-3xl md:max-w-4xl mx-auto">
             <p className="text-[#FFFFFF] text-[10px] font-normal font-inter md:text-lg leading-4 md:leading-relaxed">
-              If you complete your commitments and don&apos;t see clear movement, email us for a full refund.
+              {/* If you complete your commitments and don&apos;t see clear movement, email us for a full refund. */}
+              If you complete the program and apply the system but see no movement in your career trajectory, email us for a full refund.
             </p>
 
-            <p className="mt-0.5 md:mt-3 text-[#FFFFFF] text-[10px] font-bold font-inter md:text-lg">
+            {/* <p className="mt-0.5 md:mt-3 text-[#FFFFFF] text-[10px] font-bold font-inter md:text-lg">
               No questions asked.
-            </p>
+            </p> */}
           </div>
 
           {/* CTA */}
@@ -100,6 +108,8 @@ const OutcomeContract = () => {
 
         </div>
       </div>
+
+
     </section>
   );
 };

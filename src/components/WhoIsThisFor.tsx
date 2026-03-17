@@ -103,17 +103,14 @@ const WhoIsThisFor = () => {
                          mb-1 md:mb-3">
             But...
           </h3> */}
-
+{/* 
           <p className="font-inter font-light px-6 
                         text-[10px] md:text-[20px] lg:text-[24px] 
                         leading-relaxed text-black mt-4 md:mt-12">
-            {/* If you’re looking for quick hacks and you believe promotions are
-            purely political and out of your control, then this may not be the
-            strategy for you. */}
             You know you are capable of more.
             <br />
             You just need the playbook.
-          </p>
+          </p> */}
         </div>
 
       </div>
