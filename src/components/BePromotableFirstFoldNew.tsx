@@ -254,7 +254,7 @@ export default function BePromotableFirstFold() {
       <section className="max-w-7xl mx-auto px-5 pb-16 md:mt-8">
 
         {/* Mobile: Tabs */}
-        <div className="flex md:hidden justify-center gap-3 mb-4 sm:mb-6">
+        {/* <div className="flex md:hidden justify-center gap-3 mb-4 sm:mb-6">
           {(["current", "future"] as const).map((tab) => (
             <button
               key={tab}
@@ -270,7 +270,7 @@ export default function BePromotableFirstFold() {
               {tab === "current" ? "Current State" : "Future State"}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Mobile: Single card */}
         <div className="md:hidden">
