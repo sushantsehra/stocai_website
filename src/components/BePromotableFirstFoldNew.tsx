@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import harshImg from '../assets/harshMehtaCI.png';
 import harshImage from '../assets/harshMehtaFI.png';
@@ -181,6 +181,15 @@ function IDCard({
 export default function BePromotableFirstFold() {
   const [activeTab, setActiveTab] = useState<"current" | "future">("current");
 
+  // Auto-switch tabs every 2 seconds on mobile
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTab((prev) => (prev === "current" ? "future" : "current"));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const currentCard: IDCardProps = {
     variant: "current",
     profile: harshImg,
@@ -213,17 +222,17 @@ export default function BePromotableFirstFold() {
     <main className="min-h-screen bg-white font-sans text-gray-900">
 
       {/* ── Hero ── */}
-      <section className="max-w-2xl mx-auto px-5 pt-6 md:pt-14 pb-10 text-center">
-        <p className="sm:text-base text-[14px] font-quattrocento md:text-2xl text-[#000000] font-normal leading-snug">
+      <section className="max-w-7xl mx-auto px-5 pt-6 md:pt-14 pb-10 text-center">
+        <p className="sm:text-base text-[14px] font-quattrocento md:text-5xl text-[#000000] font-normal leading-snug">
           You&apos;re Not Stuck Because You&apos;re Bad At Your Job.
         </p>
-        <h1 className="text-[16px] sm:text-3xl md:text-4xl font-bold font-inter leading-tight text-black mb-1">
+        <h1 className="text-[16px] sm:text-3xl md:text-5xl font-bold font-inter leading-tight text-black mb-1 md:mb-3">
           You&apos;re Stuck Because Nobody Taught 
           <br />
           You{" "}
           <span className="text-[#014BAA]">How Promotions Actually Work.</span>
         </h1>
-        <p className="mt-5 text-[12px] sm:text-base text-[#464646] font-inter font-medium leading-4.5 max-w-xl mx-auto">
+        <p className="mt-5 md:mt-8 text-[12px] sm:text-base md:text-3xl text-[#464646] font-inter font-medium leading-4.5 md:leading-10 max-w-xl md:max-w-4xl mx-auto">
           A focused{" "}
           <strong className="text-[#014BAA]">8-week program</strong> for professionals with{" "}
           <strong className="text-[#014BAA]">8+ years</strong> of experience who deliver great
@@ -233,7 +242,7 @@ export default function BePromotableFirstFold() {
         </p>
         <a
           href="#apply"
-          className="inline-flex items-center gap-2 mt-6 md:mt-8 px-3 md:px-7 py-2.5 md:py-3.5 rounded-[8px] bg-[#014BAA] text-white font-semibold text-[12px] sm:text-base
+          className="inline-flex items-center gap-2 mt-6 md:mt-12 px-3 md:px-7 py-2.5 md:py-3.5 rounded-[8px] bg-[#014BAA] text-white font-semibold text-[12px] sm:text-base
             hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-200"
         >
           Apply for Program
@@ -242,20 +251,20 @@ export default function BePromotableFirstFold() {
       </section>
 
       {/* ── Current / Future State ── */}
-      <section className="max-w-7xl mx-auto px-5 pb-16">
+      <section className="max-w-7xl mx-auto px-5 pb-16 md:mt-8">
 
         {/* Mobile: Tabs */}
-        <div className="flex md:hidden justify-center gap-3 mb-6">
+        <div className="flex md:hidden justify-center gap-3 mb-4 sm:mb-6">
           {(["current", "future"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 max-w-[160px] py-2.5 rounded-lg text-sm font-semibold border transition-all
+              className={`flex-1 max-w-[160px] py-2 sm:py-2.5 rounded-lg text-[10px] sm:text-sm font-semibold border transition-all
                 ${activeTab === tab
                   ? tab === "current"
-                    ? "bg-gray-950 text-white border-gray-950"
-                    : "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
+                    ? "bg-black text-white border-black"
+                    : "bg-[#014BAA] text-white border-[#014BAA]"
+                  : "bg-white text-black border-black hover:border-black"
                 }`}
             >
               {tab === "current" ? "Current State" : "Future State"}
