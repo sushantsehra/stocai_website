@@ -32,26 +32,26 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="w-7 h-7 sm:w-9 sm:h-9 cursor-pointer rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
+                className="w-8 h-8 sm:w-9 sm:h-9 cursor-pointer rounded-lg bg-white hover:bg-slate-700 flex items-center justify-center transition-colors"
               >
                 <Linkedin className="w-5 h-5 text-black" />
               </Link>
               <Link
                     href="https://www.instagram.com/my_stocai/"
                     aria-label="Social media"
-                    className="w-7 h-7 sm:w-9 sm:h-9 cursor-pointer rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors"
+                    className="w-8 h-8 sm:w-9 sm:h-9 cursor-pointer rounded-lg bg-white hover:bg-slate-700 flex items-center justify-center transition-colors"
                   >
                   <Instagram className="w-6 h-6 text-black" />
               </Link>
               {/* <Link href="https://x.com/my_stocai" target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Twitter" className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Twitter">
+                aria-label="Twitter" className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white hover:bg-slate-700 flex items-center justify-center transition-colors" aria-label="Twitter">
                 <Twitter className="w-5 h-5 text-black" />
               </Link> */}
               <Link   
                 href="mailto:team@bettercorporatelife.com"
                 aria-label="Email"
-                className="w-7 h-7 sm:w-9 sm:h-9 cursor-pointer rounded-lg bg-white/10 hover:bg-slate-700 flex items-center justify-center transition-colors">
+                className="w-8 h-8 sm:w-9 sm:h-9 cursor-pointer rounded-lg bg-white hover:bg-slate-700 flex items-center justify-center transition-colors">
                 <Mail className="w-5 h-5 text-black" />
               </Link>
             </div>
