@@ -214,14 +214,16 @@ export default function BePromotableFirstFold() {
 
       {/* ── Hero ── */}
       <section className="max-w-2xl mx-auto px-5 pt-6 md:pt-14 pb-10 text-center">
-        <p className="sm:text-base text-[14px] font-quattrocento text-[#000000] font-normal leading-snug">
+        <p className="sm:text-base text-[14px] font-quattrocento md:text-2xl text-[#000000] font-normal leading-snug">
           You&apos;re Not Stuck Because You&apos;re Bad At Your Job.
         </p>
-        <h1 className="text-[16px] sm:text-3xl md:text-4xl font-bold font-inter leading-tight text-gray-900 mb-1">
-          You&apos;re Stuck Because Nobody Taught You{" "}
+        <h1 className="text-[16px] sm:text-3xl md:text-4xl font-bold font-inter leading-tight text-black mb-1">
+          You&apos;re Stuck Because Nobody Taught 
+          <br />
+          You{" "}
           <span className="text-[#014BAA]">How Promotions Actually Work.</span>
         </h1>
-        <p className="mt-5 text-sm sm:text-base text-[#464646] font-inter font-medium leading-4.5 max-w-xl mx-auto">
+        <p className="mt-5 text-[12px] sm:text-base text-[#464646] font-inter font-medium leading-4.5 max-w-xl mx-auto">
           A focused{" "}
           <strong className="text-[#014BAA]">8-week program</strong> for professionals with{" "}
           <strong className="text-[#014BAA]">8+ years</strong> of experience who deliver great
@@ -231,7 +233,7 @@ export default function BePromotableFirstFold() {
         </p>
         <a
           href="#apply"
-          className="inline-flex items-center gap-2 mt-6 md:mt-8 px-3 md:px-7 py-2.5 md:py-3.5 rounded-[8px] bg-[#014BAA] text-white font-semibold text-sm sm:text-base
+          className="inline-flex items-center gap-2 mt-6 md:mt-8 px-3 md:px-7 py-2.5 md:py-3.5 rounded-[8px] bg-[#014BAA] text-white font-semibold text-[12px] sm:text-base
             hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-200"
         >
           Apply for Program
