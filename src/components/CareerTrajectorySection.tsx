@@ -33,15 +33,17 @@ export default function CareerTrajectorySection() {
 
         {/* Sub Text */}
         <div className="text-center mb-4 md:mb-10">
-          <p className="font-semibold font-inter text-black text-[10px] md:text-[18px] lg:text-[28px]">
+          <p className="font-semibold font-inter text-black text-[12px] md:text-[18px] lg:text-[28px]">
             Join professionals who already have!
           </p>
           <p
             style={{ fontWeight: 300 }}
-            className="text-black font-inter text-[10px] md:text-[16px] lg:text-[24px] mt-1 md:mt-1 leading-4 md:leading-relaxed max-w-[280px] md:max-w-none mx-auto"
+            className="text-black font-inter text-[12px] md:text-[16px] lg:text-[24px] mt-1 md:mt-1 leading-4 md:leading-relaxed max-w-[280px] md:max-w-none mx-auto"
           >
             From Fortune 500 companies to fast-growing startups –
-            real people, real promotions
+            <span className="text-[#014BAA]">
+              real people, real promotions
+            </span>
           </p>
         </div>
 

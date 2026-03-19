@@ -32,10 +32,17 @@ const LearningExperienceNew = () => {
   const slides: Slide[] = [
     {
       title: "Concept-Led Videos",
-      points: [
-        "Understand growth levers and blockers",
-        "Decode unspoken workplace dynamics",
-        "Spot patterns you've been missing for years",
+      // points: [
+      //   "Understand growth levers and blockers",
+      //   "Decode unspoken workplace dynamics",
+      //   "Spot patterns you've been missing for years",
+      // ],
+        points: [
+        "Practical frameworks used by senior leaders",
+        "Weekly implementation exercises",
+        "1:1 coaching sessions",
+        "Promotion pitch practice",
+        "Accountability so you actually execute"
       ],
       image: tile1,
     },
@@ -199,7 +206,7 @@ This one gives you {" "} <span className="text-[#014BAA] ">a system.</span>
           <div className="relative md:w-[40%]">
             <h3
               key={slides[currentSlide].title}
-              className="text-[13px] text-center sm:text-left sm:text-2xl lg:text-[24px] font-semibold font-jakarta text-[#014BAA] mb-3 sm:mb-4 transition-all duration-300"
+              className="text-[15px] text-center sm:text-left sm:text-2xl lg:text-[24px] font-semibold font-jakarta text-[#014BAA] mb-3 sm:mb-4 transition-all duration-300"
             >
               {slides[currentSlide].title}
             </h3>
@@ -211,7 +218,7 @@ This one gives you {" "} <span className="text-[#014BAA] ">a system.</span>
                   className="flex items-start gap-3 transition-all duration-300"
                 >
                   <FaRegCircleCheck className="w-3 h-3 md:w-5 md:h-5 text-[#6B7280] flex-shrink-0 mt-1" />
-                  <span className="text-[10px] md:text-[18px] text-[#000000] font-jakarta font-normal leading-snug mt-0.5 md:mt-0">
+                  <span className="text-[14px] md:text-[18px] text-[#000000] font-jakarta font-normal leading-snug mt-0.5 md:mt-0">
                     {point}
                   </span>
                 </li>

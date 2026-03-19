@@ -3,15 +3,26 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+// const modules = [
+//   { id: 1, title: "Fundamentals of Being Promotable", summary: "Understand what promotion truly means for you." },
+//   { id: 2, title: "Claim What You Value", summary: "Learn to delegate effectively and multiply your impact." },
+//   { id: 3, title: "Gaining Visibility and Influence", summary: "Map your key stakeholders and understand what matters to them." },
+//   { id: 4, title: "Navigate With Confidence", summary: "Identify what weakens your executive presence." },
+//   { id: 5, title: "Leverage - Impact Without Burnout", summary: "Learn to delegate effectively and multiply your impact." },
+//   { id: 6, title: "Personal Brand-Building Advocates", summary: "Step into the habits and behaviours of your next level." },
+//   { id: 7, title: "Psychology Of Promotion", summary: "Communicate your value with clarity, confidence, and conviction." },
+//   { id: 8, title: "My Action Plan", summary: "Create a personalized action plan to apply everything you've learned." },
+// ];
+
 const modules = [
-  { id: 1, title: "Fundamentals of Being Promotable", summary: "Understand what promotion truly means for you." },
-  { id: 2, title: "Claim What You Value", summary: "Learn to delegate effectively and multiply your impact." },
-  { id: 3, title: "Gaining Visibility and Influence", summary: "Map your key stakeholders and understand what matters to them." },
-  { id: 4, title: "Navigate With Confidence", summary: "Identify what weakens your executive presence." },
-  { id: 5, title: "Leverage - Impact Without Burnout", summary: "Learn to delegate effectively and multiply your impact." },
-  { id: 6, title: "Personal Brand-Building Advocates", summary: "Step into the habits and behaviours of your next level." },
-  { id: 7, title: "Psychology Of Promotion", summary: "Communicate your value with clarity, confidence, and conviction." },
-  { id: 8, title: "My Action Plan", summary: "Create a personalized action plan to apply everything you've learned." },
+  { id: 1, title: "Understanding what makes someone promotable"},
+  { id: 2, title: "Expanding your scope of influence"},
+  { id: 3, title: "Expanding your scope of influence"},
+  { id: 4, title: "Communicating impact effectively"},
+  { id: 5, title: "Strategic visibility"},
+  { id: 6, title: "Executive presence"},
+  { id: 7, title: "Promotion psychology"},
+  { id: 8, title: "Promotion psychology"},
 ];
 
 export default function EightWeekArc() {
@@ -45,8 +56,9 @@ export default function EightWeekArc() {
           </span>
         </h2>
 
-        <p className="text-[#000000] font-inter text-[12px] sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-8">
-          (With actionable outcomes every week)
+        <p className="text-[#000000] font-inter text-[14px] font-inter font-medium sm:text-xl md:text-[20px] leading-6 max-w-5xl mx-auto md:mb-8">
+          {/* (With actionable outcomes every week) */}
+          Each week focuses on one growth lever.
         </p>
       </div>
 
@@ -89,18 +101,18 @@ export default function EightWeekArc() {
                   <div className="bg-[#FFFFFF] rounded-[11.11px] p-2 sm:p-10 h-full flex flex-col justify-between text-left">
                     <div className="pt-3">
                       <p className="text-[#014BAA] text-[7.22px] lg:text-2xl font-jakarta font-bold mb-1 md:mb-3 lg:mb-5">
-                        Module {m.id}
+                        Week {m.id}
                       </p>
 
                       <h3 className="text-[12px] sm:text-2xl lg:text-4xl font-bold font-quattrocento mb-4">
                         {m.title}
                       </h3>
 
-                      <div className="bg-[#014BAA] rounded-[5.56px] md:rounded-[10px] p-1.5 md:p-4 md:mt-6">
+                      {/* <div className="bg-[#014BAA] rounded-[5.56px] md:rounded-[10px] p-1.5 md:p-4 md:mt-6">
                         <p className="text-white text-[7.45px] md:text-xl sm:text-base">
                           {m.summary}
                         </p>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="flex justify-center gap-4 md:mt-6 translate-y-[-10px]">
@@ -134,11 +146,11 @@ export default function EightWeekArc() {
                     {m.title}
                   </h3>
 
-                  <div className="relative bg-[#014BAA] rounded-[5.56px] md:rounded-[10px] p-1.5 md:p-4 md:mt-8">
+                  {/* <div className="relative bg-[#014BAA] rounded-[5.56px] md:rounded-[10px] p-1.5 md:p-4 md:mt-8">
                     <p className="text-white text-[7.45px] sm:text-sm md:text-2xl">
                       {m.summary}
                     </p>
-                  </div>
+                  </div> */}
 
                 </div>
               )}

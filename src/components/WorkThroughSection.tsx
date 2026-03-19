@@ -90,7 +90,7 @@ const WorkThroughSection = () => {
               <div
                 key={index}
                 style={{
-                  background: "#E6F1FF",
+                  background: "#014BAA",
                   // padding: "28px 26px",
                   borderRadius: "6px",
                   display: "flex",
@@ -107,7 +107,7 @@ const WorkThroughSection = () => {
                     // fontSize: "16px",
                     lineHeight: "1.5",
                     margin: 0,
-                    color: "#000000",
+                    color: "#FFFFFF",
                     fontWeight: 300,
                   }}
                   className="font-inter text-[9px] md:text-[18px]"
@@ -120,7 +120,7 @@ const WorkThroughSection = () => {
 
              <div
                 style={{
-                  background: "#E6F1FF",
+                  background: "#014BAA",
                   padding: "20px",
                   borderRadius: "6px",
                   marginLeft: "9px",
@@ -138,7 +138,7 @@ const WorkThroughSection = () => {
                     // fontSize: "16px",
                     lineHeight: "1.5",
                     margin: 0,
-                    color: "#000000",
+                    color: "#FFFFFF",
                     fontWeight: 300,
                   }}
                   className="font-inter text-[9px] md:text-[18px]"
@@ -148,7 +148,7 @@ const WorkThroughSection = () => {
               </div>
 
               <div className="mt-4 md:mt-10">
-                <p className="font-inter font-bold text-[9px] sm:text-[18px] md:text-[24px] text-[#1D1D1D]">
+                <p className="font-inter font-bold text-[15px] sm:text-[18px] md:text-[24px] text-[#1D1D1D]">
                   These are the skills most professionals only discover <span className="text-[#014BAA]">
                     after 15-20 years
                   </span>

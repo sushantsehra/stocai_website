@@ -222,7 +222,7 @@ const TestimonialFeatures: React.FC = () => {
 
               <WhoIsThisFor />
               {/* Heading */}
-              <h2 className="text-center font-quattrocento font-bold text-[16px] leading-[22px] text-[#1D1D1D] mb-4">
+              <h2 className="text-center font-quattrocento font-bold text-[18px] leading-[22px] text-[#1D1D1D] mb-4">
                 Triple your chances of promotion in the next 8 weeks.
               </h2>
 
@@ -232,13 +232,13 @@ const TestimonialFeatures: React.FC = () => {
                 {/* LEFT SIDE */}
                 <div className="">
 
-                  <p className="text-[9px] font-inter text-[#1D1D1D] mb-3 ml-1">
+                  <p className="text-[12px] font-inter text-[#1D1D1D] mb-3 ml-1">
                     Most professionals believe promotions depend on:
                   </p>
 
-                  <div className="bg-[#D9D9D9] rounded-[8px] p-4 w-full">
+                  <div className="bg-[#D9D9D9] rounded-[8px] p-4 w-full mt-8">
 
-                    <ul className="list-disc pl-1 text-[8px] font-inter space-y-1 text-[#1D1D1D]">
+                    <ul className="list-disc pl-1 text-[10px] font-inter space-y-1 text-[#1D1D1D] min-h-[73px]">
                       <li>Working harder</li>
                       <li>Waiting longer</li>
                       <li>Pleasing their manager</li>
@@ -246,7 +246,7 @@ const TestimonialFeatures: React.FC = () => {
 
                   </div>
 
-                  <p className="text-[9px] font-normal font-inter mt-4 text-[#1D1D1D]">
+                  <p className="text-[10px] font-normal font-inter mt-4 text-[#1D1D1D]">
                     None of these move the needle.
                   </p>
 
@@ -260,13 +260,13 @@ const TestimonialFeatures: React.FC = () => {
                 {/* RIGHT SIDE */}
                 <div className="border-l border-gray-400 pl-4">
 
-                  <p className="text-[9px] font-inter font-normal text-[#1D1D1D] mb-3 ml-1">
+                  <p className="text-[12px] font-inter font-normal text-[#1D1D1D] mb-3 ml-1">
                     Promotions happen when leadership sees three signals:
                   </p>
 
                   <div className="bg-[#014BAA] text-white rounded-xl p-3 w-full">
 
-                    <ul className="list-disc pl-5 text-[8px] font-inter font-normal space-y-1">
+                    <ul className="list-disc pl-5 text-[10px] font-inter font-normal space-y-1">
                       <li>Influence across teams</li>
                       <li>Strategic thinking</li>
                       <li>Visible impact on business outcomes</li>
@@ -274,7 +274,7 @@ const TestimonialFeatures: React.FC = () => {
 
                   </div>
 
-                  <p className="text-[9px] mt-3 font-inter font-regular text-[#1D1D1D]">
+                  <p className="text-[10px] mt-3 font-inter font-regular text-[#1D1D1D]">
                     This program teaches you how to build those signals intentionally.
                   </p>
 
