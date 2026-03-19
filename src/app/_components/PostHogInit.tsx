@@ -17,7 +17,8 @@ export default function PostHogInit() {
 
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
     const apiHost =
-      process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://app.posthog.com";
+      process.env.NEXT_PUBLIC_POSTHOG_HOST ||
+      "https://d.bettercorporatelife.com";
 
     if (!apiKey || !env.features.analytics) {
       console.warn(
@@ -28,6 +29,7 @@ export default function PostHogInit() {
 
     posthog.init(apiKey, {
       api_host: apiHost,
+      defaults: "2026-01-30",
       autocapture: true,
       capture_pageview: false,
       capture_pageleave: true,
