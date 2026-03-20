@@ -7,6 +7,7 @@ import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import posthog from "posthog-js";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -182,6 +183,12 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       const waitlistData = await response.json().catch(() => ({}));
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+      if (waitlistData?.updated === true) {
+        trackAlreadyWaitlisted(source, {
+          context: "hero_waitlist_submit",
+          payment_started: true,
+        });
       }
 
       onSubmit?.({

@@ -28,6 +28,7 @@ import PromotableHeroWaitlist from "./PromotableHeroWaitlist";
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
 
@@ -96,6 +97,12 @@ const BMPLandingComponents = () => {
       const waitlistData = await response.json().catch(() => ({}));
 
       if (response.ok) {
+        if (waitlistData?.updated === true) {
+          trackAlreadyWaitlisted(userData.source, {
+            context: "bmp_request_access",
+            payment_started: true,
+          });
+        }
         posthog.capture("waitlist_submitted", {
           source: userData.source,
           payment_started: true,

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 
 const PreviewWaitlistSection = () => {
   const [name, setName] = useState("");
@@ -93,6 +94,12 @@ const PreviewWaitlistSection = () => {
       const waitlistData = await response.json().catch(() => ({}));
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+      if (waitlistData?.updated === true) {
+        trackAlreadyWaitlisted(source, {
+          context: "preview_waitlist_section_submit",
+          payment_started: false,
+        });
       }
       posthog.capture("waitlist_submitted", {
         source,

@@ -19,6 +19,7 @@ import AdditionalBenefits from './AdditionalBenefits';
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
+import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 
 // Define interface for full modal data
 interface UserData {
@@ -105,6 +106,13 @@ const BMPPromotableComponents: React.FC = () => {
       
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+
+      if (waitlistData?.updated === true) {
+        trackAlreadyWaitlisted(userData.source, {
+          context: "bmp_promotable_request_access",
+          payment_started: false,
+        });
       }
 
       posthog.capture("waitlist_submitted", {

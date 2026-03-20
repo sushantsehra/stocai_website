@@ -5,6 +5,7 @@ import HeroWaitlist from "@/components/HeroWaitlist";
 import env from "@/utils/env";
 import posthog from "posthog-js";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -59,7 +60,7 @@ const WaitlistModalHost: React.FC = () => {
       });
       if (emailValue) {
         try {
-          await fetch(`${env.apiUrl}/waitlist`, {
+          const response = await fetch(`${env.apiUrl}/waitlist`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -68,6 +69,13 @@ const WaitlistModalHost: React.FC = () => {
               attribution: getAttributionForApi(),
             }),
           });
+          const waitlistData = await response.json().catch(() => ({}));
+          if (response.ok && waitlistData?.updated === true) {
+            trackAlreadyWaitlisted(triggerSource, {
+              context: "waitlist_modal_open_prefill",
+              has_prefill_email: true,
+            });
+          }
         } catch {
           // Ignore errors here; user can still complete full form in modal.
         }

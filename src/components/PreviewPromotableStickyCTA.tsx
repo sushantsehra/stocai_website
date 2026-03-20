@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 
 const PreviewPromotableStickyCTA = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -139,6 +140,12 @@ const PreviewPromotableStickyCTA = () => {
       const waitlistData = await response.json().catch(() => ({}));
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
+      }
+      if (waitlistData?.updated === true) {
+        trackAlreadyWaitlisted(source, {
+          context: "preview_promotable_sticky_cta_submit",
+          payment_started: false,
+        });
       }
       posthog.capture("waitlist_submitted", {
         source,
