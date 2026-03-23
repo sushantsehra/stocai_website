@@ -10,6 +10,12 @@ export const dynamic = 'force-static';
 export const metadata: Metadata = {
   title: "Better Corporate Life - Clarity and Confidence at Work",
   description: "Better Corporate Life helps professionals navigate corporate growth with clarity, confidence, and practical frameworks.",
+  
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   openGraph: {
     title: "Better Corporate Life - Clarity and Confidence at Work",
     description: "Better Corporate Life helps professionals navigate corporate growth with clarity, confidence, and practical frameworks.",
