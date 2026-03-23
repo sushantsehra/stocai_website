@@ -20,7 +20,7 @@ import ScrollingFeatures from "./ScrollingFeatures";
 import OutcomeContract from "./OutcomeContractNew";
 import FoundersBonus from "./FoundersBonus";
 import FromCommunity from "./FromCommunity";
-import CareerTrajectorySection from "./CareerTrajectorySection";
+// import CareerTrajectorySection from "./CareerTrajectorySection";
 import LearningExperienceNew from "./LearningExperienceNew";
 import AdditionalBenefitsNew from "./AdditionalBenefitsNew";
 import TrustSectionNew from "./TrustSectionNew";
@@ -185,11 +185,11 @@ const BMPLandingComponents = () => {
         <HearFromSection />
         {/* <WhoIsThisFor /> */}
         <ReviewedByProfessionals />
-        <CareerTrajectorySection />
-        <LearningExperienceNew />
-        <ScrollingFeatures />
-        <OutcomeContract />
         <EightWeekArc />
+        <ScrollingFeatures />
+        {/* <CareerTrajectorySection /> */}
+        <LearningExperienceNew />
+        <OutcomeContract />
         <AdditionalBenefitsNew />
         <FounderNoteSection />
         <TrustSectionNew />

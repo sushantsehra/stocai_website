@@ -63,7 +63,7 @@ const FEATURES = [
 const TestimonialFeatures: React.FC = () => {
   return (
     <section className="w-full bg-[#FFFFFF]">
-      <div className="max-w-7xl mx-auto py-5 md:py-20 flex flex-col md:flex-row gap-4 md:gap-0 items-end">
+      <div className="max-w-7xl mx-auto py-2 pt-1 pb-10 md:py-1 flex flex-col md:flex-row gap-4 md:gap-0 items-end">
 
         {/* LEFT — Testimonial Card */}
         <div className="w-full md:w-[40%] flex-shrink-0">
@@ -181,7 +181,7 @@ const TestimonialFeatures: React.FC = () => {
               // </div>
               <div
                 key={feature.title}
-                className="relative bg-[#EEE5DF] min-h-[271px] rounded-2xl p-6 sm:p-7 hover:bg-[#e9dfd3] transition-colors duration-200"
+                className="relative bg-[#E6F1FF] min-h-[271px] rounded-2xl p-6 sm:p-7 transition-colors duration-200"
               >
                 {/* ICON TOP RIGHT */}
                 <div className="absolute top-5 right-5">
@@ -222,7 +222,7 @@ const TestimonialFeatures: React.FC = () => {
 
               <WhoIsThisFor />
               {/* Heading */}
-              <h2 className="text-center font-quattrocento font-bold text-[18px] leading-[22px] text-[#1D1D1D] mb-4">
+              <h2 className="text-center font-quattrocento font-bold text-[18px] leading-[22px] text-[#1D1D1D] mb-4 px-2">
                 Triple your chances of promotion in the next 8 weeks.
               </h2>
 
@@ -232,13 +232,13 @@ const TestimonialFeatures: React.FC = () => {
                 {/* LEFT SIDE */}
                 <div className="">
 
-                  <p className="text-[12px] font-inter text-[#1D1D1D] mb-3 ml-1">
+                  <p className="text-[12px] font-inter font-normal text-[#1D1D1D] mb-3 ml-1">
                     Most professionals believe promotions depend on:
                   </p>
 
                   <div className="bg-[#D9D9D9] rounded-[8px] p-4 w-full mt-8">
 
-                    <ul className="list-disc pl-1 text-[10px] font-inter space-y-1 text-[#1D1D1D] min-h-[73px]">
+                    <ul className="list-disc pl-1 text-[10px] font-inter font-normal space-y-1 text-[#1D1D1D] min-h-[60px]">
                       <li>Working harder</li>
                       <li>Waiting longer</li>
                       <li>Pleasing their manager</li>
@@ -274,7 +274,7 @@ const TestimonialFeatures: React.FC = () => {
 
                   </div>
 
-                  <p className="text-[10px] mt-3 font-inter font-regular text-[#1D1D1D]">
+                  <p className="text-[10px] mt-3 font-inter font-normal text-[#1D1D1D]">
                     This program teaches you how to build those signals intentionally.
                   </p>
 
@@ -328,7 +328,7 @@ const TestimonialFeatures: React.FC = () => {
                   />
                 </div>
 
-                <h3 className="text-[#014BAA] font-quattrocento text-[12px] font-semibold leading-4 pr-6">
+                <h3 className="text-[#014BAA] font-quattrocento text-[12px] font-semibold leading-4 pr-5 ">
                   {feature.title}
                 </h3>
 
@@ -340,14 +340,14 @@ const TestimonialFeatures: React.FC = () => {
           </div>
 
           {/* Footer Text */}
-          <div className="text-center md:text-left text-[#1D1D1D] font-medium font-inter px-4 sm:text-[14px] mt-2">
+          {/* <div className="text-center md:text-left text-[#1D1D1D] font-medium font-inter px-4 sm:text-[14px] mt-2">
             <p
               style={{
                 fontSize: "11px"
               }}>
               25+ years of experience | 100+ teams led | ICF-certified coaching | 2 months of hands-on support
             </p>
-          </div>
+          </div> */}
         </div>
 
 

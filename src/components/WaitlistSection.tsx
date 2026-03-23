@@ -68,7 +68,8 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
   return (
     <section
       id="waitlist"
-      className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-8 lg:py-15 px-4 text-center mt-6"
+      // className="bg-gradient-to-b from-[#0F182C] to-[#0B63F0] text-white py-8 lg:py-15 px-4 text-center mt-6"
+      className="bg-[#014BAA] text-white py-8 lg:py-15 px-4 text-center mt-6"
     >
       {/* Icon */}
       {/* <div className="inline-flex items-center justify-center w-12 h-12 md:w-[64px] md:h-[64px] bg-[#3B6FF5] rounded-[12px] md:rounded-[20px] mb-6 lg:mb-12">
@@ -93,9 +94,9 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
         </h2>
 
         <div className="flex items-center justify-center">
-          <p className="lg:text-[20px] mb-1  md:mb-12 lg:mb-14 text-[10px] sm:text-base font-inter font-medium leading-3.5 md:leading-6 text-white/60 lg:max-w-3xl text-center">
+          <p className="lg:text-[20px] mb-1 px-5 md:px-0  md:mb-12 lg:mb-14 text-[10px] sm:text-base font-inter font-medium leading-3.5 md:leading-6 text-white/60 lg:max-w-3xl text-center">
             After years of doing this privately and helping hundreds become promotable,
-            we&apos;re scaling to our first paid launch.
+            we&apos;re scaling to our{" "} <span className="italic">first paid launch.</span>
           </p>
         </div>
 

@@ -28,7 +28,8 @@ const professionals = [
   },
   {
     name: "Tanay Malhotra",
-    role: "Business Development Lead",
+    // role: "Business Development Lead",
+    role: "BD Lead",
     text: "First program that gave me a system, not just motivation.",
     image: TanayMalhotra,
   },

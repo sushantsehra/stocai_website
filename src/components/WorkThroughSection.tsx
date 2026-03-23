@@ -61,7 +61,7 @@ const WorkThroughSection = () => {
 
                     <h2
             style={{
-              fontFamily: "serif",
+              // fontFamily: "serif",
               //   fontSize: "48px",
               marginBottom: "1px",
               color: "#1D1D1D",
@@ -110,7 +110,7 @@ const WorkThroughSection = () => {
                     color: "#FFFFFF",
                     fontWeight: 300,
                   }}
-                  className="font-inter text-[9px] md:text-[18px]"
+                  className="font-inter font-normal text-center text-[9px] md:text-[18px]"
                 >
                   {item}
                 </p>
@@ -118,20 +118,21 @@ const WorkThroughSection = () => {
             ))}
           </div>
 
-             <div
+            <div className="flex items-center justify-center">
+                           <div
                 style={{
                   background: "#014BAA",
-                  padding: "20px",
+                  padding: "12px",
                   borderRadius: "6px",
                   marginLeft: "9px",
                   marginRight: "9px",
                   marginTop: "10px",
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "flex-center",
                   gap: "8px",
                   textAlign: "left",
                 }}
-                className="p-3 md:p-5 lg:min-h-[80px] md:items-center md:flex md:justify-center"
+                className="p-3 md:p-5 lg:min-h-[80px] md:items-center md:flex md:justify-center max-w-[180px] md:max-w-[60%]"
               >
                 <p
                   style={{
@@ -141,11 +142,12 @@ const WorkThroughSection = () => {
                     color: "#FFFFFF",
                     fontWeight: 300,
                   }}
-                  className="font-inter text-[9px] md:text-[18px]"
+                  className="font-inter font-normal text-center text-[9px] md:text-[18px]"
                 >
                   How to position yourself for the next role before it opens
                 </p>
               </div>
+            </div>
 
               <div className="mt-4 md:mt-10">
                 <p className="font-inter font-bold text-[15px] sm:text-[18px] md:text-[24px] text-[#1D1D1D]">

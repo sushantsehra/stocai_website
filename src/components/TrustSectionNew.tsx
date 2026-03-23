@@ -43,7 +43,7 @@ const TrustSection = () => {
           <div className="grid grid-cols-[55%_45%] md:grid-cols-[60%_40%] gap-3 sm:gap-6 md:gap-8 items-start">
 
             {/* ====== Left Section ====== */}
-            <div className="pt-12 lg:pt-12 text-start pl-3">
+            <div className="pt-14 lg:pt-12 text-start pl-3">
               {/* <h2 className="text-[12px] sm:text-[40px] md:text-[48px] font-bold font-quattrocento leading-tight sm:leading-[48px] text-[#0F1729] mb-5 sm:mb-6">
                 Who are we and{" "}
                 <br />

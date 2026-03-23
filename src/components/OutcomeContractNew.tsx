@@ -14,14 +14,14 @@ const OutcomeContract = () => {
   };
 
   return (
-    <section className="bg-white py-7 md:pt-6 md:pb-20 px-8 md:px-6">
+    <section className="bg-white py-2 md:pt-1 md:pb-4 px-8 md:px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Top Heading */}
         {/* <h2 className="text-[18px] md:text-4xl lg:text-[48px] font-quattrocento font-bold text-black">
           That’s not all.
         </h2> */}
 
-        <p className="mt-1 md:mt-6 text-[10px] md:text-lg lg:text-2xl font-normal font-inter text-black leading-4 md:leading-relaxed">
+        <p className="mt-1 md:mt-6 text-[14px] md:text-lg lg:text-2xl font-[300] font-inter text-black leading-5 md:leading-relaxed">
           {/* You’re guided by an AI-powered reflection coach throughout. */}
             You know you are capable of more.
           <br className="" />
@@ -31,16 +31,16 @@ const OutcomeContract = () => {
       </div>
 
       {/* Black Card */}
-      <div className="max-w-4xl mx-auto mt-4 md:mt-6 lg:mt-12">
+      <div className="max-w-4xl mx-auto mt-8 md:mt-6 lg:mt-12">
         <div className="bg-[#000000] text-white rounded-[11px] px-4 md:px-20 py-6 md:pt-8 md:pb-12 shadow-xl">
 
           {/* Icon Placeholder */}
-          <div className="flex justify-center mb-1 md:mb-8">
-            <Image src={privacy} alt="Privacy Icon" width={32} height={32} />
+          <div className="flex justify-center mb-1 md:mb-4">
+            <Image src={privacy} alt="Privacy Icon" width={32} height={32} className="w-[32px] h-[32px] md:w-[50px] md:h-[50px]" />
           </div>
 
           {/* Title */}
-          <h3 className="text-[18px] md:text-3xl font-quattrocento font-normal text-center font-medium">
+          <h3 className="text-[18px] md:text-3xl font-quattrocento font-bold text-center font-medium">
             <span className="font-inter font-medium">
               {/* Your */}
               A simple guarantee.
@@ -49,7 +49,7 @@ const OutcomeContract = () => {
               {/* Outcome Contract */}
           </h3>
 
-          <p className="text-white  font-inter font-normal text-center text-[9px] md:text-lg mt-1 md:mt-2">
+          <p className="text-white  font-inter font-medium text-center text-[9px] md:text-lg mt-1 md:mt-2">
             We&apos;re invested in your success. And here&apos;s our commitment.
           </p>
 
@@ -57,7 +57,7 @@ const OutcomeContract = () => {
           <div className="flex flex-row md:justify-center gap-2 md:gap-24 mt-4 md:mt-10 text-left">
 
             {/* Left */}
-            <div className="w-full md:w-[220px]">
+            <div className="w-full md:w-[220px]  translate-x-[15%]">
               <h4 className="text-[12px] md:text-xl font-medium font-inter mb-1 md:mb-6">
                 We provide
               </h4>
@@ -89,7 +89,7 @@ const OutcomeContract = () => {
 
           {/* Refund Section */}
           <div className="text-center mt-5 md:mt-12 max-w-3xl md:max-w-4xl mx-auto">
-            <p className="text-[#FFFFFF] text-[10px] font-normal font-inter md:text-lg leading-4 md:leading-relaxed">
+            <p className="text-[#FFFFFF] text-[14px] font-normal font-inter md:text-lg leading-5.5 md:leading-relaxed">
               {/* If you complete your commitments and don&apos;t see clear movement, email us for a full refund. */}
               If you complete the program and apply the system but see no movement in your career trajectory, email us for a full refund.
             </p>

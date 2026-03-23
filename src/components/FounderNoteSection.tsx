@@ -7,7 +7,7 @@ import founderPicture from "../assets/SushantPicture.png";
 
 export default function FounderNoteSection() {
   return (
-    <section className="relative w-full mt-8 aspect-[1000/660] md:aspect-[1500/600] overflow-hidden">
+    <section className="relative w-full mt-8 aspect-[1000/600] md:aspect-[1500/600] overflow-hidden">
       
       {/* Background Image */}
       <Image
@@ -26,7 +26,7 @@ export default function FounderNoteSection() {
           <div className="flex flex-row items-end justify-between h-full">
 
             {/* LEFT SIDE IMAGE */}
-            <div className="w-full lg:w-1/2 flex items-end justify-center lg:justify-start h-full">
+            <div className="w-full lg:w-1/2 flex items-end justify-center lg:justify-start h-full translate-x-[-10%] md:translate-x-0">
               <Image
                 src={founderPicture}
                 alt="Sushant Sehra"
@@ -47,9 +47,9 @@ export default function FounderNoteSection() {
             </div>
 
             {/* RIGHT SIDE TEXT */}
-            <div className="w-full lg:w-1/2 text-white lg:pl-[3vw] pb-6 lg:pb-[5vw]">
+            <div className="w-full lg:w-1/2 text-white lg:pl-[3vw] pb-6 lg:pb-[5vw] translate-x-[-10%] md:translate-x-0">
 
-              <div className="translate-x-[-15%] lg:mb-[1vw] 2xl:mb-[1vw]">
+              <div className="translate-x-[-9%] lg:mb-[1vw] 2xl:mb-[1vw]">
                 <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[2.8vw] xl:text-[3.2vw] 2xl:text-[3.8vw] leading-6 md:leading-tight lg:leading-[1.1] xl:leading-[1.1] 2xl:leading-[1.1]">
                 A note from <br />
                 <span className="font-bold">

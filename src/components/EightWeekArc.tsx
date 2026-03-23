@@ -49,10 +49,18 @@ export default function EightWeekArc() {
 
   return (
     <section className="relative bg-white py-5 md:py-20 overflow-hidden">
+
+            {/* Top Blue Banner */}
+      <div className="bg-[#014BAA] text-white text-center py-3 md:py-2 px-4 mb-[5%]">
+        <h2 className="font-quattrocento font-bold text-[18px] md:text-[32px] lg:text-[48px] lg:py-3">
+          Ready to change your career trajectory?
+        </h2>
+      </div>
+
       <div className="relative z-20 max-w-7xl mx-auto text-center mb-2 md:mb-6">
         <h2 className="text-[18px] sm:text-[36px] md:text-[48px] font-bold leading-tight md:mb-2">
-          <span className="text-[#000000] font-quattrocento">
-            The <span className="text-[#014BAA] font-bold">8-Week</span> Arc
+          <span className="text-[#000000] font-inter font-medium">
+            The <span className="text-[#014BAA] font-bold font-quattrocento">8-Week</span> Arc
           </span>
         </h2>
 
@@ -62,7 +70,7 @@ export default function EightWeekArc() {
         </p>
       </div>
 
-      <div className="relative flex justify-center items-center min-h-[115px] md:min-h-[450px] mt-14 md:mt-20">
+      <div className="relative flex justify-center items-center min-h-[85px] md:min-h-[300px] mt-14 md:mt-20  md:translate-y-[25%]">
 
         {modules.map((m, i) => {
           const pos = getPos(i);
@@ -93,7 +101,7 @@ export default function EightWeekArc() {
           return (
             <div
               key={m.id}
-              className={`absolute w-[140px] sm:w-[340px] lg:w-[420px] h-[180px] sm:h-[450px] transition-all duration-700 ease-in-out ${style}`}
+              className={`absolute w-[140px] sm:w-[340px] lg:w-[420px] h-[160px] sm:h-[420px] transition-all duration-700 ease-in-out ${style}`}
             >
 
               {pos === 0 ? (
@@ -115,7 +123,7 @@ export default function EightWeekArc() {
                       </div> */}
                     </div>
 
-                    <div className="flex justify-center gap-4 md:mt-6 translate-y-[-10px]">
+                    <div className="flex justify-center gap-4 md:mt-6 translate-y-[-10px] md:translate-y-[-30px]">
                       <button
                         onClick={handlePrev}
                         className="w-5 h-5 md:w-9 md:h-9 rounded-full bg-gray-400 flex items-center justify-center"
@@ -139,7 +147,7 @@ export default function EightWeekArc() {
                   <div className={`absolute inset-0 ${overlay} pointer-events-none`} />
 
                   <p className="relative text-[7.22px] md:text-sm lg:text-2xl font-bold font-quattrocento text-[#014BAA] mb-2 md:mb-4 md:mt-3">
-                    Module {m.id}
+                    Week {m.id}
                   </p>
 
                   <h3 className="relative text-[12px] md:text-base lg:text-4xl font-quattrocento text-black font-bold mb-3">

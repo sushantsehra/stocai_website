@@ -63,7 +63,7 @@ const AdditionalBenefitsNew = () => {
   ];
 
   return (
-    <section className="bg-white py-8 md:py-8 px-4 container mx-auto max-w-7xl">
+    <section className="bg-white py-8 md:py-1 md:pt-1 md:pb-8 px-4 container mx-auto max-w-7xl">
 
       {/* Title */}
       <h2 className="text-center text-[#0F1729] font-quattrocento font-bold 
@@ -169,7 +169,7 @@ const AdditionalBenefitsNew = () => {
             </p>
 
             {/* New Price */}
-            <p className="text-white font-bold text-[18px] font-inter sm:text-5xl md:text-5xl">
+            <p className="text-white font-bold text-[24px] font-inter sm:text-5xl md:text-5xl tracking-wider">
               ₹950
             </p>
           </div>

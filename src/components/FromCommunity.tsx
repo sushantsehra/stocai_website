@@ -26,7 +26,7 @@ const FromCommunity = () => {
     ];
 
     return (
-        <section className="py-8 bg-white overflow-hidden">
+        <section className="py-3 md:py-8 bg-white overflow-hidden">
 
             {/* ===== MOBILE VIEW (md:hidden) ===== */}
             <div className="md:hidden max-w-6xl mx-auto px-4 flex flex-col items-center">

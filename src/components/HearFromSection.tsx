@@ -95,7 +95,7 @@ const HearFromSection = () => {
                 // height: "100px",
                 maxWidth: "550px",
               }}
-              className="h-[135px] md:h-[270px] w-full pt-6 md:pt-16 px-4"
+              className="h-[125px] md:h-[270px] w-full pt-6 md:pt-16 px-4"
             >
               {/* Circular Image */}
               <div

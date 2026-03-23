@@ -27,11 +27,11 @@ const bonusItems = [
 
 const FoundersBonus = () => {
   return (
-    <section className="w-full bg-[#FFFFFF] py-4 md:py-16 px-4 md:px-12">
+    <section className="w-full bg-[#FFFFFF] py-4 md:py-1 px-4 md:px-12">
       <div className="max-w-[1200px] mx-auto">
 
         {/* Heading */}
-        <div className="mb-5 md:mb-14">
+        <div className="mb-5 md:mb-10">
           <h2 className="font-quattrocento font-normal
                          text-[18px] sm:text-[26px] md:text-[42px] lg:text-[50px] 
                          leading-tight text-[#1D1D1D]">
@@ -55,7 +55,8 @@ const FoundersBonus = () => {
         </div>
 
         {/* Layout */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
+        {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8"> */}
+        <div className="flex flex-row gap-3 md:gap-8">
 
           {/* Left Cards */}
           <div className="lg:col-span-2 grid grid-cols-2 gap-1.5 sm:gap-4 md:gap-6">
@@ -95,7 +96,7 @@ const FoundersBonus = () => {
           {/* Pricing Card */}
           <div className="
               bg-[#0F0F10]
-              rounded-[20px] md:rounded-[28px]
+              rounded-[8px] md:rounded-[8px] w-[150px] md:w-[40%]
               p-6 sm:p-8 md:p-12
               flex flex-col justify-center items-center text-center
               min-h-[200px] mx-2 sm:min-h-[320px] md:min-h-[520px]
@@ -121,7 +122,7 @@ const FoundersBonus = () => {
 
             <h4 className="
               font-quattrocento font-bold
-              text-[16px] sm:text-[20px] md:text-[36px]
+              text-[15px] sm:text-[20px] md:text-[36px]
               text-[#0054C0]
               mb-0 md:mb-4
             ">

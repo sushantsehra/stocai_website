@@ -37,13 +37,13 @@ const ScrollingFeatures = () => {
     <section className="bg-white py-1 md:py-6 overflow-hidden">
 
       <div className="mx-auto w-full flex justify-center items-center flex-col py-4 md:mb-6">
-        <p className="font-semibold font-inter text-[10px] md:text-[32px] text-black">
+        <p className="font-semibold font-inter text-[15px] md:text-[32px] text-black mb-0.5">
           Join professionals who already have!
         </p>
-        <p className="font-normal font-inter text-[10px] md:text-[27px] text-black mx-16">
+        <p className="font-normal font-inter text-[12px] md:text-[27px] text-black mx-12 md:mx-16 mb-0.5">
           From Fortune 500 companies to fast-growing startups -
         </p>
-                <p className="font-normal font-inter text-[10px] md:text-[27px] text-black mx-16">
+                <p className="font-bold font-inter text-[12px] md:text-[27px] text-[#014BAA] mx-16">
           real people, real promotions
         </p>
       </div>

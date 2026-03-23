@@ -29,7 +29,7 @@ export default function PostHogInit() {
 
     posthog.init(apiKey, {
       api_host: apiHost,
-      defaults: "2026-01-30",
+      // defaults: "2026-01-30",
       autocapture: true,
       capture_pageview: false,
       capture_pageleave: true,
