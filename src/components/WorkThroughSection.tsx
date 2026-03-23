@@ -92,13 +92,15 @@ const WorkThroughSection = () => {
                 style={{
                   background: "#014BAA",
                   // padding: "28px 26px",
-                  borderRadius: "6px",
+                  // borderRadius: "6px",
                   display: "flex",
-                  alignItems: "flex-start",
+                  // alignItems: "flex-start",
+                  alignItems: "center",
+                  justifyContent: "center",
                   gap: "8px",
                   textAlign: "left",
                 }}
-                className="p-3 md:p-5 lg:min-h-[90px]"
+                className="p-3 md:p-5 lg:min-h-[90px] rounded-[6px] md:rounded-[12px]"
               >
                 {/* <SiTicktick size={20} color="#161616" /> */}
 
@@ -123,16 +125,16 @@ const WorkThroughSection = () => {
                 style={{
                   background: "#014BAA",
                   padding: "12px",
-                  borderRadius: "6px",
+                  // borderRadius: "6px",
                   marginLeft: "9px",
                   marginRight: "9px",
-                  marginTop: "10px",
+                  // marginTop: "10px",
                   display: "flex",
                   alignItems: "flex-center",
                   gap: "8px",
                   textAlign: "left",
                 }}
-                className="p-3 md:p-5 lg:min-h-[80px] md:items-center md:flex md:justify-center max-w-[180px] md:max-w-[60%]"
+                className="p-3 md:p-5 lg:min-h-[80px] mt-[10px] md:mt-[18px] text-center md:items-center md:flex md:justify-center max-w-[180px] md:max-w-[60%]  rounded-[6px] md:rounded-[12px]"
               >
                 <p
                   style={{
@@ -142,7 +144,7 @@ const WorkThroughSection = () => {
                     color: "#FFFFFF",
                     fontWeight: 300,
                   }}
-                  className="font-inter font-normal text-center text-[9px] md:text-[18px]"
+                  className="font-inter font-normal text-center text-[9px] md:text-[18px] md:px-12 md:py-4"
                 >
                   How to position yourself for the next role before it opens
                 </p>

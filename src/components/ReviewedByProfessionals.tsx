@@ -56,7 +56,7 @@ const ReviewedByProfessionals = () => {
               key={index}
               className="
                 bg-white
-                rounded-[6px]
+                rounded-[6px] md:rounded-[16px]
                 p-3 md:p-10
                 shadow-[0_45px_35px_rgba(0,0,0,0.06)]
                 flex flex-col

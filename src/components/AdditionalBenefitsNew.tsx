@@ -76,16 +76,23 @@ const AdditionalBenefitsNew = () => {
       <div className="bg-[#E6F1FF] rounded-t-[12px] overflow-hidden md:max-w-5xl mx-auto">
 
         {benefits.map((item, index) => (
+          // <div
+          //   key={index}
+          //   className={`flex items-center md:items-start gap-2 sm:gap-5 
+          //              px-4 sm:px-8 md:px-8 
+          //              py-4 sm:py-8 ${index === 0 ? "md:pt-6 md:pb-1.5" : "md:py-1.5"}
+          //              border-b border-[#0B64F433]`}
+          // >
           <div
             key={index}
-            className={`flex items-center md:items-start gap-2 sm:gap-5 
-                       px-4 sm:px-8 md:px-8 
-                       py-4 sm:py-8 ${index === 0 ? "md:pt-6 md:pb-1.5" : "md:py-1.5"}
-                       border-b border-[#0B64F433]`}
+            className={`flex items-start md:items-start gap-2 sm:gap-5 
+                        px-4 sm:px-8 md:px-8 
+                        py-4 sm:py-8 ${index === 0 ? "md:pt-6 md:pb-1.5" : "md:py-1.5"}
+                        border-b border-[#0B64F433]`}
           >
 
             {/* Icon */}
-            <div className="w-8 h-8 md:w-8 md:h-8 flex-shrink-0 mt-0 md:mt-1 flex items-center justify-center">
+            <div className="w-8 h-8 md:w-8 md:h-8 flex-shrink-0 mt-0 md:my-5 flex items-center justify-center">
               <Image
                 src={item.icon}
                 alt="icon"
@@ -96,11 +103,11 @@ const AdditionalBenefitsNew = () => {
             </div>
 
             {/* Content */}
-            <div className="flex-1">
+            <div className="flex-1 md:py-6">
 
-              <h3 className="font-inter font-semibold 
+              <h3 className={`font-inter font-semibold 
                              text-[12px] sm:text-[18px] md:text-[18px]
-                             leading-snug">
+                             leading-snug ${index === 1 ? "mt-2 md:mt-0" : "mt-0"}`}>
                 {item.title}
                 {item.highlight && (
                   <span className="text-[#014BAA] font-inter font-bold text-[12px] sm:text-[18px] md:text-[18px]">
@@ -161,7 +168,7 @@ const AdditionalBenefitsNew = () => {
         </div> */}
         <div className="bg-black rounded-b-[28px] py-5 md:py-4 px-4 flex flex-col items-center md:max-w-5xl mx-auto">
           {/* Price Section */}
-          <div className="flex items-center gap-4 mb-2 md:mb-2 flex-wrap justify-center">
+          <div className="flex items-center gap-4 mb-2 md:mb-4 flex-wrap justify-center">
 
             {/* Old Price */}
             <p className="text-[#6E6E6E] font-bold font-quattrocento text-[12px] sm:text-lg md:text-xl line-through">

@@ -22,7 +22,7 @@ const modules = [
   { id: 5, title: "Strategic visibility"},
   { id: 6, title: "Executive presence"},
   { id: 7, title: "Promotion psychology"},
-  { id: 8, title: "Promotion psychology"},
+  { id: 8, title: "Your personalized promotion roadmap"},
 ];
 
 export default function EightWeekArc() {

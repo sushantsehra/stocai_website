@@ -4,7 +4,7 @@ import React from "react";
 
 const WhoIsThisFor = () => {
   return (
-    <section className="bg-white pt-0 pb-5 md:pt-2 md:pb-12 px-2 md:px-5">
+    <section className="bg-white pt-0 pb-5 md:pt-2 md:pb-12 px-2 md:px-5 md:mt-6">
       <div className="max-w-[1200px] mx-auto">
 
         {/* Heading */}

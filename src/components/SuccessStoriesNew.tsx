@@ -23,7 +23,8 @@ const CARDS = [
   },
   {
     name: "Venkatraman A.",
-    role: "SVP",
+    // role: "SVP",
+    role: "Senior Vice President",
     text: "Gained the confidence to negotiate and bag my target role.",
     image: VenkatramanA,
   },

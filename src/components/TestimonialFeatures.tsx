@@ -217,7 +217,7 @@ const TestimonialFeatures: React.FC = () => {
         <div className="block sm:hidden w-full md:flex-1 flex flex-col justify-start">
           {/* Heading */}
 
-          <div className="w-full py-5 px-4">
+          <div className="w-full py-2 px-4">
             <div className="max-w-full">
 
               <WhoIsThisFor />
@@ -353,13 +353,13 @@ const TestimonialFeatures: React.FC = () => {
 
       </div>
 
-        <div className="w-full py-4 pb-10 px-1 hidden md:block">
+        <div className="w-full py-4 pb-10 md:pb-16 px-1 hidden md:block">
             <div className="max-w-7xl mx-auto">
 
               <WhoIsThisFor />
 
               {/* Heading */}
-              <h2 className="text-center font-quattrocento font-bold text-[48px] leading-[49px] text-[#1D1D1D] mb-10">
+              <h2 className="text-center font-quattrocento font-bold text-[48px] leading-[49px] text-[#1D1D1D] mt-6 mb-10">
                 Triple your chances of promotion in the next 8 weeks.
               </h2>
 

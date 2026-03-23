@@ -88,14 +88,14 @@ const HearFromSection = () => {
               style={{
                 position: "relative",
                 background: "#4D4D4D",
-                borderRadius: "6px",
+                // borderRadius: "6px",
                 // padding: "70px 30px 40px 30px",
                 textAlign: "center",
                 color: "white",
                 // height: "100px",
                 maxWidth: "550px",
               }}
-              className="h-[125px] md:h-[270px] w-full pt-6 md:pt-16 px-4"
+              className="h-[125px] md:h-[270px] w-full pt-6 md:pt-16 px-4 rounded-[6px] md:rounded-[16px]"
             >
               {/* Circular Image */}
               <div

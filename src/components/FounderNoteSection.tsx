@@ -7,7 +7,7 @@ import founderPicture from "../assets/SushantPicture.png";
 
 export default function FounderNoteSection() {
   return (
-    <section className="relative w-full mt-8 aspect-[1000/600] md:aspect-[1500/600] overflow-hidden">
+    <section className="relative w-full mt-8 aspect-[1000/600] md:aspect-[1500/700] overflow-hidden">
       
       {/* Background Image */}
       <Image
@@ -27,7 +27,7 @@ export default function FounderNoteSection() {
 
             {/* LEFT SIDE IMAGE */}
             <div className="w-full lg:w-1/2 flex items-end justify-center lg:justify-start h-full translate-x-[-10%] md:translate-x-0">
-              <Image
+              {/* <Image
                 src={founderPicture}
                 alt="Sushant Sehra"
                 priority
@@ -35,34 +35,54 @@ export default function FounderNoteSection() {
                   h-[100%]
                   sm:h-[80%]
                   md:h-[80%]
-                  lg:h-[85%]
+                  lg:h-[105%]
                   xl:h-[88%]
-                  2xl:h-[92%]
+                  2xl:h-[100%]
                   w-auto
                   object-contain
                   lg:object-bottom lg:object-left-bottom
                   translate-y-3.5 lg:translate-y-0
                 "
+              /> */}
+              <Image
+                src={founderPicture}
+                alt="Sushant Sehra"
+                priority
+                className="
+                  w-auto
+                  h-[60vh]
+                  sm:h-[70vh]
+                  md:h-[80vh]
+                  lg:h-[90vh]
+                  // xl:h-[93vh]
+                  // 2xl:h-[110vh]
+
+                  max-h-[1000px]
+
+                  object-contain
+                  lg:object-bottom
+                  translate-y-[30%] md:translate-y-[5%] md:translate-x-[-10%]
+                "
               />
             </div>
 
             {/* RIGHT SIDE TEXT */}
-            <div className="w-full lg:w-1/2 text-white lg:pl-[3vw] pb-6 lg:pb-[5vw] translate-x-[-10%] md:translate-x-0">
+            <div className="w-full lg:w-1/2 text-white lg:pl-[3vw] pb-6 lg:pb-[3vw] translate-x-[-10%] md:translate-x-0">
 
-              <div className="translate-x-[-9%] lg:mb-[1vw] 2xl:mb-[1vw]">
-                <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[2.8vw] xl:text-[3.2vw] 2xl:text-[3.8vw] leading-6 md:leading-tight lg:leading-[1.1] xl:leading-[1.1] 2xl:leading-[1.1]">
+              <div className="translate-x-[-9%] md:translate-x-[-15%] lg:mb-[5.5vw]">
+                <h2 className="font-quattrocento font-bold text-[24px] sm:text-4xl md:text-5xl lg:text-[65px] leading-6 md:leading-tight lg:leading-[1.1] xl:leading-[1.1] 2xl:leading-[1.1]">
                 A note from <br />
                 <span className="font-bold">
                   Sushant Sehra
                 </span>
               </h2>
 
-              <p className="mt-1 2xl:mt-[1vw] text-[8px] font-inter font-medium sm:text-base lg:text-[1vw] xl:text-[1.2vw] 2xl:text-[1.4vw] opacity-100">
+              <p className="mt-1 md:mb-2 2xl:mt-[1vw] text-[8px] font-inter font-medium sm:text-base lg:text-[20px] xl:text-[28px] opacity-100">
                 Founder, Better Corporate Life
               </p>
               </div>
 
-              <div className="mt-3 md:mt-2 lg:mt-0 2xl:mt-0 space-y-2 md:space-y-4 lg:space-y-[1.5vw] xl:space-y-[2vw] font-inter font-normal text-[8px] sm:text-base lg:text-[0.9vw] xl:text-[1.1vw] 2xl:text-[1.3vw] leading-relaxed opacity-100">
+              <div className="mt-3 md:mt-3 lg:translate-y-[-12%] lg:mt-0 2xl:mt-0 space-y-2 md:space-y-4 lg:space-y-[1.5vw] xl:space-y-[2vw] font-inter font-normal text-[8px] sm:text-base lg:text-[18px] xl:text-[20px] 2xl:text-[24px] leading-relaxed opacity-100">
                 
                 <p>
                   <span className="font-bold">Be Promotable</span> is designed
