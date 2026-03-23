@@ -83,7 +83,7 @@ const SuccessStories = () => {
                     Promoted
                   </div>
                 </div>
-                <div className="p-3 bg-[#181818] flex-grow">
+                {/* <div className="p-3 bg-[#181818] flex-grow">
                   <p className="text-[#F8F3F0] font-medium font-inter text-[10px] mt-2 mb-[10px] leading-[14px]">
                     {card.text}
                   </p>
@@ -93,6 +93,22 @@ const SuccessStories = () => {
                   <p className="text-[#8B8B8B] font-medium font-inter text-[6px]">
                     {card.role}
                   </p>
+                </div> */}
+                <div className="p-3 bg-[#181818] flex-grow">
+                  <div className="min-h-[50px]">
+                  <p className="text-[#F8F3F0] font-medium font-inter text-[10px] mt-2 mb-[10px] leading-[14px]">
+                    {card.text}
+                  </p>
+                  </div>
+                  <div>
+                  <h3 className="text-[#F8F3F0] font-medium font-inter text-[10px] mb-0">
+                    {card.name}
+                  </h3>
+                  <p className="text-[#8B8B8B] font-medium font-inter text-[6px]">
+                    {card.role}
+                  </p>
+                  </div>
+
                 </div>
               </div>
             ))}

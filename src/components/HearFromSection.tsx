@@ -123,18 +123,23 @@ const HearFromSection = () => {
               </div>
 
               {/* Text */}
-              <p
-                style={{
-                  // fontSize: "18px",
-                  lineHeight: "1.4",
-                  marginBottom: "15px",
-                  marginTop: "10px",
-                }}
-                className="font-medium font-inter text-white text-[8px] md:text-[18px]"
-              >
-                {item.text}
-              </p>
 
+              <div className="flex flex-col">
+                <div className="min-h-[60px] sm:min-h-[90px]">
+                  <p
+                    style={{
+                      // fontSize: "18px",
+                      lineHeight: "1.4",
+                      marginBottom: "15px",
+                      marginTop: "10px",
+                    }}
+                    className="font-medium font-inter text-white text-[8px] md:text-[18px] sm:px-12"
+                  >
+                    {item.text}
+                  </p>
+                </div>
+
+                <div className="">
               {/* Name */}
               <h3
                 style={{
@@ -160,6 +165,9 @@ const HearFromSection = () => {
               >
                 {item.role}
               </p>
+                </div>
+              </div>
+
             </div>
           ))}
         </div>
