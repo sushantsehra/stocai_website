@@ -239,7 +239,7 @@ export default function BePromotableFirstFold() {
       </section>
 
       {/* ── Current / Future State ── */}
-      <section className="max-w-7xl mx-auto px-5 md:px-1 pb-7 md:mt-8">
+      <section className="max-w-7xl  px-5 md:px-1 pb-7 md:mt-8">
 
         {/* Mobile: Single card alternating */}
         <div className="md:hidden">
@@ -254,7 +254,7 @@ export default function BePromotableFirstFold() {
         Unfortunately promotions don&apos;t work that way.
       </p>
               </div>
-            <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
+            <div className="flex flex-col sm:flex-row gap-8 md:gap-2 items-center sm:items-start">
               <IDCard {...currentCard} />
               <CurrentStateText />
             </div>
@@ -279,7 +279,7 @@ export default function BePromotableFirstFold() {
         </div>
 
         {/* Desktop: Single large card alternating with text side-by-side */}
-        <div className="hidden md:flex md:flex-row gap-12 items-start justify-center">
+        <div className="hidden md:flex md:flex-row gap-2 translate-x-[5%] items-center justify-center">
 
           {/* Card — switches every 2s with fade transition */}
           <div className="relative" style={{ minWidth: 480 }}>
@@ -311,7 +311,7 @@ export default function BePromotableFirstFold() {
 
 function CurrentStateText({ large = false }: { large?: boolean }) {
   return (
-    <div className={large ? "w-[490px] px-1" : "w-full md:w-[400px] px-1"}>
+    <div className={large ? "w-[690px] px-1" : "w-full md:w-[400px] px-1"}>
       <h2
         className={`font-extrabold text-black font-inter font-bold leading-snug mb-4 md:mt-6 hidden md:block ${
           large ? "text-4xl mb-5" : "text-[18px] sm:text-2xl leading-4 md:leading-8 mb-4"
@@ -324,7 +324,7 @@ function CurrentStateText({ large = false }: { large?: boolean }) {
       </p>
 
       <div className="flex flex-row gap-8 md:gap-6">
-        <div>
+        <div className="md:min-w-[250px]">
           <h3 className={`font-bold text-[#014BAA] font-inter md:max-w-full ${large ? "text-[26px]" : "text-[16px] md:text-xl"}`}>
             Current State
           </h3>
@@ -373,7 +373,7 @@ function CurrentStateText({ large = false }: { large?: boolean }) {
 
 function FutureStateText({ large = false }: { large?: boolean }) {
   return (
-    <div className={large ? "w-[490px] px-1" : "w-full md:w-[400px] px-1"}>
+    <div className={large ? "w-[690px] px-1" : "w-full md:w-[400px] px-1"}>
 
             <h2
         className={`font-extrabold text-black font-inter font-bold leading-snug mb-4 md:mt-6 hidden md:block ${
@@ -387,7 +387,7 @@ function FutureStateText({ large = false }: { large?: boolean }) {
       </p>
       
       <div className="flex flex-row gap-3 md:gap-6">
-        <div className="md:mt-[1%] max-w-[220px] md:max-w-full">
+        <div className="md:mt-[1%] max-w-[220px] md:max-w-full md:min-w-[250px]">
           <h3 className={`font-bold text-[#014BAA] font-inter mb-1 ${large ? "text-[26px]" : "text-[16px] md:text-xl"}`}>
             Future State
           </h3>
@@ -396,7 +396,7 @@ function FutureStateText({ large = false }: { large?: boolean }) {
           </p>
         </div>
         <div>
-          <ul className={`text-[#000000] mt-[1%] font-inter font-normal mb-4 ${large ? "space-y-2 text-lg" : "space-y-0 sm:space-y-1 text-[10px] sm:text-sm md:text-base"}`}>
+          <ul className={`text-[#000000] mt-[1%] font-inter font-normal mb-4 md:mb-3.5 ${large ? "space-y-2 text-lg" : "space-y-0 sm:space-y-1 text-[10px] sm:text-sm md:text-base"}`}>
             {/* {[
               "Drives outcomes across teams",
               "Shapes decisions before meetings happen",
