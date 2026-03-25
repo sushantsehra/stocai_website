@@ -5,6 +5,7 @@ import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 
 const PreviewPromotableStickyCTA = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -125,6 +126,7 @@ const PreviewPromotableStickyCTA = () => {
     localStorage.setItem("userPhone", phone);
 
     try {
+      const visitorId = getWaitlistVisitorId();
       const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -133,6 +135,7 @@ const PreviewPromotableStickyCTA = () => {
           email: trimmedEmail,
           phone: fullPhone,
           source,
+          visitorId,
           attribution: getAttributionForApi(),
         }),
       });

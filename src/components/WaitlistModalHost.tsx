@@ -6,6 +6,7 @@ import env from "@/utils/env";
 import posthog from "posthog-js";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -60,12 +61,14 @@ const WaitlistModalHost: React.FC = () => {
       });
       if (emailValue) {
         try {
+          const visitorId = getWaitlistVisitorId();
           const response = await fetch(`${env.apiUrl}/waitlist`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               email: emailValue,
               source: triggerSource,
+              visitorId,
               attribution: getAttributionForApi(),
             }),
           });

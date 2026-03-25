@@ -8,6 +8,7 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import posthog from "posthog-js";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -168,6 +169,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       source,
     });
     try {
+      const visitorId = getWaitlistVisitorId();
       const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -176,6 +178,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           phone: fullPhone,
           email,
           source,
+          visitorId,
           attribution: getAttributionForApi(),
         }),
       });

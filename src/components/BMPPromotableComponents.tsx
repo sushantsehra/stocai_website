@@ -20,6 +20,7 @@ import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 
 // Define interface for full modal data
 interface UserData {
@@ -82,6 +83,7 @@ const BMPPromotableComponents: React.FC = () => {
       
       console.log("Attempting to save to database...");
       console.log("API URL:", `${env.apiUrl}/waitlist`);
+      const visitorId = getWaitlistVisitorId();
 
       const response = await fetchWithTimeout(
         `${env.apiUrl}/waitlist`,
@@ -96,6 +98,7 @@ const BMPPromotableComponents: React.FC = () => {
             phone: fullPhone,
             email: userData.email,
             source: userData.source,
+            visitorId,
             attribution: getAttributionForApi(),
           }),
         },

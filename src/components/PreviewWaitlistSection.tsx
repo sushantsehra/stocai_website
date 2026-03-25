@@ -5,6 +5,7 @@ import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 
 const PreviewWaitlistSection = () => {
   const [name, setName] = useState("");
@@ -79,6 +80,7 @@ const PreviewWaitlistSection = () => {
     localStorage.setItem("userPhone", phone);
 
     try {
+      const visitorId = getWaitlistVisitorId();
       const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -87,6 +89,7 @@ const PreviewWaitlistSection = () => {
           email: email.trim(),
           phone: fullPhone,
           source,
+          visitorId,
           attribution: getAttributionForApi(),
         }),
       });

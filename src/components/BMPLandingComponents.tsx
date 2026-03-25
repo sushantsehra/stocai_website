@@ -29,6 +29,7 @@ import posthog from "posthog-js";
 import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
 
@@ -82,6 +83,7 @@ const BMPLandingComponents = () => {
         source: userData.source,
       });
 
+      const visitorId = getWaitlistVisitorId();
       const response = await fetch(`${env.apiUrl}/waitlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,6 +92,7 @@ const BMPLandingComponents = () => {
           email: userData.email.trim(),
           phone: fullPhone,
           source: userData.source,
+          visitorId,
           attribution: getAttributionForApi(),
         }),
       });
