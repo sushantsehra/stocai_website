@@ -99,8 +99,11 @@ export default function RootLayout({
         </Script>
         {/* End Google Tag Manager */}
 
-        <link rel="icon" href="/bcl-logo.png" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        {/* <link rel="icon" href="/bcl-logo.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" /> */}
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
 
       </head>
       <body className="antialiased" suppressHydrationWarning>
