@@ -338,7 +338,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             <div className="bg-[#014BAA] w-full py-3 px-4 mb-1 md:mb-6 md:hidden text-center">
                 <div className="w-full md:w-auto px-2 md:py-1">
                   <p className="text-white font-quattrocento text-[11px] md:text-sm lg:text-base font-semibold">
-                    1344 hours of strategic insights | Promotion pitch practice | Accountability so you actually execute
+                    1344 minutes of strategic insights | Promotion pitch practice | Accountability so you actually execute
                   </p>
                 </div>
             </div>
@@ -349,7 +349,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 {/* Item 1 */}
                 <div className="w-full md:w-auto px-2 py-1">
                   <p className="text-white font-quattrocento text-[10px] md:text-sm lg:text-base font-semibold">
-                    1344 hours of strategic insights
+                    1344 minutes of strategic insights
                   </p>
                 </div>
 
