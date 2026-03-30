@@ -279,7 +279,7 @@ export default function BePromotableFirstFold() {
         </div>
 
         {/* Desktop: Single large card alternating with text side-by-side */}
-        <div className="hidden md:flex md:flex-row gap-2 translate-x-[5%] items-center justify-center">
+        <div className="hidden md:flex md:flex-row gap-2 translate-x-[5%] xl:translate-x-[30%] items-center justify-center">
 
           {/* Card — switches every 2s with fade transition */}
           <div className="relative" style={{ minWidth: 480 }}>
