@@ -40,6 +40,7 @@ interface UserData {
   countryCode: string;
   fullPhone?: string;
   source: string;
+  referenceId?: string;
 }
 
 interface WaitlistSubmitData {
@@ -100,6 +101,7 @@ const BMPLandingComponents = () => {
       const waitlistData = await response.json().catch(() => ({}));
 
       if (response.ok) {
+        userData.referenceId = waitlistData?.reference_id;
         if (waitlistData?.updated === true) {
           trackAlreadyWaitlisted(userData.source, {
             context: "bmp_request_access",
@@ -234,6 +236,7 @@ const BMPLandingComponents = () => {
         initialName={modalInitialData.name}
         initialPhone={modalInitialData.phone}
         initialCountryCode={modalInitialData.countryCode}
+        initialReferenceId={modalInitialData.referenceId}
         source={modalInitialData.source}
         onSubmit={handleWaitlistSubmit}
       />

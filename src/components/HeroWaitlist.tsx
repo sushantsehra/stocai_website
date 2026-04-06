@@ -6,9 +6,6 @@ import certificate from "../assets/certificate.png"
 import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import posthog from "posthog-js";
-import { getAttributionForApi } from "@/lib/analytics/attribution";
-import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
-import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -24,6 +21,7 @@ type HeroWaitlistProps = {
   isOpen: boolean;
   onClose: (reason?: "x_button" | "escape") => void;
   initialEmail?: string;
+  initialReferenceId?: string;
   source?: string;
   onSubmit?: (data: {
     name: string;
@@ -36,6 +34,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   isOpen,
   onClose,
   initialEmail,
+  initialReferenceId,
   source = "waitlist_modal",
   onSubmit,
 }) => {
@@ -169,29 +168,8 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       source,
     });
     try {
-      const visitorId = getWaitlistVisitorId();
-      const response = await fetch(`${env.apiUrl}/waitlist`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          phone: fullPhone,
-          email,
-          source,
-          visitorId,
-          attribution: getAttributionForApi(),
-        }),
-      });
-
-      const waitlistData = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
-      }
-      if (waitlistData?.updated === true) {
-        trackAlreadyWaitlisted(source, {
-          context: "hero_waitlist_submit",
-          payment_started: true,
-        });
+      if (!initialReferenceId) {
+        throw new Error("Waitlist record not found. Please click Request Access again.");
       }
 
       onSubmit?.({
@@ -216,7 +194,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           name,
           email,
           phone: fullPhone,
-          reference_id: waitlistData?.reference_id,
+          reference_id: initialReferenceId,
           amount: 399900,
         });
         posthog.capture("payment_redirected", {

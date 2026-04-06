@@ -8,9 +8,6 @@ import applicationIcon from "../assets/application.png";
 import certificate from "../assets/certificate.png";
 import communitiesIcon from "../assets/communities.png";
 import delegateIcon from "../assets/delegate.png";
-import { getAttributionForApi } from "@/lib/analytics/attribution";
-import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
-import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 import leaderIcon from "../assets/leader.png";
 import marketingIcon from "../assets/marketing.png";
 import roadmapIcon from "../assets/roadmap.png";
@@ -29,6 +26,7 @@ type HeroWaitlistProps = {
   isOpen: boolean;
   onClose: (reason?: "x_button" | "escape") => void;
   initialEmail?: string;
+  initialReferenceId?: string;
   initialName?: string;
   initialPhone?: string;
   initialCountryCode?: string;
@@ -69,6 +67,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   isOpen,
   onClose,
   initialEmail,
+  initialReferenceId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
@@ -197,30 +196,8 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     });
 
     try {
-      const visitorId = getWaitlistVisitorId();
-      const response = await fetch(`${env.apiUrl}/waitlist`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          phone: fullPhone,
-          email,
-          source,
-          visitorId,
-          attribution: getAttributionForApi(),
-        }),
-      });
-
-      const waitlistData = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(waitlistData?.error || "Unable to join the waitlist.");
-      }
-
-      if (waitlistData?.updated === true) {
-        trackAlreadyWaitlisted(source, {
-          context: "promotable_hero_waitlist_submit",
-          payment_started: true,
-        });
+      if (!initialReferenceId) {
+        throw new Error("Waitlist record not found. Please click Request Access again.");
       }
 
       onSubmit?.({
@@ -243,7 +220,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         name,
         email,
         phone: fullPhone,
-        reference_id: waitlistData?.reference_id,
+        reference_id: initialReferenceId,
         amount: 95000,
       });
       posthog.capture("payment_redirected", {

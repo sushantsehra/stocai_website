@@ -29,6 +29,7 @@ interface UserData {
   phone: string;
   countryCode: string;
   source: string;
+  referenceId?: string;
 }
 
 // Define type for waitlist submission (matches modal onSubmit)
@@ -110,6 +111,12 @@ const BMPPromotableComponents: React.FC = () => {
       if (!response.ok) {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
       }
+
+      userData.referenceId = waitlistData?.reference_id;
+      setModalInitialData((current) => ({
+        ...current,
+        referenceId: waitlistData?.reference_id,
+      }));
 
       if (waitlistData?.updated === true) {
         trackAlreadyWaitlisted(userData.source, {
@@ -207,6 +214,7 @@ const BMPPromotableComponents: React.FC = () => {
         initialName={modalInitialData.name}
         initialPhone={modalInitialData.phone}
         initialCountryCode={modalInitialData.countryCode}
+        initialReferenceId={modalInitialData.referenceId}
         source={modalInitialData.source}
         onSubmit={handleWaitlistSubmit}
       />
