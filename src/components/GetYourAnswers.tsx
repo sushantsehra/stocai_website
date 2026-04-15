@@ -8,6 +8,7 @@ import pic1 from "@/assets/pic1.png";
 import pic2 from "@/assets/pic2.png";
 import pic3 from "@/assets/pic3.png";
 import posthog from 'posthog-js';
+import { getAppUrl } from "@/utils/env";
 
 const GetYourAnswers = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -18,8 +19,7 @@ const GetYourAnswers = () => {
       location: "about_page",
     });
 
-    // Navigate to clarity.mystocai.com instead of opening popup
-    window.location.href = "https://clarity.mystocai.com";
+    window.location.href = getAppUrl();
   };
 
   // const handleCloseLoginPopup = () => {

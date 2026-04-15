@@ -1,22 +1,23 @@
 import React from "react";
 import Link from "next/link";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/LandingHeader";
+import Footer from "@/components/FooterSection";
+import BlogStickyCTA from "@/components/BlogStickyCTA";
 
 export default function BlogNotFound() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="blog-theme min-h-screen bg-white">
       <Header />
       
-      <main className="container mx-auto pt-32 px-4 pb-16">
+      <main className="container mx-auto px-4 pb-32 pt-32">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Blog Post Not Found</h1>
-          <p className="text-xl text-[#323232] mb-8">
+          <h1 className="blog-title-text mb-6 font-jakarta text-4xl font-bold md:text-5xl">Blog Post Not Found</h1>
+          <p className="blog-body-text mb-8 text-xl">
             Sorry, the blog post you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
           <Link 
             href="/blog" 
-            className="inline-block bg-[#54B0AF] text-white py-3 px-8 rounded-full hover:bg-[#489998] transition-colors"
+            className="blog-accent-bg inline-block rounded-full px-8 py-3 text-white transition-colors"
           >
             Return to Blog
           </Link>
@@ -24,6 +25,7 @@ export default function BlogNotFound() {
       </main>
       
       <Footer />
+      <BlogStickyCTA />
     </div>
   );
 } 

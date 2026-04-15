@@ -7,6 +7,7 @@ import Image from 'next/image';
 import at_ease from "@/assets/at_ease.png";
 import fomo from "@/assets/fomo.png";
 import posthog from 'posthog-js';
+import { getAppUrl } from "@/utils/env";
 
 const DeClutterMindComponent = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -17,7 +18,7 @@ const DeClutterMindComponent = () => {
       location: "about_page",
     });
 
-    window.location.href = "https://clarity.mystocai.com";
+    window.location.href = getAppUrl();
   };
 
   // const handleCloseLoginPopup = () => {

@@ -14,7 +14,8 @@ const getEnvironment = (): Environment => {
 // Environment-specific configuration
 interface EnvConfig {
   apiUrl: string;
-  assetsUrl: string;
+  siteUrl: string;
+  appUrl: string;
   isDebugEnabled: boolean;
   features: {
     newUi: boolean;
@@ -26,7 +27,8 @@ interface EnvConfig {
 const envConfigs: Record<Environment, EnvConfig> = {
   development: {
     apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://127.0.0.1:8000',
-    assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'http://localhost:3000',
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    appUrl: process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'http://localhost:3001',
     isDebugEnabled: true,
     features: {
       newUi: true,
@@ -35,7 +37,8 @@ const envConfigs: Record<Environment, EnvConfig> = {
   },
   staging: {
     apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://backend.mystocai.com',
-    assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://mystocai.com',
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://bettercorporatelife.com',
+    appUrl: process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://os.bettercorporatelife.com',
     isDebugEnabled: false,
     features: {
       newUi: true,
@@ -44,7 +47,8 @@ const envConfigs: Record<Environment, EnvConfig> = {
   },
   production: {
     apiUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://backend.mystocai.com',
-    assetsUrl: process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://mystocai.com',
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://bettercorporatelife.com',
+    appUrl: process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_APP_PUBLIC_URL || 'https://os.bettercorporatelife.com',
     isDebugEnabled: false,
     features: {
       newUi: true,
@@ -60,11 +64,13 @@ const config = envConfigs[currentEnv];
 // Get APP_PUBLIC_URL from environment variables or fallback to default
 const getPublicUrl = (): string => {
   if (typeof window !== 'undefined') {
-    // Client-side: use the environment variable passed from Next.js
-    return process.env.NEXT_PUBLIC_APP_PUBLIC_URL || window.location.origin;
+    return process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
   }
-  // Server-side: use the environment variable or fallback
-  return process.env.NEXT_PUBLIC_APP_PUBLIC_URL || config.assetsUrl;
+  return process.env.NEXT_PUBLIC_SITE_URL || config.siteUrl;
+};
+
+const getProductUrl = (): string => {
+  return process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_APP_PUBLIC_URL || config.appUrl;
 };
 
 // Export environment utilities
@@ -74,18 +80,20 @@ export const env = {
   isStaging: currentEnv === 'staging',
   isProduction: currentEnv === 'production',
   apiUrl: config.apiUrl,
-  assetsUrl: config.assetsUrl,
+  siteUrl: config.siteUrl,
+  appUrl: config.appUrl,
   publicUrl: getPublicUrl(),
+  productUrl: getProductUrl(),
   isDebugEnabled: config.isDebugEnabled,
   features: config.features
 };
 
 // Utility function to generate signup redirect URLs
 export const getAppUrl = (): string => {
-  return env.publicUrl;
+  return env.productUrl;
 }
 export const getSignupUrl = (redirectPath?: string): string => {
-  const baseUrl = env.publicUrl;
+  const baseUrl = env.productUrl;
   const signupPath = '/signUp'; // Note: using /signUp to match the existing external URLs
   
   if (!redirectPath) {

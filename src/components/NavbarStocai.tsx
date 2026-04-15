@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { useUser } from "@/contexts/UserContext";
-import { getSignupUrl } from "@/utils/env";
+import { getAppUrl, getSignupUrl } from "@/utils/env";
 import { deleteUserCookie, setLogoutSignal } from "@/utils/cookies";
 import Image from 'next/image';
 
@@ -176,8 +176,7 @@ export default function NavbarStocai() {
 
   // Resources Dropdown Component
   const ResourcesDropdown = () => {
-    const isResourcesActive =
-      pathname === "/blog" || pathname === "/quiz";
+    const isResourcesActive = pathname === "/quiz";
 
     return (
       <div className="relative" ref={resourcesRef}>
@@ -209,21 +208,7 @@ export default function NavbarStocai() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleResourcesNavigate("/blog");
-                  }}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  className={`py-2 px-4 w-full text-left block font-gotham font-normal transition-colors duration-300 whitespace-nowrap hover:text-[#54B0AF] ${
-                    pathname === "/blog"
-                      ? "text-[#54B0AF] font-bold"
-                      : "text-gray-700 hover:bg-gray-50"
-                  }`}
-                >
-                  Blog
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleResourcesNavigate("https://clarity.mystocai.com/psy-quiz");
+                    handleResourcesNavigate(`${getAppUrl()}/psy-quiz`);
                   }}
                   onMouseDown={(e) => e.stopPropagation()}
                   className={`py-2 px-4 w-full text-left block font-gotham transition-colors duration-300 whitespace-nowrap hover:text-[#54B0AF] ${
@@ -261,17 +246,7 @@ export default function NavbarStocai() {
             <div className="mt-2 w-full bg-white rounded-lg shadow-lg z-50 border border-gray-200">
               <div className="py-2">
                 <button
-                  onClick={() => handleResourcesNavigate("/blog")}
-                  className={`py-2 px-6 w-full text-left block transition-colors duration-300 whitespace-nowrap font-gotham ${
-                    pathname === "/blog"
-                      ? "bg-[#54B0AF] text-white font-bold"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  Blog
-                </button>
-                <button
-                  onClick={() => handleResourcesNavigate("https://clarity.mystocai.com/psy-quiz")}
+                  onClick={() => handleResourcesNavigate(`${getAppUrl()}/psy-quiz`)}
                   className={`py-2 px-6 w-full text-left block transition-colors duration-300 whitespace-nowrap font-gotham ${
                     pathname === "/quiz"
                       ? "bg-[#54B0AF] text-white font-bold"

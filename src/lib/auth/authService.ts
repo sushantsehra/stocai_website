@@ -5,7 +5,7 @@ import {
   signInWithPopup
 } from 'firebase/auth';
 import { auth, googleProvider } from './firebase';
-import { AuthResponse, SignUpData, SignInData } from './types';
+import { AuthResponse, SignUpData, SignInData, AuthRequestContext } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:8000';
 
@@ -80,7 +80,7 @@ export class AuthService {
     }
   }
 
-  static async signUp(data: SignUpData): Promise<AuthResponse> {
+  static async signUp(data: SignUpData, authContext?: AuthRequestContext): Promise<AuthResponse> {
     try {
       // Create user with Firebase first
       const userCredential = await createUserWithEmailAndPassword(
@@ -98,6 +98,7 @@ export class AuthService {
           id_token: idToken,
           full_name: data.fullName,
           email: data.email,
+          ...authContext,
         });
         return response;
       } catch (apiError: unknown) {
@@ -119,7 +120,7 @@ export class AuthService {
     }
   }
 
-  static async signIn(data: SignInData): Promise<AuthResponse> {
+  static async signIn(data: SignInData, authContext?: AuthRequestContext): Promise<AuthResponse> {
     try {
       // Sign in with Firebase first
       const userCredential = await signInWithEmailAndPassword(
@@ -136,6 +137,7 @@ export class AuthService {
         const response = await this.makeAPIRequest('/signin', {
           id_token: idToken,
           email: data.email,
+          ...authContext,
         });
         return response;
       } catch (apiError: unknown) {
@@ -158,7 +160,7 @@ export class AuthService {
     }
   }
 
-  static async signInWithGoogle(): Promise<AuthResponse> {
+  static async signInWithGoogle(authContext?: AuthRequestContext): Promise<AuthResponse> {
     try {
       // Clear any existing popup windows and focus
       if (typeof window !== 'undefined') {
@@ -173,6 +175,7 @@ export class AuthService {
       try {
         const response = await this.makeAPIRequest('/google-signup', {
           id_token: idToken,
+          ...authContext,
         });
         return response;
       } catch (apiError: unknown) {

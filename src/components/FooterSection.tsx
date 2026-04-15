@@ -5,9 +5,18 @@ import { Linkedin, Mail, Instagram } from "lucide-react";
 import { MdOutlineSecurity } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const Footer = () => {
-    const scrollToSection = (id: string) => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const scrollToSection = (id: string) => {
+    if (pathname !== "/") {
+      router.push(`/#${id}`);
+      return;
+    }
+
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });

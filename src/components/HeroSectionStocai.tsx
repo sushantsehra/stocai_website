@@ -12,6 +12,7 @@ import user4 from "@/assets/5.png";
 import svg_linestroke from "@/assets/svg_linestroke.png";
 import Image from "next/image";
 import posthog from 'posthog-js';
+import { getAppUrl } from "@/utils/env";
 
 const HeroSectionStocai = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -22,7 +23,7 @@ const HeroSectionStocai = () => {
       location: "about_page",
     });
 
-    window.location.href = "https://clarity.mystocai.com";
+    window.location.href = getAppUrl();
   };
 
   // const handleCloseLoginPopup = () => {

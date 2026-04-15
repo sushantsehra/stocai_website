@@ -111,6 +111,36 @@ export function deleteUserCookie() {
   removeCookie('user', { path: '/' });
 }
 
+export function setAuthCookie(name: string, value: string, maxAge: number = 30 * 24 * 60 * 60) {
+  const domain = getDomain();
+  const options: CookieOptions = {
+    path: '/',
+    maxAge,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+  };
+
+  if (domain) {
+    setCookie(name, value, { ...options, domain });
+  }
+
+  setCookie(name, value, options);
+}
+
+export function getAuthCookie(name: string): string | null {
+  return getCookie(name);
+}
+
+export function deleteAuthCookie(name: string) {
+  const domain = getDomain();
+
+  if (domain) {
+    removeCookie(name, { path: '/', domain });
+  }
+
+  removeCookie(name, { path: '/' });
+}
+
 export function setLogoutSignal() {
   const domain = getDomain();
   const timestamp = Date.now().toString();

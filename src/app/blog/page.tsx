@@ -1,6 +1,7 @@
 import React from "react";
-import Header from "../../components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/LandingHeader";
+import Footer from "@/components/FooterSection";
+import BlogStickyCTA from "@/components/BlogStickyCTA";
 import { getAllBlogPosts } from "../../data/blogPosts";
 import BlogPageClient from "./BlogPageClient";
 
@@ -11,10 +12,11 @@ export default async function BlogPage() {
   const blogPosts = await getAllBlogPosts();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="blog-theme min-h-screen bg-white">
       <Header />
       <BlogPageClient initialBlogPosts={blogPosts} />
       <Footer />
+      <BlogStickyCTA />
     </div>
   );
 } 

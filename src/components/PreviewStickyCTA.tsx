@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import posthog from "posthog-js";
+import { getSignupUrl } from "@/utils/env";
 
 const PreviewStickyCTA = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -121,7 +122,7 @@ const PreviewStickyCTA = () => {
       
       // Small delay gives analytics transport time to flush before hard navigation.
       window.setTimeout(() => {
-        window.location.href = "https://os.bettercorporatelife.com/signUp?redirect=%2F";
+        window.location.href = getSignupUrl("/");
       }, 250);
     }
   };

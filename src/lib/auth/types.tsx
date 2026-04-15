@@ -11,6 +11,9 @@ export interface AuthResponse {
   lastName: string;
   email: string;
   message?: string;
+  access_token?: string;
+  token_type?: string;
+  preview_status?: string;
 }
 
 export interface AuthError {
@@ -32,4 +35,11 @@ export interface SignInData {
 export interface ForgotPasswordData {
   email: string;
   newPassword?: string;
+}
+
+export interface AuthRequestContext {
+  access_tier?: string;
+  source?: string;
+  waitlist_reference_id?: string;
+  auth_flow?: string;
 }

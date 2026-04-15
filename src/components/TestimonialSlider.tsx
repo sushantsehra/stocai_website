@@ -11,6 +11,7 @@ import stocai_img4 from "@/assets/4.png";
 import stocai_img5 from "@/assets/5.png";
 import stocai_img6 from "@/assets/6.png";
 import posthog from "posthog-js";
+import { getAppUrl } from "@/utils/env";
 
 const TestimonialSlider = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -21,7 +22,7 @@ const TestimonialSlider = () => {
       location: "about_page",
     });
 
-    window.location.href = "https://clarity.mystocai.com";
+    window.location.href = getAppUrl();
   };
 
   // const handleCloseLoginPopup = () => {

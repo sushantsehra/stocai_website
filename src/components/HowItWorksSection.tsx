@@ -7,6 +7,7 @@ import img1 from "@/assets/hitws1.png";
 import img2 from "@/assets/hitws2.png";
 import img3 from "@/assets/hitws3.png";
 import img4 from "@/assets/hitws4.png";
+import { getAppUrl } from "@/utils/env";
 
 const HowItWorksSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -115,7 +116,7 @@ const HowItWorksSection = () => {
           <Button
             variant="primary"
             className="self-center sm:self-start py-2"
-            onClick={() => window.location.href = "https://clarity.mystocai.com"}
+            onClick={() => window.location.href = getAppUrl()}
           >
             Start Introspecting
           </Button>

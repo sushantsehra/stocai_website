@@ -2,6 +2,7 @@
 
 // import Image from 'next/image';
 import posthog from "posthog-js";
+import { getAppUrl } from "@/utils/env";
 const OverthinkingToClarity = () => {
   return (
     <div className="bg-white">
@@ -29,7 +30,7 @@ const OverthinkingToClarity = () => {
                 });
 
                 setTimeout(() => {
-                  window.location.href = "https://clarity.mystocai.com";
+                  window.location.href = getAppUrl();
                 }, 300);
               }}
 

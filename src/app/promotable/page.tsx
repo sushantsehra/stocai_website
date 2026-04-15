@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import BMPLandingComponents from "@/components/BMPLandingComponents";
+import env from "@/utils/env";
 
 // This ensures the page is statically generated at build time
 export const dynamic = 'force-static';
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Homepage - Stocai - Your AI-Powered Introspection & Clarity Partner",
     description: "Discover the new Stocai homepage with enhanced features for guided introspection and mindful decision-making.",
-    url: "https://mystocai.com/homepage",
+    url: `${env.publicUrl}/promotable`,
     siteName: "Stocai",
     images: [
       {
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     creator: "@stocai",
   },
   alternates: {
-    canonical: "https://mystocai.com/homepage",
+    canonical: `${env.publicUrl}/promotable`,
   },
   robots: {
     index: true,
@@ -48,11 +49,11 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Stocai Homepage",
-    "url": "https://mystocai.com/homepage",
+    "url": `${env.publicUrl}/promotable`,
     "isPartOf": {
       "@type": "WebSite",
       "name": "Stocai",
-      "url": "https://mystocai.com"
+      "url": env.publicUrl
     }
   };
 
@@ -64,13 +65,13 @@ function JsonLd() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://mystocai.com"
+        "item": env.publicUrl
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Homepage",
-        "item": "https://mystocai.com/homepage"
+        "item": `${env.publicUrl}/promotable`
       }
     ]
   };

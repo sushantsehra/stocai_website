@@ -1,18 +1,17 @@
 import React from "react";
 import type { Metadata } from "next";
+import env from "@/utils/env";
 
 export const metadata: Metadata = {
   title: "Stocai Blog - Your AI-Powered Introspection & Clarity Partner",
   description: "Read the latest articles and insights on AI-powered introspection, clarity, and personal growth from Stocai.",
-  // Ensure proper indexing
   robots: {
     index: true,
     follow: true,
     nocache: false,
   },
-  // Set canonical URL for blog section
   alternates: {
-    canonical: "https://mystocai.com/blog",
+    canonical: `${env.publicUrl}/blog`,
   },
 };
 
@@ -21,7 +20,5 @@ export default function BlogLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <>{children}</>
-  );
-} 
+  return <>{children}</>;
+}

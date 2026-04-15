@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ThumbsUp, MessageCircle } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
-import { getSignupUrl } from '@/utils/env';
 import type { Comment, UserIntent, DynamicBlogPost } from '@/types/blog';
 import Image from 'next/image';
+import { auth } from '@/lib/auth/firebase';
+import BlogAuthModal from '@/components/BlogAuthModal';
+import { getAuthCookie } from '@/utils/cookies';
 
 interface BlogInteractionsProps {
   blog: DynamicBlogPost;
-  slug: string;
 }
 
-export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) {
+export default function BlogInteractions({ blog }: BlogInteractionsProps) {
   const { user } = useUser();
-  const router = useRouter();
+  const backendApiUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL;
   
   const [liked, setLiked] = useState(false);
   const [commentText, setCommentText] = useState('');
@@ -23,6 +23,29 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
   const [likes, setLikes] = useState(blog.like_count || 0);
   const [commentCount, setCommentCount] = useState(blog.comment_count || 0);
   const [isLoading, setIsLoading] = useState(true);
+  const [interactionApiAvailable, setInteractionApiAvailable] = useState(Boolean(backendApiUrl));
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const processedIntentKeyRef = useRef<string | null>(null);
+
+  const getAuthorizationHeader = useCallback(async () => {
+    const communityToken = getAuthCookie('community_access_token');
+    if (communityToken) {
+      return { Authorization: `Bearer ${communityToken}` };
+    }
+
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      return null;
+    }
+
+    const token = await currentUser.getIdToken();
+    return { Authorization: `Bearer ${token}` };
+  }, []);
+
+  const openAuthModal = useCallback(() => {
+    setIsAuthModalOpen(true);
+  }, []);
 
   useEffect(() => {
     // Check if user has liked this blog
@@ -32,76 +55,93 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
 
   // Function to fetch current blog stats and comments
   const fetchBlogData = useCallback(async () => {
-    if (!process.env.NEXT_PUBLIC_BACKEND_API_URL) {
+    if (!backendApiUrl || !interactionApiAvailable) {
       setIsLoading(false);
       return;
     }
 
     try {
-      // Fetch both blog data and comments
       const [blogResponse, commentsResponse] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/blog/${blog.blog_id}`),
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/blogs/comment/${blog.blog_id}`)
+        fetch(`${backendApiUrl}/blog/${blog.blog_id}`),
+        fetch(`${backendApiUrl}/blogs/comment/${blog.blog_id}`)
       ]);
 
-      // Update like count from blog data
+      if (blogResponse.status === 404) {
+        setInteractionApiAvailable(false);
+        return;
+      }
+
       if (blogResponse.ok) {
         const blogData = await blogResponse.json();
         setLikes(blogData.like_count || 0);
         setCommentCount(blogData.comment_count || 0);
-      } else {
-        console.error('Failed to fetch blog data:', blogResponse.status);
+      } else if (blogResponse.status >= 500) {
+        console.warn('Blog interaction stats are temporarily unavailable.');
       }
 
-      // Update comments and comment count from comments data
       if (commentsResponse.ok) {
         const commentsData = await commentsResponse.json();
-        console.log('Comments data fetched:', commentsData);
         const sortedComments = commentsData.sort(
           (a: Comment, b: Comment) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
         setComments(sortedComments);
-        // Use the actual comments length if backend comment_count seems off
         setCommentCount(sortedComments.length);
-      } else {
-        console.error('Failed to fetch comments:', commentsResponse.status);
+      } else if (commentsResponse.status === 404) {
+        setComments([]);
+      } else if (commentsResponse.status >= 500) {
+        console.warn('Blog comments are temporarily unavailable.');
       }
-    } catch (err) {
-      console.error('Error fetching blog data:', err);
+    } catch {
+      setInteractionApiAvailable(false);
     } finally {
       setIsLoading(false);
     }
-  }, [blog.blog_id]);
+  }, [backendApiUrl, blog.blog_id, interactionApiAvailable]);
 
   useEffect(() => {
     fetchBlogData();
-  }, [blog.blog_id, fetchBlogData]);
+  }, [fetchBlogData]);
 
 
   const handleLike = useCallback(async () => {
     if (!user?.user_id) {
       saveUserIntent('like', blog.blog_id);
-      router.push(getSignupUrl(`/blog/${slug}`));
+      openAuthModal();
       return;
     }
 
-    if (!process.env.NEXT_PUBLIC_BACKEND_API_URL) {
-      console.error('Backend API URL not configured');
+    if (!backendApiUrl || !interactionApiAvailable) {
       return;
     }
 
     try {
+      const authHeader = await getAuthorizationHeader();
+      if (!authHeader) {
+        saveUserIntent('like', blog.blog_id);
+        openAuthModal();
+        return;
+      }
+
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/blogs/${blog.blog_id}/like?user_id=${user.user_id}`,
-        { method: 'POST' }
+        `${backendApiUrl}/blogs/${blog.blog_id}/like`,
+        {
+          method: 'POST',
+          headers: authHeader,
+        }
       );
 
+      if (response.status === 404) {
+        setInteractionApiAvailable(false);
+        return;
+      }
+
       if (!response.ok) {
-        console.error('Like failed');
-        const errorData = await response.json();
-        if (errorData.detail === "User already liked this blog") {
+        console.warn('Unable to update blog like right now.');
+        const errorData = await response.json().catch(() => null);
+        if (errorData?.detail === "User already liked this blog") {
           setLiked(true);
           localStorage.setItem(`liked-${blog.blog_id}`, 'true');
+          fetchBlogData();
         }
         return;
       }
@@ -109,55 +149,65 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
       setLiked(true);
       localStorage.setItem(`liked-${blog.blog_id}`, 'true');
       
-      // Refetch blog data to get updated counts
       fetchBlogData();
-    } catch (err) {
-      console.error('Error liking blog:', err);
+    } catch {
+      console.warn('Unable to update blog like right now.');
     }
-  }, [user, blog.blog_id, slug, router, fetchBlogData]);
+  }, [user, backendApiUrl, interactionApiAvailable, blog.blog_id, fetchBlogData, getAuthorizationHeader, openAuthModal]);
 
   const handleAddComment = useCallback(async (text?: string) => {
     const commentContent = text || commentText.trim();
     
     if (!user?.user_id) {
       saveUserIntent('comment', blog.blog_id, commentContent);
-      router.push(getSignupUrl(`/blog/${slug}`));
+      openAuthModal();
       return;
     }
 
     if (!commentContent) return;
 
-    if (!process.env.NEXT_PUBLIC_BACKEND_API_URL) {
-      console.error('Backend API URL not configured');
+    if (!backendApiUrl || !interactionApiAvailable) {
       return;
     }
 
     setCommentText('');
 
     try {
+      const authHeader = await getAuthorizationHeader();
+      if (!authHeader) {
+        saveUserIntent('comment', blog.blog_id, commentContent);
+        openAuthModal();
+        return;
+      }
+
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/blogs/${blog.blog_id}/comment`,
+        `${backendApiUrl}/blogs/${blog.blog_id}/comment`,
         {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            ...authHeader,
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify({
-            user_id: user.user_id,
             text: commentContent,
-            username: `${user.firstName} ${user.lastName}`,
           }),
         }
       );
+
+      if (response.status === 404) {
+        setInteractionApiAvailable(false);
+        return;
+      }
 
       if (!response.ok) {
         throw new Error('Failed to post comment');
       }
 
-      // Refetch blog data to get updated comments and counts
       fetchBlogData();
-    } catch (err) {
-      console.error('Error posting comment:', err);
+    } catch {
+      console.warn('Unable to post comment right now.');
     }
-  }, [user, blog.blog_id, commentText, slug, router, fetchBlogData]);
+  }, [user, backendApiUrl, interactionApiAvailable, blog.blog_id, commentText, fetchBlogData, getAuthorizationHeader, openAuthModal]);
 
   useEffect(() => {
     // Handle stored user intent after login
@@ -171,17 +221,26 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
         intent.blogId === blog.blog_id &&
         Date.now() - intent.timestamp < 5 * 60 * 1000 // 5-minute window
       ) {
+        const intentKey = JSON.stringify(intent);
+        if (processedIntentKeyRef.current === intentKey) {
+          return;
+        }
+
         const executeIntent = async () => {
+          processedIntentKeyRef.current = intentKey;
+          localStorage.removeItem('userIntent');
+
           if (intent.actionType === 'like' && !liked && user) {
             await handleLike();
           } else if (intent.actionType === 'comment' && intent.payload && user) {
             setCommentText(intent.payload);
             await handleAddComment(intent.payload);
           }
-          localStorage.removeItem('userIntent');
         };
 
         executeIntent();
+      } else {
+        localStorage.removeItem('userIntent');
       }
     } catch (error) {
       console.error('Error parsing user intent:', error);
@@ -206,15 +265,15 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
 
   return (
     <div className="mt-6">
+      <BlogAuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       <hr className="mb-6" />
       
       <div className="flex items-center gap-4 text-[#323232] mb-4">
         <button
-          className={`flex items-center gap-1 transition-colors ${
-            liked ? 'text-blue-600' : 'hover:text-blue-600'
+          className={`flex cursor-pointer items-center gap-1 transition-colors ${
+            liked ? 'blog-accent-text' : 'hover:text-[#0B64F4]'
           }`}
           onClick={handleLike}
-          disabled={liked}
         >
           <ThumbsUp className="w-4 h-4" />
           {likes}
@@ -227,16 +286,17 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
 
       <div className="mb-6">
         <textarea
-          className="w-full border border-gray-300 p-3 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#54B0AF] focus:border-transparent"
-          placeholder="Add a comment..."
+          className="blog-input w-full resize-none rounded-lg p-3"
+          placeholder={interactionApiAvailable ? "Add a comment..." : "Comments are unavailable right now."}
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           rows={3}
+          disabled={!interactionApiAvailable}
         />
         <button
           onClick={() => handleAddComment()}
-          disabled={!commentText.trim()}
-          className="mt-2 px-4 py-2 bg-[#54B0AF] text-white rounded-lg hover:bg-[#459190] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          disabled={!commentText.trim() || !interactionApiAvailable}
+          className="blog-accent-bg mt-2 rounded-lg px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
           Post Comment
         </button>
@@ -253,7 +313,7 @@ export default function BlogInteractions({ blog, slug }: BlogInteractionsProps) 
               >
                 <div className="flex items-center mb-2">
 <Image
-  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(comment.username)}&background=54B0AF&color=fff`}
+  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(comment.username)}&background=0B64F4&color=fff`}
   alt={comment.username}
   width={32} // w-8 = 32px
   height={32}

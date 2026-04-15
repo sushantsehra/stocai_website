@@ -6,6 +6,7 @@ import Button from "./Button";
 import img1 from "@/assets/Ellipse 1267 (1).png";
 import img2 from "@/assets/Ellipse 1267 (2).png";
 import img3 from "@/assets/Ellipse 1267.png";
+import { getAppUrl } from "@/utils/env";
 
 interface TestimonialCardProps {
   title: string;
@@ -171,7 +172,7 @@ const TestimonialsSection = () => {
       </div>
 
       <div className="flex justify-center mt-4 lg:mt-4 md:mt-3">
-        <Button variant="primary" onClick={() => window.location.href = "https://clarity.mystocai.com"}>
+        <Button variant="primary" onClick={() => window.location.href = getAppUrl()}>
           See The Impact For Yourself
         </Button>
       </div>

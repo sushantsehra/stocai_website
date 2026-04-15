@@ -8,6 +8,7 @@ import arrow1 from "@/assets/Arrow_page.png";
 import arrow2 from "@/assets/Arrow_page_feature1.png";
 import arrow3 from "@/assets/Arrow_page_feature2.png";
 import arrow4 from "@/assets/Arrow_page_feature3.png";
+import { getAppUrl } from "@/utils/env";
 
 const FeaturesSection = () => {
   return (
@@ -102,7 +103,7 @@ const FeaturesSection = () => {
         <Button
           variant="primary"
           className="self-center mt-3 md:mt-4 lg:mt-4 font-Gotham"
-          onClick={() => window.location.href = "https://clarity.mystocai.com"}
+          onClick={() => window.location.href = getAppUrl()}
         >
           Try Stocai Now
         </Button>

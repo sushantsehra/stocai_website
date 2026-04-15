@@ -6,6 +6,7 @@ import React from 'react';
 import svg_linestroke from "@/assets/svg_linestroke.png";
 import Image from "next/image";
 import posthog from 'posthog-js';
+import { getAppUrl } from "@/utils/env";
 
 const CommonSituationsSection = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -16,7 +17,7 @@ const CommonSituationsSection = () => {
       location: "about_page",
     });
 
-    window.location.href = "https://clarity.mystocai.com";
+    window.location.href = getAppUrl();
   };
 
   // const handleCloseLoginPopup = () => {

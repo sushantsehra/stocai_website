@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { AuthService } from '@/lib/auth/authService';
-import { SignUpData, SignInData } from '@/lib/auth/types';
+import { SignUpData, SignInData, AuthRequestContext } from '@/lib/auth/types';
 import { useUser } from '@/contexts/UserContext';
 import { setCookie } from '@/utils/cookies';
 import GoogleAuthButton from './GoogleAuthButton';
@@ -11,6 +11,15 @@ import AuthError from './AuthError';
 
 interface AuthFormProps {
   onSuccess?: () => void;
+  initialMode?: 'login' | 'signup';
+  variant?: 'default' | 'community';
+  showGoogleAuth?: boolean;
+  authContext?: AuthRequestContext;
+  onBeforeEmailSignUp?: (data: SignUpData) => Promise<AuthRequestContext | void> | AuthRequestContext | void;
+  onBeforeGoogleAuth?: () => Promise<AuthRequestContext | void> | AuthRequestContext | void;
+  onEmailSignUp?: (data: SignUpData, authContext?: AuthRequestContext) => Promise<AuthResponseData>;
+  onEmailLogin?: (data: SignInData, authContext?: AuthRequestContext) => Promise<AuthResponseData>;
+  onGoogleLogin?: (authContext?: AuthRequestContext) => Promise<AuthResponseData>;
 }
 
 interface AuthResponseData {
@@ -30,8 +39,19 @@ const pushToDataLayer = (payload: Record<string, unknown>) => {
   dataLayerWindow.dataLayer.push(payload);
 };
 
-const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
-  const [isLogin, setIsLogin] = useState(true);
+const AuthForm: React.FC<AuthFormProps> = ({
+  onSuccess,
+  initialMode = 'login',
+  variant = 'default',
+  showGoogleAuth = true,
+  authContext,
+  onBeforeEmailSignUp,
+  onBeforeGoogleAuth,
+  onEmailSignUp,
+  onEmailLogin,
+  onGoogleLogin,
+}) => {
+  const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [forgotPassword, setForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -65,6 +85,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
     setErrorMessage('');
     setSuccessMessage('');
   }, []);
+
+  const mergedAuthContext = useCallback(
+    (override?: AuthRequestContext | void): AuthRequestContext | undefined =>
+      authContext || override ? { ...authContext, ...override } : undefined,
+    [authContext]
+  );
 
   const handleSignupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
@@ -180,10 +206,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
         await AuthService.resetPassword(forgotPasswordData.email);
         setSuccessMessage('Password reset email sent! Check your inbox.');
       } else if (isLogin) {
-        const response = await AuthService.signIn(signinData);
+        const response = onEmailLogin
+          ? await onEmailLogin(signinData, authContext)
+          : await AuthService.signIn(signinData);
         handleAuthSuccess(response);
       } else {
-        const response = await AuthService.signUp(signupData);
+        const signupContext = await onBeforeEmailSignUp?.(signupData);
+        const effectiveContext = mergedAuthContext(signupContext);
+        const response = onEmailSignUp
+          ? await onEmailSignUp(signupData, effectiveContext)
+          : await AuthService.signUp(signupData, effectiveContext);
         handleAuthSuccess(response);
       }
     } catch (error: unknown) {
@@ -202,7 +234,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
     clearMessages();
 
     try {
-      const response = await AuthService.signInWithGoogle();
+      const googleContext = await onBeforeGoogleAuth?.();
+      const effectiveContext = mergedAuthContext(googleContext);
+      const response = onGoogleLogin
+        ? await onGoogleLogin(effectiveContext)
+        : await AuthService.signInWithGoogle(effectiveContext);
       handleAuthSuccess(response);
     } catch (error: unknown) {
       console.error('Google auth error:', error);
@@ -225,6 +261,26 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
     return <div className="w-full h-64 flex items-center justify-center">Loading...</div>;
   }
 
+  const communityCopy = {
+    loginEyebrow: "",
+    loginTitle: "Log in",
+    signupEyebrow: "",
+    signupTitle: "Sign up",
+    forgotEyebrow: "",
+    forgotTitle: "Reset password",
+  };
+
+  const defaultCopy = {
+    loginEyebrow: "Welcome Back",
+    loginTitle: "Get back to it",
+    signupEyebrow: "Let's get started",
+    signupTitle: "Create new account",
+    forgotEyebrow: "Don't Worry we will handle it",
+    forgotTitle: "Reset your password",
+  };
+
+  const copy = variant === 'community' ? communityCopy : defaultCopy;
+
   return (
     <div className="font-sans flex items-center justify-center w-full text-gray-900">
       <div className="flex flex-col w-full items-center justify-center">
@@ -235,30 +291,36 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
             {isLogin ? (
               forgotPassword ? (
                 <>
-                  <h3 className="font-medium text-xl font-gotham text-center">
-                    Don&apos;t Worry we will handle it
-                  </h3>
-                  <h2 className="font-bold text-[#323232] text-4xl text-center mb-4">
-                    Reset your password
+                  {copy.forgotEyebrow ? (
+                    <h3 className="font-medium text-xl font-gotham text-center">
+                      {copy.forgotEyebrow}
+                    </h3>
+                  ) : null}
+                  <h2 className="font-bold text-[#323232] text-3xl text-center mb-4">
+                    {copy.forgotTitle}
                   </h2>
                 </>
               ) : (
                 <>
-                  <h3 className="font-medium font-gotham text-xl text-center">
-                    Welcome Back
-                  </h3>
-                  <h2 className="font-bold font-gotham text-[#323232] text-3xl text-center mb-2">
-                    Get back to it
+                  {copy.loginEyebrow ? (
+                    <h3 className="font-medium font-gotham text-xl text-center">
+                      {copy.loginEyebrow}
+                    </h3>
+                  ) : null}
+                  <h2 className="font-bold font-gotham text-[#323232] text-3xl text-center mb-4">
+                    {copy.loginTitle}
                   </h2>
                 </>
               )
             ) : (
               <>
-                <h3 className="font-medium font-gotham text-xl text-center">
-                  Let&apos;s get started
-                </h3>
-                <h2 className="font-bold font-gotham text-[#323232] text-4xl text-center mb-4">
-                  Create new account
+                {copy.signupEyebrow ? (
+                  <h3 className="font-medium font-gotham text-xl text-center">
+                    {copy.signupEyebrow}
+                  </h3>
+                ) : null}
+                <h2 className="font-bold font-gotham text-[#323232] text-3xl text-center mb-4">
+                  {copy.signupTitle}
                 </h2>
               </>
             )}
@@ -267,7 +329,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
             <AuthError error={errorMessage} success={successMessage} />
 
             {/* Google Login Button */}
-            {!forgotPassword && (
+            {!forgotPassword && showGoogleAuth && (
               <div className="flex justify-center space-x-4 mt-6">
                 <GoogleAuthButton 
                   onGoogleAuth={handleGoogleAuth}
@@ -278,7 +340,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
             )}
 
             {/* OR Divider */}
-            {!forgotPassword && (
+            {!forgotPassword && showGoogleAuth && (
               <div className="relative text-center text-[#323232] my-6">
                 <span className="font-medium text-[#323232] font-gotham text-[20px] bg-white px-4">
                   OR
@@ -335,7 +397,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="flex items-center justify-center w-full px-6 py-5 bg-[#54b0af] rounded-2xl overflow-hidden hover:bg-[#4a9998] transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#54b0af] focus:ring-opacity-50"
+                      className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-[#0B64F4] px-6 py-5 transition-colors hover:bg-[#0953C8] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#0B64F4] focus:ring-opacity-50"
                     >
                       {loading ? (
                         <span className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -370,7 +432,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="flex items-center justify-center w-full px-6 py-5 bg-[#54b0af] rounded-2xl overflow-hidden hover:bg-[#4a9998] transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#54b0af] focus:ring-opacity-50"
+                          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-[#0B64F4] px-6 py-5 transition-colors hover:bg-[#0953C8] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#0B64F4] focus:ring-opacity-50"
                         >
                           {loading ? (
                             <span className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -415,7 +477,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="flex items-center justify-center w-full px-6 py-4 bg-[#54b0af] rounded-2xl overflow-hidden hover:bg-[#4a9998] transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#54b0af] focus:ring-opacity-50"
+                          className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-[#0B64F4] px-6 py-4 transition-colors hover:bg-[#0953C8] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#0B64F4] focus:ring-opacity-50"
                         >
                           {loading ? (
                             <span className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -437,7 +499,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
                       clearMessages();
                     }}
                     disabled={loading}
-                    className="text-[#54b0af] hover:text-[#4a9998] text-sm font-medium w-full text-center mt-2 transition-colors disabled:opacity-50 focus:outline-none"
+                    className="mt-2 w-full cursor-pointer text-center text-sm font-medium text-[#0B64F4] transition-colors hover:text-[#0953C8] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none"
                   >
                     {forgotPassword ? (
                       <span className="flex items-center font-gotham justify-center">
@@ -466,7 +528,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
                       resetForm();
                     }}
                     disabled={loading}
-                    className="text-[#54b0af] hover:text-[#4a9998] font-semibold transition-colors disabled:opacity-50 focus:outline-none"
+                    className="cursor-pointer font-semibold text-[#0B64F4] transition-colors hover:text-[#0953C8] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none"
                   >
                     {isLogin ? "Sign Up" : "Login"}
                   </button>

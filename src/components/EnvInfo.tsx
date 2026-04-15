@@ -16,7 +16,8 @@ export const EnvInfo: React.FC = () => {
       <h4 className="font-bold">Environment: {env.current}</h4>
       <ul className="mt-1">
         <li>API URL: {env.apiUrl}</li>
-        <li>Assets URL: {env.assetsUrl}</li>
+        <li>Site URL: {env.publicUrl}</li>
+        <li>App URL: {env.productUrl}</li>
         <li>Debug: {env.isDebugEnabled ? 'Enabled' : 'Disabled'}</li>
         <li>New UI: {env.features.newUi ? 'Enabled' : 'Disabled'}</li>
         <li>Analytics: {env.features.analytics ? 'Enabled' : 'Disabled'}</li>

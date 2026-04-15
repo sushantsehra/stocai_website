@@ -10,6 +10,7 @@ import SectionBottom from "@/assets/SectionBottom.png";
 import SectionTop from "@/assets/SectionTop.png";
 import teal_circle from "@/assets/teal_circle.png";
 import posthog from "posthog-js";
+import { getAppUrl } from "@/utils/env";
 
 const ProfessionalHeroSection = () => {
   // const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -20,7 +21,7 @@ const ProfessionalHeroSection = () => {
       location: "about_page",
     });
 
-    window.location.href = "https://clarity.mystocai.com";
+    window.location.href = getAppUrl();
   };
 
   // const handleCloseLoginPopup = () => {

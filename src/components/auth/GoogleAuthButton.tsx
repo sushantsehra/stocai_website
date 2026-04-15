@@ -19,7 +19,7 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({
     <button
       onClick={onGoogleAuth}
       disabled={loading || disabled}
-      className="flex items-center justify-center w-full px-6 py-3 bg-white border-2 border-gray-300 rounded-2xl hover:bg-gray-50 hover:border-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-[#D8E1F0] bg-white px-6 py-3 transition-colors hover:border-[#0B64F4] hover:bg-[#F4F8FF] disabled:cursor-not-allowed disabled:opacity-50"
     >
       {loading ? (
         <span className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>

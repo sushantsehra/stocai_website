@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,24 +17,25 @@ interface BlogPostCardProps {
   tags?: string[];
 }
 
-export default function BlogPostCard({ 
-  title, 
-  excerpt, 
-  date, 
-  imageUrl, 
+export default function BlogPostCard({
+  title,
+  excerpt,
+  date,
+  imageUrl,
   slug,
   likeCount = 0,
   commentCount = 0,
-  tags = []
+  tags = [],
 }: BlogPostCardProps) {
   const [imageError, setImageError] = useState(false);
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:translate-y-[-5px]">
+    <div className="blog-card-surface overflow-hidden transition-transform duration-300 hover:-translate-y-1">
       <Link href={`/blog/${slug}`} className="block">
-        <div className="h-48 md:h-52 bg-gray-200 relative cursor-pointer">
+        <div className="blog-soft-bg relative h-48 cursor-pointer md:h-52">
           {imageUrl && !imageError ? (
-            <Image 
-              src={imageUrl} 
+            <Image
+              src={imageUrl}
               alt={title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -41,36 +43,35 @@ export default function BlogPostCard({
               onError={() => setImageError(true)}
             />
           ) : (
-            <div className="h-full w-full flex items-center justify-center bg-gradient-to-r from-[#54B0AF] to-[#7ED5D4]">
-              <span className="text-white text-2xl font-bold">Stocai</span>
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#0B64F4] via-[#4D86F7] to-[#A9C7FF]">
+              <span className="font-jakarta text-2xl font-bold text-white">BCL</span>
             </div>
           )}
         </div>
       </Link>
       <div className="p-6">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-sm text-[#323232]">{date}</p>
+          <p className="blog-muted-text text-sm">{date}</p>
           {tags.length > 0 && (
             <div className="flex gap-1">
               {tags.slice(0, 2).map((tag, index) => (
                 <span
                   key={index}
-                  className="text-xs bg-[#54B0AF] text-white px-2 py-1 rounded-full"
+                  className="blog-tag rounded-full px-2 py-1 text-xs"
                 >
                   {tag}
                 </span>
               ))}
               {tags.length > 2 && (
-                <span className="text-xs text-[#323232]">+{tags.length - 2}</span>
+                <span className="blog-muted-text text-xs">+{tags.length - 2}</span>
               )}
             </div>
           )}
         </div>
-        <h2 className="text-xl font-semibold mb-2 line-clamp-2">{title}</h2>
-        <p className="text-[#323232] mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: excerpt }} />
-        
-        {/* Engagement Stats */}
-        <div className="flex items-center gap-4 text-[#323232] text-sm mb-4">
+        <h2 className="blog-title-text mb-2 line-clamp-2 font-jakarta text-xl font-semibold">{title}</h2>
+        <p className="blog-body-text mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: excerpt }} />
+
+        <div className="blog-body-text mb-4 flex items-center gap-4 text-sm">
           <div className="flex items-center gap-1">
             <ThumbsUp className="w-4 h-4" />
             <span>{likeCount}</span>
@@ -80,14 +81,14 @@ export default function BlogPostCard({
             <span>{commentCount}</span>
           </div>
         </div>
-        
-        <Link 
-          href={`/blog/${slug}`} 
-          className="text-[#54B0AF] font-medium hover:underline inline-flex items-center"
+
+        <Link
+          href={`/blog/${slug}`}
+          className="blog-accent-text inline-flex items-center font-medium hover:underline"
         >
-          Read More <span className="ml-1">→</span>
+          Read More <span className="ml-1">-&gt;</span>
         </Link>
       </div>
     </div>
   );
-} 
+}

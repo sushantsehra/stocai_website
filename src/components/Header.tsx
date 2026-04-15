@@ -33,6 +33,7 @@ export default function Header() {
             <div className="flex-grow flex justify-center items-center relative">
               <Navbar />
             </div>
+
           </div>
         </div>
       </header>

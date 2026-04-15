@@ -6,6 +6,7 @@ import Image from "next/image";
 import panda from "@/assets/panda_main.png";
 import background from "@/assets/Stocai_landingpage_bg.png";
 import arrow from "@/assets/Arrow_page.png";
+import { getAppUrl } from "@/utils/env";
 
 const HeroSection = () => {
   return (
@@ -55,7 +56,7 @@ const HeroSection = () => {
             </Button>
             <Button
               variant="primary"
-              onClick={() => window.location.href = "https://clarity.mystocai.com"}
+              onClick={() => window.location.href = getAppUrl()}
               className="p-4"
             >
               {/* See Stocai in Action */}

@@ -4,6 +4,7 @@ import React from "react";
 import Button from "./Button";
 import Image from "next/image";
 import chatScreen from "@/assets/Stocai - Chat Screen 1.png";
+import { getAppUrl } from "@/utils/env";
 
 const CallToActionSection = () => {
   return (
@@ -37,7 +38,7 @@ const CallToActionSection = () => {
           <Button
             variant="primary"
             className="self-start mt-3 md:mt-5 lg:mt-8"
-            onClick={() => window.location.href = "https://clarity.mystocai.com"}
+            onClick={() => window.location.href = getAppUrl()}
           >
             Start Reflecting
           </Button>
