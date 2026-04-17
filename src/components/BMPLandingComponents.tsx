@@ -32,6 +32,9 @@ import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
+import StoCareerBot from "./StoCareerBot";
+
+const SHOW_STO_CAREER_BOT = false;
 
 interface UserData {
   name: string;
@@ -240,6 +243,9 @@ const BMPLandingComponents = () => {
         source={modalInitialData.source}
         onSubmit={handleWaitlistSubmit}
       />
+      {SHOW_STO_CAREER_BOT && (
+        <StoCareerBot onRequestAccess={handleRequestAccess} />
+      )}
     </div>
   );
 };
