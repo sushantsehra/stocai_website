@@ -336,7 +336,7 @@ export default function Navbar() {
           <div className="relative user-menu-container">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center font-gotham space-x-2 bg-[#54B0AF] hover:bg-[#459190] transition-colors rounded-full p-1 font-bold"
+              className="flex cursor-pointer items-center font-gotham space-x-2 bg-[#54B0AF] hover:bg-[#459190] transition-colors rounded-full p-1 font-bold"
             >
               <Image
                 // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=459190&color=fff&size=32`}
@@ -361,7 +361,7 @@ export default function Navbar() {
                 <div className="py-1">
                   <button
                   onClick={handleLogout}
-                  className="w-full py-2 text-center text-base font-gotham font-semibold text-[#323232] hover:bg-gray-100 transition-colors"
+                  className="w-full cursor-pointer py-2 text-center text-base font-gotham font-semibold text-[#323232] hover:bg-gray-100 transition-colors"
                 >
                   Logout
                 </button>
@@ -447,7 +447,7 @@ export default function Navbar() {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
-                    className="bg-red-500 text-white font-medium py-2 px-8 rounded-full text-center font-gotham text-sm hover:bg-red-600 transition-colors"
+                    className="cursor-pointer bg-red-500 text-white font-medium py-2 px-8 rounded-full text-center font-gotham text-sm hover:bg-red-600 transition-colors"
                   >
                     Logout
                   </button>

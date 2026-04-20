@@ -5,7 +5,7 @@ import bclLogo from "../assets/bcl.png";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { getSignupUrl } from "@/utils/env";
+import { getAppUrl, getSignupUrl } from "@/utils/env";
 import { useUser } from "@/contexts/UserContext";
 import { deleteAuthCookie, deleteUserCookie, setLogoutSignal } from "@/utils/cookies";
 
@@ -47,6 +47,11 @@ const Header = () => {
 const handleLoginRedirect = () => {
   window.location.href = getSignupUrl("/");
 };
+
+  const handleContinueLearning = () => {
+    setShowUserMenu(false);
+    setMenuOpen(false);
+  };
 
   const handleLogout = () => {
     setLogoutSignal();
@@ -113,7 +118,7 @@ const handleLoginRedirect = () => {
               <div className="landing-user-menu relative">
                 <button
                   onClick={() => setShowUserMenu((current) => !current)}
-                  className="flex items-center gap-2 rounded-full bg-[#0B64F4] px-2 py-1 text-white transition hover:bg-blue-700"
+                  className="flex cursor-pointer items-center gap-2 rounded-full bg-[#0B64F4] px-2 py-1 text-white transition hover:bg-blue-700"
                 >
                   <Image
                     src={`https://ui-avatars.com/api/?name=${encodeURIComponent(`${user.firstName} ${user.lastName}`)}&background=ffffff&color=0B64F4&size=32&bold=true`}
@@ -137,9 +142,16 @@ const handleLoginRedirect = () => {
                         <p className="mt-1 text-xs text-slate-500">{user.email}</p>
                       ) : null}
                     </div>
+                    <Link
+                      href={`${getAppUrl()}/`}
+                      onClick={handleContinueLearning}
+                      className="mt-2 block w-full cursor-pointer rounded-[10px] px-3 py-2 text-left font-jakarta text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                    >
+                      Continue Your Learning
+                    </Link>
                     <button
                       onClick={handleLogout}
-                      className="mt-2 w-full rounded-[10px] px-3 py-2 text-left font-jakarta text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                      className="w-full cursor-pointer rounded-[10px] px-3 py-2 text-left font-jakarta text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
                     >
                       Logout
                     </button>
@@ -159,7 +171,7 @@ const handleLoginRedirect = () => {
 
             <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col justify-center items-center gap-[4px] rounded-[4px] shadow-3xl border border-gray-100 p-2"
+            className="md:hidden flex cursor-pointer flex-col justify-center items-center gap-[4px] rounded-[4px] shadow-3xl border border-gray-100 p-2"
           >
             <span className="w-5 h-[2.5px] bg-[#7A7777]"></span>
             <span className="w-5 h-[2.5px] bg-[#7A7777]"></span>
@@ -187,7 +199,7 @@ const handleLoginRedirect = () => {
 
             <button
               onClick={scrollToWaitlist}
-              className="bg-[#0B64F4] text-white py-2 rounded-[4px] font-jakarta font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+              className="cursor-pointer bg-[#0B64F4] text-white py-2 rounded-[4px] font-jakarta font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             >
               Get Early Access
             </button>
@@ -206,9 +218,16 @@ const handleLoginRedirect = () => {
                     {user.firstName} {user.lastName}
                   </span>
                 </div>
+                <Link
+                  href={`${getAppUrl()}/`}
+                  onClick={handleContinueLearning}
+                  className="cursor-pointer rounded-[4px] bg-[#0B64F4] py-2 text-center font-jakarta font-bold text-white transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+                >
+                  Continue your learning
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="rounded-[4px] bg-slate-100 py-2 font-jakarta font-bold text-slate-700 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+                  className="cursor-pointer rounded-[4px] bg-slate-100 py-2 font-jakarta font-bold text-slate-700 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
                 >
                   Logout
                 </button>
