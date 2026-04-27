@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import posthog from "posthog-js";
 import stoAvatar from "@/assets/panda_main.png";
+import env from "@/utils/env";
 import {
   buildResultCopy,
   ContextAnswers,
@@ -32,27 +33,28 @@ type BotStep =
   | "door"
   | "result";
 
-type BuyForm = {
-  name: string;
-  email: string;
-  phone: string;
-  countryCode: string;
+type StoCareerBotProps = {
+  variant?: "floating" | "embedded";
+  waitlistId?: string;
+  waitlistReferenceId?: string;
+  source?: string;
 };
 
-type StoCareerBotProps = {
-  onRequestAccess: (data: {
-    name: string;
-    email: string;
-    phone: string;
-    countryCode: string;
-    fullPhone: string;
-    source: string;
-  }) => Promise<void>;
+type BotSessionResponse = {
+  id: string;
+  waitlist_id: string;
+  flow_version: string;
+  status: string;
+  current_step?: string | null;
+  answers_json?: Record<string, unknown>;
+  result_json?: Record<string, unknown>;
+  started_at?: string | null;
+  completed_at?: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
 const whatsappNumber = "918860403799";
-
-const countryCodes = ["+91", "+1", "+44", "+971", "+65", "+61", "+49", "+33", "+81", "+82"];
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -135,8 +137,20 @@ const stepMeta: Record<BotStep, { label: string; progress: number }> = {
   result: { label: "Your full picture", progress: 100 },
 };
 
-export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
-  const [isOpen, setIsOpen] = useState(false);
+const booleanAnswerLabel = (value: boolean | null, labels: { yes: string; no: string }) => {
+  if (value === true) return labels.yes;
+  if (value === false) return labels.no;
+  return null;
+};
+
+export default function StoCareerBot({
+  variant = "floating",
+  waitlistId,
+  waitlistReferenceId,
+  source = "bot",
+}: StoCareerBotProps) {
+  const isEmbedded = variant === "embedded";
+  const [isOpen, setIsOpen] = useState(isEmbedded);
   const [step, setStep] = useState<BotStep>("intro");
   const [visibleMessageCount, setVisibleMessageCount] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -149,17 +163,19 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
   });
   const [skippedContext, setSkippedContext] = useState(false);
   const [diagnosticPath, setDiagnosticPath] = useState<"not_considered" | "considered" | null>(null);
+  const [desireAskedEarly, setDesireAskedEarly] = useState<boolean | null>(null);
   const [desireBlocker, setDesireBlocker] = useState("");
+  const [importanceVisible, setImportanceVisible] = useState<boolean | null>(null);
+  const [personallySeen, setPersonallySeen] = useState<boolean | null>(null);
+  const [sponsorHasPower, setSponsorHasPower] = useState<boolean | null>(null);
+  const [sponsorWillSpendCapital, setSponsorWillSpendCapital] = useState<boolean | null>(null);
+  const [nextLevelEvidence, setNextLevelEvidence] = useState<boolean | null>(null);
   const [door, setDoor] = useState<DiagnosticDoorId | null>(null);
-  const [showBuyForm, setShowBuyForm] = useState(false);
-  const [buyForm, setBuyForm] = useState<BuyForm>({
-    name: "",
-    email: "",
-    phone: "",
-    countryCode: "+91",
-  });
-  const [buyStatus, setBuyStatus] = useState<"idle" | "loading" | "error">("idle");
-  const [buyError, setBuyError] = useState("");
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [sessionStartedAt, setSessionStartedAt] = useState<string | null>(null);
+  const [sessionActivated, setSessionActivated] = useState(false);
+  const [debouncedAnswersPayload, setDebouncedAnswersPayload] = useState<Record<string, unknown>>({});
+  const [debouncedResultPayload, setDebouncedResultPayload] = useState<Record<string, unknown>>({});
 
   const selectedQ1 = q1Options.find((option) => option.id === q1);
 
@@ -167,6 +183,99 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (!q1 || !door) return null;
     return buildResultCopy({ q1, door, context, skippedContext, desireBlocker });
   }, [context, desireBlocker, door, q1, skippedContext]);
+
+  const answersPayload = useMemo<Record<string, unknown>>(
+    () => ({
+      q1,
+      q1Label: selectedQ1?.label ?? null,
+      context: {
+        notExpected: context.notExpected,
+        knownFor: context.knownFor,
+        targetRole: context.targetRole,
+        skipped: skippedContext,
+        skippedLabel: skippedContext ? "Skip - I'd rather not share this" : null,
+      },
+      diagnosticPath,
+      diagnosticPathLabel:
+        diagnosticPath === "not_considered"
+          ? "I was not even considered for the promotion or opportunity"
+          : diagnosticPath === "considered"
+            ? "I was considered but someone else got chosen"
+            : null,
+      decisions: {
+        desireAskedEarly,
+        desireAskedEarlyLabel: booleanAnswerLabel(desireAskedEarly, {
+          yes: "Yes, I asked early",
+          no: "No, I didn't",
+        }),
+        importanceVisible,
+        importanceVisibleLabel: booleanAnswerLabel(importanceVisible, {
+          yes: "Yes, leadership cares about this work",
+          no: "No, it is not visible enough to leadership",
+        }),
+        personallySeen,
+        personallySeenLabel: booleanAnswerLabel(personallySeen, {
+          yes: "Yes, people know it's me",
+          no: "No, the work is seen but I am not",
+        }),
+        sponsorHasPower,
+        sponsorHasPowerLabel: booleanAnswerLabel(sponsorHasPower, {
+          yes: "Yes, they are in the decision room",
+          no: "No, they do not have enough power",
+        }),
+        sponsorWillSpendCapital,
+        sponsorWillSpendCapitalLabel: booleanAnswerLabel(sponsorWillSpendCapital, {
+          yes: "Yes, they would put reputation on the line",
+          no: "No, they would not go that far",
+        }),
+        nextLevelEvidence,
+        nextLevelEvidenceLabel: booleanAnswerLabel(nextLevelEvidence, {
+          yes: "Yes, I have next-level evidence",
+          no: "No, most evidence is from my current role",
+        }),
+      },
+      desireBlocker,
+      desireBlockerLabel: desireBlocker || null,
+      door,
+      doorLabel: door ? doorDetails[door].name : null,
+      waitlistReferenceId,
+    }),
+    [
+      context,
+      desireAskedEarly,
+      desireBlocker,
+      diagnosticPath,
+      door,
+      importanceVisible,
+      nextLevelEvidence,
+      personallySeen,
+      q1,
+      skippedContext,
+      sponsorHasPower,
+      sponsorWillSpendCapital,
+      selectedQ1,
+      waitlistReferenceId,
+    ],
+  );
+
+  const resultPayload = useMemo<Record<string, unknown>>(
+    () =>
+      resultCopy && door
+        ? {
+            door,
+            title: resultCopy.title,
+            summary: resultCopy.summary,
+            pain: resultCopy.pain,
+            concept: resultCopy.concept,
+            program: resultCopy.program,
+          }
+        : {},
+    [door, resultCopy],
+  );
+
+  const sessionStatus = door && step === "result" ? "completed" : "in_progress";
+  const answersForPersistence = step === "context" ? debouncedAnswersPayload : answersPayload;
+  const resultForPersistence = step === "context" ? debouncedResultPayload : resultPayload;
 
   const screenItems = useMemo<React.ReactNode[]>(() => {
     if (step === "q1") {
@@ -438,9 +547,6 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
       if (!previous) return current;
       setStep(previous);
       setDoor(null);
-      setShowBuyForm(false);
-      setBuyStatus("idle");
-      setBuyError("");
       return current.slice(0, -1);
     });
   };
@@ -452,11 +558,17 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     setContext({ notExpected: "", knownFor: "", targetRole: "" });
     setSkippedContext(false);
     setDiagnosticPath(null);
+    setDesireAskedEarly(null);
     setDesireBlocker("");
+    setImportanceVisible(null);
+    setPersonallySeen(null);
+    setSponsorHasPower(null);
+    setSponsorWillSpendCapital(null);
+    setNextLevelEvidence(null);
     setDoor(null);
-    setShowBuyForm(false);
-    setBuyStatus("idle");
-    setBuyError("");
+    setSessionId(null);
+    setSessionStartedAt(null);
+    setSessionActivated(false);
     trackBotEvent("sto_chat_restarted");
   };
 
@@ -471,11 +583,13 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
   };
 
   const openBot = () => {
+    if (isEmbedded) return;
     setIsOpen(true);
     trackBotEvent("sto_chat_opened");
   };
 
   const closeBot = () => {
+    if (isEmbedded) return;
     setIsOpen(false);
     trackBotEvent("sto_chat_closed", {
       step,
@@ -491,40 +605,146 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     return `https://wa.me/${whatsappNumber}?text=${message}`;
   }, [door]);
 
-  const submitBuyForm = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setBuyError("");
+  useEffect(() => {
+    if (!isEmbedded) return;
+    trackBotEvent("sto_chat_opened", {
+      placement: "waitlist_modal",
+      modal_source: source,
+      waitlist_id: waitlistId,
+      waitlist_reference_id: waitlistReferenceId,
+    });
+  }, [isEmbedded, source, waitlistId, waitlistReferenceId]);
 
-    if (!buyForm.name.trim() || !buyForm.email.trim() || !buyForm.phone.trim()) {
-      setBuyStatus("error");
-      setBuyError("Please enter your name, email, and phone number.");
+  useEffect(() => {
+    const shouldDebounce = step === "context";
+
+    if (!shouldDebounce) {
+      setDebouncedAnswersPayload(answersPayload);
+      setDebouncedResultPayload(resultPayload);
       return;
     }
 
-    setBuyStatus("loading");
-    trackBotEvent("sto_buy_details_submitted", { door, q1 });
-    try {
-      await onRequestAccess({
-        name: buyForm.name.trim(),
-        email: buyForm.email.trim(),
-        phone: buyForm.phone.trim(),
-        countryCode: buyForm.countryCode,
-        fullPhone: `${buyForm.countryCode}${buyForm.phone.trim()}`,
-        source: "bot",
-      });
-      setBuyStatus("idle");
-      setShowBuyForm(false);
-      closeBot();
-    } catch (error) {
-      setBuyStatus("error");
-      setBuyError(error instanceof Error ? error.message : "Unable to open checkout. Please try again.");
-    }
-  };
+    const timeoutId = window.setTimeout(() => {
+      setDebouncedAnswersPayload(answersPayload);
+      setDebouncedResultPayload(resultPayload);
+    }, 600);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [answersPayload, resultPayload, step]);
+
+  useEffect(() => {
+    if (!isEmbedded || !waitlistId || !sessionActivated || sessionId || !sessionStartedAt) return;
+
+    let isCancelled = false;
+
+    const createSession = async () => {
+      try {
+        const response = await fetch(`${env.apiUrl}/waitlist-bot-sessions`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            waitlist_id: waitlistId,
+            flow_version: "v1",
+            status: "in_progress",
+            current_step: step,
+            answers_json: answersForPersistence,
+            result_json: resultForPersistence,
+            started_at: sessionStartedAt,
+            completed_at: null,
+          }),
+        });
+
+        const data = (await response.json().catch(() => ({}))) as Partial<BotSessionResponse> & {
+          error?: string;
+        };
+
+        if (!response.ok || !data?.id) {
+          throw new Error(data?.error || "Unable to create bot session.");
+        }
+
+        if (!isCancelled) {
+          setSessionId(data.id);
+        }
+      } catch (error) {
+        console.error("Failed to create waitlist bot session", error);
+      }
+    };
+
+    void createSession();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [
+    answersForPersistence,
+    isEmbedded,
+    sessionActivated,
+    sessionId,
+    sessionStartedAt,
+    step,
+    waitlistId,
+    resultForPersistence,
+  ]);
+
+  useEffect(() => {
+    if (!sessionId || !sessionActivated) return;
+
+    let isCancelled = false;
+
+    const updateSession = async () => {
+      try {
+        const response = await fetch(`${env.apiUrl}/waitlist-bot-sessions/${sessionId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            status: sessionStatus,
+            current_step: step,
+            answers_json: answersForPersistence,
+            result_json: resultForPersistence,
+            completed_at: sessionStatus === "completed" ? new Date().toISOString() : null,
+          }),
+        });
+
+        if (!response.ok && !isCancelled) {
+          const data = (await response.json().catch(() => ({}))) as { error?: string };
+          throw new Error(data?.error || "Unable to update bot session.");
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          console.error("Failed to update waitlist bot session", error);
+        }
+      }
+    };
+
+    void updateSession();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [answersForPersistence, resultForPersistence, sessionActivated, sessionId, sessionStatus, step]);
 
   const renderControls = () => {
     if (step === "intro") {
       return (
-        <button type="button" className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90" onClick={() => goTo("q1")}>
+        <button
+          type="button"
+          className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
+          onClick={() => {
+            if (!sessionActivated) {
+              setSessionActivated(true);
+              setSessionStartedAt(new Date().toISOString());
+            }
+            goTo("q1");
+          }}
+        >
           Let&apos;s begin
         </button>
       );
@@ -670,10 +890,24 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (step === "desire") {
       return (
         <div className="space-y-2">
-          <button type="button" className={optionClass} onClick={() => goTo("importance")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setDesireAskedEarly(true);
+              goTo("importance");
+            }}
+          >
             Yes, I asked early
           </button>
-          <button type="button" className={optionClass} onClick={() => goTo("desire_blocker")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setDesireAskedEarly(false);
+              goTo("desire_blocker");
+            }}
+          >
             No, I didn&apos;t
           </button>
         </div>
@@ -708,10 +942,24 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (step === "importance") {
       return (
         <div className="space-y-2">
-          <button type="button" className={optionClass} onClick={() => goTo("personal_seen")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setImportanceVisible(true);
+              goTo("personal_seen");
+            }}
+          >
             Yes, leadership cares about this work
           </button>
-          <button type="button" className={optionClass} onClick={() => revealDoor("story_of_work")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setImportanceVisible(false);
+              revealDoor("story_of_work");
+            }}
+          >
             No, it is not visible enough to leadership
           </button>
         </div>
@@ -721,10 +969,24 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (step === "personal_seen") {
       return (
         <div className="space-y-2">
-          <button type="button" className={optionClass} onClick={() => revealDoor("values_misalignment")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setPersonallySeen(true);
+              revealDoor("values_misalignment");
+            }}
+          >
             Yes, people know it&apos;s me
           </button>
-          <button type="button" className={optionClass} onClick={() => revealDoor("story_of_contribution")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setPersonallySeen(false);
+              revealDoor("story_of_contribution");
+            }}
+          >
             No, the work is seen but I am not
           </button>
         </div>
@@ -742,10 +1004,24 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (step === "sponsor_power") {
       return (
         <div className="space-y-2">
-          <button type="button" className={optionClass} onClick={() => goTo("sponsor_willing")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setSponsorHasPower(true);
+              goTo("sponsor_willing");
+            }}
+          >
             Yes, they are in the decision room
           </button>
-          <button type="button" className={optionClass} onClick={() => revealDoor("sponsor_network")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setSponsorHasPower(false);
+              revealDoor("sponsor_network");
+            }}
+          >
             No, they do not have enough power
           </button>
         </div>
@@ -755,10 +1031,24 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (step === "sponsor_willing") {
       return (
         <div className="space-y-2">
-          <button type="button" className={optionClass} onClick={() => goTo("next_level")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setSponsorWillSpendCapital(true);
+              goTo("next_level");
+            }}
+          >
             Yes, they would put reputation on the line
           </button>
-          <button type="button" className={optionClass} onClick={() => revealDoor("communication_framework")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setSponsorWillSpendCapital(false);
+              revealDoor("communication_framework");
+            }}
+          >
             No, they would not go that far
           </button>
         </div>
@@ -768,10 +1058,24 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     if (step === "next_level") {
       return (
         <div className="space-y-2">
-          <button type="button" className={optionClass} onClick={() => revealDoor("complex_situation")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setNextLevelEvidence(true);
+              revealDoor("complex_situation");
+            }}
+          >
             Yes, I have next-level evidence
           </button>
-          <button type="button" className={optionClass} onClick={() => revealDoor("brilliance_image_trap")}>
+          <button
+            type="button"
+            className={optionClass}
+            onClick={() => {
+              setNextLevelEvidence(false);
+              revealDoor("brilliance_image_trap");
+            }}
+          >
             No, most evidence is from my current role
           </button>
         </div>
@@ -800,6 +1104,114 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
     </div>
   );
 
+  const shellClassName = isEmbedded
+    ? "flex h-[640px] flex-col rounded-[18px] border border-[#e8e4de] bg-white shadow-[0_18px_50px_rgba(15,15,15,0.12)]"
+    : "pointer-events-auto fixed inset-x-0 bottom-0 flex h-[100svh] flex-col border border-[#e8e4de] bg-white shadow-[0_-18px_40px_rgba(15,15,15,0.18)] md:inset-auto md:bottom-24 md:right-7 md:h-[720px] md:w-[440px] md:rounded-[9px] md:shadow-[0_18px_50px_rgba(15,15,15,0.18)]";
+
+  const botShell = (
+    <section
+      role="dialog"
+      aria-modal={isEmbedded ? undefined : true}
+      aria-label="Sto career diagnostic"
+      data-sto-bot
+      data-waitlist-id={waitlistId}
+      data-waitlist-reference-id={waitlistReferenceId}
+      className={shellClassName}
+    >
+      <header className="border-b border-[#e8e4de]/75 bg-white/95 backdrop-blur">
+        <div className="flex h-[58px] items-center justify-between px-[18px]">
+          <div className="min-w-0 truncate font-serif text-xl leading-none tracking-[-0.01em] text-[#6b6760]">
+            <strong className="font-extrabold text-[#0f0f0f]">Better</strong> Corporate Life
+          </div>
+          <div className="ml-4 flex items-center gap-3">
+            <div className="whitespace-nowrap text-[11px] uppercase leading-none tracking-[0.08em] text-[#a09c96]">
+              {stepMeta[step].label}
+            </div>
+            {!isEmbedded ? (
+              <button
+                type="button"
+                onClick={closeBot}
+                className="rounded-[9px] px-2 py-1 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
+                aria-label="Close Sto chat"
+              >
+                Close
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="h-0.5 w-full overflow-hidden bg-transparent">
+          <div
+            className="h-full bg-[#0f0f0f] transition-[width] duration-300"
+            style={{ width: `${stepMeta[step].progress}%` }}
+          />
+        </div>
+      </header>
+
+      <div className="flex-1 overflow-y-auto bg-white px-[18px] py-6">
+        {renderConversation()}
+      </div>
+
+      <footer className="bg-gradient-to-t from-white from-[62%] to-white/0 px-[18px] pb-[calc(10px+env(safe-area-inset-bottom))] pt-[22px]">
+        {controlsReady && step === "result" && resultCopy && door ? (
+          <div className="space-y-3">
+            <div className={`grid gap-2 ${isEmbedded ? "" : "md:grid-cols-2"}`}>
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackBotEvent("sto_call_clicked", { door, q1, placement: isEmbedded ? "waitlist_modal" : "floating_bot" })}
+                className="rounded-[9px] border border-[#0f0f0f] bg-white px-3 py-[15px] text-center text-[15px] font-semibold text-[#0f0f0f] transition hover:bg-[#f8f7f5]"
+              >
+                Book a call on WhatsApp
+              </a>
+              {isEmbedded ? (
+                <p className="rounded-[9px] border border-[#e8e4de] bg-[#f8f7f5] px-3 py-[15px] text-center text-sm font-medium leading-6 text-[#6b6760]">
+                  Ready to move? Use the invest button below this diagnostic to continue to checkout.
+                </p>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    trackBotEvent("sto_buy_clicked", { door, q1 });
+                  }}
+                  className="rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-3 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
+                >
+                  I&apos;ll invest in my career
+                </button>
+              )}
+            </div>
+          </div>
+        ) : controlsReady ? (
+          renderControls()
+        ) : (
+          <div className="min-h-[44px]" />
+        )}
+
+        <div className="mt-3 flex items-center justify-between">
+          <button
+            type="button"
+            onClick={goBack}
+            disabled={!history.length}
+            className="rounded-[9px] px-3 py-1.5 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5] disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            onClick={reset}
+            className="rounded-[9px] px-3 py-1.5 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
+          >
+            Restart
+          </button>
+        </div>
+      </footer>
+    </section>
+  );
+
+  if (isEmbedded) {
+    return botShell;
+  }
+
   return (
     <>
       <button
@@ -818,147 +1230,7 @@ export default function StoCareerBot({ onRequestAccess }: StoCareerBotProps) {
       {isOpen ? (
         <div className="fixed inset-0 z-[10000] md:pointer-events-none">
           <div className="absolute inset-0 bg-black/35 md:hidden" onClick={closeBot} />
-          <section
-            role="dialog"
-            aria-modal="true"
-            aria-label="Sto career diagnostic"
-            className="pointer-events-auto fixed inset-x-0 bottom-0 flex h-[100svh] flex-col border border-[#e8e4de] bg-white shadow-[0_-18px_40px_rgba(15,15,15,0.18)] md:inset-auto md:bottom-24 md:right-7 md:h-[720px] md:w-[440px] md:rounded-[9px] md:shadow-[0_18px_50px_rgba(15,15,15,0.18)]"
-          >
-            <header className="border-b border-[#e8e4de]/75 bg-white/95 backdrop-blur">
-              <div className="flex h-[58px] items-center justify-between px-[18px]">
-                <div className="min-w-0 truncate font-serif text-xl leading-none tracking-[-0.01em] text-[#6b6760]">
-                  <strong className="font-extrabold text-[#0f0f0f]">Better</strong> Corporate Life
-                </div>
-                <div className="ml-4 flex items-center gap-3">
-                  <div className="whitespace-nowrap text-[11px] uppercase leading-none tracking-[0.08em] text-[#a09c96]">
-                    {stepMeta[step].label}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={closeBot}
-                    className="rounded-[9px] px-2 py-1 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
-                    aria-label="Close Sto chat"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-              <div className="h-0.5 w-full overflow-hidden bg-transparent">
-                <div
-                  className="h-full bg-[#0f0f0f] transition-[width] duration-300"
-                  style={{ width: `${stepMeta[step].progress}%` }}
-                />
-              </div>
-            </header>
-
-            <div className="flex-1 overflow-y-auto bg-white px-[18px] py-6">
-              {renderConversation()}
-            </div>
-
-            <footer className="bg-gradient-to-t from-white from-[62%] to-white/0 px-[18px] pb-[calc(10px+env(safe-area-inset-bottom))] pt-[22px]">
-              {controlsReady && step === "result" && resultCopy && door ? (
-                <div className="space-y-3">
-                  <div className="grid gap-2 md:grid-cols-2">
-                    <a
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => trackBotEvent("sto_call_clicked", { door, q1 })}
-                      className="rounded-[9px] border border-[#0f0f0f] bg-white px-3 py-[15px] text-center text-[15px] font-semibold text-[#0f0f0f] transition hover:bg-[#f8f7f5]"
-                    >
-                      Book a call on WhatsApp
-                    </a>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowBuyForm((current) => !current);
-                        trackBotEvent("sto_buy_clicked", { door, q1 });
-                      }}
-                      className="rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-3 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
-                    >
-                      I&apos;ll invest in my career
-                    </button>
-                  </div>
-
-                  {showBuyForm ? (
-                    <form onSubmit={submitBuyForm} className="space-y-2 rounded-[9px] border border-[#e8e4de] bg-[#f8f7f5] p-3">
-                      <p className="text-xs font-semibold text-[#6b6760]">
-                        Enter your details and I will open the existing checkout flow.
-                      </p>
-                      <input
-                        value={buyForm.name}
-                        onChange={(event) => setBuyForm((current) => ({ ...current, name: event.target.value }))}
-                        placeholder="Your name"
-                        className="w-full rounded-[9px] border border-[#d0cbc3] px-3 py-2 text-sm outline-none focus:border-[#0f0f0f]"
-                      />
-                      <input
-                        type="email"
-                        value={buyForm.email}
-                        onChange={(event) => setBuyForm((current) => ({ ...current, email: event.target.value }))}
-                        placeholder="Email address"
-                        className="w-full rounded-[9px] border border-[#d0cbc3] px-3 py-2 text-sm outline-none focus:border-[#0f0f0f]"
-                      />
-                      <div className="grid grid-cols-[92px_1fr] gap-2">
-                        <select
-                          value={buyForm.countryCode}
-                          onChange={(event) => setBuyForm((current) => ({ ...current, countryCode: event.target.value }))}
-                          className="rounded-[9px] border border-[#d0cbc3] px-2 py-2 text-sm outline-none focus:border-[#0f0f0f]"
-                        >
-                          {countryCodes.map((code) => (
-                            <option key={code} value={code}>
-                              {code}
-                            </option>
-                          ))}
-                        </select>
-                        <input
-                          type="tel"
-                          value={buyForm.phone}
-                          onChange={(event) =>
-                            setBuyForm((current) => ({
-                              ...current,
-                              phone: event.target.value.replace(/[^0-9]/g, ""),
-                            }))
-                          }
-                          placeholder="Phone number"
-                          className="rounded-[9px] border border-[#d0cbc3] px-3 py-2 text-sm outline-none focus:border-[#0f0f0f]"
-                        />
-                      </div>
-                      {buyError ? <p className="text-xs font-semibold text-[#B42318]">{buyError}</p> : null}
-                      <button
-                        type="submit"
-                        disabled={buyStatus === "loading"}
-                        className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-3 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        {buyStatus === "loading" ? "Opening checkout..." : "Continue to checkout"}
-                      </button>
-                    </form>
-                  ) : null}
-                </div>
-              ) : controlsReady ? (
-                renderControls()
-              ) : (
-                <div className="min-h-[44px]" />
-              )}
-
-              <div className="mt-3 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={goBack}
-                  disabled={!history.length}
-                  className="rounded-[9px] px-3 py-1.5 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5] disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="rounded-[9px] px-3 py-1.5 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
-                >
-                  Restart
-                </button>
-              </div>
-            </footer>
-          </section>
+          {botShell}
         </div>
       ) : null}
     </>

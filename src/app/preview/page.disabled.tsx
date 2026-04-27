@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import { Metadata } from "next";
 import Footer from "@/components/FooterSection";
@@ -107,3 +108,4 @@ export default function Home() {
     </>
   );
 }
+*/

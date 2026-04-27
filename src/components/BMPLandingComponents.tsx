@@ -32,9 +32,6 @@ import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
-import StoCareerBot from "./StoCareerBot";
-
-const SHOW_STO_CAREER_BOT = false;
 
 interface UserData {
   name: string;
@@ -44,6 +41,7 @@ interface UserData {
   fullPhone?: string;
   source: string;
   referenceId?: string;
+  waitlistId?: string;
 }
 
 interface WaitlistSubmitData {
@@ -105,6 +103,7 @@ const BMPLandingComponents = () => {
 
       if (response.ok) {
         userData.referenceId = waitlistData?.reference_id;
+        userData.waitlistId = waitlistData?.reference_id;
         if (waitlistData?.updated === true) {
           trackAlreadyWaitlisted(userData.source, {
             context: "bmp_request_access",
@@ -240,12 +239,10 @@ const BMPLandingComponents = () => {
         initialPhone={modalInitialData.phone}
         initialCountryCode={modalInitialData.countryCode}
         initialReferenceId={modalInitialData.referenceId}
+        initialWaitlistId={modalInitialData.waitlistId}
         source={modalInitialData.source}
         onSubmit={handleWaitlistSubmit}
       />
-      {SHOW_STO_CAREER_BOT && (
-        <StoCareerBot onRequestAccess={handleRequestAccess} />
-      )}
     </div>
   );
 };
