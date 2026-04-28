@@ -11,7 +11,6 @@ import delegateIcon from "../assets/delegate.png";
 import leaderIcon from "../assets/leader.png";
 import marketingIcon from "../assets/marketing.png";
 import roadmapIcon from "../assets/roadmap.png";
-import StoCareerBot from "./StoCareerBot";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -70,7 +69,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
-  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
@@ -83,7 +81,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [countryCode, setCountryCode] = useState("+91");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
-  const showEmbeddedStoBot = source === "sticky_cta";
 
   useEffect(() => {
     if (isOpen) {
@@ -480,17 +477,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 </div>
               </div>
             </div>
-
-            {showEmbeddedStoBot ? (
-              <div className="mt-[14px] md:mt-[24px]">
-                <StoCareerBot
-                  variant="embedded"
-                  waitlistId={initialWaitlistId}
-                  waitlistReferenceId={initialReferenceId}
-                  source={source}
-                />
-              </div>
-            ) : null}
           </div>
 
           <div className="mt-0 rounded-b-[21px] bg-black px-[14px] pb-[23px] pt-[18px] md:mt-[18px] md:rounded-b-[32px] md:px-[40px] md:pb-[30px] md:pt-[26px]">
