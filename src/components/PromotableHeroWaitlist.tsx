@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import applicationIcon from "../assets/application.png";
@@ -70,14 +69,12 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
-  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
   source = "waitlist_modal",
   onSubmit,
 }) => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -91,9 +88,8 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setEmail(initialEmail || "");
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
-      router.prefetch("/diagnostic");
     }
-  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, router]);
+  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -251,38 +247,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         error: error instanceof Error ? error.message : "unknown_error",
       });
     }
-  };
-
-  const handleGetUnstuck = () => {
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem(
-        "stoDiagnosticContext",
-        JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
-          countryCode: countryCode.trim(),
-          referenceId: initialReferenceId?.trim() || "",
-          waitlistId: initialWaitlistId?.trim() || "",
-          source: source.trim(),
-        }),
-      );
-    }
-
-    posthog.capture("sto_diagnostic_route_opened", {
-      source,
-      waitlist_reference_id: initialReferenceId,
-      waitlist_id: initialWaitlistId || initialReferenceId,
-    });
-    pushToDataLayer({
-      event: "sto_diagnostic_route_opened",
-      source,
-      waitlist_reference_id: initialReferenceId,
-      waitlist_id: initialWaitlistId || initialReferenceId,
-    });
-
-    onClose();
-    router.push("/diagnostic");
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {

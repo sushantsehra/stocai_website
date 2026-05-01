@@ -93,11 +93,6 @@ const handleLoginRedirect = () => {
     router.push("/");
   };
 
-  const openReviewModal = () => {
-    setMenuOpen(false);
-    setIsReviewModalOpen(true);
-  };
-
   const closeReviewModal = () => {
     setIsReviewModalOpen(false);
     setReviewSession(null);
