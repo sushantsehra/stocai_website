@@ -177,7 +177,7 @@ const AdditionalBenefitsNew = () => {
 
             {/* New Price */}
             <p className="text-white font-bold text-[24px] font-inter sm:text-5xl md:text-5xl tracking-wider">
-              ₹950
+              ₹1970
             </p>
           </div>
           {/* Button */}

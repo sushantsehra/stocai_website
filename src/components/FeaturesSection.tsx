@@ -15,7 +15,7 @@ const FeaturesSection = () => {
     <section className="flex flex-col mt-11" id="features">
       <div className="self-center mt-[7.5rem] max-w-full text-center w-[1050px] md:mt-28 lg:mt-32">
         <div className="flex flex-col w-full font-bold text-black  max-md:max-w-full">
-          <h2 className="self-center max-w-full text-[28px] lg:text-5xl leading-[33px]  px-2 md:px-0 w-[950px]  md:text-4xl md:leading-[45px] lg:leading-[60px] font-quattrocento font-bold">
+          <h2 className="self-center max-w-full text-[28px] lg:text-5xl leading-[33px]  px-2 md:px-0 w-[1970px]  md:text-4xl md:leading-[45px] lg:leading-[60px] font-quattrocento font-bold">
             When you are feeling sad, anxious or looking to figure something,{" "}
             <span className="font-bold font-Gotham text-[#54B0AF]">Stocai</span>{" "}
             is here.

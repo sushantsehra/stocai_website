@@ -389,7 +389,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
               <div className="bg-black text-white px-4 md:px-8 py-2 md:py-3 rounded-[10px]">
                 <span className="text-xl md:text-3xl font-bold">
-                  ₹950/-
+                  ₹1970/-
                 </span>
               </div>
 

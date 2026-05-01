@@ -210,9 +210,6 @@ const handleLoginRedirect = () => {
             <button onClick={() => navigateToSection("faq")} className="hover:text-[#0B64F4] font-jakarta cursor-pointer">
               FAQ
             </button>
-            <button onClick={openReviewModal} className="hover:text-[#0B64F4] font-jakarta cursor-pointer">
-              Review Session
-            </button>
           </nav>
 
         <div className="flex items-center space-x-3 lg:space-x-4">
@@ -305,9 +302,6 @@ const handleLoginRedirect = () => {
             </button>
             <button onClick={() => navigateToSection("faq")} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
               FAQ
-            </button>
-            <button onClick={openReviewModal} className="text-black/80 hover:text-[#0B64F4] font-jakarta">
-              Review Session
             </button>
             <hr />
 

@@ -1,4 +1,4 @@
-export type Q1OptionId = "hard_work" | "invisible" | "missed_opportunity" | "self_doubt" | "wrong_place";
+export type Q1OptionId = "hard_work" | "invisible" | "missed_opportunity" | "self_doubt";
 
 export type DiagnosticDoorId =
   | "imposter_syndrome"
@@ -11,8 +11,6 @@ export type DiagnosticDoorId =
   | "complex_situation";
 
 export type ContextAnswers = {
-  notExpected: string;
-  knownFor: string;
   targetRole: string;
 };
 
@@ -23,32 +21,27 @@ export const q1Options: Array<{
 }> = [
   {
     id: "hard_work",
-    label: "I worked really hard. It just didn't seem to matter in the end",
-    empathy: "You worked really hard and now you might be wondering - what was the meaning of all this.",
+    label: "I've worked really hard. But it doesn't seem to make a difference to my career.",
+    empathy:
+      "Yes, putting in the work and not seeing results in your career is disheartening. Makes you question why your effort wasn't enough.",
   },
   {
     id: "invisible",
-    label: "My manager barely notices I exist",
+    label: "My manager barely notices that I exist.",
     empathy:
-      "You show up, you deliver, and it's like you're invisible. Must be making you wonder if you're even in the right place.",
+      "That's a lonely place to be at work, being invisible to the one person who's supposed to see your contribution. You're probably wondering if you're in the wrong place.",
   },
   {
     id: "missed_opportunity",
-    label: "Someone else got the opportunity I was waiting for",
+    label: "Someone else got the opportunity I was waiting for.",
     empathy:
-      "You watched someone else get what you worked for. And now you're wondering - what am I even doing wrong.",
+      "That's a real gut punch, when you've been waiting patiently for your moment. It's natural to feel disappointed, even a little betrayed.",
   },
   {
     id: "self_doubt",
-    label: "I've started doubting myself and I hate that",
+    label: "I'm starting to doubt myself. Maybe this job/role isn't for me.",
     empathy:
-      "You used to back yourself. Somewhere along the way that changed. And that change is bothering you more than anything else.",
-  },
-  {
-    id: "wrong_place",
-    label: "Honestly? I'm starting to wonder if this is even for me",
-    empathy:
-      "Feeling different from everyone around you is lonely. But what if different is exactly what makes you special.",
+      "It's natural for self-doubt to creep in when things aren't going well. And then it can color everything around you.",
   },
 ];
 
@@ -74,9 +67,9 @@ export const doorDetails: Record<
     summary:
       "Something inside stopped you from asking early - not lack of ambition, but a belief that you were not ready or worthy yet.",
     concept:
-      "This is not a confidence problem in the generic sense. It is a timing problem created by self-doubt: you wait until you feel fully ready, while promotion decisions start forming much earlier.",
+      "Have you heard of Impostor Syndrome? It's when talented people start doubting themselves and their abilities. Working harder won't fix things. It's about fixing the gap between how you should be seen and positioned, and how you are.",
     programLink:
-      "corporatelife helps you notice that pattern, ask earlier, and build the internal permission to be seen before everything feels perfect.",
+      "That's exactly what Better Corporate Life is built for. One of the things you'll learn in our program is how to bridge this gap.",
   },
   story_of_work: {
     name: "Story of the Work",
@@ -84,9 +77,9 @@ export const doorDetails: Record<
     summary:
       "Your project is not visible to the people who make decisions, even if the work itself is solid.",
     concept:
-      "Good work does not automatically travel upward. Leadership notices work when it is framed in the language of business priorities, risk, leverage, and outcomes.",
+      "If what you're working on isn't seen by decision-makers as important, your chances of promotion are slim.",
     programLink:
-      "corporatelife teaches you how to translate the importance of your work so decision-makers understand why it matters.",
+      "You need to tell the Story of the Work in a language that leadership will understand. Better Corporate Life will teach you how to do this, in simple steps.",
   },
   story_of_contribution: {
     name: "Story of Contribution",
@@ -94,9 +87,9 @@ export const doorDetails: Record<
     summary:
       "The work may be visible, but people are not connecting the output specifically to you.",
     concept:
-      "This is where reliable performers often get stuck. They let the work speak, but the work rarely names who created the change.",
+      "So your work is visible, but you're not. The work is happening, and it's good, but you don't get the credit.",
     programLink:
-      "corporatelife helps you stake your claim clearly, without sounding self-promotional or political.",
+      "What can you do to change the Story of Contribution? Learn to stake your claim. It's not about bragging, or playing politics. Better Corporate Life will teach you how to do this, in simple steps.",
   },
   sponsor_network: {
     name: "Sponsor Network",
@@ -106,7 +99,7 @@ export const doorDetails: Record<
     concept:
       "A single sponsor is a single point of failure. Promotions need multiple stakeholders who understand your value and have enough power to carry your case.",
     programLink:
-      "corporatelife teaches stakeholder strategy so your growth does not depend on one person noticing you at the right time.",
+      "What you need is a network of sponsors. Build relationships with multiple stakeholders who have the power to influence your career. Better Corporate Life will teach you how to do this, in simple steps.",
   },
   communication_framework: {
     name: "Communication Framework",
@@ -114,9 +107,9 @@ export const doorDetails: Record<
     summary:
       "Your sponsor may have power, but they are not motivated enough to spend political currency on you yet.",
     concept:
-      "Sponsors back people when the case feels important to them too. That means communicating from their priorities, not only from your effort or frustration.",
+      "Sponsors back people when your promotion feels like a win to them too. If they don't see what's in it for them, or they don't feel seen by you, this becomes a communication problem you need to fix.",
     programLink:
-      "corporatelife teaches the communication frameworks that make your growth feel like a shared win.",
+      "Better Corporate Life will teach you how to do this, in simple steps.",
   },
   brilliance_image_trap: {
     name: "Brilliance Image Trap",
@@ -124,9 +117,9 @@ export const doorDetails: Record<
     summary:
       "You are seen as excellent at your current role, but not yet as someone already operating at the next level.",
     concept:
-      "Being brilliant at today's job can trap your reputation there. The next level needs visible evidence tied to next-level priorities, not just stronger current-role performance.",
+      "People see what you do today, not what you could do tomorrow. Stop asking for feedback about your current role performance. Instead, ask what you can do to be considered for the next level.",
     programLink:
-      "corporatelife helps you deliberately build that next-level signal through the right projects, language, and relationships.",
+      "Better Corporate Life will teach you how to do this, in simple steps.",
   },
   values_misalignment: {
     name: "Values Misalignment",
@@ -172,13 +165,13 @@ export const buildResultCopy = ({
 }) => {
   const doorCopy = doorDetails[door];
   const feeling = q1CopyById[q1].toLowerCase();
-  const notExpected = context.notExpected.trim();
-  const knownFor = context.knownFor.trim();
   const targetRole = context.targetRole.trim();
 
   const summary = skippedContext
     ? `You started with this: ${feeling}. From your diagnostic answers, this looks less like a performance problem and more like a ${doorCopy.shortName.toLowerCase()} problem.`
-    : `You said what is not moving is: "${notExpected}". You are known for "${knownFor}", and you are working toward "${targetRole}". That combination points to a very specific growth bottleneck.`;
+    : targetRole
+      ? `You're working toward "${targetRole}". From your diagnostic answers, this looks less like a performance problem and more like a ${doorCopy.shortName.toLowerCase()} problem.`
+      : `You started with this: ${feeling}. From your diagnostic answers, this looks less like a performance problem and more like a ${doorCopy.shortName.toLowerCase()} problem.`;
 
   const pain = (() => {
     if (door === "communication_framework" && q1 === "invisible") {
@@ -195,9 +188,6 @@ export const buildResultCopy = ({
     }
     if (q1 === "hard_work") {
       return "The painful part is that effort without the right signal can feel like it disappears. You did the work, but the system did not convert it into momentum.";
-    }
-    if (q1 === "wrong_place") {
-      return "The painful part is wondering whether you are the mismatch, when the real issue may be that your value has not been translated into the promotion system yet.";
     }
     return "The painful part is that the outcome can look personal, even when the real problem is a missing career signal that can be built deliberately.";
   })();

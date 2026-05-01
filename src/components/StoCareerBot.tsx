@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import posthog from "posthog-js";
 import stoAvatar from "@/assets/panda_main.png";
 import env from "@/utils/env";
@@ -38,6 +39,10 @@ type StoCareerBotProps = {
   waitlistId?: string;
   waitlistReferenceId?: string;
   source?: string;
+  paymentName?: string;
+  paymentEmail?: string;
+  paymentPhone?: string;
+  paymentCountryCode?: string;
 };
 
 type BotSessionResponse = {
@@ -72,49 +77,54 @@ const trackBotEvent = (event: string, payload: Record<string, unknown> = {}) => 
 };
 
 const optionClass =
-  "w-full rounded-[9px] border border-[#d0cbc3] bg-white px-3.5 py-3.5 text-left text-[15px] font-medium leading-6 text-[#0f0f0f] opacity-100 transition hover:border-[#0f0f0f] hover:bg-[#f8f7f5] disabled:cursor-not-allowed disabled:opacity-60";
+  "w-full cursor-pointer rounded-[18px] border border-[#d8e4f6] bg-white px-5 py-4 text-left font-gotham text-[15px] font-medium leading-7 text-[#111111] shadow-[0_8px_24px_rgba(1,75,170,0.05)] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] disabled:cursor-not-allowed disabled:opacity-60 md:px-6 md:py-5 md:text-[16px]";
+
+const selectedOptionClass =
+  "!border-[#0A57C6] !bg-[#014BAA] !text-white shadow-[0_18px_34px_rgba(1,75,170,0.16)] hover:!bg-[#014BAA] hover:!text-white";
 
 const BotMessage = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-[14px] rounded-bl-[4px] border border-[#e8e4de] bg-[#f8f7f5] px-[15px] py-[14px] text-[15px] leading-[1.58] text-[#0f0f0f]">
+  <div className="rounded-[20px] rounded-bl-[6px] border border-[#e3ebf7] bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-4 font-gotham text-[15px] leading-7 text-[#1f2937] shadow-[0_10px_28px_rgba(1,75,170,0.05)] md:px-6 md:py-5 md:text-[16px]">
     {children}
   </div>
 );
 
 const UserChoice = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-3.5 py-3 text-[15px] font-medium leading-6 text-white">
-    {children}
+  <div className="flex justify-end">
+    <div className="w-fit max-w-[88%] rounded-[18px] border border-[#0A57C6] bg-[#014BAA] px-5 py-4 text-left font-gotham text-[15px] font-semibold leading-7 text-white shadow-[0_14px_30px_rgba(1,75,170,0.18)] md:max-w-[760px] md:px-6 md:py-5 md:text-[16px]">
+      {children}
+    </div>
   </div>
 );
 
 const FormulaCard = ({ title, formula, note }: { title: string; formula: string; note: string }) => (
-  <div className="rounded-[9px] border border-[#e8e4de] bg-[#f8f7f5] px-4 py-[18px] text-center">
-    <p className="mx-auto mb-[14px] inline-flex rounded-full border border-[#e8e4de] bg-white px-[9px] py-[7px] text-[10px] font-semibold uppercase leading-none tracking-[0.14em] text-[#6b6760]">
+  <div className="rounded-[24px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-6 text-center shadow-[0_18px_40px_rgba(1,75,170,0.08)] md:px-7">
+    <p className="mx-auto mb-4 inline-flex rounded-full border border-[#dce8f8] bg-white px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
       {title}
     </p>
-    <p className="font-serif text-[22px] font-bold leading-[1.28] text-[#0f0f0f]">
+    <p className="font-gotham text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-[#111111] md:text-[28px]">
       {formula}
     </p>
-    <p className="mt-[10px] text-base leading-[1.55] text-[#6b6760]">{note}</p>
+    <p className="mt-4 font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{note}</p>
   </div>
 );
 
 const PandaHeader = () => (
-  <div className="mb-2 flex items-center gap-3">
-    <div className="h-[38px] w-[38px] overflow-hidden rounded-[9px] bg-[#f0ede8]">
-      <Image src={stoAvatar} alt="BCL Panda" width={38} height={38} className="h-full w-full object-cover" />
+  <div className="mb-4 flex items-center gap-4">
+    <div className="h-[78px] w-[78px] overflow-visible">
+      <Image src={stoAvatar} alt="Sto" width={78} height={78} className="h-full w-full object-contain" />
     </div>
     <div>
-      <p className="text-sm font-semibold text-[#0f0f0f]">BCL Panda</p>
-      <p className="text-xs text-[#a09c96]">Your guide</p>
+      <p className="font-gotham text-[17px] font-bold text-[#111111]">Sto</p>
+      <p className="font-gotham text-[13px] text-[#6b7280]">Your guide</p>
     </div>
   </div>
 );
 
 const TypingIndicator = () => (
-  <div className="flex h-11 w-fit items-center gap-1 rounded-[14px] rounded-bl-[4px] border border-[#e8e4de] bg-[#f8f7f5] px-4">
-    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#6b6760]" />
-    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#6b6760] [animation-delay:120ms]" />
-    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#6b6760] [animation-delay:240ms]" />
+  <div className="flex h-12 w-fit items-center gap-1.5 rounded-[18px] rounded-bl-[6px] border border-[#e3ebf7] bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5">
+    <span className="h-2 w-2 animate-bounce rounded-full bg-[#0A57C6]" />
+    <span className="h-2 w-2 animate-bounce rounded-full bg-[#0A57C6] [animation-delay:120ms]" />
+    <span className="h-2 w-2 animate-bounce rounded-full bg-[#0A57C6] [animation-delay:240ms]" />
   </div>
 );
 
@@ -143,22 +153,44 @@ const booleanAnswerLabel = (value: boolean | null, labels: { yes: string; no: st
   return null;
 };
 
+const getDoorCtas = (door: DiagnosticDoorId) => {
+  if (door === "values_misalignment" || door === "complex_situation") {
+    return {
+      primary: { label: "Yes, let's talk", kind: "call" as const },
+    };
+  }
+
+  if (door === "sponsor_network" || door === "communication_framework") {
+    return {
+      primary: { label: "Yes, I want this", kind: "payment" as const },
+    };
+  }
+
+  return {
+    primary: { label: "Take me there", kind: "payment" as const },
+    secondary: { label: "I'd like a call instead", kind: "call" as const },
+  };
+};
+
 export default function StoCareerBot({
   variant = "floating",
   waitlistId,
   waitlistReferenceId,
   source = "bot",
+  paymentName = "",
+  paymentEmail = "",
+  paymentPhone = "",
+  paymentCountryCode = "+91",
 }: StoCareerBotProps) {
   const isEmbedded = variant === "embedded";
   const [isOpen, setIsOpen] = useState(isEmbedded);
   const [step, setStep] = useState<BotStep>("intro");
   const [visibleMessageCount, setVisibleMessageCount] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
+  const [controlsVisible, setControlsVisible] = useState(false);
   const [history, setHistory] = useState<BotStep[]>([]);
   const [q1, setQ1] = useState<Q1OptionId | null>(null);
   const [context, setContext] = useState<ContextAnswers>({
-    notExpected: "",
-    knownFor: "",
     targetRole: "",
   });
   const [skippedContext, setSkippedContext] = useState(false);
@@ -176,6 +208,8 @@ export default function StoCareerBot({
   const [sessionActivated, setSessionActivated] = useState(false);
   const [debouncedAnswersPayload, setDebouncedAnswersPayload] = useState<Record<string, unknown>>({});
   const [debouncedResultPayload, setDebouncedResultPayload] = useState<Record<string, unknown>>({});
+  const [actionState, setActionState] = useState<"idle" | "loading" | "error">("idle");
+  const [actionMessage, setActionMessage] = useState("");
 
   const selectedQ1 = q1Options.find((option) => option.id === q1);
 
@@ -189,11 +223,9 @@ export default function StoCareerBot({
       q1,
       q1Label: selectedQ1?.label ?? null,
       context: {
-        notExpected: context.notExpected,
-        knownFor: context.knownFor,
         targetRole: context.targetRole,
         skipped: skippedContext,
-        skippedLabel: skippedContext ? "Skip - I'd rather not share this" : null,
+        skippedLabel: skippedContext ? "Let's skip this for now" : null,
       },
       diagnosticPath,
       diagnosticPathLabel:
@@ -205,33 +237,33 @@ export default function StoCareerBot({
       decisions: {
         desireAskedEarly,
         desireAskedEarlyLabel: booleanAnswerLabel(desireAskedEarly, {
-          yes: "Yes, I asked early",
+          yes: "Yes, I did",
           no: "No, I didn't",
         }),
         importanceVisible,
         importanceVisibleLabel: booleanAnswerLabel(importanceVisible, {
-          yes: "Yes, leadership cares about this work",
-          no: "No, it is not visible enough to leadership",
+          yes: "Yes, it's clearly important to them",
+          no: "No. I'm not sure they see the value",
         }),
         personallySeen,
         personallySeenLabel: booleanAnswerLabel(personallySeen, {
-          yes: "Yes, people know it's me",
-          no: "No, the work is seen but I am not",
+          yes: "Yes, they do",
+          no: "No, they don't",
         }),
         sponsorHasPower,
         sponsorHasPowerLabel: booleanAnswerLabel(sponsorHasPower, {
-          yes: "Yes, they are in the decision room",
-          no: "No, they do not have enough power",
+          yes: "Yes, they do",
+          no: "No, they don't",
         }),
         sponsorWillSpendCapital,
         sponsorWillSpendCapitalLabel: booleanAnswerLabel(sponsorWillSpendCapital, {
-          yes: "Yes, they would put reputation on the line",
-          no: "No, they would not go that far",
+          yes: "Yes, they would",
+          no: "No, I don't think so",
         }),
         nextLevelEvidence,
         nextLevelEvidenceLabel: booleanAnswerLabel(nextLevelEvidence, {
-          yes: "Yes, I have next-level evidence",
-          no: "No, most evidence is from my current role",
+          yes: "Yes, it does",
+          no: "No, it doesn't",
         }),
       },
       desireBlocker,
@@ -276,28 +308,60 @@ export default function StoCareerBot({
   const sessionStatus = door && step === "result" ? "completed" : "in_progress";
   const answersForPersistence = step === "context" ? debouncedAnswersPayload : answersPayload;
   const resultForPersistence = step === "context" ? debouncedResultPayload : resultPayload;
+  const activeDoorCtas = door ? getDoorCtas(door) : null;
 
   const screenItems = useMemo<React.ReactNode[]>(() => {
     if (step === "q1") {
       return [
         <PandaHeader key="panda" />,
-        <BotMessage key="privacy">Before we start - nothing you say here goes anywhere. Just be honest with me.</BotMessage>,
         <BotMessage key="q1">So tell me - what&apos;s actually bothering you at work right now?</BotMessage>,
+        <BotMessage key="privacy">This is a private conversation between us. Be frank so we can get to real insights.</BotMessage>,
       ];
     }
 
     if (step === "intro") {
       return [
-        <div key="intro" className="flex min-h-[440px] flex-col justify-center gap-4 pb-2">
-          <Image src={stoAvatar} alt="BCL Panda" width={68} height={68} className="h-[68px] w-[68px] rounded-[9px] object-cover" />
-          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#6b6760]">Better Corporate Life</p>
-          <h3 className="max-w-[11ch] font-serif text-[28px] font-extrabold leading-[1.08] tracking-[-0.02em] text-[#0f0f0f]">
-            The Corporate <em className="font-bold">Life</em> Conversation
-          </h3>
-          <div className="h-0.5 w-9 rounded-full bg-[#d0cbc3]" />
-          <p className="max-w-[320px] text-[15px] leading-[1.58] text-[#6b6760]">
-            Before we show you anything - let&apos;s understand where you actually are right now.
-          </p>
+        <div key="intro" className="relative min-h-[440px] overflow-hidden rounded-[28px] border border-[#dce8f8] bg-[linear-gradient(135deg,#ffffff_0%,#f7fbff_58%,#eef5ff_100%)] px-6 py-7 shadow-[0_22px_46px_rgba(1,75,170,0.08)] md:min-h-[500px] md:px-8 md:py-8">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(1,75,170,0.12)_0%,rgba(1,75,170,0.04)_28%,rgba(255,255,255,0)_62%)]" />
+          <div className="absolute right-[-30px] top-[-10px] h-[250px] w-[250px] rounded-full bg-[#dfeeff]/60 blur-3xl md:right-[72px] md:top-[-6px] md:h-[420px] md:w-[420px]" />
+
+          <motion.div
+            initial={{ x: 134, y: 124, scale: 4.2, opacity: 0.98 }}
+            animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+            transition={{ delay: 1.95, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-6 top-7 z-10 md:left-[42px] md:top-[38px]"
+          >
+            <motion.div
+              initial={{ x: 320, y: 76, scale: 4.9, rotate: -5, opacity: 1 }}
+              animate={{ x: 0, y: 0, scale: 1, rotate: 0, opacity: 1 }}
+              transition={{ delay: 1.95, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative"
+            >
+              <motion.div
+                initial={{ opacity: 1, scale: 3.15 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.95, duration: 1.05, ease: "easeOut" }}
+                className="absolute left-1/2 top-1/2 h-[180px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(1,75,170,0.22)_0%,rgba(1,75,170,0.06)_48%,rgba(255,255,255,0)_74%)] blur-xl md:h-[280px] md:w-[280px]"
+              />
+              <Image src={stoAvatar} alt="Sto" width={78} height={78} className="relative h-[78px] w-[78px] rounded-[16px] object-cover" />
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.75, duration: 0.55, ease: "easeOut" }}
+            className="relative z-20 flex min-h-[370px] flex-col justify-end gap-5 md:min-h-[430px] md:max-w-[58%]"
+          >
+            <p className="font-gotham text-[11px] font-bold uppercase tracking-[0.18em] text-[#0A57C6]">Better Corporate Life</p>
+            <h3 className="max-w-[12ch] font-quattrocento text-[32px] font-bold leading-[1.02] tracking-[-0.03em] text-[#111111] md:text-[44px]">
+              The Corporate <span className="text-[#014BAA]">Life</span> Conversation
+            </h3>
+            <div className="h-[3px] w-12 rounded-full bg-[#014BAA]" />
+            <p className="max-w-[38ch] font-gotham text-[16px] leading-8 text-[#4b5563]">
+              Hi I am Sto. To get unstuck, we start by seeing where we stand right now.
+            </p>
+          </motion.div>
         </div>,
       ];
     }
@@ -308,7 +372,7 @@ export default function StoCareerBot({
         <UserChoice key="q1-choice">{selectedQ1.label}</UserChoice>,
         <BotMessage key="q1-empathy">{getQ1Empathy(q1)}</BotMessage>,
         <BotMessage key="context-bridge">
-          I want to show you something specific to your situation. Help me understand a little more first.
+          Help me understand this better; can you answer a couple more questions?
         </BotMessage>,
       ];
     }
@@ -316,7 +380,7 @@ export default function StoCareerBot({
     if (step === "context") {
       return [
         <PandaHeader key="panda" />,
-        <BotMessage key="context-intro">No right or wrong answers. Just what&apos;s true for you right now.</BotMessage>,
+        <BotMessage key="context-intro">What role or career milestone are you currently working towards?</BotMessage>,
       ];
     }
 
@@ -324,9 +388,8 @@ export default function StoCareerBot({
       return [
         <PandaHeader key="panda" />,
         <BotMessage key="diagnostic-ready">
-          Got it. Now let&apos;s find what is actually happening underneath the frustration.
+          Ok. Tell me what&apos;s currently happening at work.
         </BotMessage>,
-        <BotMessage key="diagnostic-question">What is currently happening at work?</BotMessage>,
       ];
     }
 
@@ -339,7 +402,7 @@ export default function StoCareerBot({
           key="not-considered-formula"
           title="To be considered"
           formula="Performance x Visibility"
-          note="If either one is zero, the result is zero. Your performance is clearly not the issue, so let's look at visibility."
+          note="If either is missing, the result is zero. Your performance isn't the issue. So let's look at visibility."
         />,
       ];
     }
@@ -347,18 +410,8 @@ export default function StoCareerBot({
     if (step === "desire") {
       return [
         <PandaHeader key="panda" />,
-        <BotMessage key="visibility-formula">
-          Visibility has two parts: whether the right people knew you wanted this, and whether your work is seen as
-          important.
-        </BotMessage>,
-        <FormulaCard
-          key="visibility-card"
-          title="Visibility"
-          formula="Desire x Importance"
-          note="Most people wait for the right moment to ask. By then, someone else may already have asked."
-        />,
         <BotMessage key="desire-question">
-          Did you ask for the promotion early - early enough that it was clear almost from the start?
+          Did you ask for the promotion early enough? Did you ensure your manager knew you were looking for one?
         </BotMessage>,
       ];
     }
@@ -367,19 +420,30 @@ export default function StoCareerBot({
       return [
         <PandaHeader key="panda" />,
         <UserChoice key="desire-no">No, I didn&apos;t</UserChoice>,
-        <BotMessage key="desire-blocker">What stopped you from asking early?</BotMessage>,
+        <BotMessage key="desire-blocker-1">Alright, so you didn&apos;t ask. I think I see what&apos;s happening here.</BotMessage>,
+        <BotMessage key="desire-blocker-2">
+          You didn&apos;t ask for a promotion. Not because you don&apos;t want it, but because somewhere deep inside you is the fear that you aren&apos;t ready for it.
+        </BotMessage>,
+        <BotMessage key="desire-blocker-3">
+          This happens more often than you&apos;d think. And it&apos;s fixable. In fact, it&apos;s one of the things we cover in our Be More Promotable program.
+        </BotMessage>,
       ];
     }
 
     if (step === "importance") {
       return [
         <PandaHeader key="panda" />,
-        <UserChoice key="desire-yes">Yes, I asked early</UserChoice>,
-        <BotMessage key="importance-context">
-          You can do great work and still be invisible if leadership does not connect the work to what they care about.
-        </BotMessage>,
-        <BotMessage key="importance-question">
-          Is your project or work important to leadership - do they care about what you work on?
+        <UserChoice key="desire-yes">Yes, I did</UserChoice>,
+        <BotMessage key="importance-intro-1">It&apos;s great that you asked. Not many make that effort.</BotMessage>,
+        <BotMessage key="importance-intro-2">Clearly, you have the desire for visibility.</BotMessage>,
+        <FormulaCard
+          key="visibility-card"
+          title="Visibility"
+          formula="Desire x Importance"
+          note="You can do great work and still be invisible if the right people don't connect you to that work."
+        />,
+        <BotMessage key="desire-question">
+          Is the project you&apos;re working on seen as important by leadership? Do they care about the outcomes?
         </BotMessage>,
       ];
     }
@@ -387,12 +451,9 @@ export default function StoCareerBot({
     if (step === "personal_seen") {
       return [
         <PandaHeader key="panda" />,
-        <UserChoice key="importance-yes">Yes, leadership cares about this work</UserChoice>,
-        <BotMessage key="personal-seen-context">
-          Good. Now the question is whether the work is connected to you personally.
-        </BotMessage>,
+        <UserChoice key="importance-yes">Yes, it&apos;s clearly important to them</UserChoice>,
         <BotMessage key="personal-seen-question">
-          Are your contributions personally seen - do people know it&apos;s specifically you doing this work?
+          So the project is seen as important. But are you? Do people know it&apos;s you doing all this work?
         </BotMessage>,
       ];
     }
@@ -402,14 +463,13 @@ export default function StoCareerBot({
         <PandaHeader key="panda" />,
         <UserChoice key="considered">I was considered but someone else got chosen</UserChoice>,
         <BotMessage key="considered-intro">
-          You were in the picture. That means your performance and visibility were good enough. Something else happened
-          at the decision moment.
+          You were considered. This means your performance and visibility levels are high enough. But that&apos;s not all a promotion requires.
         </BotMessage>,
         <FormulaCard
           key="considered-formula"
           title="To be picked"
           formula="Sponsor Strength x Next Level Signal"
-          note="Sponsor Strength is who goes to bat for you. Next Level Signal is whether people already see you operating one level up."
+          note="Sponsor strength is about who goes to bat for you, and with what impact. Next level signals help people see you in the new role."
         />,
       ];
     }
@@ -417,9 +477,6 @@ export default function StoCareerBot({
     if (step === "sponsor_power") {
       return [
         <PandaHeader key="panda" />,
-        <BotMessage key="sponsor-power-context">
-          First, let&apos;s check whether the person backing you had real power.
-        </BotMessage>,
         <BotMessage key="sponsor-power-question">Does your sponsor have real power in the decision room?</BotMessage>,
       ];
     }
@@ -427,9 +484,9 @@ export default function StoCareerBot({
     if (step === "sponsor_willing") {
       return [
         <PandaHeader key="panda" />,
-        <UserChoice key="sponsor-power-yes">Yes, they are in the decision room</UserChoice>,
+        <UserChoice key="sponsor-power-yes">Yes, they do</UserChoice>,
         <BotMessage key="sponsor-willing-question">
-          Would your sponsor spend political currency on you - put their own reputation on the line?
+          Would your sponsor spend their political currency on you? Put their own reputation on the line for you?
         </BotMessage>,
       ];
     }
@@ -437,45 +494,45 @@ export default function StoCareerBot({
     if (step === "next_level") {
       return [
         <PandaHeader key="panda" />,
-        <UserChoice key="sponsor-willing-yes">Yes, they would put reputation on the line</UserChoice>,
+        <UserChoice key="sponsor-willing-yes">Yes, they would</UserChoice>,
         <BotMessage key="next-level-question">
-          Does your work show evidence that your output impacts next-level KPIs, not just your current role?
+          Does your work output in the current role show others you&apos;re ready for the next level?
         </BotMessage>,
       ];
     }
 
     if (step === "result" && resultCopy && door) {
       return [
-        <div key="result-card" className="space-y-0">
-          <section className="border-b border-[#e8e4de] pb-6">
-            <p className="mb-3 text-[10px] font-semibold uppercase leading-none tracking-[0.14em] text-[#6b6760]">
+        <div key="result-card" className="grid gap-4 md:grid-cols-2">
+          <section className="rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:col-span-2 md:px-6 md:py-6">
+            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
               Where you are
             </p>
-            <p className="text-[15px] leading-[1.58] text-[#6b6760]">{resultCopy.summary}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.summary}</p>
           </section>
-          <section className="border-b border-[#e8e4de] py-6">
-            <p className="mb-3 text-[10px] font-semibold uppercase leading-none tracking-[0.14em] text-[#6b6760]">
+          <section className="rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
+            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
               What&apos;s actually hurting
             </p>
-            <p className="text-[15px] leading-[1.58] text-[#6b6760]">{resultCopy.pain}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.pain}</p>
           </section>
-          <section className="border-b border-[#e8e4de] py-6">
-            <p className="mb-[14px] inline-flex rounded-full bg-[#0f0f0f] px-[9px] py-[7px] text-[10px] font-semibold uppercase leading-none tracking-[0.14em] text-white">
+          <section className="rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
+            <p className="mb-4 inline-flex rounded-full bg-[#014BAA] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
               {resultCopy.title}
             </p>
-            <h3 className="mb-2.5 font-serif text-[21px] font-bold leading-[1.2] text-[#0f0f0f]">
+            <h3 className="mb-3 font-quattrocento text-[22px] font-bold leading-[1.08] tracking-[-0.02em] text-[#111111]">
               Why this is happening
             </h3>
-            <p className="text-[15px] leading-[1.58] text-[#6b6760]">{resultCopy.concept}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.concept}</p>
           </section>
-          <section className="py-6">
-            <p className="mb-3 text-[10px] font-semibold uppercase leading-none tracking-[0.14em] text-[#6b6760]">
+          <section className="rounded-[22px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.08)] md:px-6 md:py-6">
+            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
               What changes this
             </p>
-            <p className="text-[15px] leading-[1.58] text-[#6b6760]">{resultCopy.program}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#374151] md:text-[16px]">{resultCopy.program}</p>
           </section>
           {doorDetails[door].special ? (
-            <p className="rounded-[9px] bg-[#eef7f2] p-3 text-sm font-semibold text-[#1a6b3c]">
+            <p className="rounded-[18px] border border-[#dce8f8] bg-[#f8fbff] p-4 font-gotham text-sm font-semibold text-[#0A57C6] md:col-span-2">
               This is a better fit for a direct conversation than a quick checkout.
             </p>
           ) : null}
@@ -487,14 +544,14 @@ export default function StoCareerBot({
       return [
         <PandaHeader key="panda" />,
         <BotMessage key="door-intro">Here&apos;s what I think is really going on.</BotMessage>,
-        <div key="door-card" className="rounded-[9px] border border-[#e8e4de] bg-[#f8f7f5] px-4 py-[18px] text-left">
-          <p className="mb-[14px] inline-flex rounded-full bg-[#eef7f2] px-[9px] py-[7px] text-[10px] font-semibold uppercase leading-none tracking-[0.14em] text-[#1a6b3c]">
+        <div key="door-card" className="rounded-[24px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-6 text-left shadow-[0_18px_40px_rgba(1,75,170,0.08)] md:px-7">
+          <p className="mb-4 inline-flex rounded-full bg-[#014BAA] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
             What&apos;s really going on
           </p>
-          <h2 className="mb-2.5 font-serif text-[28px] font-bold leading-[1.12] text-[#0f0f0f]">
+          <h2 className="mb-3 font-quattrocento text-[30px] font-bold leading-[1.02] tracking-[-0.03em] text-[#111111] md:text-[36px]">
             {doorDetails[door].name}
           </h2>
-          <p className="text-[15px] leading-[1.58] text-[#6b6760]">{doorDetails[door].summary}</p>
+          <p className="max-w-[58ch] font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[17px]">{doorDetails[door].summary}</p>
         </div>,
       ];
     }
@@ -502,12 +559,13 @@ export default function StoCareerBot({
     return [<BotMessage key="fallback">Let&apos;s continue.</BotMessage>];
   }, [door, q1, resultCopy, selectedQ1, step]);
 
-  const controlsReady = visibleMessageCount >= screenItems.length && !isTyping;
+  const controlsReady = visibleMessageCount >= screenItems.length && !isTyping && controlsVisible;
 
   useEffect(() => {
     if (!isOpen) return;
 
     setVisibleMessageCount(0);
+    setControlsVisible(false);
     setIsTyping(true);
 
     let nextIndex = 0;
@@ -523,7 +581,12 @@ export default function StoCareerBot({
         if (nextIndex < screenItems.length) {
           timers.push(window.setTimeout(revealNext, 280));
         } else {
-          setIsTyping(false);
+          const controlsDelay = step === "q1" ? 1130 : 0;
+          const controlsTimer = window.setTimeout(() => {
+            setIsTyping(false);
+            setControlsVisible(true);
+          }, controlsDelay);
+          timers.push(controlsTimer);
         }
       }, delay);
       timers.push(timer);
@@ -555,7 +618,7 @@ export default function StoCareerBot({
     setStep("intro");
     setHistory([]);
     setQ1(null);
-    setContext({ notExpected: "", knownFor: "", targetRole: "" });
+    setContext({ targetRole: "" });
     setSkippedContext(false);
     setDiagnosticPath(null);
     setDesireAskedEarly(null);
@@ -569,6 +632,8 @@ export default function StoCareerBot({
     setSessionId(null);
     setSessionStartedAt(null);
     setSessionActivated(false);
+    setActionState("idle");
+    setActionMessage("");
     trackBotEvent("sto_chat_restarted");
   };
 
@@ -605,10 +670,109 @@ export default function StoCareerBot({
     return `https://wa.me/${whatsappNumber}?text=${message}`;
   }, [door]);
 
+  const createPaymentLink = async () => {
+    const trimmedPhone = paymentPhone.trim();
+    const fullPhone = trimmedPhone.startsWith("+") ? trimmedPhone : `${paymentCountryCode}${trimmedPhone}`;
+
+    const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: paymentName || undefined,
+        email: paymentEmail || undefined,
+        phone: fullPhone,
+        reference_id: waitlistReferenceId || `waitlist_${Date.now()}`,
+        amount: 197000,
+      }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error((data as { error?: string })?.error || "Unable to start payment.");
+    }
+
+    const shortUrl = (data as { short_url?: string; shortUrl?: string })?.short_url || (data as { short_url?: string; shortUrl?: string })?.shortUrl;
+    if (!shortUrl) {
+      throw new Error("Payment link was not returned.");
+    }
+
+    return shortUrl;
+  };
+
+  const handlePaymentRedirect = async () => {
+    if (!waitlistReferenceId) {
+      throw new Error("Waitlist record not found. Please restart from the waitlist form.");
+    }
+
+    if (!paymentPhone.trim()) {
+      throw new Error("Phone number is missing. Please restart from the waitlist form.");
+    }
+
+    posthog.capture("waitlist_submit_attempt", {
+      source,
+    });
+    pushToDataLayer({
+      event: "waitlist_submit_attempt",
+      source,
+    });
+
+    posthog.capture("waitlist_submitted", {
+      source,
+      payment_started: true,
+    });
+    pushToDataLayer({
+      event: "waitlist_submitted",
+      source,
+      payment_started: true,
+    });
+
+    const shortUrl = await createPaymentLink();
+
+    posthog.capture("payment_redirected", {
+      source,
+      amount: 197000,
+    });
+    pushToDataLayer({
+      event: "payment_redirected",
+      source,
+      amount: 197000,
+    });
+
+    window.location.href = shortUrl;
+  };
+
+  const handlePrimaryCta = async () => {
+    if (!door || !activeDoorCtas) return;
+
+    if (activeDoorCtas.primary.kind === "call") {
+      trackBotEvent("sto_call_clicked", {
+        door,
+        q1,
+        placement: isEmbedded ? "diagnostic_route" : "floating_bot",
+      });
+      window.open(whatsappHref, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    setActionState("loading");
+    setActionMessage("");
+
+    try {
+      trackBotEvent("sto_buy_clicked", { door, q1, placement: isEmbedded ? "diagnostic_route" : "floating_bot" });
+      await handlePaymentRedirect();
+    } catch (error) {
+      setActionState("error");
+      setActionMessage(error instanceof Error ? error.message : "Something went wrong.");
+    }
+  };
+
   useEffect(() => {
     if (!isEmbedded) return;
     trackBotEvent("sto_chat_opened", {
-      placement: "waitlist_modal",
+      placement: "diagnostic_route",
       modal_source: source,
       waitlist_id: waitlistId,
       waitlist_reference_id: waitlistReferenceId,
@@ -736,7 +900,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
+          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => {
             if (!sessionActivated) {
               setSessionActivated(true);
@@ -752,12 +916,12 @@ export default function StoCareerBot({
 
     if (step === "q1") {
       return (
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {q1Options.map((option) => (
             <button
               key={option.id}
               type="button"
-              className={`${optionClass} ${q1 === option.id ? "border-[#0f0f0f] bg-[#0f0f0f] text-white" : ""}`}
+              className={`${optionClass} ${q1 === option.id ? selectedOptionClass : ""}`}
               onClick={() => {
                 setQ1(option.id);
                 trackBotEvent("sto_q1_selected", { q1: option.id });
@@ -769,7 +933,7 @@ export default function StoCareerBot({
           <button
             type="button"
             disabled={!q1}
-            className="mt-4 w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-5 w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
             onClick={() => goTo("empathy")}
           >
             Continue
@@ -782,7 +946,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
+          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("context")}
         >
           Tell you more
@@ -791,60 +955,41 @@ export default function StoCareerBot({
     }
 
     if (step === "context") {
-      const canProceed =
-        context.notExpected.trim() && context.knownFor.trim() && context.targetRole.trim();
+      const canProceed = context.targetRole.trim();
 
       return (
-        <div className="space-y-[18px]">
-          <label className="block text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.12em] text-[#6b6760]">
-            What&apos;s not going the way you expected
-            <textarea
-              value={context.notExpected}
-              onChange={(event) => setContext((current) => ({ ...current, notExpected: event.target.value }))}
-              placeholder="e.g. Been in the same role 3 years, keep delivering, but nothing moves forward"
-              className="mt-2 min-h-[110px] w-full resize-y rounded-[9px] border border-[#d0cbc3] bg-white px-3.5 py-3.5 text-[15px] normal-case leading-[1.55] tracking-[0] text-[#0f0f0f] outline-none transition focus:border-[#0f0f0f]"
-            />
-          </label>
-          <label className="block text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.12em] text-[#6b6760]">
-            What you are known for at work
-            <textarea
-              value={context.knownFor}
-              onChange={(event) => setContext((current) => ({ ...current, knownFor: event.target.value }))}
-              placeholder="e.g. The person who gets things done. Reliable. Never misses a deadline"
-              className="mt-2 min-h-[110px] w-full resize-y rounded-[9px] border border-[#d0cbc3] bg-white px-3.5 py-3.5 text-[15px] normal-case leading-[1.55] tracking-[0] text-[#0f0f0f] outline-none transition focus:border-[#0f0f0f]"
-            />
-          </label>
-          <label className="block text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.12em] text-[#6b6760]">
-            The role or position you are working towards
+        <div className="space-y-5">
+          <label className="block font-gotham text-[11px] font-bold uppercase leading-[1.4] tracking-[0.18em] text-[#0A57C6]">
+            Role or career milestone
             <textarea
               value={context.targetRole}
               onChange={(event) => setContext((current) => ({ ...current, targetRole: event.target.value }))}
-              placeholder="e.g. Senior Manager - or just want to feel like my work actually matters"
-              className="mt-2 min-h-[110px] w-full resize-y rounded-[9px] border border-[#d0cbc3] bg-white px-3.5 py-3.5 text-[15px] normal-case leading-[1.55] tracking-[0] text-[#0f0f0f] outline-none transition focus:border-[#0f0f0f]"
+              placeholder="E.g. Senior Manager. Or just want to feel more appreciated at work."
+              className="mt-3 min-h-[138px] w-full resize-y rounded-[20px] border border-[#d8e4f6] bg-white px-5 py-4 font-gotham text-[15px] normal-case leading-7 tracking-[0] text-[#111111] outline-none shadow-[0_10px_26px_rgba(1,75,170,0.05)] transition placeholder:text-[#9aa4b2] focus:border-[#0A57C6]"
             />
           </label>
           <button
             type="button"
             disabled={!canProceed}
-            className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
             onClick={() => {
               setSkippedContext(false);
               trackBotEvent("sto_screen2_completed", { q1 });
               goTo("diagnostic");
             }}
           >
-            I&apos;m ready
+            I&apos;m ready to explore further
           </button>
           <button
             type="button"
-            className="w-full rounded-[9px] border border-[#d0cbc3] bg-white px-4 py-[15px] text-[15px] font-semibold text-[#6b6760] transition hover:border-[#0f0f0f]"
+            className="w-full cursor-pointer rounded-[18px] border border-[#d8e4f6] bg-white px-5 py-4 font-gotham text-[15px] font-bold text-[#0A57C6] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] md:py-5"
             onClick={() => {
               setSkippedContext(true);
               trackBotEvent("sto_screen2_skipped", { q1 });
               goTo("diagnostic");
             }}
           >
-            Skip - I&apos;d rather not share this
+            Let&apos;s skip this for now
           </button>
         </div>
       );
@@ -852,7 +997,7 @@ export default function StoCareerBot({
 
     if (step === "diagnostic") {
       return (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <button
             type="button"
             className={optionClass}
@@ -881,7 +1026,7 @@ export default function StoCareerBot({
 
     if (step === "not_considered_formula") {
       return (
-        <button type="button" className={optionClass} onClick={() => goTo("desire")}>
+        <button type="button" className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5" onClick={() => goTo("desire")}>
           Let&apos;s look at visibility
         </button>
       );
@@ -889,7 +1034,7 @@ export default function StoCareerBot({
 
     if (step === "desire") {
       return (
-        <div className="space-y-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <button
             type="button"
             className={optionClass}
@@ -898,7 +1043,7 @@ export default function StoCareerBot({
               goTo("importance");
             }}
           >
-            Yes, I asked early
+            Yes, I did
           </button>
           <button
             type="button"
@@ -916,32 +1061,22 @@ export default function StoCareerBot({
 
     if (step === "desire_blocker") {
       return (
-        <div className="space-y-2">
-          {[
-            "I didn't feel ready yet",
-            "I was waiting for a big win first",
-            "I was worried about how it would look",
-            "I just assumed it would happen naturally",
-          ].map((answer) => (
-            <button
-              key={answer}
-              type="button"
-              className={optionClass}
-              onClick={() => {
-                setDesireBlocker(answer);
-                revealDoor("imposter_syndrome");
-              }}
-            >
-              {answer}
-            </button>
-          ))}
-        </div>
+        <button
+          type="button"
+          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          onClick={() => {
+            setDesireBlocker("I didn't ask early enough.");
+            revealDoor("imposter_syndrome");
+          }}
+        >
+          Tell me more
+        </button>
       );
     }
 
     if (step === "importance") {
       return (
-        <div className="space-y-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <button
             type="button"
             className={optionClass}
@@ -950,7 +1085,7 @@ export default function StoCareerBot({
               goTo("personal_seen");
             }}
           >
-            Yes, leadership cares about this work
+            Yes, it&apos;s clearly important to them
           </button>
           <button
             type="button"
@@ -968,7 +1103,7 @@ export default function StoCareerBot({
 
     if (step === "personal_seen") {
       return (
-        <div className="space-y-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <button
             type="button"
             className={optionClass}
@@ -977,7 +1112,7 @@ export default function StoCareerBot({
               revealDoor("values_misalignment");
             }}
           >
-            Yes, people know it&apos;s me
+            Yes, they do
           </button>
           <button
             type="button"
@@ -987,7 +1122,7 @@ export default function StoCareerBot({
               revealDoor("story_of_contribution");
             }}
           >
-            No, the work is seen but I am not
+            No, they don&apos;t
           </button>
         </div>
       );
@@ -995,15 +1130,15 @@ export default function StoCareerBot({
 
     if (step === "considered_formula") {
       return (
-        <button type="button" className={optionClass} onClick={() => goTo("sponsor_power")}>
-          Check my sponsor strength
+        <button type="button" className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5" onClick={() => goTo("sponsor_power")}>
+          Next
         </button>
       );
     }
 
     if (step === "sponsor_power") {
       return (
-        <div className="space-y-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <button
             type="button"
             className={optionClass}
@@ -1012,7 +1147,7 @@ export default function StoCareerBot({
               goTo("sponsor_willing");
             }}
           >
-            Yes, they are in the decision room
+            Yes, they do
           </button>
           <button
             type="button"
@@ -1022,7 +1157,7 @@ export default function StoCareerBot({
               revealDoor("sponsor_network");
             }}
           >
-            No, they do not have enough power
+            No, they don&apos;t
           </button>
         </div>
       );
@@ -1030,7 +1165,7 @@ export default function StoCareerBot({
 
     if (step === "sponsor_willing") {
       return (
-        <div className="space-y-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <button
             type="button"
             className={optionClass}
@@ -1039,7 +1174,7 @@ export default function StoCareerBot({
               goTo("next_level");
             }}
           >
-            Yes, they would put reputation on the line
+            Yes, they would
           </button>
           <button
             type="button"
@@ -1049,7 +1184,7 @@ export default function StoCareerBot({
               revealDoor("communication_framework");
             }}
           >
-            No, they would not go that far
+            No, I don&apos;t think so
           </button>
         </div>
       );
@@ -1057,7 +1192,7 @@ export default function StoCareerBot({
 
     if (step === "next_level") {
       return (
-        <div className="space-y-2">
+        <div className="grid gap-3 md:grid-cols-2">
           <button
             type="button"
             className={optionClass}
@@ -1066,7 +1201,7 @@ export default function StoCareerBot({
               revealDoor("complex_situation");
             }}
           >
-            Yes, I have next-level evidence
+            Yes, it does
           </button>
           <button
             type="button"
@@ -1076,7 +1211,7 @@ export default function StoCareerBot({
               revealDoor("brilliance_image_trap");
             }}
           >
-            No, most evidence is from my current role
+            No, it doesn&apos;t
           </button>
         </div>
       );
@@ -1086,7 +1221,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-4 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
+          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("result")}
         >
           Show my full picture
@@ -1105,7 +1240,7 @@ export default function StoCareerBot({
   );
 
   const shellClassName = isEmbedded
-    ? "flex h-[640px] flex-col rounded-[18px] border border-[#e8e4de] bg-white shadow-[0_18px_50px_rgba(15,15,15,0.12)]"
+    ? "flex min-h-[72svh] w-full flex-col overflow-hidden rounded-[28px] border border-[#d6e5fb] bg-white font-gotham shadow-[0_28px_80px_rgba(1,75,170,0.12)] sm:min-h-[760px] md:min-h-[860px] md:rounded-[36px]"
     : "pointer-events-auto fixed inset-x-0 bottom-0 flex h-[100svh] flex-col border border-[#e8e4de] bg-white shadow-[0_-18px_40px_rgba(15,15,15,0.18)] md:inset-auto md:bottom-24 md:right-7 md:h-[720px] md:w-[440px] md:rounded-[9px] md:shadow-[0_18px_50px_rgba(15,15,15,0.18)]";
 
   const botShell = (
@@ -1118,20 +1253,20 @@ export default function StoCareerBot({
       data-waitlist-reference-id={waitlistReferenceId}
       className={shellClassName}
     >
-      <header className="border-b border-[#e8e4de]/75 bg-white/95 backdrop-blur">
-        <div className="flex h-[58px] items-center justify-between px-[18px]">
-          <div className="min-w-0 truncate font-serif text-xl leading-none tracking-[-0.01em] text-[#6b6760]">
-            <strong className="font-extrabold text-[#0f0f0f]">Better</strong> Corporate Life
+      <header className="border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur">
+        <div className="flex h-[72px] items-center justify-between px-5 md:h-[88px] md:px-8">
+          <div className="min-w-0 truncate font-quattrocento text-[26px] font-bold leading-none tracking-[-0.03em] text-[#111111]">
+            Better <span className="text-[#014BAA]">Corporate Life</span>
           </div>
           <div className="ml-4 flex items-center gap-3">
-            <div className="whitespace-nowrap text-[11px] uppercase leading-none tracking-[0.08em] text-[#a09c96]">
+            <div className="whitespace-nowrap font-gotham text-[11px] font-bold uppercase leading-none tracking-[0.18em] text-[#90a4c3]">
               {stepMeta[step].label}
             </div>
             {!isEmbedded ? (
               <button
                 type="button"
                 onClick={closeBot}
-                className="rounded-[9px] px-2 py-1 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
+                className="cursor-pointer rounded-[9px] px-2 py-1 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
                 aria-label="Close Sto chat"
               >
                 Close
@@ -1139,47 +1274,53 @@ export default function StoCareerBot({
             ) : null}
           </div>
         </div>
-        <div className="h-0.5 w-full overflow-hidden bg-transparent">
+        <div className="h-1 w-full overflow-hidden bg-[#edf4ff]">
           <div
-            className="h-full bg-[#0f0f0f] transition-[width] duration-300"
+            className="h-full bg-[#014BAA] transition-[width] duration-300"
             style={{ width: `${stepMeta[step].progress}%` }}
           />
         </div>
       </header>
 
-      <div className="flex-1 overflow-y-auto bg-white px-[18px] py-6">
+      <div className="flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8">
         {renderConversation()}
       </div>
 
-      <footer className="bg-gradient-to-t from-white from-[62%] to-white/0 px-[18px] pb-[calc(10px+env(safe-area-inset-bottom))] pt-[22px]">
+      <footer className="bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8">
         {controlsReady && step === "result" && resultCopy && door ? (
           <div className="space-y-3">
-            <div className={`grid gap-2 ${isEmbedded ? "" : "md:grid-cols-2"}`}>
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackBotEvent("sto_call_clicked", { door, q1, placement: isEmbedded ? "waitlist_modal" : "floating_bot" })}
-                className="rounded-[9px] border border-[#0f0f0f] bg-white px-3 py-[15px] text-center text-[15px] font-semibold text-[#0f0f0f] transition hover:bg-[#f8f7f5]"
+            <div className={`grid gap-2 ${activeDoorCtas?.secondary ? (isEmbedded ? "" : "md:grid-cols-2") : ""}`}>
+              <button
+                type="button"
+                onClick={handlePrimaryCta}
+                disabled={actionState === "loading"}
+                className="cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
               >
-                Book a call on WhatsApp
-              </a>
-              {isEmbedded ? (
-                <p className="rounded-[9px] border border-[#e8e4de] bg-[#f8f7f5] px-3 py-[15px] text-center text-sm font-medium leading-6 text-[#6b6760]">
-                  Ready to move? Use the invest button below this diagnostic to continue to checkout.
-                </p>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    trackBotEvent("sto_buy_clicked", { door, q1 });
-                  }}
-                  className="rounded-[9px] border border-[#0f0f0f] bg-[#0f0f0f] px-3 py-[15px] text-[15px] font-semibold text-white transition hover:opacity-90"
+                {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
+              </button>
+              {activeDoorCtas?.secondary ? (
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() =>
+                    trackBotEvent("sto_call_clicked", {
+                      door,
+                      q1,
+                      placement: isEmbedded ? "diagnostic_route" : "floating_bot",
+                    })
+                  }
+                  className="cursor-pointer rounded-[18px] border border-[#d8e4f6] bg-white px-5 py-4 text-center font-gotham text-[15px] font-bold text-[#014BAA] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] md:py-5"
                 >
-                  I&apos;ll invest in my career
-                </button>
-              )}
+                  {activeDoorCtas.secondary.label}
+                </a>
+              ) : null}
             </div>
+            {actionMessage ? (
+              <p className="rounded-[18px] border border-[#f1d7d7] bg-[#fff4f4] px-4 py-3 font-gotham text-sm font-medium text-[#9f2d2d]">
+                {actionMessage}
+              </p>
+            ) : null}
           </div>
         ) : controlsReady ? (
           renderControls()
@@ -1192,14 +1333,14 @@ export default function StoCareerBot({
             type="button"
             onClick={goBack}
             disabled={!history.length}
-            className="rounded-[9px] px-3 py-1.5 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5] disabled:cursor-not-allowed disabled:opacity-40"
+            className="cursor-pointer rounded-[12px] px-3 py-2 font-gotham text-xs font-bold text-[#7b8aa3] hover:bg-[#f3f8ff] disabled:cursor-not-allowed disabled:opacity-40"
           >
             Back
           </button>
           <button
             type="button"
             onClick={reset}
-            className="rounded-[9px] px-3 py-1.5 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
+            className="cursor-pointer rounded-[12px] px-3 py-2 font-gotham text-xs font-bold text-[#7b8aa3] hover:bg-[#f3f8ff]"
           >
             Restart
           </button>
@@ -1217,11 +1358,11 @@ export default function StoCareerBot({
       <button
         type="button"
         onClick={openBot}
-        className="fixed bottom-[104px] right-4 z-[9998] flex h-[74px] min-w-[170px] items-center gap-2 rounded-[9px] border border-[#e8e4de] bg-white px-3 shadow-[0_12px_30px_rgba(15,15,15,0.18)] transition hover:-translate-y-0.5 md:bottom-[104px] md:right-7"
+        className="fixed bottom-[104px] right-4 z-[9998] flex h-[74px] min-w-[170px] cursor-pointer items-center gap-2 rounded-[9px] border border-[#e8e4de] bg-white px-3 shadow-[0_12px_30px_rgba(15,15,15,0.18)] transition hover:-translate-y-0.5 md:bottom-[104px] md:right-7"
         aria-label="Chat with Sto"
       >
         <Image src={stoAvatar} alt="" width={58} height={58} className="h-[58px] w-[58px] rounded-[8px] object-cover" />
-        <span className="text-left font-jakarta text-sm font-bold leading-4 text-[#0f0f0f]">
+        <span className="text-left font-gotham text-sm font-bold leading-4 text-[#0f0f0f]">
           Talk to Sto
           <span className="block text-xs font-semibold text-[#6b6760]">Career diagnostic</span>
         </span>

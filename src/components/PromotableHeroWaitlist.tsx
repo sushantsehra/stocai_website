@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import applicationIcon from "../assets/application.png";
@@ -69,12 +70,14 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
+  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
   source = "waitlist_modal",
   onSubmit,
 }) => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -88,8 +91,9 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setEmail(initialEmail || "");
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
+      router.prefetch("/diagnostic");
     }
-  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
+  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, router]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -222,16 +226,16 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         email,
         phone: fullPhone,
         reference_id: initialReferenceId,
-        amount: 95000,
+        amount: 197000,
       });
       posthog.capture("payment_redirected", {
         source,
-        amount: 95000,
+        amount: 197000,
       });
       pushToDataLayer({
         event: "payment_redirected",
         source,
-        amount: 95000,
+        amount: 197000,
       });
       window.location.href = shortUrl;
     } catch (error) {
@@ -247,6 +251,38 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         error: error instanceof Error ? error.message : "unknown_error",
       });
     }
+  };
+
+  const handleGetUnstuck = () => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "stoDiagnosticContext",
+        JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          countryCode: countryCode.trim(),
+          referenceId: initialReferenceId?.trim() || "",
+          waitlistId: initialWaitlistId?.trim() || "",
+          source: source.trim(),
+        }),
+      );
+    }
+
+    posthog.capture("sto_diagnostic_route_opened", {
+      source,
+      waitlist_reference_id: initialReferenceId,
+      waitlist_id: initialWaitlistId || initialReferenceId,
+    });
+    pushToDataLayer({
+      event: "sto_diagnostic_route_opened",
+      source,
+      waitlist_reference_id: initialReferenceId,
+      waitlist_id: initialWaitlistId || initialReferenceId,
+    });
+
+    onClose();
+    router.push("/diagnostic");
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -358,7 +394,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 </div>
                 <div className="flex items-center justify-center rounded-[6px] bg-[#003A86]">
                   <span className="bmp-modal-price text-white">
-                    ₹950/-
+                    ₹1970/-
                   </span>
                 </div>
               </div>
@@ -425,7 +461,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                       </div>
                       <div className="flex items-center justify-center rounded-[6px] bg-[#003A86]">
                         <span className="font-inter text-[22px] font-bold leading-[20px] text-white">
-                          ₹950/-
+                          ₹1970/-
                         </span>
                       </div>
                     </div>
@@ -500,7 +536,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="bmp-modal-cta-text inline-flex items-center justify-center rounded-[7px] bg-[#357BF2] px-[16px] py-[7px] text-white transition hover:bg-[#1f6dea] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-50 md:rounded-[8px] md:px-[44px] md:py-[10px]"
+                  className="bmp-modal-cta-text inline-flex cursor-pointer items-center justify-center rounded-[7px] bg-[#357BF2] px-[16px] py-[10px] text-white transition hover:bg-[#1f6dea] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-50 md:rounded-[8px] md:px-[44px]"
                 >
                   {status === "loading" ? "Processing..." : "I'll Invest in My Career"}
                 </button>
