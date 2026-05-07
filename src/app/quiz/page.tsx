@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { TrendingUp, Users, Target, Zap, Eye, MessageSquare, Rocket, ArrowRight } from "lucide-react";
 
 export default function QuizHomePage() {
@@ -79,7 +80,7 @@ export default function QuizHomePage() {
             {/* Hero Section */}
             <div className="relative overflow-hidden">
                 <div className="absolute top-4 left-4 md:top-4 md:left-8">
-                    <img src="/bcl-logo.png" alt="BCL Logo" className="h-32 w-auto" />
+                    <Image src="/bcl-logo.png" alt="BCL Logo" width={256} height={128} className="h-32 w-auto" priority />
                 </div>
                 <div className="bg-white text-foreground mt-32 py-12 px-4">
                     <div className="container mx-auto max-w-4xl text-center">

@@ -1,11 +1,30 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import posthog from "posthog-js";
-import stoAvatar from "@/assets/panda_main.png";
-import env from "@/utils/env";
+import {
+  ArrowRight,
+  ArrowLeft,
+  BookOpen,
+  Check,
+  Clock3,
+  Compass,
+  Eye,
+  Lightbulb,
+  Loader2,
+  RefreshCw,
+  Shield,
+  Signal,
+  Target,
+  UserRound,
+  WifiOff,
+} from "lucide-react";
+import stoHeadshot from "@/assets/sto-headshot.png";
+import stoComplete from "@/assets/panda_main.png";
+import diagnosticMountainPeakWide from "@/assets/diagnostic-mountain-peak-wide.webp";
 import {
   buildResultCopy,
   ContextAnswers,
@@ -15,163 +34,27 @@ import {
   q1Options,
   Q1OptionId,
 } from "@/data/stoConversation";
-
-type BotStep =
-  | "intro"
-  | "q1"
-  | "empathy"
-  | "context"
-  | "diagnostic"
-  | "not_considered_formula"
-  | "desire"
-  | "desire_blocker"
-  | "importance"
-  | "personal_seen"
-  | "considered_formula"
-  | "sponsor_power"
-  | "sponsor_willing"
-  | "next_level"
-  | "door"
-  | "result";
-
-type StoCareerBotProps = {
-  variant?: "floating" | "embedded";
-  waitlistId?: string;
-  waitlistReferenceId?: string;
-  source?: string;
-  paymentName?: string;
-  paymentEmail?: string;
-  paymentPhone?: string;
-  paymentCountryCode?: string;
-};
-
-type BotSessionResponse = {
-  id: string;
-  waitlist_id: string;
-  flow_version: string;
-  status: string;
-  current_step?: string | null;
-  answers_json?: Record<string, unknown>;
-  result_json?: Record<string, unknown>;
-  started_at?: string | null;
-  completed_at?: string | null;
-  created_at: string;
-  updated_at: string;
-};
-
-const whatsappNumber = "918860403799";
-
-const pushToDataLayer = (payload: Record<string, unknown>) => {
-  if (typeof window === "undefined") return;
-  const dataLayerWindow = window as unknown as Window & { dataLayer?: unknown[] };
-  if (!dataLayerWindow.dataLayer) {
-    dataLayerWindow.dataLayer = [];
-  }
-  dataLayerWindow.dataLayer.push(payload);
-};
-
-const trackBotEvent = (event: string, payload: Record<string, unknown> = {}) => {
-  const properties = { source: "bot", ...payload };
-  posthog.capture(event, properties);
-  pushToDataLayer({ event, ...properties });
-};
-
-const optionClass =
-  "w-full cursor-pointer rounded-[18px] border border-[#d8e4f6] bg-white px-5 py-4 text-left font-gotham text-[15px] font-medium leading-7 text-[#111111] shadow-[0_8px_24px_rgba(1,75,170,0.05)] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] disabled:cursor-not-allowed disabled:opacity-60 md:px-6 md:py-5 md:text-[16px]";
-
-const selectedOptionClass =
-  "!border-[#0A57C6] !bg-[#014BAA] !text-white shadow-[0_18px_34px_rgba(1,75,170,0.16)] hover:!bg-[#014BAA] hover:!text-white";
-
-const BotMessage = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-[20px] rounded-bl-[6px] border border-[#e3ebf7] bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-4 font-gotham text-[15px] leading-7 text-[#1f2937] shadow-[0_10px_28px_rgba(1,75,170,0.05)] md:px-6 md:py-5 md:text-[16px]">
-    {children}
-  </div>
-);
-
-const UserChoice = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex justify-end">
-    <div className="w-fit max-w-[88%] rounded-[18px] border border-[#0A57C6] bg-[#014BAA] px-5 py-4 text-left font-gotham text-[15px] font-semibold leading-7 text-white shadow-[0_14px_30px_rgba(1,75,170,0.18)] md:max-w-[760px] md:px-6 md:py-5 md:text-[16px]">
-      {children}
-    </div>
-  </div>
-);
-
-const FormulaCard = ({ title, formula, note }: { title: string; formula: string; note: string }) => (
-  <div className="rounded-[24px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-6 text-center shadow-[0_18px_40px_rgba(1,75,170,0.08)] md:px-7">
-    <p className="mx-auto mb-4 inline-flex rounded-full border border-[#dce8f8] bg-white px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
-      {title}
-    </p>
-    <p className="font-gotham text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-[#111111] md:text-[28px]">
-      {formula}
-    </p>
-    <p className="mt-4 font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{note}</p>
-  </div>
-);
-
-const PandaHeader = () => (
-  <div className="mb-4 flex items-center gap-4">
-    <div className="h-[78px] w-[78px] overflow-visible">
-      <Image src={stoAvatar} alt="Sto" width={78} height={78} className="h-full w-full object-contain" />
-    </div>
-    <div>
-      <p className="font-gotham text-[17px] font-bold text-[#111111]">Sto</p>
-      <p className="font-gotham text-[13px] text-[#6b7280]">Your guide</p>
-    </div>
-  </div>
-);
-
-const TypingIndicator = () => (
-  <div className="flex h-12 w-fit items-center gap-1.5 rounded-[18px] rounded-bl-[6px] border border-[#e3ebf7] bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5">
-    <span className="h-2 w-2 animate-bounce rounded-full bg-[#0A57C6]" />
-    <span className="h-2 w-2 animate-bounce rounded-full bg-[#0A57C6] [animation-delay:120ms]" />
-    <span className="h-2 w-2 animate-bounce rounded-full bg-[#0A57C6] [animation-delay:240ms]" />
-  </div>
-);
-
-const stepMeta: Record<BotStep, { label: string; progress: number }> = {
-  intro: { label: "Introduction", progress: 6 },
-  q1: { label: "Your situation", progress: 14 },
-  empathy: { label: "Your situation", progress: 22 },
-  context: { label: "Context", progress: 32 },
-  diagnostic: { label: "Diagnosis", progress: 42 },
-  not_considered_formula: { label: "Diagnosis", progress: 54 },
-  desire: { label: "Diagnosis", progress: 60 },
-  desire_blocker: { label: "Diagnosis", progress: 72 },
-  importance: { label: "Diagnosis", progress: 68 },
-  personal_seen: { label: "Diagnosis", progress: 80 },
-  considered_formula: { label: "Diagnosis", progress: 54 },
-  sponsor_power: { label: "Diagnosis", progress: 60 },
-  sponsor_willing: { label: "Diagnosis", progress: 70 },
-  next_level: { label: "Diagnosis", progress: 80 },
-  door: { label: "What's really going on", progress: 90 },
-  result: { label: "Your full picture", progress: 100 },
-};
-
-const booleanAnswerLabel = (value: boolean | null, labels: { yes: string; no: string }) => {
-  if (value === true) return labels.yes;
-  if (value === false) return labels.no;
-  return null;
-};
-
-const getDoorCtas = (door: DiagnosticDoorId) => {
-  if (door === "values_misalignment" || door === "complex_situation") {
-    return {
-      primary: { label: "Yes, let's talk", kind: "call" as const },
-    };
-  }
-
-  if (door === "sponsor_network" || door === "communication_framework") {
-    return {
-      primary: { label: "Yes, I want this", kind: "payment" as const },
-    };
-  }
-
-  return {
-    primary: { label: "Take me there", kind: "payment" as const },
-    secondary: { label: "I'd like a call instead", kind: "call" as const },
-  };
-};
-
+import { trackBotEvent } from "./StoCareerBot/analytics";
+import { booleanAnswerLabel, getDoorCtas, q1ShortLabels, situationImages, stepMeta, whatsappNumber } from "./StoCareerBot/config";
+import { useBotSessionPersistence, useStoPayment } from "./StoCareerBot/hooks";
+import type { BotStep, StoCareerBotProps } from "./StoCareerBot/types";
+import {
+  AnswerChoiceCard,
+  BotMessage,
+  DiagnosticBranchLines,
+  DiagnosticMapBackground,
+  DiagnosticQuestionCard,
+  FormulaCard,
+  FormulaVisual,
+  PandaHeader,
+  OutcomeChoiceCard,
+  QuestionPanel,
+  QuestProgress,
+  SituationArt,
+  StoNote,
+  TypingIndicator,
+  UserChoice,
+} from "./StoCareerBot/ui";
 export default function StoCareerBot({
   variant = "floating",
   waitlistId,
@@ -203,13 +86,10 @@ export default function StoCareerBot({
   const [sponsorWillSpendCapital, setSponsorWillSpendCapital] = useState<boolean | null>(null);
   const [nextLevelEvidence, setNextLevelEvidence] = useState<boolean | null>(null);
   const [door, setDoor] = useState<DiagnosticDoorId | null>(null);
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const [sessionStartedAt, setSessionStartedAt] = useState<string | null>(null);
   const [sessionActivated, setSessionActivated] = useState(false);
   const [debouncedAnswersPayload, setDebouncedAnswersPayload] = useState<Record<string, unknown>>({});
   const [debouncedResultPayload, setDebouncedResultPayload] = useState<Record<string, unknown>>({});
-  const [actionState, setActionState] = useState<"idle" | "loading" | "error">("idle");
-  const [actionMessage, setActionMessage] = useState("");
 
   const selectedQ1 = q1Options.find((option) => option.id === q1);
 
@@ -309,6 +189,16 @@ export default function StoCareerBot({
   const answersForPersistence = step === "context" ? debouncedAnswersPayload : answersPayload;
   const resultForPersistence = step === "context" ? debouncedResultPayload : resultPayload;
   const activeDoorCtas = door ? getDoorCtas(door) : null;
+  const { resetSession } = useBotSessionPersistence({
+    isEmbedded,
+    waitlistId,
+    sessionActivated,
+    sessionStartedAt,
+    step,
+    status: sessionStatus,
+    answers: answersForPersistence,
+    result: resultForPersistence,
+  });
 
   const screenItems = useMemo<React.ReactNode[]>(() => {
     if (step === "q1") {
@@ -343,7 +233,7 @@ export default function StoCareerBot({
                 transition={{ delay: 1.95, duration: 1.05, ease: "easeOut" }}
                 className="absolute left-1/2 top-1/2 h-[180px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(1,75,170,0.22)_0%,rgba(1,75,170,0.06)_48%,rgba(255,255,255,0)_74%)] blur-xl md:h-[280px] md:w-[280px]"
               />
-              <Image src={stoAvatar} alt="Sto" width={78} height={78} className="relative h-[78px] w-[78px] rounded-[16px] object-cover" />
+              <Image src={stoHeadshot} alt="Sto headshot" width={78} height={78} className="relative h-[78px] w-[78px] rounded-full border border-[#d8e4f6] object-cover" />
             </motion.div>
           </motion.div>
 
@@ -388,7 +278,7 @@ export default function StoCareerBot({
       return [
         <PandaHeader key="panda" />,
         <BotMessage key="diagnostic-ready">
-          Ok. Tell me what&apos;s currently happening at work.
+          What happened with the promotion or opportunity?
         </BotMessage>,
       ];
     }
@@ -629,11 +519,10 @@ export default function StoCareerBot({
     setSponsorWillSpendCapital(null);
     setNextLevelEvidence(null);
     setDoor(null);
-    setSessionId(null);
+    resetSession();
     setSessionStartedAt(null);
     setSessionActivated(false);
-    setActionState("idle");
-    setActionMessage("");
+    resetPaymentState();
     trackBotEvent("sto_chat_restarted");
   };
 
@@ -670,104 +559,19 @@ export default function StoCareerBot({
     return `https://wa.me/${whatsappNumber}?text=${message}`;
   }, [door]);
 
-  const createPaymentLink = async () => {
-    const trimmedPhone = paymentPhone.trim();
-    const fullPhone = trimmedPhone.startsWith("+") ? trimmedPhone : `${paymentCountryCode}${trimmedPhone}`;
-
-    const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        name: paymentName || undefined,
-        email: paymentEmail || undefined,
-        phone: fullPhone,
-        reference_id: waitlistReferenceId || `waitlist_${Date.now()}`,
-        amount: 197000,
-      }),
-    });
-
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      throw new Error((data as { error?: string })?.error || "Unable to start payment.");
-    }
-
-    const shortUrl = (data as { short_url?: string; shortUrl?: string })?.short_url || (data as { short_url?: string; shortUrl?: string })?.shortUrl;
-    if (!shortUrl) {
-      throw new Error("Payment link was not returned.");
-    }
-
-    return shortUrl;
-  };
-
-  const handlePaymentRedirect = async () => {
-    if (!waitlistReferenceId) {
-      throw new Error("Waitlist record not found. Please restart from the waitlist form.");
-    }
-
-    if (!paymentPhone.trim()) {
-      throw new Error("Phone number is missing. Please restart from the waitlist form.");
-    }
-
-    posthog.capture("waitlist_submit_attempt", {
-      source,
-    });
-    pushToDataLayer({
-      event: "waitlist_submit_attempt",
-      source,
-    });
-
-    posthog.capture("waitlist_submitted", {
-      source,
-      payment_started: true,
-    });
-    pushToDataLayer({
-      event: "waitlist_submitted",
-      source,
-      payment_started: true,
-    });
-
-    const shortUrl = await createPaymentLink();
-
-    posthog.capture("payment_redirected", {
-      source,
-      amount: 197000,
-    });
-    pushToDataLayer({
-      event: "payment_redirected",
-      source,
-      amount: 197000,
-    });
-
-    window.location.href = shortUrl;
-  };
-
-  const handlePrimaryCta = async () => {
-    if (!door || !activeDoorCtas) return;
-
-    if (activeDoorCtas.primary.kind === "call") {
-      trackBotEvent("sto_call_clicked", {
-        door,
-        q1,
-        placement: isEmbedded ? "diagnostic_route" : "floating_bot",
-      });
-      window.open(whatsappHref, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    setActionState("loading");
-    setActionMessage("");
-
-    try {
-      trackBotEvent("sto_buy_clicked", { door, q1, placement: isEmbedded ? "diagnostic_route" : "floating_bot" });
-      await handlePaymentRedirect();
-    } catch (error) {
-      setActionState("error");
-      setActionMessage(error instanceof Error ? error.message : "Something went wrong.");
-    }
-  };
+  const { actionState, actionMessage, handlePrimaryCta, resetPaymentState } = useStoPayment({
+    activeDoorCtas,
+    door,
+    q1,
+    isEmbedded,
+    source,
+    whatsappHref,
+    waitlistReferenceId,
+    paymentName,
+    paymentEmail,
+    paymentPhone,
+    paymentCountryCode,
+  });
 
   useEffect(() => {
     if (!isEmbedded) return;
@@ -798,103 +602,6 @@ export default function StoCareerBot({
     };
   }, [answersPayload, resultPayload, step]);
 
-  useEffect(() => {
-    if (!isEmbedded || !waitlistId || !sessionActivated || sessionId || !sessionStartedAt) return;
-
-    let isCancelled = false;
-
-    const createSession = async () => {
-      try {
-        const response = await fetch(`${env.apiUrl}/waitlist-bot-sessions`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            waitlist_id: waitlistId,
-            flow_version: "v1",
-            status: "in_progress",
-            current_step: step,
-            answers_json: answersForPersistence,
-            result_json: resultForPersistence,
-            started_at: sessionStartedAt,
-            completed_at: null,
-          }),
-        });
-
-        const data = (await response.json().catch(() => ({}))) as Partial<BotSessionResponse> & {
-          error?: string;
-        };
-
-        if (!response.ok || !data?.id) {
-          throw new Error(data?.error || "Unable to create bot session.");
-        }
-
-        if (!isCancelled) {
-          setSessionId(data.id);
-        }
-      } catch (error) {
-        console.error("Failed to create waitlist bot session", error);
-      }
-    };
-
-    void createSession();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [
-    answersForPersistence,
-    isEmbedded,
-    sessionActivated,
-    sessionId,
-    sessionStartedAt,
-    step,
-    waitlistId,
-    resultForPersistence,
-  ]);
-
-  useEffect(() => {
-    if (!sessionId || !sessionActivated) return;
-
-    let isCancelled = false;
-
-    const updateSession = async () => {
-      try {
-        const response = await fetch(`${env.apiUrl}/waitlist-bot-sessions/${sessionId}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            status: sessionStatus,
-            current_step: step,
-            answers_json: answersForPersistence,
-            result_json: resultForPersistence,
-            completed_at: sessionStatus === "completed" ? new Date().toISOString() : null,
-          }),
-        });
-
-        if (!response.ok && !isCancelled) {
-          const data = (await response.json().catch(() => ({}))) as { error?: string };
-          throw new Error(data?.error || "Unable to update bot session.");
-        }
-      } catch (error) {
-        if (!isCancelled) {
-          console.error("Failed to update waitlist bot session", error);
-        }
-      }
-    };
-
-    void updateSession();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [answersForPersistence, resultForPersistence, sessionActivated, sessionId, sessionStatus, step]);
-
   const renderControls = () => {
     if (step === "intro") {
       return (
@@ -915,146 +622,61 @@ export default function StoCareerBot({
     }
 
     if (step === "q1") {
-      return (
-        <div className="space-y-3">
-          {q1Options.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`${optionClass} ${q1 === option.id ? selectedOptionClass : ""}`}
-              onClick={() => {
-                setQ1(option.id);
-                trackBotEvent("sto_q1_selected", { q1: option.id });
-              }}
-            >
-              {option.label}
-            </button>
-          ))}
-          <button
-            type="button"
-            disabled={!q1}
-            className="mt-5 w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
-            onClick={() => goTo("empathy")}
-          >
-            Continue
-          </button>
-        </div>
-      );
+      return null;
     }
 
     if (step === "empathy") {
       return (
         <button
           type="button"
-          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          className="w-full cursor-pointer rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("context")}
         >
-          Tell you more
+          Continue
         </button>
       );
     }
 
     if (step === "context") {
-      const canProceed = context.targetRole.trim();
-
-      return (
-        <div className="space-y-5">
-          <label className="block font-gotham text-[11px] font-bold uppercase leading-[1.4] tracking-[0.18em] text-[#0A57C6]">
-            Role or career milestone
-            <textarea
-              value={context.targetRole}
-              onChange={(event) => setContext((current) => ({ ...current, targetRole: event.target.value }))}
-              placeholder="E.g. Senior Manager. Or just want to feel more appreciated at work."
-              className="mt-3 min-h-[138px] w-full resize-y rounded-[20px] border border-[#d8e4f6] bg-white px-5 py-4 font-gotham text-[15px] normal-case leading-7 tracking-[0] text-[#111111] outline-none shadow-[0_10px_26px_rgba(1,75,170,0.05)] transition placeholder:text-[#9aa4b2] focus:border-[#0A57C6]"
-            />
-          </label>
-          <button
-            type="button"
-            disabled={!canProceed}
-            className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
-            onClick={() => {
-              setSkippedContext(false);
-              trackBotEvent("sto_screen2_completed", { q1 });
-              goTo("diagnostic");
-            }}
-          >
-            I&apos;m ready to explore further
-          </button>
-          <button
-            type="button"
-            className="w-full cursor-pointer rounded-[18px] border border-[#d8e4f6] bg-white px-5 py-4 font-gotham text-[15px] font-bold text-[#0A57C6] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] md:py-5"
-            onClick={() => {
-              setSkippedContext(true);
-              trackBotEvent("sto_screen2_skipped", { q1 });
-              goTo("diagnostic");
-            }}
-          >
-            Let&apos;s skip this for now
-          </button>
-        </div>
-      );
+      return null;
     }
 
     if (step === "diagnostic") {
-      return (
-        <div className="space-y-3">
-          <button
-            type="button"
-            className={optionClass}
-            onClick={() => {
-              setDiagnosticPath("not_considered");
-              trackBotEvent("sto_diagnostic_answered", { answer: "not_considered", q1 });
-              goTo("not_considered_formula");
-            }}
-          >
-            I was not even considered for the promotion or opportunity
-          </button>
-          <button
-            type="button"
-            className={optionClass}
-            onClick={() => {
-              setDiagnosticPath("considered");
-              trackBotEvent("sto_diagnostic_answered", { answer: "considered", q1 });
-              goTo("considered_formula");
-            }}
-          >
-            I was considered but someone else got chosen
-          </button>
-        </div>
-      );
+      return null;
     }
 
     if (step === "not_considered_formula") {
       return (
         <button type="button" className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5" onClick={() => goTo("desire")}>
-          Let&apos;s look at visibility
+          See what&apos;s happening with visibility
         </button>
       );
     }
 
     if (step === "desire") {
       return (
-        <div className="grid gap-3 md:grid-cols-2">
-          <button
-            type="button"
-            className={optionClass}
-            onClick={() => {
-              setDesireAskedEarly(true);
-              goTo("importance");
-            }}
-          >
-            Yes, I did
-          </button>
-          <button
-            type="button"
-            className={optionClass}
-            onClick={() => {
-              setDesireAskedEarly(false);
-              goTo("desire_blocker");
-            }}
-          >
-            No, I didn&apos;t
-          </button>
+        <div className="mx-auto max-w-[980px] space-y-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            <AnswerChoiceCard
+              tone="yes"
+              title="Yes, I had made it clear early."
+              description="I had made it clear early."
+              onClick={() => {
+                setDesireAskedEarly(true);
+                goTo("importance");
+              }}
+            />
+            <AnswerChoiceCard
+              tone="no"
+              title="No, I mentioned it late or assumed they knew."
+              description="I mentioned it late or assumed they knew."
+              onClick={() => {
+                setDesireAskedEarly(false);
+                goTo("desire_blocker");
+              }}
+            />
+          </div>
+          <StoNote>Performance shows what you did. Intent shows what you want next.</StoNote>
         </div>
       );
     }
@@ -1077,26 +699,24 @@ export default function StoCareerBot({
     if (step === "importance") {
       return (
         <div className="grid gap-3 md:grid-cols-2">
-          <button
-            type="button"
-            className={optionClass}
+          <AnswerChoiceCard
+            tone="yes"
+            title="Yes, it is clearly important to them."
+            description="Leadership cares about the outcomes."
             onClick={() => {
               setImportanceVisible(true);
               goTo("personal_seen");
             }}
-          >
-            Yes, it&apos;s clearly important to them
-          </button>
-          <button
-            type="button"
-            className={optionClass}
+          />
+          <AnswerChoiceCard
+            tone="no"
+            title="No, it is not visible enough to leadership."
+            description="The work may not be linked to a priority they track."
             onClick={() => {
               setImportanceVisible(false);
               revealDoor("story_of_work");
             }}
-          >
-            No, it is not visible enough to leadership
-          </button>
+          />
         </div>
       );
     }
@@ -1104,26 +724,24 @@ export default function StoCareerBot({
     if (step === "personal_seen") {
       return (
         <div className="grid gap-3 md:grid-cols-2">
-          <button
-            type="button"
-            className={optionClass}
+          <AnswerChoiceCard
+            tone="yes"
+            title="Yes, they do."
+            description="People connect the work directly to me."
             onClick={() => {
               setPersonallySeen(true);
               revealDoor("values_misalignment");
             }}
-          >
-            Yes, they do
-          </button>
-          <button
-            type="button"
-            className={optionClass}
+          />
+          <AnswerChoiceCard
+            tone="no"
+            title="No, they do not."
+            description="The work is visible, but my contribution is not."
             onClick={() => {
               setPersonallySeen(false);
               revealDoor("story_of_contribution");
             }}
-          >
-            No, they don&apos;t
-          </button>
+          />
         </div>
       );
     }
@@ -1139,26 +757,24 @@ export default function StoCareerBot({
     if (step === "sponsor_power") {
       return (
         <div className="grid gap-3 md:grid-cols-2">
-          <button
-            type="button"
-            className={optionClass}
+          <AnswerChoiceCard
+            tone="yes"
+            title="Yes, they do."
+            description="They can influence what happens in the room."
             onClick={() => {
               setSponsorHasPower(true);
               goTo("sponsor_willing");
             }}
-          >
-            Yes, they do
-          </button>
-          <button
-            type="button"
-            className={optionClass}
+          />
+          <AnswerChoiceCard
+            tone="no"
+            title="No, they do not."
+            description="They support me, but may not carry enough weight."
             onClick={() => {
               setSponsorHasPower(false);
               revealDoor("sponsor_network");
             }}
-          >
-            No, they don&apos;t
-          </button>
+          />
         </div>
       );
     }
@@ -1166,26 +782,24 @@ export default function StoCareerBot({
     if (step === "sponsor_willing") {
       return (
         <div className="grid gap-3 md:grid-cols-2">
-          <button
-            type="button"
-            className={optionClass}
+          <AnswerChoiceCard
+            tone="yes"
+            title="Yes, they would."
+            description="They would actively advocate for me."
             onClick={() => {
               setSponsorWillSpendCapital(true);
               goTo("next_level");
             }}
-          >
-            Yes, they would
-          </button>
-          <button
-            type="button"
-            className={optionClass}
+          />
+          <AnswerChoiceCard
+            tone="no"
+            title="No, I do not think so."
+            description="They may like my work, but not enough to spend capital."
             onClick={() => {
               setSponsorWillSpendCapital(false);
               revealDoor("communication_framework");
             }}
-          >
-            No, I don&apos;t think so
-          </button>
+          />
         </div>
       );
     }
@@ -1193,26 +807,24 @@ export default function StoCareerBot({
     if (step === "next_level") {
       return (
         <div className="grid gap-3 md:grid-cols-2">
-          <button
-            type="button"
-            className={optionClass}
+          <AnswerChoiceCard
+            tone="yes"
+            title="Yes, it does."
+            description="My current output already signals next-level readiness."
             onClick={() => {
               setNextLevelEvidence(true);
               revealDoor("complex_situation");
             }}
-          >
-            Yes, it does
-          </button>
-          <button
-            type="button"
-            className={optionClass}
+          />
+          <AnswerChoiceCard
+            tone="no"
+            title="No, it does not."
+            description="My excellence may still read as current-role excellence."
             onClick={() => {
               setNextLevelEvidence(false);
               revealDoor("brilliance_image_trap");
             }}
-          >
-            No, it doesn&apos;t
-          </button>
+          />
         </div>
       );
     }
@@ -1232,15 +844,463 @@ export default function StoCareerBot({
     return null;
   };
 
-  const renderConversation = () => (
-    <div className="space-y-3">
-      {screenItems.slice(0, visibleMessageCount).map((item) => item)}
-      {isTyping ? <TypingIndicator /> : null}
-    </div>
-  );
+  const renderVisualScreen = () => {
+    if (!isEmbedded) {
+      return (
+        <div className="space-y-3">
+          {screenItems.slice(0, visibleMessageCount).map((item) => item)}
+          {isTyping ? <TypingIndicator /> : null}
+        </div>
+      );
+    }
+
+    if (step !== "intro" && (isTyping || visibleMessageCount < screenItems.length)) {
+      return (
+        <div className="flex min-h-[420px] items-center justify-center">
+          <TypingIndicator />
+        </div>
+      );
+    }
+
+    if (step === "intro") {
+      return (
+        <div className="mx-auto grid h-full w-full max-w-[1224px] items-center gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+          <section className="relative min-h-[360px] overflow-hidden rounded-[16px] border border-[#d8e4f6] bg-[linear-gradient(135deg,#eef6ff_0%,#ffffff_58%,#f6fbff_100%)] px-5 py-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:min-h-[460px] md:px-8 md:py-7">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_24%,rgba(10,87,198,0.10)_0%,rgba(10,87,198,0.03)_24%,transparent_55%)]" />
+            <div className="relative z-10 flex h-full items-end justify-center">
+              <Image src={stoComplete} alt="Sto headshot" width={360} height={360} priority className="h-[300px] w-[300px] rounded-full object-cover drop-shadow-[0_22px_34px_rgba(15,23,42,0.14)] md:h-[390px] md:w-[390px]" />
+              <div className="absolute right-3 top-[22%] md:right-8">
+                <span className="mb-2 inline-flex rounded-full bg-[#e8f2ff] px-3 py-1 font-gotham text-[10px] font-bold uppercase tracking-[0.16em] text-[#0A57C6]">
+                  Meet Sto
+                </span>
+                <div className="rounded-[14px] border border-[#d8e4f6] bg-white px-4 py-3 font-quattrocento text-[18px] font-bold text-[#050817] shadow-[0_14px_30px_rgba(15,23,42,0.10)]">
+                  Hi, I&apos;m Sto.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="flex min-h-0 flex-col justify-center rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0A57C6] text-white shadow-[0_12px_28px_rgba(10,87,198,0.28)]">
+              <Compass className="h-7 w-7" />
+            </div>
+            <h1 className="mt-4 max-w-[20ch] font-quattrocento text-[34px] font-bold leading-[1.05] text-[#050817] md:text-[44px]">
+              You&apos;re not stuck because you&apos;re bad at your job.
+            </h1>
+            <h2 className="mt-3 max-w-[21ch] font-quattrocento text-[31px] font-bold leading-[1.05] text-[#050817] md:text-[40px]">
+              You&apos;re stuck because <span className="text-[#014BAA]">promotions work differently</span> from performance.
+            </h2>
+            <div className="mt-4 h-[3px] w-14 rounded-full bg-[#014BAA]" />
+            <p className="mt-4 max-w-[52ch] font-gotham text-[14px] leading-6 text-[#40506c] md:text-[15px]">
+              Sto will ask a few sharp questions to help you see what is actually blocking your promotion momentum.
+            </p>
+            <button
+              type="button"
+              className="mt-4 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-3 rounded-[10px] bg-[#0057D9] px-5 font-gotham text-[15px] font-bold text-white shadow-[0_14px_30px_rgba(0,87,217,0.24)] transition hover:bg-[#0A57C6] md:max-w-[560px]"
+              onClick={() => {
+                if (!sessionActivated) {
+                  setSessionActivated(true);
+                  setSessionStartedAt(new Date().toISOString());
+                }
+                goTo("q1");
+              }}
+            >
+              Promotion Clarity Check
+              <ArrowRight className="h-5 w-5" />
+            </button>
+            <p className="mt-3 flex items-center justify-center gap-2 font-gotham text-[12px] font-medium text-[#667085] md:max-w-[560px]">
+              <Clock3 className="h-4 w-4" />
+              Takes 3-4 minutes. No generic advice.
+            </p>
+          </section>
+        </div>
+      );
+    }
+
+    if (step === "q1") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1370px] flex-col justify-start gap-3 pt-2 md:pt-3">
+          <div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="flex shrink-0 items-center gap-3">
+                <Image src={stoHeadshot} alt="Sto headshot" width={64} height={64} className="h-[54px] w-[54px] shrink-0 rounded-full border border-[#d8e4f6] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.08)] md:h-[64px] md:w-[64px]" />
+                <div>
+                  <p className="font-gotham text-[14px] font-bold text-[#101828]">Sto</p>
+                  <p className="font-gotham text-[12px] font-medium text-[#5269a3]">Your guide</p>
+                </div>
+              </div>
+              <div className="relative w-full max-w-[645px] rounded-[22px] bg-[#f0f2f7] px-7 py-3 font-gotham text-[14px] font-medium leading-5 text-[#273348] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] before:absolute before:left-[-18px] before:top-1/2 before:hidden before:h-0 before:w-0 before:-translate-y-1/2 before:border-y-[14px] before:border-r-[20px] before:border-y-transparent before:border-r-[#f0f2f7] sm:ml-8 sm:before:block">
+                Let&apos;s get real about what&apos;s going on for you at work.
+              </div>
+            </div>
+            <h2 className="mt-4 max-w-[25ch] font-quattrocento text-[30px] font-bold leading-[1.02] text-[#050817] md:text-[38px] xl:text-[42px]">
+              Which of these feels closest to what&apos;s happening at work right now?
+            </h2>
+            <p className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#5269a3] md:text-[15px]">
+              Choose the one that feels most true. This stays between us.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-7 md:gap-y-3">
+            {q1Options.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                className={`relative flex min-h-[150px] cursor-pointer flex-col overflow-hidden rounded-[17px] border bg-white text-center shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] md:min-h-[176px] ${
+                  q1 === option.id ? "border-2 border-[#014BAA]" : "border-[#e6e0d7]"
+                }`}
+                onClick={() => {
+                  setQ1(option.id);
+                  trackBotEvent("sto_q1_selected", { q1: option.id });
+                }}
+                aria-pressed={q1 === option.id}
+              >
+                {q1 === option.id ? (
+                  <span className="absolute right-4 top-4 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#014BAA] text-white shadow-[0_8px_16px_rgba(1,75,170,0.24)]">
+                    <Check className="h-4 w-4" strokeWidth={3} />
+                  </span>
+                ) : null}
+                <div className="relative h-[110px] w-full bg-[#fffaf3] md:h-[128px]">
+                  <img
+                    src={situationImages[option.id].src}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    aria-hidden
+                  />
+                </div>
+                <span className="flex min-h-[40px] items-center justify-center px-4 font-gotham text-[14px] font-bold leading-5 text-[#111827] md:text-[15px]">
+                  {q1ShortLabels[option.id]}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            disabled={!q1}
+            className="min-h-[52px] w-full cursor-pointer rounded-[10px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[18px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
+            onClick={() => goTo("empathy")}
+          >
+            Continue
+          </button>
+        </div>
+      );
+    }
+
+    if (step === "empathy" && selectedQ1 && q1) {
+      const empathyCopy = getQ1Empathy(q1);
+      const empathySentences = empathyCopy
+        .split(/(?<=[.!?])\s+/)
+        .map((sentence) => sentence.trim())
+        .filter(Boolean);
+
+      return (
+        <div className="mx-auto grid h-full w-full max-w-[1224px] items-center gap-5 md:grid-cols-[320px_minmax(0,1fr)]">
+          <aside>
+            <p className="mb-3 font-gotham text-[11px] font-bold uppercase tracking-[0.16em] text-[#014BAA]">You selected</p>
+            <div className="rounded-[16px] border border-[#d8e4f6] bg-white p-3 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+              <SituationArt id={q1} />
+              <p className="mt-4 font-gotham text-[14px] font-bold leading-5 text-[#202939]">{q1ShortLabels[q1]}</p>
+            </div>
+          </aside>
+
+          <section>
+            <div className="rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
+              <div className="mb-5 flex items-center gap-3">
+                <Image src={stoHeadshot} alt="Sto headshot" width={56} height={56} className="h-12 w-12 shrink-0 rounded-full border border-[#d8e4f6] object-cover" />
+                <div>
+                  <p className="font-gotham text-[14px] font-bold text-[#101828]">Sto</p>
+                  <p className="font-gotham text-[13px] text-[#336bd6]">Your guide</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {empathySentences.map((sentence) => (
+                  <p key={sentence} className="font-quattrocento text-[26px] font-bold leading-[1.22] text-[#101828] md:text-[32px]">
+                    {sentence}
+                  </p>
+                ))}
+                <p className="font-quattrocento text-[28px] font-bold leading-tight text-[#101828] md:text-[34px]">
+                  Let&apos;s go one layer deeper.
+                </p>
+              </div>
+            </div>
+            <p className="mt-4 text-center font-gotham text-[13px] font-medium text-[#336bd6]">
+              2-3 questions. Then Sto will show you what may be blocking your momentum.
+            </p>
+          </section>
+        </div>
+      );
+    }
+
+    if (step === "context") {
+      const canProceed = context.targetRole.trim();
+
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-4">
+          <div className="grid min-h-0 items-stretch gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+            <section className="rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
+              <PandaHeader />
+              <h2 className="max-w-[19ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#050817] md:text-[38px]">
+                What role or career milestone are you currently working towards?
+              </h2>
+              <p className="mt-4 font-gotham text-[15px] leading-6 text-[#40506c] md:text-[16px]">
+                This helps Sto understand what progress would look like for you.
+              </p>
+            </section>
+            <div className="relative min-h-[280px] overflow-hidden rounded-[16px] border border-[#d8e4f6] bg-[#fffaf3] shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+              <Image
+                src={diagnosticMountainPeakWide}
+                alt=""
+                fill
+                sizes="(max-width: 1024px) 92vw, 620px"
+                className="object-cover"
+                aria-hidden
+              />
+            </div>
+          </div>
+
+          <label className="block font-gotham text-[11px] font-bold uppercase leading-[1.4] tracking-[0.18em] text-[#014BAA]">
+            Role or career milestone
+            <textarea
+              value={context.targetRole}
+              onChange={(event) => setContext((current) => ({ ...current, targetRole: event.target.value }))}
+              placeholder="E.g. Senior Manager. Or just want to feel more appreciated at work."
+              className="mt-2 min-h-[76px] w-full resize-none rounded-[14px] border border-[#d8e4f6] bg-white px-4 py-3 font-gotham text-[15px] normal-case leading-6 tracking-[0] text-[#111111] outline-none shadow-[0_8px_20px_rgba(1,75,170,0.05)] transition placeholder:text-[#9aa4b2] focus:border-[#014BAA]"
+            />
+          </label>
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <button
+              type="button"
+              disabled={!canProceed}
+              className="min-h-12 w-full cursor-pointer rounded-[14px] border border-[#014BAA] bg-[#014BAA] px-5 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
+              onClick={() => {
+                setSkippedContext(false);
+                trackBotEvent("sto_screen2_completed", { q1 });
+                goTo("diagnostic");
+              }}
+            >
+              I&apos;m ready to explore further
+            </button>
+            <button
+              type="button"
+              className="min-h-12 w-full cursor-pointer rounded-[14px] border border-[#d8e4f6] bg-white px-5 font-gotham text-[15px] font-bold text-[#014BAA] transition hover:border-[#014BAA] hover:bg-[#f8fbff]"
+              onClick={() => {
+                setSkippedContext(true);
+                trackBotEvent("sto_screen2_skipped", { q1 });
+                goTo("diagnostic");
+              }}
+            >
+              Let&apos;s skip this for now
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    if (step === "diagnostic") {
+      return (
+        <div className="relative mx-auto flex h-full min-h-[620px] w-full max-w-[1180px] flex-col justify-center overflow-hidden rounded-[24px] px-5 py-5 md:min-h-0 md:px-8 md:py-7">
+          <DiagnosticMapBackground />
+          <div className="relative z-10 mx-auto flex w-full max-w-[900px] flex-col items-center">
+            <DiagnosticQuestionCard />
+            <DiagnosticBranchLines />
+            <div className="mt-9 grid w-full max-w-[860px] gap-6 md:mt-[128px] md:grid-cols-2 md:gap-16">
+              <OutcomeChoiceCard
+                type="not_considered"
+                onClick={() => {
+                  setDiagnosticPath("not_considered");
+                  trackBotEvent("sto_diagnostic_answered", { answer: "not_considered", q1 });
+                  goTo("not_considered_formula");
+                }}
+              />
+              <OutcomeChoiceCard
+                type="considered"
+                onClick={() => {
+                  setDiagnosticPath("considered");
+                  trackBotEvent("sto_diagnostic_answered", { answer: "considered", q1 });
+                  goTo("considered_formula");
+                }}
+              />
+            </div>
+            <div className="relative z-20 mt-6 flex w-full justify-center">
+              <StoNote>Pick the version closest to what happened. The next path changes based on your choice.</StoNote>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (step === "not_considered_formula") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <FormulaVisual
+            kind="not_considered"
+            formula="To be considered = Performance x Visibility"
+            note="If either is missing, the result is zero. Your performance isn't the issue. So let's look at visibility."
+            outcomeTitle="I was not even considered"
+            outcomeBody="You were not discussed, shortlisted, or seen as a contender."
+          />
+          <StoNote>This insight is based on your selection. The next step will help uncover what&apos;s holding your visibility back -- and what to do about it.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "considered_formula") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <FormulaVisual
+            kind="considered"
+            formula="To be picked = Sponsor Strength x Next Level Signal"
+            note="Sponsor strength is about who goes to bat for you, and with what impact. Next level signals help people see you in the new role."
+            outcomeTitle="I was considered but someone else got chosen"
+            outcomeBody="You were in the frame, but the final bet went to someone else."
+          />
+          <StoNote>This insight is based on your selection. The next step will help uncover what affected the final decision -- and what to do about it.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "desire") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            eyebrow="Early signal"
+            title="Did you ask for the promotion early enough?"
+            subtitle="Did you ensure your manager knew you were looking for one?"
+            wide
+          />
+          <StoNote>Performance shows what you did. Intent shows what you want next.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "importance") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<Eye className="h-9 w-9" />}
+            title="Is the project you are working on seen as important by leadership?"
+            subtitle="Do they care about the outcomes?"
+            wide
+          />
+          <StoNote>Clearly, you have the desire for visibility. Now we check whether leadership sees the work as important.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "personal_seen") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<UserRound className="h-9 w-9" />}
+            title="The project is seen as important. But are you?"
+            subtitle="Do people know it's you doing all this work?"
+            wide
+          />
+          <StoNote>The work can be visible while your contribution stays disconnected from it.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "desire_blocker") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<WifiOff className="h-9 w-9" />}
+            title="You didn't ask. I think I see what's happening here."
+            subtitle="Not because you don't want it, but because somewhere deep inside you is the fear that you aren't ready for it."
+            wide
+          />
+          <StoNote>This happens more often than you&apos;d think. And it&apos;s fixable.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "sponsor_power") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<Signal className="h-9 w-9" />}
+            title="Does your sponsor have real power in the decision room?"
+            wide
+          />
+          <StoNote>Sponsor strength depends on who can influence the room, not just who likes your work.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "sponsor_willing") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<Shield className="h-9 w-9" />}
+            title="Would your sponsor spend their political currency on you?"
+            subtitle="Would they put their own reputation on the line for you?"
+            wide
+          />
+          <StoNote>A sponsor with power still has to feel invested enough to use it.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "next_level") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<Target className="h-9 w-9" />}
+            title="Does your current work show that you're ready for the next level?"
+            wide
+          />
+          <StoNote>Promotion decisions need proof that others can already imagine you in the bigger role.</StoNote>
+        </div>
+      );
+    }
+
+    if (door && step === "door") {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel
+            icon={<Lightbulb className="h-9 w-9" />}
+            eyebrow="What's really going on"
+            title={doorDetails[door].name}
+            subtitle={doorDetails[door].summary}
+            wide
+          />
+          <StoNote>Here&apos;s what I think is really going on.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "result" && resultCopy && door) {
+      return (
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+          <QuestionPanel icon={<BookOpen className="h-9 w-9" />} eyebrow="Your full picture" title={resultCopy.title} subtitle={resultCopy.summary} wide />
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              ["What's actually hurting", resultCopy.pain],
+              ["Why this is happening", resultCopy.concept],
+              ["What changes this", resultCopy.program],
+            ].map(([title, copy]) => (
+              <section key={title} className="rounded-[16px] border border-[#d8e4f6] bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+                <p className="font-gotham text-[11px] font-bold uppercase tracking-[0.16em] text-[#014BAA]">{title}</p>
+                <p className="mt-3 font-gotham text-[14px] leading-6 text-[#40506c] md:text-[15px]">{copy}</p>
+              </section>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="mx-auto w-full max-w-[820px]">
+        <QuestionPanel title="Let's continue." wide />
+      </div>
+    );
+  };
 
   const shellClassName = isEmbedded
-    ? "flex min-h-[72svh] w-full flex-col overflow-hidden rounded-[28px] border border-[#d6e5fb] bg-white font-gotham shadow-[0_28px_80px_rgba(1,75,170,0.12)] sm:min-h-[760px] md:min-h-[860px] md:rounded-[36px]"
+    ? "relative mx-auto grid h-full min-h-0 w-full grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden rounded-[12px] border border-[#e6e0d7] bg-white font-gotham shadow-[0_16px_44px_rgba(15,23,42,0.09)]"
     : "pointer-events-auto fixed inset-x-0 bottom-0 flex h-[100svh] flex-col border border-[#e8e4de] bg-white shadow-[0_-18px_40px_rgba(15,15,15,0.18)] md:inset-auto md:bottom-24 md:right-7 md:h-[720px] md:w-[440px] md:rounded-[9px] md:shadow-[0_18px_50px_rgba(15,15,15,0.18)]";
 
   const botShell = (
@@ -1253,49 +1313,81 @@ export default function StoCareerBot({
       data-waitlist-reference-id={waitlistReferenceId}
       className={shellClassName}
     >
-      <header className="border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur">
-        <div className="flex h-[72px] items-center justify-between px-5 md:h-[88px] md:px-8">
-          <div className="min-w-0 truncate font-quattrocento text-[26px] font-bold leading-none tracking-[-0.03em] text-[#111111]">
-            Better <span className="text-[#014BAA]">Corporate Life</span>
-          </div>
-          <div className="ml-4 flex items-center gap-3">
-            <div className="whitespace-nowrap font-gotham text-[11px] font-bold uppercase leading-none tracking-[0.18em] text-[#90a4c3]">
-              {stepMeta[step].label}
+      <header className={isEmbedded ? "relative z-10" : "border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur"}>
+        {isEmbedded ? (
+          step === "intro" || step === "q1" || step === "empathy" ? (
+            <div className="border-b border-[#dce8f8] bg-white/80">
+              <div className="flex h-[64px] items-center justify-between px-6 md:px-12">
+                <button
+                  type="button"
+                  onClick={step === "intro" ? reset : goBack}
+                  disabled={step !== "intro" && !history.length}
+                  className="inline-flex min-w-[112px] cursor-pointer items-center gap-4 font-gotham text-[14px] font-medium text-[#050817] hover:text-[#014BAA] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                  Back
+                </button>
+                <div className="font-quattrocento text-[22px] font-bold leading-none text-[#050817] md:text-[28px]">
+                  Better <span className="text-[#014BAA]">Corporate Life</span>
+                </div>
+                <div className="min-w-[112px] text-right font-gotham text-[10px] font-bold uppercase tracking-[0.26em] text-[#5269a3] md:text-[12px]">
+                  {step === "intro" ? "Introduction" : "Your Situation"}
+                </div>
+              </div>
+              <div className="mx-6 h-[4px] bg-[#d9dee8] md:mx-12">
+                <div className={`h-full bg-[#014BAA] ${step === "intro" ? "w-[16%]" : step === "q1" ? "w-[16%]" : "w-[27%]"}`} />
+              </div>
             </div>
-            {!isEmbedded ? (
-              <button
-                type="button"
-                onClick={closeBot}
-                className="cursor-pointer rounded-[9px] px-2 py-1 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
-                aria-label="Close Sto chat"
-              >
-                Close
-              </button>
-            ) : null}
-          </div>
-        </div>
-        <div className="h-1 w-full overflow-hidden bg-[#edf4ff]">
-          <div
-            className="h-full bg-[#014BAA] transition-[width] duration-300"
-            style={{ width: `${stepMeta[step].progress}%` }}
-          />
-        </div>
+          ) : (
+            <QuestProgress step={step} />
+          )
+        ) : (
+          <>
+            <div className="flex h-[72px] items-center justify-between px-5 md:h-[88px] md:px-8">
+              <div className="min-w-0 truncate font-quattrocento text-[26px] font-bold leading-none tracking-[-0.03em] text-[#111111]">
+                Better <span className="text-[#014BAA]">Corporate Life</span>
+              </div>
+              <div className="ml-4 flex items-center gap-3">
+                <div className="whitespace-nowrap font-gotham text-[11px] font-bold uppercase leading-none tracking-[0.18em] text-[#90a4c3]">
+                  {stepMeta[step].label}
+                </div>
+                {!isEmbedded ? (
+                  <button
+                    type="button"
+                    onClick={closeBot}
+                    className="cursor-pointer rounded-[9px] px-2 py-1 text-xs font-semibold text-[#6b6760] hover:bg-[#f8f7f5]"
+                    aria-label="Close Sto chat"
+                  >
+                    Close
+                  </button>
+                ) : null}
+              </div>
+            </div>
+            <div className="h-1 w-full overflow-hidden bg-[#edf4ff]">
+              <div
+                className="h-full bg-[#014BAA] transition-[width] duration-300"
+                style={{ width: `${stepMeta[step].progress}%` }}
+              />
+            </div>
+          </>
+        )}
       </header>
 
-      <div className="flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8">
-        {renderConversation()}
+      <div className={isEmbedded ? `relative z-10 min-h-0 overflow-y-auto px-5 md:overflow-hidden md:px-12 ${step === "q1" ? "py-0" : "py-5 md:py-6"}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+        {renderVisualScreen()}
       </div>
 
-      <footer className="bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8">
+      <footer className={isEmbedded ? `${step === "intro" ? "hidden" : `relative z-10 px-5 pb-[calc(12px+env(safe-area-inset-bottom))] pt-1 md:px-12 md:pb-4`}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
         {controlsReady && step === "result" && resultCopy && door ? (
-          <div className="space-y-3">
-            <div className={`grid gap-2 ${activeDoorCtas?.secondary ? (isEmbedded ? "" : "md:grid-cols-2") : ""}`}>
+          <div className="mx-auto max-w-[980px] space-y-3">
+            <div className={`grid gap-3 ${activeDoorCtas?.secondary ? "md:grid-cols-2" : ""}`}>
               <button
                 type="button"
                 onClick={handlePrimaryCta}
                 disabled={actionState === "loading"}
-                className="cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
+                className="inline-flex cursor-pointer items-center justify-center gap-3 rounded-[14px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:py-5"
               >
+                {actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
                 {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
               </button>
               {activeDoorCtas?.secondary ? (
@@ -1310,7 +1402,7 @@ export default function StoCareerBot({
                       placement: isEmbedded ? "diagnostic_route" : "floating_bot",
                     })
                   }
-                  className="cursor-pointer rounded-[18px] border border-[#d8e4f6] bg-white px-5 py-4 text-center font-gotham text-[15px] font-bold text-[#014BAA] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] md:py-5"
+                  className="cursor-pointer rounded-[14px] border border-[#014BAA] bg-white px-5 py-4 text-center font-gotham text-[15px] font-bold text-[#014BAA] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] md:py-5"
                 >
                   {activeDoorCtas.secondary.label}
                 </a>
@@ -1322,28 +1414,41 @@ export default function StoCareerBot({
               </p>
             ) : null}
           </div>
-        ) : controlsReady ? (
-          renderControls()
-        ) : (
+        ) : controlsReady && step !== "diagnostic" ? (
+          <div className={isEmbedded ? "mx-auto max-w-[1370px]" : ""}>{renderControls()}</div>
+        ) : step !== "diagnostic" ? (
           <div className="min-h-[44px]" />
+        ) : (
+          <div />
         )}
 
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mx-auto mt-2 flex max-w-[1370px] items-center justify-between pt-1">
           <button
             type="button"
-            onClick={goBack}
-            disabled={!history.length}
-            className="cursor-pointer rounded-[12px] px-3 py-2 font-gotham text-xs font-bold text-[#7b8aa3] hover:bg-[#f3f8ff] disabled:cursor-not-allowed disabled:opacity-40"
+            onClick={step === "q1" ? reset : goBack}
+            disabled={step !== "q1" && !history.length}
+            className="inline-flex cursor-pointer items-center gap-2 rounded-[12px] px-3 py-2 font-gotham text-sm font-bold text-[#526177] hover:bg-[#f3f8ff] disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Back
+            {step === "q1" ? "Restart" : "Back"}
           </button>
-          <button
-            type="button"
-            onClick={reset}
-            className="cursor-pointer rounded-[12px] px-3 py-2 font-gotham text-xs font-bold text-[#7b8aa3] hover:bg-[#f3f8ff]"
-          >
-            Restart
-          </button>
+          {step === "q1" || step === "empathy" ? (
+            <div className="font-gotham text-sm font-medium text-[#7f8da3]">{step === "empathy" ? "2 of 5" : "1 of 5"}</div>
+          ) : step === "diagnostic" ? (
+            <div />
+          ) : null}
+          <div className="inline-flex items-center gap-2 rounded-[12px] px-3 py-2 font-gotham text-sm font-bold text-[#526177]">
+            {step === "q1" || step === "empathy" ? (
+              <>
+                <Shield className="h-4 w-4" />
+                Private & confidential
+              </>
+            ) : (
+              <button type="button" onClick={reset} className="inline-flex cursor-pointer items-center gap-2 hover:text-[#014BAA]">
+                Restart
+                <RefreshCw className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </div>
       </footer>
     </section>
@@ -1361,7 +1466,7 @@ export default function StoCareerBot({
         className="fixed bottom-[104px] right-4 z-[9998] flex h-[74px] min-w-[170px] cursor-pointer items-center gap-2 rounded-[9px] border border-[#e8e4de] bg-white px-3 shadow-[0_12px_30px_rgba(15,15,15,0.18)] transition hover:-translate-y-0.5 md:bottom-[104px] md:right-7"
         aria-label="Chat with Sto"
       >
-        <Image src={stoAvatar} alt="" width={58} height={58} className="h-[58px] w-[58px] rounded-[8px] object-cover" />
+        <Image src={stoHeadshot} alt="" width={58} height={58} className="h-[58px] w-[58px] rounded-full border border-[#d8e4f6] object-cover" />
         <span className="text-left font-gotham text-sm font-bold leading-4 text-[#0f0f0f]">
           Talk to Sto
           <span className="block text-xs font-semibold text-[#6b6760]">Career diagnostic</span>

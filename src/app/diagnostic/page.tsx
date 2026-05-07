@@ -3,8 +3,8 @@ import DiagnosticClient from "./DiagnosticClient";
 
 export default function DiagnosticPage() {
   return (
-    <main className="min-h-screen bg-white px-4 py-5 md:px-6 md:py-8">
-      <div className="mx-auto max-w-[1280px]">
+    <main className="h-svh overflow-hidden bg-white p-2 md:p-3">
+      <div className="mx-auto h-full max-w-[1400px]">
         <DiagnosticClient />
       </div>
     </main>
