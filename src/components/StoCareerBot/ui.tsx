@@ -120,8 +120,8 @@ export const IconOrb = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const StoNote = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto flex w-full max-w-[980px] items-center gap-3 rounded-[14px] border border-[#d8e4f6] bg-white/80 px-4 py-3 shadow-[0_8px_22px_rgba(17,24,39,0.04)]">
-    <Image src={stoHeadshot} alt="Sto headshot" width={48} height={48} className="h-10 w-10 shrink-0 rounded-full border border-[#d8e4f6] object-cover" />
+  <div className="mx-auto flex w-full max-w-[980px] items-center gap-3 rounded-[14px] border border-[#d8e4f6] bg-white/90 px-4 py-2.5 shadow-[0_8px_22px_rgba(17,24,39,0.04)]">
+    <Image src={stoHeadshot} alt="Sto headshot" width={44} height={44} className="h-9 w-9 shrink-0 rounded-full border border-[#d8e4f6] object-cover" />
     <p className="font-gotham text-[13px] leading-5 text-[#40506c] md:text-[14px]">
       <span className="font-bold text-[#005AE0]">Sto&apos;s note:</span> {children}
     </p>
@@ -171,11 +171,11 @@ export const DiagnosticBranchLines = () => (
 );
 
 export const DiagnosticQuestionCard = () => (
-  <section className="relative z-20 mx-auto w-full max-w-[560px] rounded-[22px] border border-[#c8dcf5] bg-white px-5 py-8 text-center shadow-[0_18px_42px_rgba(30,80,145,0.12)] md:px-10 md:py-9">
-    <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#eef5ff] text-[#005AE0] shadow-[0_10px_24px_rgba(10,87,198,0.14)]">
-      <Mountain className="h-8 w-8" />
+  <section className="relative z-20 mx-auto w-full max-w-[560px] rounded-[18px] border border-[#c8dcf5] bg-white px-5 py-4 text-center shadow-[0_14px_32px_rgba(30,80,145,0.10)] md:px-7 md:py-5">
+    <div className="mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#eef5ff] text-[#005AE0] shadow-[0_8px_18px_rgba(10,87,198,0.12)]">
+      <Mountain className="h-5 w-5" />
     </div>
-    <h2 className="mx-auto max-w-[15ch] font-quattrocento text-[28px] font-bold leading-[1.08] text-[#050817] md:text-[32px]">
+    <h2 className="mx-auto max-w-[22ch] font-quattrocento text-[25px] font-bold leading-[1.08] text-[#050817] md:text-[28px]">
       What happened with the promotion or opportunity?
     </h2>
   </section>
@@ -183,7 +183,7 @@ export const DiagnosticQuestionCard = () => (
 
 export const SituationArt = ({ id, compact = false }: { id: Q1OptionId; compact?: boolean }) => (
   <div className={`relative mx-auto w-full overflow-hidden rounded-[12px] bg-[#fffaf3] ${compact ? "aspect-[2.45/1]" : "aspect-[16/9]"}`}>
-    <Image src={situationImages[id]} alt="" fill sizes="(min-width: 768px) 560px, 100vw" className="object-cover" aria-hidden />
+    <Image src={situationImages[id]} alt="" fill sizes="(min-width: 768px) 560px, 100vw" className="object-contain" aria-hidden />
   </div>
 );
 
@@ -225,7 +225,7 @@ const OutcomePreview = ({
   title: string;
   body: string;
 }) => (
-  <section className="relative overflow-hidden rounded-[14px] border border-[#d8e6f7] bg-white text-center shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
+  <section className="relative h-full overflow-hidden rounded-[14px] border border-[#d8e6f7] bg-white text-center shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
     <div className="h-12 bg-[#edf5ff]">
       <Shield className="absolute right-5 top-3 h-6 w-6 text-white" />
     </div>
@@ -258,9 +258,9 @@ export const FormulaVisual = ({
   outcomeTitle: string;
   outcomeBody: string;
 }) => (
-  <div className="mx-auto grid w-full max-w-[980px] items-center gap-4 lg:grid-cols-[290px_minmax(0,1fr)]">
+  <div className="mx-auto grid w-full max-w-[980px] items-stretch gap-4 lg:grid-cols-[290px_minmax(0,1fr)]">
     <OutcomePreview type={kind} title={outcomeTitle} body={outcomeBody} />
-    <section className="rounded-[16px] border border-[#d8e4f6] bg-white/92 px-5 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-6">
+    <section className="flex h-full flex-col justify-center rounded-[16px] border border-[#d8e4f6] bg-white/92 px-5 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-6">
       <IconOrb>
         <Lightbulb className="h-7 w-7" />
       </IconOrb>
@@ -289,44 +289,48 @@ export const FormulaVisual = ({
 export const OutcomeChoiceCard = ({
   type,
   onClick,
+  compact = false,
 }: {
   type: "not_considered" | "considered";
   onClick: () => void;
+  compact?: boolean;
 }) => {
   const isNotConsidered = type === "not_considered";
   return (
     <button
       type="button"
       onClick={onClick}
-      className="group relative z-20 cursor-pointer overflow-visible rounded-[18px] border border-[#cbdff7] bg-white text-center shadow-[0_18px_42px_rgba(30,80,145,0.12)] transition hover:-translate-y-0.5 hover:border-[#0A7CFF] hover:shadow-[0_22px_48px_rgba(10,124,255,0.16)]"
+      className="group relative z-20 h-full cursor-pointer overflow-visible rounded-[16px] border border-[#cbdff7] bg-white text-center shadow-[0_14px_32px_rgba(30,80,145,0.10)] transition hover:-translate-y-0.5 hover:border-[#0A7CFF] hover:shadow-[0_18px_38px_rgba(10,124,255,0.14)]"
     >
-      <div className="h-[74px] rounded-t-[18px] bg-[linear-gradient(180deg,#dfefff_0%,#cfe5ff_100%)]">
-        <div className="absolute inset-x-0 top-0 h-[74px] rounded-t-[18px] opacity-35 [background-image:repeating-radial-gradient(ellipse_at_center,transparent_0,transparent_11px,rgba(10,87,198,0.22)_12px,transparent_13px)]" />
-        <span className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-[#94b6df] text-white shadow-[0_7px_14px_rgba(58,99,151,0.20)]">
-          <Shield className="h-5 w-5" />
+      <div className={`${compact ? "h-[46px]" : "h-[58px]"} rounded-t-[16px] bg-[linear-gradient(180deg,#dfefff_0%,#cfe5ff_100%)]`}>
+        <div className={`absolute inset-x-0 top-0 ${compact ? "h-[46px]" : "h-[58px]"} rounded-t-[16px] opacity-35 [background-image:repeating-radial-gradient(ellipse_at_center,transparent_0,transparent_11px,rgba(10,87,198,0.22)_12px,transparent_13px)]`} />
+        <span className={`absolute right-4 ${compact ? "top-3" : "top-4"} flex h-7 w-7 items-center justify-center rounded-full bg-[#94b6df] text-white shadow-[0_7px_14px_rgba(58,99,151,0.20)]`}>
+          <Shield className="h-4 w-4" />
         </span>
       </div>
-      <div className="relative px-6 pb-7 pt-12 md:px-8 md:pb-8">
-        <div className="absolute left-1/2 top-[-42px] flex h-[86px] w-[86px] -translate-x-1/2 items-center justify-center rounded-full border-[6px] border-white bg-white text-[#0A7CFF] shadow-[0_8px_22px_rgba(30,80,145,0.14)]">
-          <div className="flex h-[64px] w-[64px] items-center justify-center rounded-full border border-[#d8e8fb] bg-white">
-            {isNotConsidered ? <UserRoundX className="h-9 w-9" /> : <UsersRound className="h-9 w-9" />}
+      <div className={`relative px-5 ${compact ? "pb-4 pt-8" : "pb-5 pt-9"} md:px-6`}>
+        <div className={`absolute left-1/2 ${compact ? "top-[-30px] h-[60px] w-[60px]" : "top-[-34px] h-[68px] w-[68px]"} flex -translate-x-1/2 items-center justify-center rounded-full border-[5px] border-white bg-white text-[#0A7CFF] shadow-[0_8px_20px_rgba(30,80,145,0.12)]`}>
+          <div className={`flex ${compact ? "h-[44px] w-[44px]" : "h-[50px] w-[50px]"} items-center justify-center rounded-full border border-[#d8e8fb] bg-white`}>
+            {isNotConsidered ? <UserRoundX className={compact ? "h-6 w-6" : "h-7 w-7"} /> : <UsersRound className={compact ? "h-6 w-6" : "h-7 w-7"} />}
           </div>
         </div>
-        <p className="mx-auto mb-4 inline-flex rounded-md bg-[#edf5ff] px-3 py-1 font-gotham text-[10px] font-bold uppercase tracking-[0.18em] text-[#014BAA]">
+        <p className={`mx-auto ${compact ? "mb-2" : "mb-3"} inline-flex rounded-md bg-[#edf5ff] px-3 py-1 font-gotham text-[10px] font-bold uppercase tracking-[0.18em] text-[#014BAA]`}>
           {isNotConsidered ? "Outcome A" : "Outcome B"}
         </p>
-        <h3 className="mx-auto max-w-[19ch] font-quattrocento text-[23px] font-bold leading-[1.08] text-[#050817] md:text-[27px]">
+        <h3 className={`mx-auto max-w-[22ch] font-quattrocento ${compact ? "text-[21px] md:text-[23px]" : "text-[22px] md:text-[25px]"} font-bold leading-[1.08] text-[#050817]`}>
           {isNotConsidered ? "I was not even considered" : "I was considered, but someone else was chosen"}
         </h3>
-        <div className="mx-auto my-5 h-px max-w-[270px] bg-[#e8dfd2]" />
-        <p className="mx-auto max-w-[30ch] font-gotham text-[14px] leading-6 text-[#40506c]">
+        <div className={`mx-auto ${compact ? "my-3" : "my-4"} h-px max-w-[250px] bg-[#e8dfd2]`} />
+        <p className="mx-auto max-w-[32ch] font-gotham text-[13px] leading-5 text-[#40506c] md:text-[14px]">
           {isNotConsidered
             ? "You were not discussed, shortlisted, or seen as a contender."
             : "You were in the frame, but the final bet went to someone else."}
         </p>
-        <span className="mx-auto mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#dce8f8] bg-white text-[#014BAA] transition group-hover:border-[#014BAA] group-hover:bg-[#f7fbff]">
-          <ArrowRight className="h-5 w-5" />
-        </span>
+        {compact ? null : (
+          <span className="mx-auto mt-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#dce8f8] bg-white text-[#014BAA] transition group-hover:border-[#014BAA] group-hover:bg-[#f7fbff]">
+            <ArrowRight className="h-5 w-5" />
+          </span>
+        )}
       </div>
     </button>
   );
@@ -346,7 +350,7 @@ export const AnswerChoiceCard = ({
   <button
     type="button"
     onClick={onClick}
-    className={`group flex min-h-[96px] cursor-pointer items-center gap-4 rounded-[14px] border bg-white px-4 py-4 text-left shadow-[0_8px_20px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#014BAA] hover:bg-[#f8fbff] ${
+    className={`group flex h-full min-h-[96px] cursor-pointer items-center gap-4 rounded-[14px] border bg-white px-4 py-4 text-left shadow-[0_8px_20px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#014BAA] hover:bg-[#f8fbff] ${
       tone === "yes" ? "border-[#014BAA]" : "border-[#d8e4f6]"
     }`}
   >

@@ -1,7 +1,7 @@
 import diagnosticHardWorkWide from "@/assets/diagnostic-hard-work.webp";
-import diagnosticManagerInvisibleWide from "@/assets/diagnostic-manager-invisible-wide.webp";
-import diagnosticMissedOpportunityWide from "@/assets/diagnostic-missed-opportunity-wide.webp";
-import diagnosticSelfDoubtWide from "@/assets/diagnostic-self-doubt-wide.webp";
+import diagnosticManagerInvisible from "@/assets/diagnostic-manager-invisible.webp";
+import diagnosticMissedOpportunity from "@/assets/diagnostic-missed-opportunity.webp";
+import diagnosticSelfDoubt from "@/assets/diagnostic-self-doubt.webp";
 import type { DiagnosticDoorId, Q1OptionId } from "@/data/stoConversation";
 import type { BotStep } from "./types";
 
@@ -60,7 +60,7 @@ export const q1ShortLabels: Record<Q1OptionId, string> = {
 
 export const situationImages: Record<Q1OptionId, typeof diagnosticHardWorkWide> = {
   hard_work: diagnosticHardWorkWide,
-  invisible: diagnosticManagerInvisibleWide,
-  missed_opportunity: diagnosticMissedOpportunityWide,
-  self_doubt: diagnosticSelfDoubtWide,
+  invisible: diagnosticManagerInvisible,
+  missed_opportunity: diagnosticMissedOpportunity,
+  self_doubt: diagnosticSelfDoubt,
 };

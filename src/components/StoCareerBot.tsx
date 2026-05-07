@@ -41,7 +41,6 @@ import type { BotStep, StoCareerBotProps } from "./StoCareerBot/types";
 import {
   AnswerChoiceCard,
   BotMessage,
-  DiagnosticBranchLines,
   DiagnosticMapBackground,
   DiagnosticQuestionCard,
   FormulaCard,
@@ -50,7 +49,6 @@ import {
   OutcomeChoiceCard,
   QuestionPanel,
   QuestProgress,
-  SituationArt,
   StoNote,
   TypingIndicator,
   UserChoice,
@@ -367,7 +365,7 @@ export default function StoCareerBot({
     if (step === "sponsor_power") {
       return [
         <PandaHeader key="panda" />,
-        <BotMessage key="sponsor-power-question">Does your sponsor have real power in the decision room?</BotMessage>,
+        <BotMessage key="sponsor-power-question">Does your sponsor have real poer in the room where this decision gets made?</BotMessage>,
       ];
     }
 
@@ -376,7 +374,7 @@ export default function StoCareerBot({
         <PandaHeader key="panda" />,
         <UserChoice key="sponsor-power-yes">Yes, they do</UserChoice>,
         <BotMessage key="sponsor-willing-question">
-          Would your sponsor spend their political currency on you? Put their own reputation on the line for you?
+          Your sponsor has power. But would they spend it on you?
         </BotMessage>,
       ];
     }
@@ -386,27 +384,27 @@ export default function StoCareerBot({
         <PandaHeader key="panda" />,
         <UserChoice key="sponsor-willing-yes">Yes, they would</UserChoice>,
         <BotMessage key="next-level-question">
-          Does your work output in the current role show others you&apos;re ready for the next level?
+          Your sponsor is willing to back you. But does your current output already show the next level?
         </BotMessage>,
       ];
     }
 
     if (step === "result" && resultCopy && door) {
       return [
-        <div key="result-card" className="grid gap-4 md:grid-cols-2">
-          <section className="rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:col-span-2 md:px-6 md:py-6">
+        <div key="result-card" className="grid items-stretch gap-4 md:grid-cols-2">
+          <section className="h-full rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:col-span-2 md:px-6 md:py-6">
             <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
               Where you are
             </p>
             <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.summary}</p>
           </section>
-          <section className="rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
+          <section className="h-full rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
             <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
               What&apos;s actually hurting
             </p>
             <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.pain}</p>
           </section>
-          <section className="rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
+          <section className="h-full rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
             <p className="mb-4 inline-flex rounded-full bg-[#014BAA] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
               {resultCopy.title}
             </p>
@@ -415,7 +413,7 @@ export default function StoCareerBot({
             </h3>
             <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.concept}</p>
           </section>
-          <section className="rounded-[22px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.08)] md:px-6 md:py-6">
+          <section className="h-full rounded-[22px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.08)] md:px-6 md:py-6">
             <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
               What changes this
             </p>
@@ -454,6 +452,13 @@ export default function StoCareerBot({
   useEffect(() => {
     if (!isOpen) return;
 
+    if (isEmbedded) {
+      setVisibleMessageCount(screenItems.length);
+      setControlsVisible(true);
+      setIsTyping(false);
+      return;
+    }
+
     setVisibleMessageCount(0);
     setControlsVisible(false);
     setIsTyping(true);
@@ -487,7 +492,7 @@ export default function StoCareerBot({
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer));
     };
-  }, [isOpen, screenItems.length, step]);
+  }, [isEmbedded, isOpen, screenItems.length, step]);
 
   const goTo = (nextStep: BotStep) => {
     setHistory((current) => [...current, step]);
@@ -622,7 +627,16 @@ export default function StoCareerBot({
     }
 
     if (step === "q1") {
-      return null;
+      return (
+        <button
+          type="button"
+          disabled={!q1}
+          className="min-h-12 w-full cursor-pointer rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[18px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:min-h-[52px]"
+          onClick={() => goTo("empathy")}
+        >
+          Continue
+        </button>
+      );
     }
 
     if (step === "empathy") {
@@ -656,7 +670,7 @@ export default function StoCareerBot({
     if (step === "desire") {
       return (
         <div className="mx-auto max-w-[980px] space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid items-stretch gap-6 md:grid-cols-2">
             <AnswerChoiceCard
               tone="yes"
               title="Yes, I had made it clear early."
@@ -676,7 +690,6 @@ export default function StoCareerBot({
               }}
             />
           </div>
-          <StoNote>Performance shows what you did. Intent shows what you want next.</StoNote>
         </div>
       );
     }
@@ -698,7 +711,7 @@ export default function StoCareerBot({
 
     if (step === "importance") {
       return (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid items-stretch gap-3 md:grid-cols-2">
           <AnswerChoiceCard
             tone="yes"
             title="Yes, it is clearly important to them."
@@ -723,7 +736,7 @@ export default function StoCareerBot({
 
     if (step === "personal_seen") {
       return (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid items-stretch gap-3 md:grid-cols-2">
           <AnswerChoiceCard
             tone="yes"
             title="Yes, they do."
@@ -756,7 +769,7 @@ export default function StoCareerBot({
 
     if (step === "sponsor_power") {
       return (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid items-stretch gap-3 md:grid-cols-2">
           <AnswerChoiceCard
             tone="yes"
             title="Yes, they do."
@@ -781,7 +794,7 @@ export default function StoCareerBot({
 
     if (step === "sponsor_willing") {
       return (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid items-stretch gap-3 md:grid-cols-2">
           <AnswerChoiceCard
             tone="yes"
             title="Yes, they would."
@@ -806,7 +819,7 @@ export default function StoCareerBot({
 
     if (step === "next_level") {
       return (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid items-stretch gap-3 md:grid-cols-2">
           <AnswerChoiceCard
             tone="yes"
             title="Yes, it does."
@@ -864,12 +877,12 @@ export default function StoCareerBot({
 
     if (step === "intro") {
       return (
-        <div className="mx-auto grid h-full w-full max-w-[1224px] items-center gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+        <div className="mx-auto grid h-full w-full max-w-[1224px] items-stretch gap-5 md:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)]">
           <section className="relative min-h-[360px] overflow-hidden rounded-[16px] border border-[#d8e4f6] bg-[linear-gradient(135deg,#eef6ff_0%,#ffffff_58%,#f6fbff_100%)] px-5 py-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:min-h-[460px] md:px-8 md:py-7">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_24%,rgba(10,87,198,0.10)_0%,rgba(10,87,198,0.03)_24%,transparent_55%)]" />
             <div className="relative z-10 flex h-full items-end justify-center">
               <Image src={stoComplete} alt="Sto headshot" width={360} height={360} priority className="h-[300px] w-[300px] rounded-full object-cover drop-shadow-[0_22px_34px_rgba(15,23,42,0.14)] md:h-[390px] md:w-[390px]" />
-              <div className="absolute right-3 top-[22%] md:right-8">
+              <div className="absolute bottom-16 right-3 md:bottom-20 md:right-8">
                 <span className="mb-2 inline-flex rounded-full bg-[#e8f2ff] px-3 py-1 font-gotham text-[10px] font-bold uppercase tracking-[0.16em] text-[#0A57C6]">
                   Meet Sto
                 </span>
@@ -933,7 +946,7 @@ export default function StoCareerBot({
                 Let&apos;s get real about what&apos;s going on for you at work.
               </div>
             </div>
-            <h2 className="mt-4 max-w-[25ch] font-quattrocento text-[30px] font-bold leading-[1.02] text-[#050817] md:text-[38px] xl:text-[42px]">
+            <h2 className="mt-4 max-w-[25ch] font-quattrocento text-[30px] font-bold leading-[1.02] text-[#050817] md:text-[36px] xl:text-[40px]">
               Which of these feels closest to what&apos;s happening at work right now?
             </h2>
             <p className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#5269a3] md:text-[15px]">
@@ -941,12 +954,12 @@ export default function StoCareerBot({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-7 md:gap-y-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
             {q1Options.map((option) => (
               <button
                 key={option.id}
                 type="button"
-                className={`relative flex min-h-[150px] cursor-pointer flex-col overflow-hidden rounded-[17px] border bg-white text-center shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] md:min-h-[176px] ${
+                className={`relative flex cursor-pointer flex-col overflow-hidden rounded-[17px] border bg-white text-center shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
                   q1 === option.id ? "border-2 border-[#014BAA]" : "border-[#e6e0d7]"
                 }`}
                 onClick={() => {
@@ -960,29 +973,21 @@ export default function StoCareerBot({
                     <Check className="h-4 w-4" strokeWidth={3} />
                   </span>
                 ) : null}
-                <div className="relative h-[110px] w-full bg-[#fffaf3] md:h-[128px]">
+                <div className="relative h-[150px] w-full bg-[#fffaf3] md:h-[170px] xl:h-[188px]">
                   <img
                     src={situationImages[option.id].src}
                     alt=""
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain"
                     aria-hidden
                   />
                 </div>
-                <span className="flex min-h-[40px] items-center justify-center px-4 font-gotham text-[14px] font-bold leading-5 text-[#111827] md:text-[15px]">
+                <span className="flex min-h-[46px] items-center justify-center px-4 font-gotham text-[13px] font-bold leading-5 text-[#111827] md:text-[14px]">
                   {q1ShortLabels[option.id]}
                 </span>
               </button>
             ))}
           </div>
 
-          <button
-            type="button"
-            disabled={!q1}
-            className="min-h-[52px] w-full cursor-pointer rounded-[10px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[18px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
-            onClick={() => goTo("empathy")}
-          >
-            Continue
-          </button>
         </div>
       );
     }
@@ -995,31 +1000,33 @@ export default function StoCareerBot({
         .filter(Boolean);
 
       return (
-        <div className="mx-auto grid h-full w-full max-w-[1224px] items-center gap-5 md:grid-cols-[320px_minmax(0,1fr)]">
-          <aside>
-            <p className="mb-3 font-gotham text-[11px] font-bold uppercase tracking-[0.16em] text-[#014BAA]">You selected</p>
-            <div className="rounded-[16px] border border-[#d8e4f6] bg-white p-3 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
-              <SituationArt id={q1} />
-              <p className="mt-4 font-gotham text-[14px] font-bold leading-5 text-[#202939]">{q1ShortLabels[q1]}</p>
+        <div className="mx-auto grid h-full w-full max-w-[1224px] items-start gap-5 md:grid-cols-[320px_minmax(0,1fr)]">
+          <aside className="flex flex-col">
+            <div className="flex h-[360px] flex-col rounded-[16px] border border-[#d8e4f6] bg-white p-4 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+              <p className="mb-3 text-left font-gotham text-[11px] font-bold uppercase tracking-[0.16em] text-[#014BAA]">You selected</p>
+              <div className="relative min-h-0 flex-1 overflow-hidden rounded-[12px] bg-[#fffaf3]">
+                <Image src={situationImages[q1]} alt="" fill sizes="(min-width: 768px) 320px, 100vw" className="object-contain" aria-hidden />
+              </div>
+              <p className="flex min-h-[58px] items-center justify-center px-2 font-gotham text-[14px] font-bold leading-5 text-[#202939]">{q1ShortLabels[q1]}</p>
             </div>
           </aside>
 
-          <section>
-            <div className="rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
-              <div className="mb-5 flex items-center gap-3">
+          <section className="flex flex-col">
+            <div className="flex h-[360px] flex-col rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
+              <div className="mb-4 flex items-center gap-3">
                 <Image src={stoHeadshot} alt="Sto headshot" width={56} height={56} className="h-12 w-12 shrink-0 rounded-full border border-[#d8e4f6] object-cover" />
                 <div>
                   <p className="font-gotham text-[14px] font-bold text-[#101828]">Sto</p>
                   <p className="font-gotham text-[13px] text-[#336bd6]">Your guide</p>
                 </div>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {empathySentences.map((sentence) => (
-                  <p key={sentence} className="font-quattrocento text-[26px] font-bold leading-[1.22] text-[#101828] md:text-[32px]">
+                  <p key={sentence} className="font-quattrocento text-[24px] font-bold leading-[1.16] text-[#101828] md:text-[28px]">
                     {sentence}
                   </p>
                 ))}
-                <p className="font-quattrocento text-[28px] font-bold leading-tight text-[#101828] md:text-[34px]">
+                <p className="font-quattrocento text-[26px] font-bold leading-tight text-[#101828] md:text-[30px]">
                   Let&apos;s go one layer deeper.
                 </p>
               </div>
@@ -1037,7 +1044,19 @@ export default function StoCareerBot({
 
       return (
         <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-4">
-          <div className="grid min-h-0 items-stretch gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+          <div className="grid min-h-0 items-stretch gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+            <div className="relative min-h-[240px] overflow-hidden rounded-[16px] border border-[#d8e4f6] bg-[#fffaf3] shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:min-h-[260px]">
+              <div className="absolute inset-5 md:inset-7">
+                <Image
+                  src={diagnosticMountainPeakWide}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 480px"
+                  className="object-contain"
+                  aria-hidden
+                />
+              </div>
+            </div>
             <section className="rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
               <PandaHeader />
               <h2 className="max-w-[19ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#050817] md:text-[38px]">
@@ -1047,16 +1066,6 @@ export default function StoCareerBot({
                 This helps Sto understand what progress would look like for you.
               </p>
             </section>
-            <div className="relative min-h-[280px] overflow-hidden rounded-[16px] border border-[#d8e4f6] bg-[#fffaf3] shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
-              <Image
-                src={diagnosticMountainPeakWide}
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 92vw, 620px"
-                className="object-cover"
-                aria-hidden
-              />
-            </div>
           </div>
 
           <label className="block font-gotham text-[11px] font-bold uppercase leading-[1.4] tracking-[0.18em] text-[#014BAA]">
@@ -1100,14 +1109,14 @@ export default function StoCareerBot({
 
     if (step === "diagnostic") {
       return (
-        <div className="relative mx-auto flex h-full min-h-[620px] w-full max-w-[1180px] flex-col justify-center overflow-hidden rounded-[24px] px-5 py-5 md:min-h-0 md:px-8 md:py-7">
+        <div className="relative mx-auto flex h-full w-full max-w-[1180px] flex-col justify-start overflow-hidden rounded-[24px] px-4 py-1 md:px-8 md:py-2">
           <DiagnosticMapBackground />
-          <div className="relative z-10 mx-auto flex w-full max-w-[900px] flex-col items-center">
+          <div className="relative z-10 mx-auto flex w-full max-w-[780px] flex-col items-center gap-3">
             <DiagnosticQuestionCard />
-            <DiagnosticBranchLines />
-            <div className="mt-9 grid w-full max-w-[860px] gap-6 md:mt-[128px] md:grid-cols-2 md:gap-16">
+            <div className="grid w-full items-stretch gap-4 md:grid-cols-2 md:gap-5">
               <OutcomeChoiceCard
                 type="not_considered"
+                compact
                 onClick={() => {
                   setDiagnosticPath("not_considered");
                   trackBotEvent("sto_diagnostic_answered", { answer: "not_considered", q1 });
@@ -1116,6 +1125,7 @@ export default function StoCareerBot({
               />
               <OutcomeChoiceCard
                 type="considered"
+                compact
                 onClick={() => {
                   setDiagnosticPath("considered");
                   trackBotEvent("sto_diagnostic_answered", { answer: "considered", q1 });
@@ -1123,7 +1133,7 @@ export default function StoCareerBot({
                 }}
               />
             </div>
-            <div className="relative z-20 mt-6 flex w-full justify-center">
+            <div className="relative z-20 flex w-full justify-center">
               <StoNote>Pick the version closest to what happened. The next path changes based on your choice.</StoNote>
             </div>
           </div>
@@ -1222,7 +1232,7 @@ export default function StoCareerBot({
         <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
           <QuestionPanel
             icon={<Signal className="h-9 w-9" />}
-            title="Does your sponsor have real power in the decision room?"
+            title="Does your sponsor have real poer in the room where this decision gets made?"
             wide
           />
           <StoNote>Sponsor strength depends on who can influence the room, not just who likes your work.</StoNote>
@@ -1235,8 +1245,7 @@ export default function StoCareerBot({
         <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
           <QuestionPanel
             icon={<Shield className="h-9 w-9" />}
-            title="Would your sponsor spend their political currency on you?"
-            subtitle="Would they put their own reputation on the line for you?"
+            title="Your sponsor has power. But would they spend it on you?"
             wide
           />
           <StoNote>A sponsor with power still has to feel invested enough to use it.</StoNote>
@@ -1249,7 +1258,7 @@ export default function StoCareerBot({
         <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
           <QuestionPanel
             icon={<Target className="h-9 w-9" />}
-            title="Does your current work show that you're ready for the next level?"
+            title="Your sponsor is willing to back you. But does your current output already show the next level?"
             wide
           />
           <StoNote>Promotion decisions need proof that others can already imagine you in the bigger role.</StoNote>
