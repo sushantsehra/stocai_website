@@ -8,22 +8,29 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   ArrowLeft,
+  BadgeCheck,
   BookOpen,
   Check,
   Clock3,
   Compass,
-  Eye,
+  Footprints,
+  HandHeart,
   Lightbulb,
   Loader2,
+  MoveUpRight,
+  Network,
   RefreshCw,
   Shield,
   Signal,
+  Sparkles,
   Target,
-  UserRound,
+  Text,
+  UserSquare,
   WifiOff,
 } from "lucide-react";
 import stoHeadshot from "@/assets/sto-headshot.png";
 import stoComplete from "@/assets/panda_main.png";
+import diagnosticStoBlueThinking from "@/assets/diagnostic-sto-blue-thinking.webp";
 import diagnosticMountainPeakWide from "@/assets/diagnostic-mountain-peak-wide.webp";
 import {
   buildResultCopy,
@@ -35,7 +42,7 @@ import {
   Q1OptionId,
 } from "@/data/stoConversation";
 import { trackBotEvent } from "./StoCareerBot/analytics";
-import { booleanAnswerLabel, getDoorCtas, q1ShortLabels, situationImages, stepMeta, whatsappNumber } from "./StoCareerBot/config";
+import { booleanAnswerLabel, getDoorCtas, q1ShortLabels, situationCardImages, situationImages, stepMeta, whatsappNumber } from "./StoCareerBot/config";
 import { useBotSessionPersistence, useStoPayment } from "./StoCareerBot/hooks";
 import type { BotStep, StoCareerBotProps } from "./StoCareerBot/types";
 import {
@@ -53,6 +60,280 @@ import {
   TypingIndicator,
   UserChoice,
 } from "./StoCareerBot/ui";
+
+const DecisionFactorCard = ({
+  tone,
+  icon,
+  title,
+  description,
+  compact = false,
+}: {
+  tone: "blue" | "gold";
+  icon: React.ReactNode;
+  title: string;
+  description?: string;
+  compact?: boolean;
+}) => {
+  const isBlue = tone === "blue";
+  return (
+    <div
+      className={`flex items-center rounded-[10px] border bg-white ${
+        compact ? "gap-3 px-4 py-3" : "gap-5 px-5 py-5"
+      } ${isBlue ? "border-[#b8d2ff] text-[#0057D9]" : "border-[#e9d8bd] text-[#b27622]"}`}
+    >
+      <div className={`shrink-0 ${compact ? "h-9 w-9" : "h-14 w-14"}`}>{icon}</div>
+      <div className="min-w-0 text-left">
+        <p className={`font-quattrocento font-bold leading-[1.05] text-[#070b2f] ${compact ? "text-[14px]" : "text-[22px] md:text-[24px]"}`}>
+          {title}
+        </p>
+        {description ? (
+          <p className="mt-1 font-gotham text-[11px] font-medium leading-4 text-[#1f2937] md:text-[12px]">{description}</p>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
+const ConsideredDecisionTableScreen = () => (
+  <div className="relative mx-auto grid h-full min-h-[520px] w-full max-w-[1224px] items-center gap-4 overflow-hidden rounded-[16px] px-2 py-2 md:grid-cols-[210px_minmax(0,1fr)] md:px-0 md:py-0">
+    <DiagnosticMapBackground />
+    <aside className="relative z-10 hidden h-full min-h-[500px] flex-col items-center justify-center md:flex">
+      <div className="relative mb-3 rounded-[18px] border border-[#eadcc8] bg-white px-6 py-4 text-center font-gotham text-[14px] font-medium leading-5 text-[#111827] shadow-[0_10px_24px_rgba(71,55,34,0.08)] after:absolute after:bottom-[-12px] after:left-1/2 after:h-6 after:w-6 after:-translate-x-1/2 after:rotate-45 after:border-b after:border-r after:border-[#eadcc8] after:bg-white">
+        You made it to
+        <br />
+        the decision table.
+      </div>
+      <Image src={diagnosticStoBlueThinking} alt="Sto thinking" width={170} height={170} className="h-[178px] w-[178px] object-contain drop-shadow-[0_18px_28px_rgba(15,23,42,0.10)]" />
+      <p className="mt-1 font-quattrocento text-[22px] font-bold leading-none text-[#070b2f]">Sto</p>
+      <p className="mt-1 font-gotham text-[13px] text-[#4b5563]">Your guide</p>
+      <div className="mt-3 h-px w-9 bg-[#b27622]" />
+    </aside>
+
+    <section className="relative z-10 rounded-[20px] border border-[#e8e2da] bg-white px-5 py-6 text-center shadow-[0_18px_42px_rgba(15,23,42,0.08)] md:px-10 md:py-8">
+      <p className="font-gotham text-[11px] font-bold uppercase tracking-[0.34em] text-[#b27622]">Considered, Not Chosen</p>
+      <h1 className="mx-auto mt-4 max-w-[22ch] font-quattrocento text-[34px] font-bold leading-[1.02] text-[#070b2f] md:text-[48px]">
+        You made it to the decision table. Now let&apos;s see what tipped the decision.
+      </h1>
+      <p className="mx-auto mt-4 max-w-[63ch] font-gotham text-[14px] font-medium leading-6 text-[#303642] md:text-[15px]">
+        Being considered usually means your performance and visibility were strong enough to enter the promotion conversation. But getting picked often depends on two final signals.
+      </p>
+
+      <div className="mt-6 flex flex-col items-center justify-center gap-4 md:flex-row md:gap-5">
+        <p className="font-quattrocento text-[34px] font-bold leading-[0.95] text-[#070b2f] md:text-[40px]">
+          To be
+          <br />
+          picked
+        </p>
+        <span className="font-gotham text-[38px] font-bold leading-none text-[#070b2f]">=</span>
+        <DecisionFactorCard
+          tone="blue"
+          icon={<HandHeart className="h-full w-full" strokeWidth={1.8} />}
+          title="Sponsor Strength"
+        />
+        <span className="font-gotham text-[40px] font-medium leading-none text-[#070b2f]">x</span>
+        <DecisionFactorCard
+          tone="gold"
+          icon={
+            <span className="relative block h-full w-full">
+              <Footprints className="absolute left-0 top-1 h-[60%] w-[60%]" strokeWidth={1.8} />
+              <MoveUpRight className="absolute bottom-0 right-0 h-[62%] w-[62%]" strokeWidth={1.8} />
+            </span>
+          }
+          title="Next-Level Signal"
+        />
+      </div>
+
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <DecisionFactorCard
+          compact
+          tone="blue"
+          icon={<HandHeart className="h-full w-full" strokeWidth={1.8} />}
+          title="Sponsor Strength"
+          description="Who goes to bat for you - and with what impact."
+        />
+        <DecisionFactorCard
+          compact
+          tone="gold"
+          icon={
+            <span className="relative block h-full w-full">
+              <Footprints className="absolute left-0 top-1 h-[62%] w-[62%]" strokeWidth={1.8} />
+              <MoveUpRight className="absolute bottom-0 right-0 h-[62%] w-[62%]" strokeWidth={1.8} />
+            </span>
+          }
+          title="Next-Level Signal"
+          description="Whether leaders can already see you in the next role."
+        />
+      </div>
+
+      <p className="mt-6 font-gotham text-[15px] font-medium leading-6 text-[#303642]">
+        Let&apos;s work out what happened at that moment of decision.
+      </p>
+    </section>
+  </div>
+);
+
+const EarlySignalChoice = ({
+  tone,
+  title,
+  description,
+  icon,
+  onClick,
+}: {
+  tone: "yes" | "no";
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}) => {
+  const isYes = tone === "yes";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group flex min-h-[116px] cursor-pointer items-center gap-5 rounded-[14px] border bg-white px-5 py-5 text-left shadow-[0_12px_28px_rgba(15,23,42,0.05)] transition hover:-translate-y-0.5 ${
+        isYes ? "border-[#0A57C6] hover:shadow-[0_16px_34px_rgba(10,87,198,0.12)]" : "border-[#eadcc8] hover:border-[#d9c4a8]"
+      }`}
+    >
+      <span className={`flex h-[68px] w-[68px] shrink-0 items-center justify-center rounded-full ${isYes ? "bg-[#f3eadf] text-[#b27622]" : "bg-[#f1f3f6] text-[#526177]"}`}>
+        {icon}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-quattrocento text-[28px] font-bold leading-none text-[#070b2f]">{title}</span>
+        <span className="mt-2 block max-w-[29ch] font-gotham text-[14px] font-medium leading-5 text-[#20315f]">{description}</span>
+      </span>
+      <ArrowRight className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${isYes ? "text-[#0057D9]" : "text-[#8c98aa]"}`} />
+    </button>
+  );
+};
+
+const ImportanceCheckPanel = () => (
+  <section className="mx-auto w-full max-w-[980px] rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
+    <div className="mx-auto flex h-10 w-10 items-center justify-center text-[#0057D9]">
+      <BadgeCheck className="h-9 w-9" strokeWidth={1.7} />
+    </div>
+    <p className="mt-3 font-gotham text-[12px] font-bold uppercase tracking-[0.18em] text-[#0057D9]">Importance Check</p>
+    <div className="mx-auto mt-4 flex max-w-[520px] items-center justify-center gap-4 text-[#0057D9]">
+      <div className="flex items-center gap-3">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
+          <Network className="h-8 w-8" strokeWidth={1.7} />
+        </span>
+        <span className="font-quattrocento text-[18px] font-bold text-[#070b2f] md:text-[20px]">Leadership</span>
+      </div>
+      <div className="flex min-w-[78px] flex-1 items-center justify-center" aria-hidden>
+        <div className="h-0 w-full max-w-[96px] border-t-2 border-dashed border-[#5d91f1]" />
+        <ArrowRight className="-ml-4 h-6 w-6 shrink-0 text-[#0057D9]" strokeWidth={2.2} />
+      </div>
+      <div className="flex items-center gap-3">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-[10px] border border-[#b8d2ff] bg-[#f7fbff]">
+          <Text className="h-8 w-8" strokeWidth={1.7} />
+        </span>
+        <span className="font-quattrocento text-[18px] font-bold text-[#070b2f] md:text-[20px]">Project</span>
+      </div>
+    </div>
+    <h2 className="mx-auto mt-5 max-w-[28ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#050817] md:text-[38px]">
+      Does leadership care about this work?
+    </h2>
+    <p className="mx-auto mt-4 max-w-[48ch] font-gotham text-[15px] font-medium leading-6 text-[#20315f] md:text-[16px]">
+      Is the project seen as important by leaders who influence promotion decisions?
+    </p>
+  </section>
+);
+
+const ImportanceChoice = ({
+  tone,
+  title,
+  description,
+  onClick,
+}: {
+  tone: "yes" | "no";
+  title: string;
+  description: string;
+  onClick: () => void;
+}) => {
+  const isYes = tone === "yes";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0A57C6] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+    >
+      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#070b2f]">{title}</span>
+      <span className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#20315f]">{description}</span>
+      <span className={`relative mt-4 flex h-[54px] w-[104px] items-center justify-center ${isYes ? "text-[#0057D9]" : "text-[#8c8f94]"}`}>
+        <Network className="h-14 w-14" strokeWidth={1.75} />
+        <span className="absolute inset-y-2 left-0 w-7 rounded-full border-l border-current opacity-60" />
+        <span className="absolute inset-y-2 right-0 w-7 rounded-full border-r border-current opacity-60" />
+        {isYes ? <Sparkles className="absolute bottom-0 right-5 h-5 w-5" strokeWidth={1.8} /> : null}
+      </span>
+    </button>
+  );
+};
+
+const OwnershipCheckPanel = () => (
+  <section className="mx-auto w-full max-w-[980px] rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
+    <div className="mx-auto flex h-10 w-10 items-center justify-center text-[#0057D9]">
+      <BadgeCheck className="h-9 w-9" strokeWidth={1.7} />
+    </div>
+    <p className="mt-3 font-gotham text-[12px] font-bold uppercase tracking-[0.18em] text-[#0057D9]">Ownership Check</p>
+    <div className="mx-auto mt-4 flex max-w-[500px] items-center justify-center gap-4 text-[#0057D9]">
+      <div className="flex items-center gap-3">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
+          <Text className="h-8 w-8" strokeWidth={1.7} />
+        </span>
+        <span className="font-quattrocento text-[18px] font-bold text-[#070b2f] md:text-[20px]">Project</span>
+      </div>
+      <div className="flex min-w-[82px] flex-1 items-center justify-center" aria-hidden>
+        <div className="h-0 w-full max-w-[104px] border-t-2 border-dashed border-[#5d91f1]" />
+        <ArrowRight className="-ml-4 h-6 w-6 shrink-0 text-[#0057D9]" strokeWidth={2.2} />
+      </div>
+      <div className="flex items-center gap-3">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
+          <UserSquare className="h-8 w-8" strokeWidth={1.7} />
+        </span>
+        <span className="font-quattrocento text-[18px] font-bold text-[#070b2f] md:text-[20px]">You</span>
+      </div>
+    </div>
+    <h2 className="mx-auto mt-5 max-w-[30ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#050817] md:text-[38px]">
+      The project matters. Are you linked to it?
+    </h2>
+    <p className="mx-auto mt-4 max-w-[39ch] font-gotham text-[15px] font-medium leading-6 text-[#20315f] md:text-[16px]">
+      When leaders think of this work, do they clearly connect it to you?
+    </p>
+  </section>
+);
+
+const OwnershipChoice = ({
+  tone,
+  title,
+  description,
+  onClick,
+}: {
+  tone: "yes" | "no";
+  title: string;
+  description: string;
+  onClick: () => void;
+}) => {
+  const isYes = tone === "yes";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0A57C6] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+    >
+      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#070b2f]">{title}</span>
+      <span className="mt-2 max-w-[30ch] font-gotham text-[14px] font-medium leading-5 text-[#20315f]">{description}</span>
+      <span className={`relative mt-4 flex h-[54px] w-[142px] items-center justify-center ${isYes ? "text-[#0057D9]" : "text-[#8c8f94]"}`}>
+        <Text className="absolute left-4 h-12 w-12" strokeWidth={1.75} />
+        <div className="h-0 w-11 border-t-2 border-dashed border-current opacity-70" />
+        <UserSquare className={`absolute right-4 h-10 w-10 ${isYes ? "" : "opacity-55"}`} strokeWidth={1.75} />
+        <span className="absolute inset-y-2 left-0 w-6 rounded-full border-l border-current opacity-60" />
+        <span className="absolute inset-y-2 right-0 w-6 rounded-full border-r border-current opacity-60" />
+        {isYes ? <Sparkles className="absolute bottom-0 right-2 h-5 w-5" strokeWidth={1.8} /> : null}
+      </span>
+    </button>
+  );
+};
+
 export default function StoCareerBot({
   variant = "floating",
   waitlistId,
@@ -631,7 +912,7 @@ export default function StoCareerBot({
         <button
           type="button"
           disabled={!q1}
-          className="min-h-12 w-full cursor-pointer rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[18px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:min-h-[52px]"
+          className="min-h-[46px] w-full cursor-pointer rounded-[8px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
           onClick={() => goTo("empathy")}
         >
           Continue
@@ -669,27 +950,35 @@ export default function StoCareerBot({
 
     if (step === "desire") {
       return (
-        <div className="mx-auto max-w-[980px] space-y-6">
-          <div className="grid items-stretch gap-6 md:grid-cols-2">
-            <AnswerChoiceCard
+        <div className="mx-auto max-w-[980px] space-y-5">
+          <div className="grid items-stretch gap-5 md:grid-cols-2">
+            <EarlySignalChoice
               tone="yes"
-              title="Yes, I had made it clear early."
+              title="Yes"
               description="I had made it clear early."
+              icon={
+                <span className="relative flex h-10 w-10 items-center justify-center">
+                  <Signal className="absolute h-10 w-10" strokeWidth={1.8} />
+                  <Check className="absolute bottom-0 h-5 w-5 rounded-full border border-current bg-white" strokeWidth={2.4} />
+                </span>
+              }
               onClick={() => {
                 setDesireAskedEarly(true);
                 goTo("importance");
               }}
             />
-            <AnswerChoiceCard
+            <EarlySignalChoice
               tone="no"
-              title="No, I mentioned it late or assumed they knew."
+              title="No"
               description="I mentioned it late or assumed they knew."
+              icon={<WifiOff className="h-10 w-10" strokeWidth={1.8} />}
               onClick={() => {
                 setDesireAskedEarly(false);
                 goTo("desire_blocker");
               }}
             />
           </div>
+          <StoNote>Performance shows what you did. Intent shows what you want next.</StoNote>
         </div>
       );
     }
@@ -711,58 +1000,69 @@ export default function StoCareerBot({
 
     if (step === "importance") {
       return (
-        <div className="grid items-stretch gap-3 md:grid-cols-2">
-          <AnswerChoiceCard
-            tone="yes"
-            title="Yes, it is clearly important to them."
-            description="Leadership cares about the outcomes."
-            onClick={() => {
-              setImportanceVisible(true);
-              goTo("personal_seen");
-            }}
-          />
-          <AnswerChoiceCard
-            tone="no"
-            title="No, it is not visible enough to leadership."
-            description="The work may not be linked to a priority they track."
-            onClick={() => {
-              setImportanceVisible(false);
-              revealDoor("story_of_work");
-            }}
-          />
+        <div className="mx-auto max-w-[980px] space-y-5">
+          <div className="grid items-stretch gap-5 md:grid-cols-2">
+            <ImportanceChoice
+              tone="yes"
+              title="Yes"
+              description="It's clearly important to them."
+              onClick={() => {
+                setImportanceVisible(true);
+                goTo("personal_seen");
+              }}
+            />
+            <ImportanceChoice
+              tone="no"
+              title="No"
+              description="I'm not sure they see the value."
+              onClick={() => {
+                setImportanceVisible(false);
+                revealDoor("story_of_work");
+              }}
+            />
+          </div>
+          <StoNote>Visibility works only when the work matters to people who decide.</StoNote>
         </div>
       );
     }
 
     if (step === "personal_seen") {
       return (
-        <div className="grid items-stretch gap-3 md:grid-cols-2">
-          <AnswerChoiceCard
-            tone="yes"
-            title="Yes, they do."
-            description="People connect the work directly to me."
-            onClick={() => {
-              setPersonallySeen(true);
-              revealDoor("values_misalignment");
-            }}
-          />
-          <AnswerChoiceCard
-            tone="no"
-            title="No, they do not."
-            description="The work is visible, but my contribution is not."
-            onClick={() => {
-              setPersonallySeen(false);
-              revealDoor("story_of_contribution");
-            }}
-          />
+        <div className="mx-auto max-w-[980px] space-y-5">
+          <div className="grid items-stretch gap-5 md:grid-cols-2">
+            <OwnershipChoice
+              tone="yes"
+              title="Yes"
+              description="They know I'm driving it."
+              onClick={() => {
+                setPersonallySeen(true);
+                revealDoor("values_misalignment");
+              }}
+            />
+            <OwnershipChoice
+              tone="no"
+              title="No"
+              description="The project succeeds, but the credit doesn't clearly come to me."
+              onClick={() => {
+                setPersonallySeen(false);
+                revealDoor("story_of_contribution");
+              }}
+            />
+          </div>
+          <StoNote>Important work helps only when your name travels with it.</StoNote>
         </div>
       );
     }
 
     if (step === "considered_formula") {
       return (
-        <button type="button" className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5" onClick={() => goTo("sponsor_power")}>
-          Next
+        <button
+          type="button"
+          className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          onClick={() => goTo("sponsor_power")}
+        >
+          Start decision check
+          <ArrowRight className="h-5 w-5" />
         </button>
       );
     }
@@ -932,21 +1232,21 @@ export default function StoCareerBot({
 
     if (step === "q1") {
       return (
-        <div className="mx-auto flex h-full w-full max-w-[1370px] flex-col justify-start gap-3 pt-2 md:pt-3">
+        <div className="mx-auto flex h-full w-full max-w-[980px] flex-col justify-start gap-3 pt-2 md:pt-4">
           <div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="flex shrink-0 items-center gap-3">
-                <Image src={stoHeadshot} alt="Sto headshot" width={64} height={64} className="h-[54px] w-[54px] shrink-0 rounded-full border border-[#d8e4f6] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.08)] md:h-[64px] md:w-[64px]" />
+                <Image src={stoHeadshot} alt="Sto headshot" width={64} height={64} className="h-[54px] w-[54px] shrink-0 rounded-full border border-[#d8e4f6] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.08)] md:h-[66px] md:w-[66px]" />
                 <div>
-                  <p className="font-gotham text-[14px] font-bold text-[#101828]">Sto</p>
-                  <p className="font-gotham text-[12px] font-medium text-[#5269a3]">Your guide</p>
+                  <p className="font-gotham text-[14px] font-bold leading-5 text-[#101828]">Sto</p>
+                  <p className="font-gotham text-[12px] font-medium leading-5 text-[#5269a3]">Your guide</p>
                 </div>
               </div>
-              <div className="relative w-full max-w-[645px] rounded-[22px] bg-[#f0f2f7] px-7 py-3 font-gotham text-[14px] font-medium leading-5 text-[#273348] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] before:absolute before:left-[-18px] before:top-1/2 before:hidden before:h-0 before:w-0 before:-translate-y-1/2 before:border-y-[14px] before:border-r-[20px] before:border-y-transparent before:border-r-[#f0f2f7] sm:ml-8 sm:before:block">
+              <div className="relative w-full max-w-[500px] rounded-[20px] bg-[#f0f2f7] px-7 py-3.5 font-gotham text-[14px] font-medium leading-5 text-[#111827] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] before:absolute before:left-[-16px] before:top-1/2 before:hidden before:h-0 before:w-0 before:-translate-y-1/2 before:border-y-[12px] before:border-r-[18px] before:border-y-transparent before:border-r-[#f0f2f7] sm:ml-8 sm:before:block">
                 Let&apos;s get real about what&apos;s going on for you at work.
               </div>
             </div>
-            <h2 className="mt-4 max-w-[25ch] font-quattrocento text-[30px] font-bold leading-[1.02] text-[#050817] md:text-[36px] xl:text-[40px]">
+            <h2 className="mt-4 max-w-[29ch] font-quattrocento text-[29px] font-bold leading-[1.04] text-[#050817] md:text-[35px]">
               Which of these feels closest to what&apos;s happening at work right now?
             </h2>
             <p className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#5269a3] md:text-[15px]">
@@ -954,13 +1254,13 @@ export default function StoCareerBot({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+          <div className="mx-auto grid w-full max-w-[784px] grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-5 md:gap-y-3">
             {q1Options.map((option) => (
               <button
                 key={option.id}
                 type="button"
-                className={`relative flex cursor-pointer flex-col overflow-hidden rounded-[17px] border bg-white text-center shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
-                  q1 === option.id ? "border-2 border-[#014BAA]" : "border-[#e6e0d7]"
+                className={`relative aspect-[1624/968] cursor-pointer overflow-hidden rounded-[14px] border bg-[#fffdf9] text-center shadow-[0_8px_18px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
+                  q1 === option.id ? "border-[#014BAA] ring-1 ring-[#014BAA]" : "border-[#e6e0d7]"
                 }`}
                 onClick={() => {
                   setQ1(option.id);
@@ -969,19 +1269,17 @@ export default function StoCareerBot({
                 aria-pressed={q1 === option.id}
               >
                 {q1 === option.id ? (
-                  <span className="absolute right-4 top-4 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#014BAA] text-white shadow-[0_8px_16px_rgba(1,75,170,0.24)]">
+                  <span className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#014BAA] text-white shadow-[0_8px_16px_rgba(1,75,170,0.24)]">
                     <Check className="h-4 w-4" strokeWidth={3} />
                   </span>
                 ) : null}
-                <div className="relative h-[150px] w-full bg-[#fffaf3] md:h-[170px] xl:h-[188px]">
-                  <img
-                    src={situationImages[option.id].src}
-                    alt=""
-                    className="h-full w-full object-contain"
-                    aria-hidden
-                  />
-                </div>
-                <span className="flex min-h-[46px] items-center justify-center px-4 font-gotham text-[13px] font-bold leading-5 text-[#111827] md:text-[14px]">
+                <img
+                  src={situationCardImages[option.id]}
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover"
+                  aria-hidden
+                />
+                <span className="absolute inset-x-0 bottom-3 z-10 flex min-h-[24px] items-center justify-center px-4 font-gotham text-[13px] font-bold leading-5 text-[#111827] md:text-[14px]">
                   {q1ShortLabels[option.id]}
                 </span>
               </button>
@@ -1158,29 +1456,19 @@ export default function StoCareerBot({
 
     if (step === "considered_formula") {
       return (
-        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
-          <FormulaVisual
-            kind="considered"
-            formula="To be picked = Sponsor Strength x Next Level Signal"
-            note="Sponsor strength is about who goes to bat for you, and with what impact. Next level signals help people see you in the new role."
-            outcomeTitle="I was considered but someone else got chosen"
-            outcomeBody="You were in the frame, but the final bet went to someone else."
-          />
-          <StoNote>This insight is based on your selection. The next step will help uncover what affected the final decision -- and what to do about it.</StoNote>
-        </div>
+        <ConsideredDecisionTableScreen />
       );
     }
 
     if (step === "desire") {
       return (
-        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
+        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-end gap-5 pb-1 md:justify-center">
           <QuestionPanel
             eyebrow="Early signal"
-            title="Did you ask for the promotion early enough?"
-            subtitle="Did you ensure your manager knew you were looking for one?"
+            title="Did your manager know early enough?"
+            subtitle="Did you clearly signal that you wanted the promotion before decisions were already moving?"
             wide
           />
-          <StoNote>Performance shows what you did. Intent shows what you want next.</StoNote>
         </div>
       );
     }
@@ -1188,13 +1476,7 @@ export default function StoCareerBot({
     if (step === "importance") {
       return (
         <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
-          <QuestionPanel
-            icon={<Eye className="h-9 w-9" />}
-            title="Is the project you are working on seen as important by leadership?"
-            subtitle="Do they care about the outcomes?"
-            wide
-          />
-          <StoNote>Clearly, you have the desire for visibility. Now we check whether leadership sees the work as important.</StoNote>
+          <ImportanceCheckPanel />
         </div>
       );
     }
@@ -1202,13 +1484,7 @@ export default function StoCareerBot({
     if (step === "personal_seen") {
       return (
         <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
-          <QuestionPanel
-            icon={<UserRound className="h-9 w-9" />}
-            title="The project is seen as important. But are you?"
-            subtitle="Do people know it's you doing all this work?"
-            wide
-          />
-          <StoNote>The work can be visible while your contribution stays disconnected from it.</StoNote>
+          <OwnershipCheckPanel />
         </div>
       );
     }
@@ -1309,7 +1585,7 @@ export default function StoCareerBot({
   };
 
   const shellClassName = isEmbedded
-    ? "relative mx-auto grid h-full min-h-0 w-full grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden rounded-[12px] border border-[#e6e0d7] bg-white font-gotham shadow-[0_16px_44px_rgba(15,23,42,0.09)]"
+    ? "relative mx-auto grid h-full min-h-0 w-full grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden rounded-[10px] border border-[#e6e0d7] bg-white font-gotham shadow-[0_18px_52px_rgba(15,23,42,0.12)]"
     : "pointer-events-auto fixed inset-x-0 bottom-0 flex h-[100svh] flex-col border border-[#e8e4de] bg-white shadow-[0_-18px_40px_rgba(15,15,15,0.18)] md:inset-auto md:bottom-24 md:right-7 md:h-[720px] md:w-[440px] md:rounded-[9px] md:shadow-[0_18px_50px_rgba(15,15,15,0.18)]";
 
   const botShell = (
@@ -1325,26 +1601,26 @@ export default function StoCareerBot({
       <header className={isEmbedded ? "relative z-10" : "border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur"}>
         {isEmbedded ? (
           step === "intro" || step === "q1" || step === "empathy" ? (
-            <div className="border-b border-[#dce8f8] bg-white/80">
-              <div className="flex h-[64px] items-center justify-between px-6 md:px-12">
+            <div className="bg-white/90">
+              <div className="flex h-[70px] items-center justify-between px-5 md:px-9">
                 <button
                   type="button"
                   onClick={step === "intro" ? reset : goBack}
                   disabled={step !== "intro" && !history.length}
-                  className="inline-flex min-w-[112px] cursor-pointer items-center gap-4 font-gotham text-[14px] font-medium text-[#050817] hover:text-[#014BAA] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex min-w-[100px] cursor-pointer items-center gap-4 font-gotham text-[14px] font-medium text-[#050817] hover:text-[#014BAA] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ArrowLeft className="h-5 w-5" />
                   Back
                 </button>
-                <div className="font-quattrocento text-[22px] font-bold leading-none text-[#050817] md:text-[28px]">
+                <div className="font-quattrocento text-[22px] font-bold leading-none text-[#050817] md:text-[25px]">
                   Better <span className="text-[#014BAA]">Corporate Life</span>
                 </div>
-                <div className="min-w-[112px] text-right font-gotham text-[10px] font-bold uppercase tracking-[0.26em] text-[#5269a3] md:text-[12px]">
+                <div className="min-w-[100px] text-right font-gotham text-[10px] font-bold uppercase tracking-[0.26em] text-[#5269a3] md:text-[11px]">
                   {step === "intro" ? "Introduction" : "Your Situation"}
                 </div>
               </div>
-              <div className="mx-6 h-[4px] bg-[#d9dee8] md:mx-12">
-                <div className={`h-full bg-[#014BAA] ${step === "intro" ? "w-[16%]" : step === "q1" ? "w-[16%]" : "w-[27%]"}`} />
+              <div className="mx-5 h-[4px] rounded-full bg-[#d9dee8] md:mx-9">
+                <div className={`h-full rounded-full bg-[#014BAA] ${step === "intro" ? "w-[16%]" : step === "q1" ? "w-[16%]" : "w-[27%]"}`} />
               </div>
             </div>
           ) : (
@@ -1382,11 +1658,11 @@ export default function StoCareerBot({
         )}
       </header>
 
-      <div className={isEmbedded ? `relative z-10 min-h-0 overflow-y-auto px-5 md:overflow-hidden md:px-12 ${step === "q1" ? "py-0" : "py-5 md:py-6"}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+      <div className={isEmbedded ? `relative z-10 min-h-0 overflow-y-auto px-5 md:px-9 ${step === "q1" ? "py-0" : "py-5 md:py-6"}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
         {renderVisualScreen()}
       </div>
 
-      <footer className={isEmbedded ? `${step === "intro" ? "hidden" : `relative z-10 px-5 pb-[calc(12px+env(safe-area-inset-bottom))] pt-1 md:px-12 md:pb-4`}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
+      <footer className={isEmbedded ? `${step === "intro" ? "hidden" : `relative z-10 px-5 pb-[calc(12px+env(safe-area-inset-bottom))] pt-1 md:px-9 md:pb-4`}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
         {controlsReady && step === "result" && resultCopy && door ? (
           <div className="mx-auto max-w-[980px] space-y-3">
             <div className={`grid gap-3 ${activeDoorCtas?.secondary ? "md:grid-cols-2" : ""}`}>
@@ -1424,14 +1700,14 @@ export default function StoCareerBot({
             ) : null}
           </div>
         ) : controlsReady && step !== "diagnostic" ? (
-          <div className={isEmbedded ? "mx-auto max-w-[1370px]" : ""}>{renderControls()}</div>
+          <div className={isEmbedded ? "mx-auto max-w-[980px]" : ""}>{renderControls()}</div>
         ) : step !== "diagnostic" ? (
           <div className="min-h-[44px]" />
         ) : (
           <div />
         )}
 
-        <div className="mx-auto mt-2 flex max-w-[1370px] items-center justify-between pt-1">
+        <div className="mx-auto mt-2 flex max-w-[980px] items-center justify-between pt-1">
           <button
             type="button"
             onClick={step === "q1" ? reset : goBack}

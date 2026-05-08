@@ -64,11 +64,16 @@ export const TypingIndicator = () => (
   </div>
 );
 
-const questSteps: BotStep[] = ["intro", "q1", "context", "diagnostic", "door"];
+const questSteps = [
+  { id: "awareness", label: "Awareness" },
+  { id: "insight", label: "Insight" },
+  { id: "diagnosis", label: "Diagnosis" },
+  { id: "direction", label: "Direction" },
+];
 
 const getQuestIndex = (step: BotStep) => {
-  if (step === "intro") return 0;
-  if (step === "q1" || step === "empathy" || step === "context") return 1;
+  if (step === "intro" || step === "q1" || step === "empathy") return 0;
+  if (step === "context") return 1;
   if (
     step === "diagnostic" ||
     step === "not_considered_formula" ||
@@ -83,29 +88,34 @@ const getQuestIndex = (step: BotStep) => {
   ) {
     return 2;
   }
-  if (step === "door") return 3;
-  return 4;
+  if (step === "door" || step === "result") return 3;
+  return 0;
 };
 
 export const QuestProgress = ({ step }: { step: BotStep }) => {
   const activeIndex = getQuestIndex(step);
   return (
-    <div className="mx-auto flex w-full max-w-[520px] items-center justify-center px-6 py-4">
+    <div className="mx-auto flex w-full max-w-[660px] items-start justify-center px-4 py-5">
       {questSteps.map((questStep, index) => (
-        <React.Fragment key={questStep}>
-          <div
-            className={`flex h-6 w-6 items-center justify-center rounded-full border-[3px] transition ${
-              index < activeIndex
-                ? "border-[#0A57C6] bg-[#0A57C6] text-white"
-                : index === activeIndex
-                  ? "border-[#0A57C6] bg-white text-[#0A57C6] ring-4 ring-[#dceaff]"
-                  : "border-[#aebbd0] bg-white text-transparent"
-            }`}
-          >
-            {index < activeIndex ? <Check className="h-3.5 w-3.5" strokeWidth={4} /> : null}
+        <React.Fragment key={questStep.id}>
+          <div className="flex w-[86px] shrink-0 flex-col items-center gap-2">
+            <div
+              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 font-gotham text-[13px] font-bold transition ${
+                index < activeIndex
+                  ? "border-[#0A57C6] bg-[#0A57C6] text-white"
+                  : index === activeIndex
+                    ? "border-[#0A57C6] bg-white text-[#0A57C6]"
+                    : "border-[#c7cdd8] bg-white text-[#a7afbd]"
+              }`}
+            >
+              {index < activeIndex ? <Check className="h-5 w-5" strokeWidth={3.2} /> : index + 1}
+            </div>
+            <span className={`font-gotham text-[12px] leading-none ${index === activeIndex ? "font-bold text-[#0A57C6]" : "font-medium text-[#333840]"}`}>
+              {index + 1}. {questStep.label}
+            </span>
           </div>
           {index < questSteps.length - 1 ? (
-            <div className={`h-[2px] flex-1 ${index < activeIndex ? "bg-[#0A57C6]" : "bg-[#aebbd0]"}`} />
+            <div className={`mt-[17px] h-[2px] min-w-10 flex-1 ${index < activeIndex ? "bg-[#0A57C6]" : "bg-[#cfd4dc]"}`} />
           ) : null}
         </React.Fragment>
       ))}
