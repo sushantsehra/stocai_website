@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./BmpPage.module.css";
+import sushantPicture from "../../assets/SushantPicture.png";
 
 export const dynamic = "force-static";
 
@@ -497,7 +498,7 @@ export default function BmpPage() {
         <div className={`${styles.container} ${styles.founderGrid}`}>
           <div className={styles.imageWrap}>
             <div className={styles.imageGlow} />
-            <Image className={styles.founderImage} src="/bmp-founder.jpg" alt="Sushant Sehra, Founder" width={1024} height={1024} />
+            <Image className={styles.founderImage} src={sushantPicture} alt="Sushant Sehra, Founder" width={1024} height={1024} />
           </div>
           <div>
             <span className={styles.divider}>Who built this</span>
