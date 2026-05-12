@@ -95,12 +95,12 @@ const getQuestIndex = (step: BotStep) => {
 export const QuestProgress = ({ step }: { step: BotStep }) => {
   const activeIndex = getQuestIndex(step);
   return (
-    <div className="mx-auto flex w-full max-w-[660px] items-start justify-center px-4 py-5">
+    <div className="mx-auto flex w-full max-w-[660px] items-center justify-center px-8 py-4 md:items-start md:px-4 md:py-5">
       {questSteps.map((questStep, index) => (
         <React.Fragment key={questStep.id}>
-          <div className="flex w-[86px] shrink-0 flex-col items-center gap-2">
+          <div className="flex min-w-0 flex-none flex-col items-center gap-1 md:w-[86px] md:shrink-0 md:gap-2">
             <div
-              className={`flex h-9 w-9 items-center justify-center rounded-full border-2 font-gotham text-[13px] font-bold transition ${
+              className={`flex h-5 w-5 items-center justify-center rounded-full border-2 font-gotham text-[0px] font-bold transition md:h-9 md:w-9 md:text-[13px] ${
                 index < activeIndex
                   ? "border-[#0A57C6] bg-[#0A57C6] text-white"
                   : index === activeIndex
@@ -108,14 +108,14 @@ export const QuestProgress = ({ step }: { step: BotStep }) => {
                     : "border-[#c7cdd8] bg-white text-[#a7afbd]"
               }`}
             >
-              {index < activeIndex ? <Check className="h-5 w-5" strokeWidth={3.2} /> : index + 1}
+              {index < activeIndex ? <Check className="h-3 w-3 md:h-5 md:w-5" strokeWidth={3.2} /> : <span className="hidden md:inline">{index + 1}</span>}
             </div>
-            <span className={`font-gotham text-[12px] leading-none ${index === activeIndex ? "font-bold text-[#0A57C6]" : "font-medium text-[#333840]"}`}>
+            <span className={`hidden max-w-full truncate text-center font-gotham leading-none md:block md:text-[12px] ${index === activeIndex ? "font-bold text-[#0A57C6]" : "font-medium text-[#333840]"}`}>
               {index + 1}. {questStep.label}
             </span>
           </div>
           {index < questSteps.length - 1 ? (
-            <div className={`mt-[17px] h-[2px] min-w-10 flex-1 ${index < activeIndex ? "bg-[#0A57C6]" : "bg-[#cfd4dc]"}`} />
+            <div className={`mx-[10px] h-px flex-1 md:mx-0 md:mt-[17px] md:h-[2px] md:min-w-10 ${index < activeIndex ? "bg-[#0A57C6]" : "bg-[#7dafff]"}`} />
           ) : null}
         </React.Fragment>
       ))}
