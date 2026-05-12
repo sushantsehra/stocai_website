@@ -35,13 +35,7 @@ export const booleanAnswerLabel = (value: boolean | null, labels: { yes: string;
 export const getDoorCtas = (door: DiagnosticDoorId) => {
   if (door === "values_misalignment" || door === "complex_situation") {
     return {
-      primary: { label: "Yes, let's talk", kind: "call" as const },
-    };
-  }
-
-  if (door === "sponsor_network" || door === "communication_framework") {
-    return {
-      primary: { label: "Yes, I want this", kind: "payment" as const },
+      primary: { label: "Book a clarity call", kind: "call" as const },
     };
   }
 
