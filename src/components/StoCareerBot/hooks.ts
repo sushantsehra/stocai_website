@@ -236,6 +236,20 @@ export const useStoPayment = ({
     window.location.href = shortUrl;
   }, [createPaymentLink, paymentPhone, source, waitlistReferenceId]);
 
+  const handlePaymentCta = useCallback(async () => {
+    if (!door) return;
+    setActionState("loading");
+    setActionMessage("");
+
+    try {
+      trackBotEvent("sto_buy_clicked", { door, q1, placement: isEmbedded ? "diagnostic_route" : "floating_bot" });
+      await handlePaymentRedirect();
+    } catch (error) {
+      setActionState("error");
+      setActionMessage(error instanceof Error ? error.message : "Something went wrong.");
+    }
+  }, [door, handlePaymentRedirect, isEmbedded, q1]);
+
   const handlePrimaryCta = useCallback(async () => {
     if (!door || !activeDoorCtas) return;
 
@@ -249,21 +263,13 @@ export const useStoPayment = ({
       return;
     }
 
-    setActionState("loading");
-    setActionMessage("");
-
-    try {
-      trackBotEvent("sto_buy_clicked", { door, q1, placement: isEmbedded ? "diagnostic_route" : "floating_bot" });
-      await handlePaymentRedirect();
-    } catch (error) {
-      setActionState("error");
-      setActionMessage(error instanceof Error ? error.message : "Something went wrong.");
-    }
-  }, [activeDoorCtas, door, handlePaymentRedirect, isEmbedded, q1, whatsappHref]);
+    await handlePaymentCta();
+  }, [activeDoorCtas, door, handlePaymentCta, isEmbedded, q1, whatsappHref]);
 
   return {
     actionState,
     actionMessage,
+    handlePaymentCta,
     handlePrimaryCta,
     resetPaymentState: useCallback(() => {
       setActionState("idle");

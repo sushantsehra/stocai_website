@@ -1,18 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-
-const StoCareerBot = dynamic(() => import("@/components/StoCareerBot"), {
-  ssr: false,
-  loading: () => (
-    <section className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[12px] border border-[#e6edf7] bg-white font-gotham shadow-[0_16px_44px_rgba(15,23,42,0.09)]">
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#dceaff] border-t-[#0A57C6]" />
-    </section>
-  ),
-});
+import StoCareerBot from "@/components/StoCareerBot";
 
 type DiagnosticContext = {
   name: string;
