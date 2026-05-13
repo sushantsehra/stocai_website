@@ -130,7 +130,7 @@ export const IconOrb = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const StoNote = ({ children }: { children: React.ReactNode }) => (
-  <div className="mx-auto flex w-full max-w-[980px] items-center gap-3 rounded-[14px] border border-[#d8e4f6] bg-white/90 px-4 py-2.5 shadow-[0_8px_22px_rgba(17,24,39,0.04)]">
+  <div className="mx-auto flex w-full max-w-[980px] items-center gap-3 rounded-[14px] border border-[#d8e4f6] bg-[#fffdf9] px-4 py-2.5 shadow-[0_8px_22px_rgba(17,24,39,0.04)]">
     <Image src={stoHeadshot} alt="Sto headshot" width={44} height={44} className="h-9 w-9 shrink-0 rounded-full border border-[#d8e4f6] object-cover" />
     <p className="font-gotham text-[13px] leading-5 text-[#40506c] md:text-[14px]">
       <span className="font-bold text-[#005AE0]">Sto&apos;s note:</span> {children}

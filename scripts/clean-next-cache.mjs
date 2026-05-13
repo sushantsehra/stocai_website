@@ -1,7 +1,10 @@
 import { rmSync } from "node:fs";
 import { resolve } from "node:path";
 
-const nextCacheDir = resolve(process.cwd(), ".next");
+const cacheDirs = [".next", ".next-verify"];
 
-rmSync(nextCacheDir, { recursive: true, force: true });
-console.log(`Removed ${nextCacheDir}`);
+for (const dir of cacheDirs) {
+  const cacheDir = resolve(process.cwd(), dir);
+  rmSync(cacheDir, { recursive: true, force: true });
+  console.log(`Removed ${cacheDir}`);
+}

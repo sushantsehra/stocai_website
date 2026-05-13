@@ -46,7 +46,6 @@ import {
   PandaHeader,
   OutcomeChoiceCard,
   QuestionPanel,
-  QuestProgress,
   StoNote,
   TypingIndicator,
   UserChoice,
@@ -105,10 +104,12 @@ const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; on
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
-        <button type="button" onClick={onRestart} className="cursor-pointer font-bold text-[#0057c8]">
+        <button type="button" disabled className="cursor-not-allowed font-bold text-[#0057c8] opacity-40">
+          Back
+        </button>
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
           Restart
         </button>
-        <span className="font-normal text-[#111111]">Private &amp; confidential</span>
       </footer>
     </section>
   </div>
@@ -327,57 +328,7 @@ const selectedSituationImages: Partial<Record<Q1OptionId, string>> = {
 };
 
 const DiagnosticStageProgress = () => {
-  const stages = ["Awareness", "Insight", "Diagnosis", "Direction"];
-
-  return (
-    <div className="w-full">
-      <div className="flex items-center gap-[10px] md:hidden" aria-hidden>
-        <span className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#1267f1] text-white">
-          <Check className="h-[13px] w-[13px]" strokeWidth={3} />
-        </span>
-        <span className="h-px flex-1 bg-[#7dafff]" />
-        <span className="h-[20px] w-[20px] rounded-full bg-[#1267f1]" />
-        <span className="h-px flex-1 bg-[#7dafff]" />
-        <span className="h-[20px] w-[20px] rounded-full border-2 border-[#1267f1] bg-white" />
-        <span className="h-px flex-1 bg-[#7dafff]" />
-        <span className="h-[20px] w-[20px] rounded-full border-2 border-[#1267f1] bg-white" />
-      </div>
-
-      <div className="hidden rounded-t-[8px] bg-white px-8 pb-8 pt-8 md:block" aria-label="Diagnostic progress">
-        <div className="mx-auto grid max-w-[690px] grid-cols-[56px_96px_56px_96px_56px_96px_56px] items-center">
-          {stages.map((label, index) => {
-            const stageNumber = index + 1;
-            const isComplete = stageNumber < 3;
-            const isCurrent = stageNumber === 3;
-
-            return (
-              <React.Fragment key={label}>
-                <div className="flex flex-col items-center gap-2">
-                  <span
-                    className={`flex h-9 w-9 items-center justify-center rounded-full border-2 font-gotham text-sm font-bold ${
-                      isComplete
-                        ? "border-[#1267f1] bg-[#1267f1] text-white"
-                        : isCurrent
-                          ? "border-[#1267f1] bg-white text-[#0057c8]"
-                          : "border-[#c8d1df] bg-white text-[#9aa6b8]"
-                    }`}
-                  >
-                    {isComplete ? <Check className="h-5 w-5" strokeWidth={3} /> : stageNumber}
-                  </span>
-                  <span className={`whitespace-nowrap font-gotham text-[12px] font-bold ${isCurrent ? "text-[#0057c8]" : "text-[#111111]"}`}>
-                    {stageNumber}. {label}
-                  </span>
-                </div>
-                {stageNumber < stages.length ? (
-                  <span className={`h-[2px] ${stageNumber < 3 ? "bg-[#1267f1]" : "bg-[#7dafff]"}`} />
-                ) : null}
-              </React.Fragment>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 };
 
 const DiagnosticEmpathyScreen = ({
@@ -385,12 +336,14 @@ const DiagnosticEmpathyScreen = ({
   selectedImage,
   empathySentences,
   onContinue,
+  onBack,
   onRestart,
 }: {
   selectedLabel: string;
   selectedImage?: string;
   empathySentences: string[];
   onContinue: () => void;
+  onBack: () => void;
   onRestart: () => void;
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
@@ -448,10 +401,12 @@ const DiagnosticEmpathyScreen = ({
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
-        <button type="button" onClick={onRestart} className="cursor-pointer font-bold text-[#0057c8]">
+        <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
+          Back
+        </button>
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
           Restart
         </button>
-        <span className="font-normal text-[#111111]">Private &amp; confidential</span>
       </footer>
     </section>
   </div>
@@ -469,9 +424,11 @@ const DiagnosticNotConsideredFormulaScreen = ({
   <div className="flex h-full min-h-[680px] w-full justify-center bg-white md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
-        <DiagnosticStageProgress />
+        <div className="shrink-0">
+          <DiagnosticStageProgress />
+        </div>
 
-      <section className="relative mt-[42px] overflow-hidden rounded-[4px] border border-[#c7d8f9] bg-white pb-[18px] pt-[48px] shadow-[0_2px_8px_rgba(15,23,42,0.12)]">
+      <section className="relative mt-[20px] shrink-0 overflow-hidden rounded-[4px] border border-[#c7d8f9] bg-white pb-[18px] pt-[48px] shadow-[0_2px_8px_rgba(15,23,42,0.12)]">
         <div className="absolute inset-x-0 top-0 h-[34px] rounded-t-[4px] bg-[#0057c8]" />
         <img
           src="/diagnostic/not-considered-badge.png"
@@ -492,12 +449,12 @@ const DiagnosticNotConsideredFormulaScreen = ({
         </div>
       </section>
 
-      <section className="mt-[22px] rounded-[4px] bg-white px-[18px] pb-[20px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+      <section className="mt-[22px] shrink-0 rounded-[4px] bg-white px-[18px] pb-[20px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
         <img src="/diagnostic/insight-bulb.png" alt="" className="mx-auto h-[55px] w-[55px] object-contain" aria-hidden />
         <h2 className="mt-[10px] font-quattrocento text-[23px] font-bold leading-[1.03] text-[#242424]">
           What this usually means
         </h2>
-        <div className="mt-[14px] rounded-[4px] bg-[#eef4ff] px-3 py-[9px] font-gotham text-[12px] font-bold leading-none text-[#0057c8]">
+        <div className="mt-[14px] rounded-[4px] bg-[#eef4ff] px-3 py-[9px] font-gotham text-[12px] font-semibold leading-none text-[#0057c8]">
           To be considered = Performance x Visibility
         </div>
         <div className="mt-[17px] flex items-center justify-center gap-[11px]">
@@ -514,7 +471,7 @@ const DiagnosticNotConsideredFormulaScreen = ({
         </p>
       </section>
 
-      <section className="mt-[22px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+      <section className="mt-[22px] flex shrink-0 items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
         <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
         <p className="font-gotham text-[11px] font-normal leading-[15px] text-[#242424]">
           <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> This insight is based on your selection. The next step will help uncover what&apos;s holding your visibility back-- and what to do about it.
@@ -524,13 +481,13 @@ const DiagnosticNotConsideredFormulaScreen = ({
         <button
           type="button"
           onClick={onContinue}
-          className="mt-[21px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-3 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
+          className="mt-[21px] min-h-[48px] w-full shrink-0 cursor-pointer rounded-[6px] bg-[#0057c8] px-3 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
           See what&apos;s happening with visibility
         </button>
       </div>
 
-      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] pb-[env(safe-area-inset-bottom)] pl-16 pr-8 font-gotham text-[12px]">
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
@@ -727,7 +684,7 @@ const StoryOfWorkScreen = ({
           </div>
         </section>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Leadership value is what turns good work into promotion momentum.
@@ -773,7 +730,7 @@ const StoryOfContributionScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
         <DiagnosticStageProgress />
 
-        <section className="mt-[34px] rounded-[4px] bg-white px-[16px] pb-[23px] pt-[14px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[23px] pt-[14px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="flex items-start gap-3 text-left">
             <div className="w-[96px] shrink-0">
               <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[96px] w-[72px] object-contain" />
@@ -833,7 +790,7 @@ const StoryOfContributionScreen = ({
           </div>
         </section>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Important work helps only when your name travels with it.
@@ -887,7 +844,7 @@ const ImposterSyndromeScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
         <DiagnosticStageProgress />
 
-        <section className="mt-[31px] rounded-[4px] bg-white px-[12px] pb-[21px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[21px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="flex items-start gap-3 text-left">
             <div className="w-[96px] shrink-0">
               <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[96px] w-[72px] object-contain" />
@@ -900,10 +857,10 @@ const ImposterSyndromeScreen = ({
             </div>
           </div>
 
-          <h1 className="mx-auto mt-[15px] max-w-[12ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
+          <h1 className="mx-auto mt-[15px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
             You wanted growth. But asking for it felt loaded.
           </h1>
-          <p className="mx-auto mt-[17px] max-w-[30ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+          <p className="mx-auto mt-[17px] max-w-[36ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             Not because you don&apos;t want the promotion. Because part of you may still be questioning whether you&apos;re ready to claim it.
           </p>
 
@@ -982,10 +939,10 @@ const ImportanceMobileScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[58px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[28px]">
         <DiagnosticStageProgress />
 
-        <section className="mt-[34px] rounded-[4px] bg-white px-[16px] pb-[20px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[20px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="mx-auto grid max-w-[270px] grid-cols-[86px_1fr_86px] items-start gap-4">
             <div className="text-center">
               <div className="mx-auto flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#1677ff] bg-[#eef4ff]">
@@ -1031,7 +988,7 @@ const ImportanceMobileScreen = ({
           </button>
         </div>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Visibility works only when the work matters to people who decide.
@@ -1051,72 +1008,74 @@ const ImportanceMobileScreen = ({
   </div>
 );
 
-const DesireSignalScreen = ({
+const DesireAskEarlyScreen = ({
   onBack,
   onRestart,
-  onStart,
+  onYes,
+  onNo,
 }: {
   onBack: () => void;
   onRestart: () => void;
-  onStart: () => void;
+  onYes: () => void;
+  onNo: () => void;
 }) => (
-  <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
-    <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[58px]">
+  <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
+    <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[28px]">
         <DiagnosticStageProgress />
 
-        <section className="mt-[31px] rounded-[4px] bg-white px-[12px] pb-[23px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3 text-left">
-            <div className="w-[96px] shrink-0">
-              <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[96px] w-[72px] object-contain" />
-              <p className="mt-1 whitespace-nowrap font-gotham text-[14px] font-bold leading-none text-[#0057c8]">
-                Sto <span className="text-[10px] font-normal text-[#8b8b8b]">Your Guide</span>
-              </p>
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[20px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+          <div className="mx-auto grid max-w-[270px] grid-cols-[86px_1fr_86px] items-start gap-4">
+            <div className="text-center">
+              <div className="mx-auto flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#1677ff] bg-[#eef4ff] text-[#0057c8]">
+                <Signal className="h-[30px] w-[30px]" strokeWidth={1.8} />
+              </div>
+              <p className="mt-[10px] whitespace-nowrap font-gotham text-[12px] font-bold leading-none text-[#0057c8]">Intent</p>
             </div>
-            <div className="mt-[39px] inline-flex min-h-[30px] items-center rounded-full bg-[#eef4ff] px-6 font-gotham text-[12px] font-medium text-[#0057c8]">
-              Deeper Diagnosis
+            <div className="pt-[29px]">
+              <ArrowRight className="h-6 w-full text-[#1677ff]" strokeWidth={1.8} />
+            </div>
+            <div className="text-center">
+              <div className="mx-auto flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#1677ff] bg-[#eef4ff] text-[#0057c8]">
+                <Check className="h-[30px] w-[30px]" strokeWidth={2.2} />
+              </div>
+              <p className="mt-[10px] whitespace-nowrap font-gotham text-[12px] font-bold leading-none text-[#0057c8]">Manager knew</p>
             </div>
           </div>
 
-          <h1 className="mx-auto mt-[12px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
-            You made your desire visible.
+          <h1 className="mx-auto mt-[24px] max-w-[19ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
+            Did your manager know early enough?
           </h1>
-          <p className="mx-auto mt-[12px] max-w-[36ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            That matters. Many people never ask. But visibility needs more than desire.
-          </p>
-
-          <div className="mt-[24px] grid grid-cols-[minmax(86px,96px)_minmax(70px,82px)_18px_minmax(70px,82px)] items-center justify-center gap-2">
-            <div className="whitespace-nowrap text-right font-quattrocento text-[20px] font-bold leading-none text-[#242424]">Visibility =</div>
-            <div className="flex min-h-[84px] flex-col items-center justify-center rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-2">
-              <img src="/diagnostic/desire-icon.png" alt="" className="h-[40px] w-[40px] object-contain" aria-hidden />
-              <p className="mt-2 font-quattrocento text-[13px] font-bold leading-none text-[#242424]">Desire</p>
-            </div>
-            <div className="font-gotham text-[18px] font-bold text-[#0057c8]">x</div>
-            <div className="flex min-h-[84px] flex-col items-center justify-center rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-2">
-              <img src="/diagnostic/desire-importance.png" alt="" className="h-[40px] w-[40px] object-contain" aria-hidden />
-              <p className="mt-2 font-quattrocento text-[13px] font-bold leading-none text-[#242424]">Importance</p>
-            </div>
-          </div>
-
-          <p className="mx-auto mt-[30px] max-w-[34ch] font-gotham text-[15px] font-normal leading-[22px] text-[#242424]">
-            You can do <span className="font-bold text-[#0057c8]">strong work</span> and still be invisible if the right people don&apos;t <span className="font-bold text-[#0057c8]">connect</span> you to that work.
+          <p className="mx-auto mt-[17px] max-w-[36ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+            Did your manager know you were looking for the promotion before decisions started forming?
           </p>
         </section>
 
-        <section className="mt-[22px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <div className="mt-[21px] space-y-[14px] text-left">
+          <button
+            type="button"
+            onClick={onYes}
+            className="w-full cursor-pointer rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-4 py-[12px] text-left transition hover:border-[#0057c8]"
+          >
+            <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#0057c8]">Yes</span>
+            <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I had made it clear early.</span>
+          </button>
+          <button
+            type="button"
+            onClick={onNo}
+            className="w-full cursor-pointer rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-4 py-[12px] text-left transition hover:border-[#c68432]"
+          >
+            <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#a54747]">No</span>
+            <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I mentioned it late or assumed they knew.</span>
+          </button>
+        </div>
+
+        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Desire gets you noticed. Importance gets you remembered.
+            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Performance shows what you did. Intent shows what you want next.
           </p>
         </section>
-
-        <button
-          type="button"
-          onClick={onStart}
-          className="mt-[21px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
-        >
-          Start decision check
-        </button>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -1147,7 +1106,7 @@ const SponsorWillingScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
         <DiagnosticStageProgress />
 
-        <section className="mt-[34px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="flex items-start gap-3">
             <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
             <div>
@@ -1197,7 +1156,7 @@ const SponsorWillingScreen = ({
           </div>
         </section>
 
-        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Power helps only when someone is willing to spend it for you.
@@ -1205,7 +1164,7 @@ const SponsorWillingScreen = ({
         </section>
       </div>
 
-      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] pb-[env(safe-area-inset-bottom)] pl-16 pr-8 font-gotham text-[12px]">
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
@@ -1233,7 +1192,7 @@ const SponsorPowerScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
         <DiagnosticStageProgress />
 
-        <section className="mt-[34px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="flex items-start gap-3">
             <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
             <div>
@@ -1283,7 +1242,7 @@ const SponsorPowerScreen = ({
           </div>
         </section>
 
-        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> A sponsor helps only if their voice carries weight when decisions are made.
@@ -1291,7 +1250,7 @@ const SponsorPowerScreen = ({
         </section>
       </div>
 
-      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] pb-[env(safe-area-inset-bottom)] pl-16 pr-8 font-gotham text-[12px]">
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
@@ -1319,7 +1278,7 @@ const NextLevelSignalScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
         <DiagnosticStageProgress />
 
-        <section className="mt-[34px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="flex items-start gap-3">
             <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
             <div>
@@ -1369,7 +1328,7 @@ const NextLevelSignalScreen = ({
           </div>
         </section>
 
-        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
           <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Support helps only when your work already makes the next level believable.
@@ -1377,7 +1336,7 @@ const NextLevelSignalScreen = ({
         </section>
       </div>
 
-      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] pb-[env(safe-area-inset-bottom)] pl-16 pr-8 font-gotham text-[12px]">
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
@@ -1470,7 +1429,7 @@ const BrillianceImageTrapScreen = ({
         </button>
       </div>
 
-      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] pb-[env(safe-area-inset-bottom)] pl-16 pr-8 font-gotham text-[12px]">
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
@@ -1619,7 +1578,7 @@ const SponsorNetworkScreen = ({
         </button>
       </div>
 
-      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] pb-[env(safe-area-inset-bottom)] pl-16 pr-8 font-gotham text-[12px]">
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
@@ -2552,16 +2511,7 @@ export default function StoCareerBot({
     }
 
     if (step === "q1") {
-      return (
-        <button
-          type="button"
-          disabled={!q1}
-          className="min-h-[46px] w-full cursor-pointer rounded-[8px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
-          onClick={() => goTo("empathy")}
-        >
-          Continue
-        </button>
-      );
+      return null;
     }
 
     if (step === "empathy") {
@@ -2836,7 +2786,7 @@ export default function StoCareerBot({
 
     if (step === "q1") {
       return (
-        <div className="mx-auto flex h-full w-full max-w-[980px] flex-col justify-start gap-3 pt-2 md:pt-4">
+        <div className="mx-auto flex h-full w-full max-w-[980px] flex-col justify-start gap-3 pb-4 pt-2 md:pt-4">
           <div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="flex shrink-0 items-center gap-3">
@@ -2890,6 +2840,24 @@ export default function StoCareerBot({
             ))}
           </div>
 
+          <button
+            type="button"
+            disabled={!q1}
+            className="mt-2 min-h-[46px] w-full cursor-pointer rounded-[8px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
+            onClick={() => goTo("empathy")}
+          >
+            Continue
+          </button>
+
+          <div className="mt-2 flex min-h-[48px] w-full items-center justify-between bg-[#eef4ff] px-4 font-gotham text-[12px] md:px-8">
+            <button type="button" onClick={goBack} className="cursor-pointer font-bold text-[#0057c8]">
+              Back
+            </button>
+            <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+              Restart
+            </button>
+          </div>
+
         </div>
       );
     }
@@ -2902,13 +2870,14 @@ export default function StoCareerBot({
         .filter(Boolean);
 
       return (
-        <DiagnosticEmpathyScreen
-          selectedLabel={q1ShortLabels[q1]}
-          selectedImage={selectedSituationImages[q1]}
-          empathySentences={empathySentences}
-          onContinue={() => goTo("context")}
-          onRestart={reset}
-        />
+          <DiagnosticEmpathyScreen
+            selectedLabel={q1ShortLabels[q1]}
+            selectedImage={selectedSituationImages[q1]}
+            empathySentences={empathySentences}
+            onContinue={() => goTo("context")}
+            onBack={goBack}
+            onRestart={reset}
+          />
       );
     }
 
@@ -2992,12 +2961,17 @@ export default function StoCareerBot({
 
     if (step === "desire") {
       return (
-        <DesireSignalScreen
+        <DesireAskEarlyScreen
           onBack={goBack}
           onRestart={reset}
-          onStart={() => {
+          onYes={() => {
             setDesireAskedEarly(true);
             goTo("importance");
+          }}
+          onNo={() => {
+            setDesireAskedEarly(false);
+            setDesireBlocker("I didn't ask early enough.");
+            revealDoor("imposter_syndrome");
           }}
         />
       );
@@ -3239,7 +3213,7 @@ export default function StoCareerBot({
       data-waitlist-reference-id={waitlistReferenceId}
       className={shellClassName}
     >
-      <header className={isEmbedded ? (step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "hidden" : "relative z-10") : "border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur"}>
+      <header className={isEmbedded ? "hidden" : "border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur"}>
         {isEmbedded ? (
           step === "intro" || step === "q1" || step === "empathy" ? (
             <div className="bg-white/90">
@@ -3260,12 +3234,9 @@ export default function StoCareerBot({
                   {step === "intro" ? "Introduction" : "Your Situation"}
                 </div>
               </div>
-              <div className="mx-5 h-[4px] rounded-full bg-[#d9dee8] md:mx-9">
-                <div className={`h-full rounded-full bg-[#014BAA] ${step === "intro" ? "w-[16%]" : step === "q1" ? "w-[16%]" : "w-[27%]"}`} />
-              </div>
             </div>
           ) : (
-            <QuestProgress step={step} />
+            null
           )
         ) : (
           <>
@@ -3289,21 +3260,15 @@ export default function StoCareerBot({
                 ) : null}
               </div>
             </div>
-            <div className="h-1 w-full overflow-hidden bg-[#edf4ff]">
-              <div
-                className="h-full bg-[#014BAA] transition-[width] duration-300"
-                style={{ width: `${stepMeta[step].progress}%` }}
-              />
-            </div>
           </>
         )}
       </header>
 
-      <div className={isEmbedded ? `relative z-10 h-full min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
         {renderVisualScreen()}
       </div>
 
-      <footer className={isEmbedded ? `${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "hidden" : `relative z-10 max-w-full overflow-x-hidden px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-1 md:px-9 md:pb-4`}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
+      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
         {controlsReady && step === "result" && resultCopy && door ? (
           <div className="mx-auto max-w-full space-y-3 md:max-w-[980px]">
             <div className={`grid gap-3 ${activeDoorCtas?.secondary ? "md:grid-cols-2" : ""}`}>
@@ -3341,25 +3306,21 @@ export default function StoCareerBot({
           <div />
         )}
 
-        <div className="mx-auto mt-2 flex min-h-[55px] max-w-[980px] items-center justify-between bg-[#eef4ff] px-4 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px] md:px-8">
-          <button
-            type="button"
-            onClick={step === "q1" ? reset : goBack}
-            disabled={step !== "q1" && !history.length}
-            className="cursor-pointer font-bold text-[#0057c8] disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {step === "q1" ? "Restart" : "Back"}
-          </button>
-          <div className="font-normal text-[#111111]">
-            {step === "q1" ? (
-              "Private & confidential"
-            ) : (
-              <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
-                Restart
-              </button>
-            )}
+        {step === "q1" ? null : (
+          <div className="mt-2 flex min-h-[55px] w-full items-center justify-between bg-[#eef4ff] px-4 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px] md:px-8">
+            <button
+              type="button"
+              onClick={goBack}
+              disabled={!history.length}
+              className="cursor-pointer font-bold text-[#0057c8] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Back
+            </button>
+            <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+              Restart
+            </button>
           </div>
-        </div>
+        )}
       </footer>
       <CallInvestModal
         isOpen={isCallModalOpen}
