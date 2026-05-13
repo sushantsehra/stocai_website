@@ -68,10 +68,10 @@ const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; on
               alt="Sto standing in a bright office"
               className="h-full w-full object-cover"
             />
-            <div className="absolute right-[27px] top-[38px] font-gotham text-[12px] font-medium uppercase leading-none text-[#005dff]">
+            <div className="absolute right-[27px] top-[38px] font-gotham text-[12px] font-medium uppercase leading-none text-[#0057c8]">
               Meet Sto
             </div>
-            <div className="absolute right-[25px] top-[64px] rounded-[7px] border border-[#3c82ff] bg-white px-3 py-2 font-gotham text-[17px] font-medium leading-none text-[#181818] shadow-[0_6px_14px_rgba(37,99,235,0.08)] after:absolute after:bottom-[-7px] after:left-[18px] after:h-[12px] after:w-[12px] after:rotate-45 after:border-b after:border-l after:border-[#3c82ff] after:bg-white">
+            <div className="absolute right-[25px] top-[64px] rounded-[7px] border border-[#7dafff] bg-white px-3 py-2 font-gotham text-[17px] font-medium leading-none text-[#242424] shadow-[0_6px_14px_rgba(37,99,235,0.08)] after:absolute after:bottom-[-7px] after:left-[18px] after:h-[12px] after:w-[12px] after:rotate-45 after:border-b after:border-l after:border-[#7dafff] after:bg-white">
               Hi, I&apos;m Sto.
             </div>
           </div>
@@ -84,7 +84,7 @@ const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; on
               You&apos;re stuck because <span className="text-[#0057c8]">promotions work differently</span> from performance.
             </h2>
             <div className="mt-[22px] h-px w-full bg-[#c7d8f9]" />
-            <p className="mt-[22px] max-w-[42ch] font-gotham text-[14px] font-normal leading-[1.45] text-[#111111]">
+            <p className="mt-[22px] max-w-[42ch] font-gotham text-[14px] font-normal leading-[1.45] text-[#242424]">
               Sto will ask a few sharp questions to help you see what is actually <span className="font-bold">blocking your promotion momentum.</span>
             </p>
           </div>
@@ -108,7 +108,7 @@ const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; on
         <button type="button" disabled className="cursor-not-allowed font-bold text-[#0057c8] opacity-40">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -186,14 +186,14 @@ const CallInvestModal = ({
         <section className="bg-white px-4 py-5 md:overflow-y-auto md:px-6 md:py-7">
           <form
             onSubmit={handleSubmit}
-            className="relative rounded-[14px] border-2 border-[#0A57C6] bg-white px-4 pb-4 pt-12 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-5 md:pt-9"
+            className="relative rounded-[14px] border-2 border-[#0057c8] bg-white px-4 pb-4 pt-12 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-5 md:pt-9"
           >
-            <span className="absolute left-5 top-3 rounded-[5px] bg-[#e7f1ff] px-2 py-1 font-gotham text-[9px] font-bold uppercase tracking-[0.08em] text-[#0A57C6]">
+            <span className="absolute left-5 top-3 rounded-[5px] bg-[#e7f1ff] px-2 py-1 font-gotham text-[9px] font-bold uppercase tracking-[0.08em] text-[#0057c8]">
               Recommended
             </span>
             <div className="text-center">
-              <h3 className="font-gotham text-[22px] font-bold leading-tight text-[#0A57C6] md:text-[23px]">Join the Program</h3>
-              <p className="mx-auto mt-2 max-w-[250px] font-gotham text-[13px] font-medium leading-5 text-[#273348] md:mt-1 md:text-[12px] md:leading-[18px]">
+              <h3 className="font-gotham text-[22px] font-bold leading-tight text-[#0057c8] md:text-[23px]">Join the Program</h3>
+              <p className="mx-auto mt-2 max-w-[250px] font-gotham text-[13px] font-medium leading-5 text-[#242424] md:mt-1 md:text-[12px] md:leading-[18px]">
                 Build the operating system for faster promotion momentum.
               </p>
             </div>
@@ -201,23 +201,23 @@ const CallInvestModal = ({
             <div className="mt-4 space-y-2">
               {["Diagnose what is blocking momentum.", "Turn work into visible career value.", "Build a sharper promotion path."].map((label) => (
                 <div key={label} className="flex items-center gap-3 rounded-[8px] border border-[#edf1f7] bg-[#f8fbff] px-3 py-[8px]">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#e6f1ff] text-[#0A57C6]">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#e6f1ff] text-[#0057c8]">
                     <Check className="h-4 w-4" strokeWidth={2.5} />
                   </span>
-                  <span className="font-gotham text-[13px] font-medium leading-5 text-[#273348]">{label}</span>
+                  <span className="font-gotham text-[13px] font-medium leading-5 text-[#242424]">{label}</span>
                 </div>
               ))}
             </div>
 
             <div className="mt-5 flex items-end justify-center gap-5 md:gap-4">
               <span className="pb-1 font-gotham text-[16px] font-bold text-[#9aa4b2] line-through">{"\u20b9"}4,999</span>
-              <span className="font-gotham text-[30px] font-bold leading-none text-[#0A57C6] md:text-[32px]">{"\u20b9"}1,970</span>
+              <span className="font-gotham text-[30px] font-bold leading-none text-[#0057c8] md:text-[32px]">{"\u20b9"}1,970</span>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[9px] bg-[#0057D9] px-4 font-gotham text-[16px] font-bold text-white shadow-[0_12px_24px_rgba(0,87,217,0.22)] transition hover:bg-[#0A57C6] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-55"
+              className="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[9px] bg-[#0057c8] px-4 font-gotham text-[16px] font-bold text-white shadow-[0_12px_24px_rgba(0,87,217,0.22)] transition hover:bg-[#0A57C6] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-55"
             >
               {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
               {isLoading ? "Processing..." : "I'll Invest in My Career"}
@@ -264,7 +264,7 @@ const DiagnosticContextScreen = ({
           <div className="flex items-center gap-2">
             <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-[2px] object-cover" />
             <div>
-              <p className="font-gotham text-[14px] font-bold leading-[16px] text-[#1d78ff]">Sto says</p>
+              <p className="font-gotham text-[14px] font-bold leading-[16px] text-[#0057c8]">Sto says</p>
               <p className="font-gotham text-[9px] font-normal leading-[12px] text-[#8b8b8b]">Your Guide</p>
             </div>
           </div>
@@ -279,7 +279,7 @@ const DiagnosticContextScreen = ({
             value={targetRole}
             onChange={(event) => onTargetRoleChange(event.target.value)}
             placeholder="E.g. 'I want to become Senior Manager' or 'I want my work to matter more.'"
-            className="mt-[17px] min-h-[61px] w-full resize-none rounded-[4px] border border-[#e4e4e4] bg-white px-3 py-3 font-gotham text-[14px] font-normal leading-[1.35] text-[#111111] outline-none transition placeholder:text-[#4f4f4f] focus:border-[#0057c8]"
+            className="mt-[17px] min-h-[61px] w-full resize-none rounded-[4px] border border-[#e4e4e4] bg-white px-3 py-3 font-gotham text-[14px] font-normal leading-[1.35] text-[#242424] outline-none transition placeholder:text-[#4f4f4f] focus:border-[#0057c8]"
           />
         </section>
 
@@ -306,7 +306,7 @@ const DiagnosticContextScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -324,6 +324,15 @@ const selectedSituationImages: Partial<Record<Q1OptionId, string>> = {
 const DiagnosticStageProgress = () => {
   return null;
 };
+
+const DiagnosticStoNote = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <section className={`mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)] ${className}`}>
+    <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
+    <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+      <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> {children}
+    </p>
+  </section>
+);
 
 const DiagnosticEmpathyScreen = ({
   selectedLabel,
@@ -358,7 +367,7 @@ const DiagnosticEmpathyScreen = ({
           <div className="flex items-center gap-2">
             <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
             <div>
-              <p className="font-gotham text-[14px] font-bold leading-[16px] text-[#1d78ff]">Sto says</p>
+              <p className="font-gotham text-[14px] font-bold leading-[16px] text-[#0057c8]">Sto says</p>
               <p className="font-gotham text-[9px] font-normal leading-[12px] text-[#8b8b8b]">Your Guide</p>
             </div>
           </div>
@@ -390,7 +399,7 @@ const DiagnosticEmpathyScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -458,12 +467,9 @@ const DiagnosticNotConsideredFormulaScreen = ({
         </p>
       </section>
 
-      <section className="mt-[22px] flex shrink-0 items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-        <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-        <p className="font-gotham text-[11px] font-normal leading-[15px] text-[#242424]">
-          <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> This insight is based on your selection. The next step will help uncover what&apos;s holding your visibility back-- and what to do about it.
-        </p>
-      </section>
+      <DiagnosticStoNote className="mt-[22px] shrink-0">
+        This insight is based on your selection. The next step will help uncover what&apos;s holding your visibility back-- and what to do about it.
+      </DiagnosticStoNote>
 
         <button
           type="button"
@@ -478,7 +484,7 @@ const DiagnosticNotConsideredFormulaScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -576,7 +582,7 @@ const DecisionCheckScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -668,12 +674,7 @@ const StoryOfWorkScreen = ({
           </div>
         </section>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Leadership value is what turns good work into promotion momentum.
-          </p>
-        </section>
+        <DiagnosticStoNote>Leadership value is what turns good work into promotion momentum.</DiagnosticStoNote>
 
         <button
           type="button"
@@ -688,7 +689,7 @@ const StoryOfWorkScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -775,12 +776,7 @@ const StoryOfContributionScreen = ({
           </div>
         </section>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Important work helps only when your name travels with it.
-          </p>
-        </section>
+        <DiagnosticStoNote>Important work helps only when your name travels with it.</DiagnosticStoNote>
 
         <button
           type="button"
@@ -803,7 +799,7 @@ const StoryOfContributionScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -904,7 +900,7 @@ const ImposterSyndromeScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -975,19 +971,14 @@ const ImportanceMobileScreen = ({
           </button>
         </div>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Visibility works only when the work matters to people who decide.
-          </p>
-        </section>
+        <DiagnosticStoNote>Visibility works only when the work matters to people who decide.</DiagnosticStoNote>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1058,19 +1049,14 @@ const DesireAskEarlyScreen = ({
           </button>
         </div>
 
-        <section className="mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Performance shows what you did. Intent shows what you want next.
-          </p>
-        </section>
+        <DiagnosticStoNote>Performance shows what you did. Intent shows what you want next.</DiagnosticStoNote>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1097,37 +1083,32 @@ const VisibilityDesireScreen = ({
               <img src="/diagnostic/desire-icon.png" alt="" className="h-full w-full object-contain" aria-hidden />
             </div>
 
-            <h1 className="mx-auto mt-[24px] max-w-[14ch] font-quattrocento text-[25px] font-bold leading-[1.08] text-black">
+            <h1 className="mx-auto mt-[24px] max-w-[15ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
               You made your desire visible.
             </h1>
 
-            <div className="mx-auto mt-[18px] space-y-[10px] font-gotham text-[15px] font-normal leading-[1.35] text-[#06158f]">
+            <div className="mx-auto mt-[17px] space-y-[8px] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
               <p>That matters. Many people never ask.</p>
               <p>But visibility needs more than desire.</p>
             </div>
 
-            <div className="relative mt-[22px] rounded-[8px] border border-[#d9e8ff] bg-[#f7fbff] px-[23px] py-[13px] shadow-[inset_0_1px_8px_rgba(0,87,200,0.06)]">
-              <Sparkles className="absolute -right-[4px] -top-[11px] h-6 w-6 text-[#005dff]" strokeWidth={1.5} />
-              <div className="flex items-center justify-center gap-[13px] whitespace-nowrap font-quattrocento text-[17px] font-bold leading-none text-[#001072]">
+            <div className="relative mt-[20px] rounded-[4px] border border-[#7dafff] bg-[#eef4ff] px-3 py-[10px] shadow-[inset_0_1px_8px_rgba(0,87,200,0.05)]">
+              <Sparkles className="absolute -right-[5px] -top-[11px] h-6 w-6 text-[#0057c8]" strokeWidth={1.5} />
+              <div className="flex items-center justify-center gap-[11px] whitespace-nowrap font-gotham text-[12px] font-semibold leading-none text-[#0057c8]">
                 <span>Visibility</span>
-                <span className="font-gotham text-[18px] font-normal text-[#001072]">=</span>
-                <span className="text-[#005dff]">Desire</span>
-                <span className="font-gotham text-[18px] font-normal text-[#001072]">x</span>
-                <span className="rounded-[8px] bg-[#eaf3ff] px-[10px] py-[7px] text-[#005dff]">Importance</span>
+                <span className="font-normal text-[#242424]">=</span>
+                <span>Desire</span>
+                <span className="font-normal text-[#242424]">x</span>
+                <span className="rounded-[4px] bg-white px-2 py-[6px]">Importance</span>
               </div>
             </div>
 
-            <p className="mx-auto mt-[23px] max-w-[31ch] font-gotham text-[19px] font-normal leading-[1.45] text-[#001072]">
-              You can do <span className="font-bold text-[#005dff]">strong work</span> and still be invisible if the right people don&apos;t <span className="font-bold text-[#005dff]">connect</span> you to that work.
+            <p className="mx-auto mt-[19px] max-w-[34ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+              You can do <span className="font-bold text-[#0057c8]">strong work</span> and still be invisible if the right people don&apos;t <span className="font-bold text-[#0057c8]">connect</span> you to that work.
             </p>
           </section>
 
-          <section className="mt-[16px] flex items-center gap-[12px] rounded-[4px] bg-[#fffdf9] px-[14px] py-[12px] text-left shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-            <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[48px] w-[48px] shrink-0 rounded-full object-cover" />
-            <p className="font-gotham text-[11px] font-normal leading-[1.35] text-[#001072]">
-              <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Desire gets you noticed. Importance gets you remembered.
-            </p>
-          </section>
+          <DiagnosticStoNote className="mt-[16px]">Desire gets you noticed. Importance gets you remembered.</DiagnosticStoNote>
 
           <button
             type="button"
@@ -1144,7 +1125,7 @@ const VisibilityDesireScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1219,19 +1200,14 @@ const SponsorWillingScreen = ({
           </div>
         </section>
 
-        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Power helps only when someone is willing to spend it for you.
-          </p>
-        </section>
+        <DiagnosticStoNote className="mt-[18px]">Power helps only when someone is willing to spend it for you.</DiagnosticStoNote>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1306,19 +1282,14 @@ const SponsorPowerScreen = ({
           </div>
         </section>
 
-        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> A sponsor helps only if their voice carries weight when decisions are made.
-          </p>
-        </section>
+        <DiagnosticStoNote className="mt-[18px]">A sponsor helps only if their voice carries weight when decisions are made.</DiagnosticStoNote>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1393,19 +1364,14 @@ const NextLevelSignalScreen = ({
           </div>
         </section>
 
-        <section className="mt-[18px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
-          <p className="font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Support helps only when your work already makes the next level believable.
-          </p>
-        </section>
+        <DiagnosticStoNote className="mt-[18px]">Support helps only when your work already makes the next level believable.</DiagnosticStoNote>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1439,7 +1405,7 @@ const BrillianceImageTrapScreen = ({
         </div>
 
         <section className="mt-[20px] rounded-[4px] bg-white px-[16px] pb-[15px] pt-[13px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <p className="font-gotham text-[15px] font-bold leading-none text-[#0057c8]">Brilliance image trap</p>
+          <p className="font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Brilliance image trap</p>
           <h1 className="mt-[10px] max-w-[20ch] font-quattrocento text-[27px] font-bold leading-[1.03] text-[#242424]">
             You excel in your current role. But nobody can see you at the next level yet.
           </h1>
@@ -1477,7 +1443,7 @@ const BrillianceImageTrapScreen = ({
         <button
           type="button"
           onClick={onContinue}
-          className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[16px] font-medium text-white transition hover:bg-[#0A57C6]"
+          className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
           Show me how this gets fixed
         </button>
@@ -1487,7 +1453,7 @@ const BrillianceImageTrapScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1521,7 +1487,7 @@ const SponsorNetworkScreen = ({
         </div>
 
         <section className="mt-[20px] rounded-[4px] bg-white px-[16px] pb-[15px] pt-[13px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <p className="font-gotham text-[15px] font-bold leading-none text-[#0057c8]">Sponsor gap</p>
+          <p className="font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Sponsor gap</p>
           <h1 className="mt-[10px] max-w-[20ch] font-quattrocento text-[27px] font-bold leading-[1.03] text-[#242424]">
             You don&apos;t have enough sponsor power behind you.
           </h1>
@@ -1615,7 +1581,7 @@ const SponsorNetworkScreen = ({
         <button
           type="button"
           onClick={onContinue}
-          className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[16px] font-medium text-white transition hover:bg-[#0A57C6]"
+          className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
           Show me how this gets fixed
         </button>
@@ -1625,7 +1591,7 @@ const SponsorNetworkScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1650,85 +1616,85 @@ const CommunicationFrameworkScreen = ({
           <div className="flex items-start gap-[14px] pl-[44px]">
             <div className="w-[56px] shrink-0 text-center">
               <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="mx-auto h-[56px] w-[56px] rounded-full object-cover" />
-              <p className="mt-[3px] font-gotham text-[11px] font-normal leading-none text-[#00103d]">Sto</p>
+              <p className="mt-[3px] font-gotham text-[12px] font-bold leading-none text-[#0057c8]">Sto</p>
             </div>
-            <div className="relative mt-[8px] max-w-[128px] rounded-[8px] border border-[#d8d8d8] bg-[#fbfbfb] px-[14px] py-[10px] font-gotham text-[11px] font-normal leading-[15px] text-[#00103d] shadow-[0_2px_5px_rgba(15,23,42,0.04)] before:absolute before:left-[-7px] before:top-[16px] before:h-[12px] before:w-[12px] before:rotate-45 before:border-b before:border-l before:border-[#d8d8d8] before:bg-[#fbfbfb]">
+            <div className="relative mt-[8px] max-w-[142px] rounded-[4px] border border-[#7dafff] bg-white px-3 py-[6px] font-gotham text-[10px] font-normal leading-[13px] text-[#0057c8] before:absolute before:left-[-7px] before:top-[10px] before:h-[12px] before:w-[12px] before:rotate-45 before:border-b before:border-l before:border-[#7dafff] before:bg-white">
               I think I see what&apos;s happening here.
             </div>
           </div>
 
           <section className="mt-[6px] rounded-[6px] border border-[#e0e0e0] bg-white px-[14px] pb-[12px] pt-[11px] shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
-            <p className="inline-flex rounded-full bg-[#e8f7ea] px-[10px] py-[4px] font-gotham text-[9px] font-bold uppercase leading-none tracking-[0.18em] text-[#24713d]">
+            <p className="inline-flex rounded-[4px] bg-[#eef4ff] px-[10px] py-[5px] font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.12em] text-[#0057c8]">
               What&apos;s really going on
             </p>
-            <h1 className="mt-[9px] font-quattrocento text-[29px] font-bold leading-[1.02] text-[#06103d]">
+            <h1 className="mt-[10px] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
               Win Alignment Gap
             </h1>
-            <p className="mt-[8px] max-w-[35ch] font-gotham text-[11px] font-normal leading-[17px] text-[#06103d]">
+            <p className="mt-[12px] max-w-[36ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
               Your sponsor has power, but won&apos;t spend it on you. That usually means one thing - your success does not yet feel like their success.
             </p>
 
-        <div className="mx-auto mt-[10px] flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#005dff] bg-white px-[12px] py-[7px] text-[#005dff]">
+        <div className="mx-auto mt-[12px] flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#7dafff] bg-[#eef4ff] px-[12px] py-[7px] text-[#0057c8]">
           <span className="flex h-[28px] w-[28px] items-end gap-[3px]" aria-hidden>
-            <span className="h-[8px] w-[5px] rounded-t-sm bg-[#005dff]" />
-            <span className="h-[14px] w-[5px] rounded-t-sm bg-[#005dff]" />
-            <span className="h-[21px] w-[5px] rounded-t-sm bg-[#005dff]" />
+            <span className="h-[8px] w-[5px] rounded-t-sm bg-[#0057c8]" />
+            <span className="h-[14px] w-[5px] rounded-t-sm bg-[#0057c8]" />
+            <span className="h-[21px] w-[5px] rounded-t-sm bg-[#0057c8]" />
           </span>
-          <span className="font-gotham text-[12px] font-bold leading-none text-[#06103d]">Your growth</span>
+          <span className="font-gotham text-[12px] font-bold leading-none text-[#242424]">Your growth</span>
         </div>
 
         <div className="mx-auto flex h-[25px] w-px flex-col items-center justify-center">
-          <span className="h-[17px] border-l border-dashed border-[#005dff]" />
-          <span className="font-gotham text-[18px] leading-none text-[#005dff]">x</span>
+          <span className="h-[17px] border-l border-dashed border-[#1677ff]" />
+          <span className="font-gotham text-[18px] leading-none text-[#0057c8]">x</span>
         </div>
 
         <div className="mx-auto text-center">
-          <div className="relative mx-auto flex h-[70px] w-[70px] items-center justify-center rounded-full border border-[#c98a24] bg-white">
-            <UserSquare className="h-[38px] w-[38px] text-[#06103d]" strokeWidth={1.4} />
-            <span className="absolute bottom-[7px] font-gotham text-[9px] font-normal text-[#06103d]">Sponsor</span>
-            <span className="absolute -right-[5px] bottom-[13px] flex h-[24px] w-[24px] items-center justify-center rounded-full border border-[#c98a24] bg-[#ffd776] font-gotham text-[15px] font-bold text-[#7c4b09]">$</span>
+          <div className="relative mx-auto flex h-[70px] w-[70px] items-center justify-center rounded-full border border-[#c68432] bg-[#fbf8f4]">
+            <UserSquare className="h-[38px] w-[38px] text-[#242424]" strokeWidth={1.4} />
+            <span className="absolute bottom-[7px] font-gotham text-[9px] font-normal text-[#242424]">Sponsor</span>
+            <span className="absolute -right-[5px] bottom-[13px] flex h-[24px] w-[24px] items-center justify-center rounded-full border border-[#c68432] bg-[#fbf8f4] font-gotham text-[15px] font-bold text-[#c68432]">$</span>
           </div>
-          <p className="mt-[3px] font-gotham text-[8px] font-normal italic leading-[11px] text-[#06103d]">
+          <p className="mt-[3px] font-gotham text-[8px] font-normal italic leading-[11px] text-[#242424]">
             Holding back
             <br />
             political currency
           </p>
         </div>
 
-        <div className="mx-auto flex h-[18px] w-px border-l border-dashed border-[#005dff]" />
+        <div className="mx-auto flex h-[18px] w-px border-l border-dashed border-[#1677ff]" />
 
-        <div className="mx-auto flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#005dff] bg-white px-[12px] py-[8px] text-[#005dff]">
+        <div className="mx-auto flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#7dafff] bg-[#eef4ff] px-[12px] py-[8px] text-[#0057c8]">
           <BadgeCheck className="h-[27px] w-[27px]" strokeWidth={1.5} />
-          <span className="font-gotham text-[12px] font-bold leading-none text-[#06103d]">Their win</span>
+          <span className="font-gotham text-[12px] font-bold leading-none text-[#242424]">Their win</span>
         </div>
 
-        <div className="mt-[8px] rounded-[6px] border border-[#f0c984] bg-[#fffaf2] px-[12px] py-[8px] text-center font-gotham text-[12px] font-bold leading-[16px] text-[#06103d]">
+        <div className="mt-[8px] rounded-[4px] border border-[#e8dfd6] bg-[#fbf8f4] px-[12px] py-[8px] text-center font-gotham text-[12px] font-bold leading-[16px] text-[#242424]">
           If they don&apos;t see what&apos;s in it for them,
           <br />
           they don&apos;t spend political currency.
         </div>
 
-        <div className="mt-[8px] flex items-center gap-[12px] rounded-[6px] border border-[#f0c984] bg-[#fffdf8] px-[10px] py-[10px]">
-          <div className="flex h-[43px] w-[43px] shrink-0 items-center justify-center rounded-full border border-[#e2a247] text-[#c78323]">
+        <div className="mt-[8px] flex items-center gap-[12px] rounded-[4px] bg-[#fffdf9] px-[10px] py-[10px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+          <div className="flex h-[43px] w-[43px] shrink-0 items-center justify-center rounded-full border border-[#e8dfd6] text-[#c68432]">
             <Sparkles className="h-[26px] w-[26px]" strokeWidth={1.5} />
           </div>
           <div className="text-left">
-            <p className="font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#c78323]">What changes this</p>
-            <p className="mt-[5px] font-gotham text-[11px] font-normal leading-[15px] text-[#06103d]">
+            <p className="font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.12em] text-[#c68432]">What changes this</p>
+            <p className="mt-[5px] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
               Shift the conversation from asking for support to making the promotion feel like a win for them too.
             </p>
           </div>
         </div>
           </section>
 
-          <p className="mx-auto mt-[8px] max-w-[31ch] text-center font-gotham text-[10px] font-normal leading-[14px] text-[#06103d]">
+          <p className="mx-auto mt-[10px] max-w-[34ch] text-center font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             Inside Better Corporate Life, we show you how to build this shift in simple steps.
           </p>
 
           <button
             type="button"
             onClick={onContinue}
-            className="mt-[8px] min-h-[40px] w-full cursor-pointer rounded-[5px] bg-[#0057c8] px-5 font-gotham text-[16px] font-medium text-white transition hover:bg-[#0A57C6]"
+            className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
           >
             Show me detailed picture
           </button>
@@ -1739,7 +1705,7 @@ const CommunicationFrameworkScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1840,7 +1806,7 @@ const DeeperDiagnosisScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1933,7 +1899,7 @@ const ConsideredDecisionTableScreen = ({
         <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
           Back
         </button>
-        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#242424]">
           Restart
         </button>
       </footer>
@@ -1960,17 +1926,17 @@ const EarlySignalChoice = ({
       type="button"
       onClick={onClick}
       className={`group flex min-h-[116px] cursor-pointer items-center gap-5 rounded-[14px] border bg-white px-5 py-5 text-left shadow-[0_12px_28px_rgba(15,23,42,0.05)] transition hover:-translate-y-0.5 ${
-        isYes ? "border-[#0A57C6] hover:shadow-[0_16px_34px_rgba(10,87,198,0.12)]" : "border-[#eadcc8] hover:border-[#d9c4a8]"
+        isYes ? "border-[#0057c8] hover:shadow-[0_16px_34px_rgba(10,87,198,0.12)]" : "border-[#eadcc8] hover:border-[#d9c4a8]"
       }`}
     >
       <span className={`flex h-[68px] w-[68px] shrink-0 items-center justify-center rounded-full ${isYes ? "bg-[#f3eadf] text-[#b27622]" : "bg-[#f1f3f6] text-[#526177]"}`}>
         {icon}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block font-quattrocento text-[28px] font-bold leading-none text-[#070b2f]">{title}</span>
-        <span className="mt-2 block max-w-[29ch] font-gotham text-[14px] font-medium leading-5 text-[#20315f]">{description}</span>
+        <span className="block font-quattrocento text-[28px] font-bold leading-none text-[#242424]">{title}</span>
+        <span className="mt-2 block max-w-[29ch] font-gotham text-[14px] font-medium leading-5 text-[#242424]">{description}</span>
       </span>
-      <ArrowRight className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${isYes ? "text-[#0057D9]" : "text-[#8c98aa]"}`} />
+      <ArrowRight className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${isYes ? "text-[#0057c8]" : "text-[#8c98aa]"}`} />
     </button>
   );
 };
@@ -1991,11 +1957,11 @@ const ImportanceChoice = ({
     <button
       type="button"
       onClick={onClick}
-      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0A57C6] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0057c8] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
     >
-      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#070b2f]">{title}</span>
-      <span className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#20315f]">{description}</span>
-      <span className={`relative mt-4 flex h-[54px] w-[104px] items-center justify-center ${isYes ? "text-[#0057D9]" : "text-[#8c8f94]"}`}>
+      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#242424]">{title}</span>
+      <span className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#242424]">{description}</span>
+      <span className={`relative mt-4 flex h-[54px] w-[104px] items-center justify-center ${isYes ? "text-[#0057c8]" : "text-[#8c8f94]"}`}>
         <Network className="h-14 w-14" strokeWidth={1.75} />
         <span className="absolute inset-y-2 left-0 w-7 rounded-full border-l border-current opacity-60" />
         <span className="absolute inset-y-2 right-0 w-7 rounded-full border-r border-current opacity-60" />
@@ -2007,32 +1973,32 @@ const ImportanceChoice = ({
 
 const OwnershipCheckPanel = () => (
   <section className="mx-auto w-full max-w-[980px] rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
-    <div className="mx-auto flex h-10 w-10 items-center justify-center text-[#0057D9]">
+    <div className="mx-auto flex h-10 w-10 items-center justify-center text-[#0057c8]">
       <BadgeCheck className="h-9 w-9" strokeWidth={1.7} />
     </div>
-    <p className="mt-3 font-gotham text-[12px] font-bold uppercase tracking-[0.18em] text-[#0057D9]">Ownership Check</p>
-    <div className="mx-auto mt-4 flex max-w-[500px] items-center justify-center gap-4 text-[#0057D9]">
+    <p className="mt-3 font-gotham text-[12px] font-bold uppercase tracking-[0.18em] text-[#0057c8]">Ownership Check</p>
+    <div className="mx-auto mt-4 flex max-w-[500px] items-center justify-center gap-4 text-[#0057c8]">
       <div className="flex items-center gap-3">
         <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
           <Text className="h-8 w-8" strokeWidth={1.7} />
         </span>
-        <span className="font-quattrocento text-[18px] font-bold text-[#070b2f] md:text-[20px]">Project</span>
+        <span className="font-quattrocento text-[18px] font-bold text-[#242424] md:text-[20px]">Project</span>
       </div>
       <div className="flex min-w-[82px] flex-1 items-center justify-center" aria-hidden>
         <div className="h-0 w-full max-w-[104px] border-t-2 border-dashed border-[#5d91f1]" />
-        <ArrowRight className="-ml-4 h-6 w-6 shrink-0 text-[#0057D9]" strokeWidth={2.2} />
+        <ArrowRight className="-ml-4 h-6 w-6 shrink-0 text-[#0057c8]" strokeWidth={2.2} />
       </div>
       <div className="flex items-center gap-3">
         <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
           <UserSquare className="h-8 w-8" strokeWidth={1.7} />
         </span>
-        <span className="font-quattrocento text-[18px] font-bold text-[#070b2f] md:text-[20px]">You</span>
+        <span className="font-quattrocento text-[18px] font-bold text-[#242424] md:text-[20px]">You</span>
       </div>
     </div>
-    <h2 className="mx-auto mt-5 max-w-[30ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#050817] md:text-[38px]">
+    <h2 className="mx-auto mt-5 max-w-[30ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#242424] md:text-[38px]">
       The project matters. Are you linked to it?
     </h2>
-    <p className="mx-auto mt-4 max-w-[39ch] font-gotham text-[15px] font-medium leading-6 text-[#20315f] md:text-[16px]">
+    <p className="mx-auto mt-4 max-w-[39ch] font-gotham text-[15px] font-medium leading-6 text-[#242424] md:text-[16px]">
       When leaders think of this work, do they clearly connect it to you?
     </p>
   </section>
@@ -2054,11 +2020,11 @@ const OwnershipChoice = ({
     <button
       type="button"
       onClick={onClick}
-      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0A57C6] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0057c8] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
     >
-      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#070b2f]">{title}</span>
-      <span className="mt-2 max-w-[30ch] font-gotham text-[14px] font-medium leading-5 text-[#20315f]">{description}</span>
-      <span className={`relative mt-4 flex h-[54px] w-[142px] items-center justify-center ${isYes ? "text-[#0057D9]" : "text-[#8c8f94]"}`}>
+      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#242424]">{title}</span>
+      <span className="mt-2 max-w-[30ch] font-gotham text-[14px] font-medium leading-5 text-[#242424]">{description}</span>
+      <span className={`relative mt-4 flex h-[54px] w-[142px] items-center justify-center ${isYes ? "text-[#0057c8]" : "text-[#8c8f94]"}`}>
         <Text className="absolute left-4 h-12 w-12" strokeWidth={1.75} />
         <div className="h-0 w-11 border-t-2 border-dashed border-current opacity-70" />
         <UserSquare className={`absolute right-4 h-10 w-10 ${isYes ? "" : "opacity-55"}`} strokeWidth={1.75} />
@@ -2259,12 +2225,12 @@ export default function StoCareerBot({
             transition={{ delay: 2.75, duration: 0.55, ease: "easeOut" }}
             className="relative z-20 flex min-h-[370px] flex-col justify-end gap-5 md:min-h-[430px] md:max-w-[58%]"
           >
-            <p className="font-gotham text-[11px] font-bold uppercase tracking-[0.18em] text-[#0A57C6]">Better Corporate Life</p>
-            <h3 className="max-w-[12ch] font-quattrocento text-[32px] font-bold leading-[1.02] tracking-[-0.03em] text-[#111111] md:text-[44px]">
-              The Corporate <span className="text-[#014BAA]">Life</span> Conversation
+            <p className="font-gotham text-[11px] font-bold uppercase tracking-[0.18em] text-[#0057c8]">Better Corporate Life</p>
+            <h3 className="max-w-[12ch] font-quattrocento text-[32px] font-bold leading-[1.02] tracking-[-0.03em] text-[#242424] md:text-[44px]">
+              The Corporate <span className="text-[#0057c8]">Life</span> Conversation
             </h3>
-            <div className="h-[3px] w-12 rounded-full bg-[#014BAA]" />
-            <p className="max-w-[38ch] font-gotham text-[16px] leading-8 text-[#4b5563]">
+            <div className="h-[3px] w-12 rounded-full bg-[#0057c8]" />
+            <p className="max-w-[38ch] font-gotham text-[16px] leading-8 text-[#242424]">
               Hi I am Sto. To get unstuck, we start by seeing where we stand right now.
             </p>
           </motion.div>
@@ -2423,34 +2389,34 @@ export default function StoCareerBot({
       return [
         <div key="result-card" className="grid items-stretch gap-4 md:grid-cols-2">
           <section className="h-full rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:col-span-2 md:px-6 md:py-6">
-            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
+            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0057c8]">
               Where you are
             </p>
-            <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.summary}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#242424] md:text-[16px]">{resultCopy.summary}</p>
           </section>
           <section className="h-full rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
-            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
+            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0057c8]">
               What&apos;s actually hurting
             </p>
-            <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.pain}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#242424] md:text-[16px]">{resultCopy.pain}</p>
           </section>
           <section className="h-full rounded-[22px] border border-[#dce8f8] bg-white px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.06)] md:px-6 md:py-6">
-            <p className="mb-4 inline-flex rounded-full bg-[#014BAA] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
+            <p className="mb-4 inline-flex rounded-full bg-[#0057c8] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
               {resultCopy.title}
             </p>
-            <h3 className="mb-3 font-quattrocento text-[22px] font-bold leading-[1.08] tracking-[-0.02em] text-[#111111]">
+            <h3 className="mb-3 font-quattrocento text-[22px] font-bold leading-[1.08] tracking-[-0.02em] text-[#242424]">
               Why this is happening
             </h3>
-            <p className="font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[16px]">{resultCopy.concept}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#242424] md:text-[16px]">{resultCopy.concept}</p>
           </section>
           <section className="h-full rounded-[22px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-5 shadow-[0_14px_34px_rgba(1,75,170,0.08)] md:px-6 md:py-6">
-            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0A57C6]">
+            <p className="mb-3 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#0057c8]">
               What changes this
             </p>
-            <p className="font-gotham text-[15px] leading-7 text-[#374151] md:text-[16px]">{resultCopy.program}</p>
+            <p className="font-gotham text-[15px] leading-7 text-[#242424] md:text-[16px]">{resultCopy.program}</p>
           </section>
           {doorDetails[door].special ? (
-            <p className="rounded-[18px] border border-[#dce8f8] bg-[#f8fbff] p-4 font-gotham text-sm font-semibold text-[#0A57C6] md:col-span-2">
+            <p className="rounded-[18px] border border-[#dce8f8] bg-[#f8fbff] p-4 font-gotham text-sm font-semibold text-[#0057c8] md:col-span-2">
               This is a better fit for a direct conversation than a quick checkout.
             </p>
           ) : null}
@@ -2463,13 +2429,13 @@ export default function StoCareerBot({
         <PandaHeader key="panda" />,
         <BotMessage key="door-intro">Here&apos;s what I think is really going on.</BotMessage>,
         <div key="door-card" className="rounded-[24px] border border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#edf5ff_100%)] px-5 py-6 text-left shadow-[0_18px_40px_rgba(1,75,170,0.08)] md:px-7">
-          <p className="mb-4 inline-flex rounded-full bg-[#014BAA] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
+          <p className="mb-4 inline-flex rounded-full bg-[#0057c8] px-3 py-2 font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-white">
             What&apos;s really going on
           </p>
-          <h2 className="mb-3 font-quattrocento text-[30px] font-bold leading-[1.02] tracking-[-0.03em] text-[#111111] md:text-[36px]">
+          <h2 className="mb-3 font-quattrocento text-[30px] font-bold leading-[1.02] tracking-[-0.03em] text-[#242424] md:text-[36px]">
             {doorDetails[door].name}
           </h2>
-          <p className="max-w-[58ch] font-gotham text-[15px] leading-7 text-[#4b5563] md:text-[17px]">{doorDetails[door].summary}</p>
+          <p className="max-w-[58ch] font-gotham text-[15px] leading-7 text-[#242424] md:text-[17px]">{doorDetails[door].summary}</p>
         </div>,
       ];
     }
@@ -2655,7 +2621,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          className="w-full cursor-pointer rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => {
             if (!sessionActivated) {
               setSessionActivated(true);
@@ -2677,7 +2643,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full cursor-pointer rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] md:py-5"
+          className="w-full cursor-pointer rounded-[12px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("context")}
         >
           Continue
@@ -2695,7 +2661,7 @@ export default function StoCareerBot({
 
     if (step === "not_considered_formula") {
       return (
-        <button type="button" className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5" onClick={() => goTo("desire")}>
+        <button type="button" className="w-full cursor-pointer rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5" onClick={() => goTo("desire")}>
           See what&apos;s happening with visibility
         </button>
       );
@@ -2740,7 +2706,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          className="w-full cursor-pointer rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => {
             setDesireBlocker("I didn't ask early enough.");
             revealDoor("imposter_syndrome");
@@ -2755,7 +2721,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          className="w-full cursor-pointer rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("importance")}
         >
           Does leadership care about this work?
@@ -2823,7 +2789,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("sponsor_power")}
         >
           Start decision check
@@ -2911,7 +2877,7 @@ export default function StoCareerBot({
       return (
         <button
           type="button"
-          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          className="w-full cursor-pointer rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
           onClick={() => goTo("result")}
         >
           Show my full picture
@@ -2932,7 +2898,7 @@ export default function StoCareerBot({
             type="button"
             onClick={openCallModal}
             disabled={actionState === "loading"}
-            className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-4 py-3.5 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:rounded-[14px] md:px-5 md:py-5"
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[12px] border border-[#0057c8] bg-[#0057c8] px-4 py-3.5 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:rounded-[14px] md:px-5 md:py-5"
           >
             {actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
             {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
@@ -2989,18 +2955,18 @@ export default function StoCareerBot({
               <div className="flex shrink-0 items-center gap-3">
                 <Image src={stoHeadshot} alt="Sto headshot" width={64} height={64} className="h-[54px] w-[54px] shrink-0 rounded-full border border-[#d8e4f6] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.08)] md:h-[66px] md:w-[66px]" />
                 <div>
-                  <p className="font-gotham text-[14px] font-bold leading-5 text-[#101828]">Sto</p>
-                  <p className="font-gotham text-[12px] font-medium leading-5 text-[#5269a3]">Your guide</p>
+                  <p className="font-gotham text-[14px] font-bold leading-5 text-[#242424]">Sto</p>
+                  <p className="font-gotham text-[12px] font-medium leading-5 text-[#242424]">Your guide</p>
                 </div>
               </div>
-              <div className="relative w-full max-w-[500px] rounded-[20px] bg-[#f0f2f7] px-7 py-3.5 font-gotham text-[14px] font-medium leading-5 text-[#111827] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] before:absolute before:left-[-16px] before:top-1/2 before:hidden before:h-0 before:w-0 before:-translate-y-1/2 before:border-y-[12px] before:border-r-[18px] before:border-y-transparent before:border-r-[#f0f2f7] sm:ml-8 sm:before:block">
+              <div className="relative w-full max-w-[500px] rounded-[20px] bg-[#f0f2f7] px-7 py-3.5 font-gotham text-[14px] font-medium leading-5 text-[#242424] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] before:absolute before:left-[-16px] before:top-1/2 before:hidden before:h-0 before:w-0 before:-translate-y-1/2 before:border-y-[12px] before:border-r-[18px] before:border-y-transparent before:border-r-[#f0f2f7] sm:ml-8 sm:before:block">
                 Let&apos;s get real about what&apos;s going on for you at work.
               </div>
             </div>
-            <h2 className="mt-4 max-w-[29ch] font-quattrocento text-[29px] font-bold leading-[1.04] text-[#050817] md:text-[35px]">
+            <h2 className="mt-4 max-w-[29ch] font-quattrocento text-[29px] font-bold leading-[1.04] text-[#242424] md:text-[35px]">
               Which of these feels closest to what&apos;s happening at work right now?
             </h2>
-            <p className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#5269a3] md:text-[15px]">
+            <p className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#242424] md:text-[15px]">
               Choose the one that feels most true. This stays between us.
             </p>
           </div>
@@ -3010,8 +2976,8 @@ export default function StoCareerBot({
               <button
                 key={option.id}
                 type="button"
-                className={`relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-[#fffdf9] text-center shadow-[0_8px_18px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
-                  q1 === option.id ? "border-[#014BAA] ring-1 ring-[#014BAA]" : "border-[#e6e0d7]"
+                className={`relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-[#fffdf9] text-center shadow-[0_8px_18px_rgba(15,23,42,0.05)] transition hover:border-[#0057c8] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
+                  q1 === option.id ? "border-[#0057c8] ring-1 ring-[#0057c8]" : "border-[#e6e0d7]"
                 }`}
                 onClick={() => {
                   setQ1(option.id);
@@ -3020,7 +2986,7 @@ export default function StoCareerBot({
                 aria-pressed={q1 === option.id}
               >
                 {q1 === option.id ? (
-                  <span className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#014BAA] text-white shadow-[0_8px_16px_rgba(1,75,170,0.24)]">
+                  <span className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#0057c8] text-white shadow-[0_8px_16px_rgba(1,75,170,0.24)]">
                     <Check className="h-4 w-4" strokeWidth={3} />
                   </span>
                 ) : null}
@@ -3032,7 +2998,7 @@ export default function StoCareerBot({
                     aria-hidden
                   />
                 </span>
-                <span className="flex min-h-[38px] items-center justify-center px-4 py-2 font-gotham text-[13px] font-bold leading-5 text-[#014BAA] md:min-h-[42px] md:text-[14px]">
+                <span className="flex min-h-[38px] items-center justify-center px-4 py-2 font-gotham text-[13px] font-bold leading-5 text-[#0057c8] md:min-h-[42px] md:text-[14px]">
                   {q1ShortLabels[option.id]}
                 </span>
               </button>
@@ -3042,7 +3008,7 @@ export default function StoCareerBot({
           <button
             type="button"
             disabled={!q1}
-            className="mx-auto mt-2 min-h-[46px] w-full max-w-[980px] cursor-pointer rounded-[8px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
+            className="mx-auto mt-2 min-h-[46px] w-full max-w-[980px] cursor-pointer rounded-[8px] border border-[#0057c8] bg-[#0057c8] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
             onClick={() => goTo("empathy")}
           >
             Continue
@@ -3052,7 +3018,7 @@ export default function StoCareerBot({
             <button type="button" onClick={goBack} className="cursor-pointer font-bold text-[#0057c8]">
               Back
             </button>
-            <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+            <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#242424]">
               Restart
             </button>
           </div>
@@ -3240,7 +3206,7 @@ export default function StoCareerBot({
               <button type="button" onClick={goBack} className="cursor-pointer font-bold text-[#0057c8]">
                 Back
               </button>
-              <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+              <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#242424]">
                 Restart
               </button>
             </footer>
@@ -3420,14 +3386,14 @@ export default function StoCareerBot({
         <div className="mx-auto flex h-full w-full min-w-0 max-w-[980px] flex-col gap-4 overflow-x-hidden px-0 py-2 md:justify-center md:gap-5 md:py-1">
           <BclHeader />
           <section className="w-full min-w-0 rounded-[12px] border border-[#d8e4f6] bg-white px-4 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8 md:py-7">
-            <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#dbe9ff] text-[#014BAA] shadow-[0_10px_22px_rgba(10,87,198,0.10)]">
+            <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#dbe9ff] text-[#0057c8] shadow-[0_10px_22px_rgba(10,87,198,0.10)]">
               <BookOpen className="h-5 w-5" />
             </div>
-            <p className="mt-4 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.18em] text-[#014BAA] md:text-[11px]">Your full picture</p>
-            <h2 className="mx-auto mt-3 max-w-[18ch] font-quattrocento text-[25px] font-bold leading-[1.04] text-[#050817] md:text-[38px]">
+            <p className="mt-4 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.18em] text-[#0057c8] md:text-[11px]">Your full picture</p>
+            <h2 className="mx-auto mt-3 max-w-[18ch] font-quattrocento text-[25px] font-bold leading-[1.04] text-[#242424] md:text-[38px]">
               {resultCopy.title}
             </h2>
-            <p className="mx-auto mt-3 max-w-[34ch] break-words font-gotham text-[13px] leading-5 text-[#40506c] md:max-w-[56ch] md:text-[16px] md:leading-6">
+            <p className="mx-auto mt-3 max-w-[34ch] break-words font-gotham text-[13px] leading-5 text-[#242424] md:max-w-[56ch] md:text-[16px] md:leading-6">
               {resultCopy.summary}
             </p>
           </section>
@@ -3438,8 +3404,8 @@ export default function StoCareerBot({
               ["What changes this", resultCopy.program],
             ].map(([title, copy]) => (
               <section key={title} className="min-w-0 rounded-[12px] border border-[#d8e4f6] bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:rounded-[16px] md:p-5">
-                <p className="break-words pt-0.5 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.14em] text-[#014BAA] md:text-[11px]">{title}</p>
-                <p className="mt-2 break-words font-gotham text-[13px] leading-5 text-[#40506c] md:mt-3 md:text-[15px] md:leading-6">{copy}</p>
+                <p className="break-words pt-0.5 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.14em] text-[#0057c8] md:text-[11px]">{title}</p>
+                <p className="mt-2 break-words font-gotham text-[13px] leading-5 text-[#242424] md:mt-3 md:text-[15px] md:leading-6">{copy}</p>
               </section>
             ))}
           </div>
@@ -3455,7 +3421,7 @@ export default function StoCareerBot({
                 >
                   Back
                 </button>
-                <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+                <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#242424]">
                   Restart
                 </button>
               </div>
@@ -3492,8 +3458,8 @@ export default function StoCareerBot({
         ) : (
           <>
             <div className="flex h-[72px] items-center justify-between px-5 md:h-[88px] md:px-8">
-              <div className="min-w-0 truncate font-quattrocento text-[26px] font-bold leading-none tracking-[-0.03em] text-[#111111]">
-                Better <span className="text-[#014BAA]">Corporate Life</span>
+              <div className="min-w-0 truncate font-quattrocento text-[26px] font-bold leading-none tracking-[-0.03em] text-[#242424]">
+                Better <span className="text-[#0057c8]">Corporate Life</span>
               </div>
               <div className="ml-4 flex items-center gap-3">
                 <div className="whitespace-nowrap font-gotham text-[11px] font-bold uppercase leading-none tracking-[0.18em] text-[#90a4c3]">
@@ -3540,7 +3506,7 @@ export default function StoCareerBot({
             >
               Back
             </button>
-            <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+            <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#242424]">
               Restart
             </button>
           </div>
@@ -3584,3 +3550,7 @@ export default function StoCareerBot({
     </>
   );
 }
+
+
+
+
