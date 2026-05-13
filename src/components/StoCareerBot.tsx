@@ -7,7 +7,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  ArrowLeft,
   BadgeCheck,
   BookOpen,
   Check,
@@ -51,16 +50,18 @@ import {
   UserChoice,
 } from "./StoCareerBot/ui";
 
+const BclHeader = () => (
+  <div className="flex h-[52px] shrink-0 items-start bg-white pt-4 md:h-[58px]">
+    <div className="font-gotham text-[29px] font-bold leading-none text-[#0057c8]">BCL</div>
+  </div>
+);
+
 const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; onRestart: () => void }) => (
   <div className="diagnostic-intro-screen flex h-full min-h-0 w-full justify-center bg-[#eef4ff] md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full min-h-0 w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
-      <div className="diagnostic-intro-content flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-8 pb-8 pt-[52px]">
-        <header className="flex items-center justify-between">
-          <div className="font-gotham text-[29px] font-bold leading-none text-[#0057c8]">BCL</div>
-          <div className="font-gotham text-[14px] font-bold leading-none text-[#4b4b4b]">Your situation</div>
-        </header>
-
-        <div className="diagnostic-intro-card mt-8 shrink-0 overflow-hidden rounded-[4px] border border-[#eef1f6] bg-[#f8fbff] shadow-[0_2px_10px_rgba(15,23,42,0.16)]">
+      <div className="diagnostic-intro-content flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-8 pb-8">
+        <BclHeader />
+        <div className="diagnostic-intro-card mt-2 shrink-0 overflow-hidden rounded-[4px] border border-[#eef1f6] bg-[#f8fbff] shadow-[0_2px_10px_rgba(15,23,42,0.16)]">
           <div className="diagnostic-intro-art relative aspect-[300/173] max-h-[400px] w-full overflow-hidden bg-[#eef5ff]">
             <img
               src="/diagnostic/intro-office-sto.png"
@@ -253,20 +254,13 @@ const DiagnosticContextScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[55px]">
-        <header className="flex items-center justify-between">
-          <button type="button" onClick={onBack} className="flex h-6 w-6 cursor-pointer items-center justify-center text-[#111111]" aria-label="Back">
-            <ArrowLeft className="h-[22px] w-[22px]" strokeWidth={2.2} />
-          </button>
-          <div className="-ml-20 font-gotham text-[29px] font-bold leading-none text-[#0057c8]">BCL</div>
-          <div className="font-gotham text-[14px] font-bold leading-none text-[#4b4b4b]">Context</div>
-        </header>
-
-        <div className="mt-[33px] overflow-hidden bg-[#f7fbff]">
+      <div className="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
+        <div className="overflow-hidden bg-[#f7fbff]">
           <img src="/diagnostic/context-mountain.png" alt="Mountain path with flag" className="aspect-[300/193] h-auto w-full object-cover" />
         </div>
 
-        <section className="mt-6 rounded-[4px] bg-white px-3 pb-4 pt-3 shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+        <section className="mt-6 rounded-[4px] bg-white px-3 pb-4 pt-3">
           <div className="flex items-center gap-2">
             <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-[2px] object-cover" />
             <div>
@@ -321,7 +315,7 @@ const DiagnosticContextScreen = ({
 );
 
 const selectedSituationImages: Partial<Record<Q1OptionId, string>> = {
-  hard_work: "/diagnostic/selected-invisible.png",
+  hard_work: "/diagnostic-cards/hard-work.png",
   invisible: "/diagnostic/selected-invisible.png",
   missed_opportunity: "/diagnostic/selected-opportunity.png",
   self_doubt: "/diagnostic/selected-self-doubt.png",
@@ -348,13 +342,9 @@ const DiagnosticEmpathyScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[55px]">
-        <header className="flex items-center justify-between">
-          <div className="font-gotham text-[29px] font-bold leading-none text-[#0057c8]">BCL</div>
-          <div className="font-gotham text-[14px] font-bold leading-none text-[#4b4b4b]">Your situation</div>
-        </header>
-
-        <div className="mt-[25px] flex items-center gap-2">
+      <div className="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
+        <div className="flex items-center gap-2">
           <div className="flex h-[36px] min-w-[91px] items-center justify-center rounded-[4px] bg-[#f5f7fb] px-2 font-gotham text-[12px] font-bold leading-none text-[#0057c8]">
             You selected
           </div>
@@ -394,10 +384,6 @@ const DiagnosticEmpathyScreen = ({
           Continue
           <ArrowRight className="h-5 w-5" strokeWidth={1.8} />
         </button>
-        <p className="mx-auto mt-[30px] max-w-[240px] text-center font-gotham text-[12px] font-normal leading-[16px] text-[#242424]">
-          2-3 questions. Then Sto will show you what may be blocking your momentum.
-        </p>
-        <p className="mt-[15px] text-center font-gotham text-[12px] font-normal text-[#242424]">1 of 5</p>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -423,7 +409,8 @@ const DiagnosticNotConsideredFormulaScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-white md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <div className="shrink-0">
           <DiagnosticStageProgress />
         </div>
@@ -521,13 +508,9 @@ const DecisionCheckScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[30px]">
-        <header className="flex items-center justify-between">
-          <div className="font-gotham text-[29px] font-bold leading-none text-[#0057c8]">BCL</div>
-          <div className="font-gotham text-[14px] font-bold leading-none text-[#242424]">Decision Check</div>
-        </header>
-
-        <div className="mt-[22px] flex items-start gap-3">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
+        <div className="flex items-start gap-3">
           <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[51px] w-[51px] rounded-full object-cover" />
           <div>
             <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
@@ -612,7 +595,8 @@ const StoryOfWorkScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <div className="mt-[27px] flex items-start gap-3">
@@ -727,7 +711,8 @@ const StoryOfContributionScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[23px] pt-[14px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -841,7 +826,8 @@ const ImposterSyndromeScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[21px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -939,7 +925,8 @@ const ImportanceMobileScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[28px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[20px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -1021,7 +1008,8 @@ const DesireAskEarlyScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[28px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[20px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -1090,6 +1078,61 @@ const DesireAskEarlyScreen = ({
   </div>
 );
 
+const VisibilityDesireScreen = ({
+  onBack,
+  onRestart,
+  onContinue,
+}: {
+  onBack: () => void;
+  onRestart: () => void;
+  onContinue: () => void;
+}) => (
+  <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
+    <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
+        <DiagnosticStageProgress />
+
+        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[24px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+          <div className="mx-auto flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#1677ff] bg-[#eef4ff] text-[#0057c8]">
+            <Signal className="h-[30px] w-[30px]" strokeWidth={1.8} />
+          </div>
+          <p className="mt-[14px] font-gotham text-[12px] font-bold uppercase leading-none tracking-[0.12em] text-[#0057c8]">
+            Visibility
+          </p>
+          <h1 className="mx-auto mt-[13px] max-w-[16ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
+            Clearly, you have the desire for visibility.
+          </h1>
+          <p className="mx-auto mt-[17px] max-w-[34ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+            You made your intent known. Now we need to check whether the work itself matters to the people who decide.
+          </p>
+
+          <div className="mt-[20px] rounded-[4px] bg-[#eef4ff] px-3 py-[10px] font-gotham text-[12px] font-semibold leading-none text-[#0057c8]">
+            Visibility = Desire x Importance
+          </div>
+        </section>
+
+        <button
+          type="button"
+          onClick={onContinue}
+          className="mt-[24px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
+        >
+          Does leadership care about this work?
+        </button>
+      </div>
+
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
+        <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
+          Back
+        </button>
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+          Restart
+        </button>
+      </footer>
+    </section>
+  </div>
+);
+
 const SponsorWillingScreen = ({
   onBack,
   onRestart,
@@ -1103,7 +1146,8 @@ const SponsorWillingScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -1189,7 +1233,8 @@ const SponsorPowerScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -1275,7 +1320,8 @@ const NextLevelSignalScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -1352,16 +1398,15 @@ const BrillianceImageTrapScreen = ({
   onBack,
   onRestart,
   onContinue,
-  onWalkthrough,
 }: {
   onBack: () => void;
   onRestart: () => void;
   onContinue: () => void;
-  onWalkthrough: () => void;
 }) => (
   <div className="flex h-full min-h-[760px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <div className="mt-[27px] flex items-start gap-3">
@@ -1417,16 +1462,6 @@ const BrillianceImageTrapScreen = ({
         >
           Show me how this gets fixed
         </button>
-        <button
-          type="button"
-          onClick={onWalkthrough}
-          className="mt-[13px] inline-flex min-h-[42px] w-full cursor-pointer items-center justify-center gap-3 rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[15px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff]"
-        >
-          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full border-2 border-[#0057c8]">
-            <img src="/diagnostic/decision-play.png" alt="" className="h-[9px] w-[9px] object-contain" aria-hidden />
-          </span>
-          Watch product walkthrough
-        </button>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -1445,16 +1480,15 @@ const SponsorNetworkScreen = ({
   onBack,
   onRestart,
   onContinue,
-  onWalkthrough,
 }: {
   onBack: () => void;
   onRestart: () => void;
   onContinue: () => void;
-  onWalkthrough: () => void;
 }) => (
   <div className="flex h-full min-h-[760px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[22px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <div className="mt-[27px] flex items-start gap-3">
@@ -1566,16 +1600,6 @@ const SponsorNetworkScreen = ({
         >
           Show me how this gets fixed
         </button>
-        <button
-          type="button"
-          onClick={onWalkthrough}
-          className="mt-[13px] inline-flex min-h-[42px] w-full cursor-pointer items-center justify-center gap-3 rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[15px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff]"
-        >
-          <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full border-2 border-[#0057c8]">
-            <img src="/diagnostic/decision-play.png" alt="" className="h-[9px] w-[9px] object-contain" aria-hidden />
-          </span>
-          Watch product walkthrough
-        </button>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -1601,16 +1625,15 @@ const DeeperDiagnosisScreen = ({
   onBack,
   onRestart,
   onContinue,
-  onWalkthrough,
 }: {
   onBack: () => void;
   onRestart: () => void;
   onContinue: () => void;
-  onWalkthrough: () => void;
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5 pt-[55px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <div className="mt-[27px] flex items-start gap-3">
@@ -1678,16 +1701,6 @@ const DeeperDiagnosisScreen = ({
         >
           This needs a deeper read
         </button>
-        <button
-          type="button"
-          onClick={onWalkthrough}
-          className="mt-[16px] inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[17px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff]"
-        >
-          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 border-[#0057c8]">
-            <img src="/diagnostic/decision-play.png" alt="" className="h-[11px] w-[11px] object-contain" aria-hidden />
-          </span>
-          Watch product walkthrough
-        </button>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -1713,7 +1726,8 @@ const ConsideredDecisionTableScreen = ({
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 pt-[57px] md:px-8">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+        <BclHeader />
         <DiagnosticStageProgress />
 
         <section className="mt-[35px] rounded-[4px] bg-white px-[11px] pb-[26px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
@@ -2057,7 +2071,7 @@ export default function StoCareerBot({
   const sessionStatus = door && step === "result" ? "completed" : "in_progress";
   const answersForPersistence = step === "context" ? debouncedAnswersPayload : answersPayload;
   const resultForPersistence = step === "context" ? debouncedResultPayload : resultPayload;
-  const activeDoorCtas = door ? getDoorCtas(door) : null;
+  const activeDoorCtas = door ? getDoorCtas() : null;
   const { resetSession } = useBotSessionPersistence({
     isEmbedded,
     waitlistId,
@@ -2192,9 +2206,6 @@ export default function StoCareerBot({
     if (step === "importance") {
       return [
         <PandaHeader key="panda" />,
-        <UserChoice key="desire-yes">Yes, I did</UserChoice>,
-        <BotMessage key="importance-intro-1">It&apos;s great that you asked. Not many make that effort.</BotMessage>,
-        <BotMessage key="importance-intro-2">Clearly, you have the desire for visibility.</BotMessage>,
         <FormulaCard
           key="visibility-card"
           title="Visibility"
@@ -2204,6 +2215,21 @@ export default function StoCareerBot({
         <BotMessage key="desire-question">
           Is the project you&apos;re working on seen as important by leadership? Do they care about the outcomes?
         </BotMessage>,
+      ];
+    }
+
+    if (step === "visibility_desire") {
+      return [
+        <PandaHeader key="panda" />,
+        <UserChoice key="desire-yes">Yes, I did</UserChoice>,
+        <BotMessage key="importance-intro-1">It&apos;s great that you asked. Not many make that effort.</BotMessage>,
+        <BotMessage key="importance-intro-2">Clearly, you have the desire for visibility.</BotMessage>,
+        <FormulaCard
+          key="visibility-card"
+          title="Visibility"
+          formula="Desire x Importance"
+          note="You can do great work and still be invisible if the right people don't connect you to that work."
+        />,
       ];
     }
 
@@ -2437,7 +2463,7 @@ export default function StoCareerBot({
     return `https://wa.me/${whatsappNumber}?text=${message}`;
   }, [door]);
 
-  const { actionState, actionMessage, handlePaymentCta, handlePrimaryCta, resetPaymentState } = useStoPayment({
+  const { actionState, actionMessage, handlePaymentCta, resetPaymentState } = useStoPayment({
     activeDoorCtas,
     door,
     q1,
@@ -2558,7 +2584,7 @@ export default function StoCareerBot({
               }
               onClick={() => {
                 setDesireAskedEarly(true);
-                goTo("importance");
+                goTo("visibility_desire");
               }}
             />
             <EarlySignalChoice
@@ -2588,6 +2614,18 @@ export default function StoCareerBot({
           }}
         >
           Tell me more
+        </button>
+      );
+    }
+
+    if (step === "visibility_desire") {
+      return (
+        <button
+          type="button"
+          className="w-full cursor-pointer rounded-[18px] border border-[#014BAA] bg-[#014BAA] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
+          onClick={() => goTo("importance")}
+        >
+          Does leadership care about this work?
         </button>
       );
     }
@@ -2751,6 +2789,31 @@ export default function StoCareerBot({
     return null;
   };
 
+  const renderResultCtas = () => {
+    if (!resultCopy || !door) return null;
+
+    return (
+      <div className="mx-auto max-w-full space-y-3 md:max-w-[980px]">
+        <div className="grid gap-3">
+          <button
+            type="button"
+            onClick={openCallModal}
+            disabled={actionState === "loading"}
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-4 py-3.5 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:rounded-[14px] md:px-5 md:py-5"
+          >
+            {actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
+            {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
+          </button>
+        </div>
+        {actionMessage ? (
+          <p className="rounded-[18px] border border-[#f1d7d7] bg-[#fff4f4] px-4 py-3 font-gotham text-sm font-medium text-[#9f2d2d]">
+            {actionMessage}
+          </p>
+        ) : null}
+      </div>
+    );
+  };
+
   const renderVisualScreen = () => {
     if (!isEmbedded) {
       return (
@@ -2786,8 +2849,9 @@ export default function StoCareerBot({
 
     if (step === "q1") {
       return (
-        <div className="mx-auto flex h-full w-full max-w-[980px] flex-col justify-start gap-3 pb-4 pt-2 md:pt-4">
-          <div>
+        <div className="flex h-full w-full flex-col justify-start gap-3 pb-4 pt-2 md:pt-4">
+          <BclHeader />
+          <div className="mx-auto w-full max-w-[980px]">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="flex shrink-0 items-center gap-3">
                 <Image src={stoHeadshot} alt="Sto headshot" width={64} height={64} className="h-[54px] w-[54px] shrink-0 rounded-full border border-[#d8e4f6] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.08)] md:h-[66px] md:w-[66px]" />
@@ -2813,7 +2877,7 @@ export default function StoCareerBot({
               <button
                 key={option.id}
                 type="button"
-                className={`relative aspect-[1624/968] cursor-pointer overflow-hidden rounded-[14px] border bg-[#fffdf9] text-center shadow-[0_8px_18px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
+                className={`relative flex cursor-pointer flex-col overflow-hidden rounded-[14px] border bg-[#fffdf9] text-center shadow-[0_8px_18px_rgba(15,23,42,0.05)] transition hover:border-[#014BAA] hover:shadow-[0_14px_30px_rgba(10,87,198,0.08)] ${
                   q1 === option.id ? "border-[#014BAA] ring-1 ring-[#014BAA]" : "border-[#e6e0d7]"
                 }`}
                 onClick={() => {
@@ -2827,13 +2891,15 @@ export default function StoCareerBot({
                     <Check className="h-4 w-4" strokeWidth={3} />
                   </span>
                 ) : null}
-                <img
-                  src={situationCardImages[option.id]}
-                  alt=""
-                  className="absolute inset-0 h-full w-full object-cover"
-                  aria-hidden
-                />
-                <span className="absolute inset-x-0 bottom-3 z-10 flex min-h-[24px] items-center justify-center px-4 font-gotham text-[13px] font-bold leading-5 text-[#111827] md:text-[14px]">
+                <span className="block aspect-[1624/820] w-full overflow-hidden">
+                  <img
+                    src={situationCardImages[option.id]}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    aria-hidden
+                  />
+                </span>
+                <span className="flex min-h-[38px] items-center justify-center px-4 py-2 font-gotham text-[13px] font-bold leading-5 text-[#014BAA] md:min-h-[42px] md:text-[14px]">
                   {q1ShortLabels[option.id]}
                 </span>
               </button>
@@ -2843,13 +2909,13 @@ export default function StoCareerBot({
           <button
             type="button"
             disabled={!q1}
-            className="mt-2 min-h-[46px] w-full cursor-pointer rounded-[8px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
+            className="mx-auto mt-2 min-h-[46px] w-full max-w-[980px] cursor-pointer rounded-[8px] border border-[#014BAA] bg-[#014BAA] px-5 font-quattrocento text-[17px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100"
             onClick={() => goTo("empathy")}
           >
             Continue
           </button>
 
-          <div className="mt-2 flex min-h-[48px] w-full items-center justify-between bg-[#eef4ff] px-4 font-gotham text-[12px] md:px-8">
+          <div className="mx-[-16px] mt-2 flex min-h-[48px] w-[calc(100%+32px)] items-center justify-between bg-[#eef4ff] px-4 font-gotham text-[12px] md:mx-[-36px] md:w-[calc(100%+72px)] md:px-8">
             <button type="button" onClick={goBack} className="cursor-pointer font-bold text-[#0057c8]">
               Back
             </button>
@@ -2908,6 +2974,7 @@ export default function StoCareerBot({
     if (step === "diagnostic") {
       return (
         <div className="relative mx-auto flex min-h-full w-full max-w-[1180px] flex-col justify-start overflow-visible rounded-[24px] px-4 pb-5 pt-1 md:px-8 md:py-2">
+          <BclHeader />
           <DiagnosticMapBackground />
           <div className="relative z-10 mx-auto flex w-full max-w-[780px] flex-col items-center gap-3">
             <DiagnosticQuestionCard />
@@ -2966,7 +3033,7 @@ export default function StoCareerBot({
           onRestart={reset}
           onYes={() => {
             setDesireAskedEarly(true);
-            goTo("importance");
+            goTo("visibility_desire");
           }}
           onNo={() => {
             setDesireAskedEarly(false);
@@ -2994,10 +3061,57 @@ export default function StoCareerBot({
       );
     }
 
+    if (step === "visibility_desire") {
+      return (
+        <VisibilityDesireScreen
+          onBack={goBack}
+          onRestart={reset}
+          onContinue={() => goTo("importance")}
+        />
+      );
+    }
+
     if (step === "personal_seen") {
       return (
-        <div className="mx-auto flex h-full w-full max-w-[1224px] flex-col justify-center gap-5">
-          <OwnershipCheckPanel />
+        <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
+          <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+              <BclHeader />
+              <OwnershipCheckPanel />
+              <div className="mt-5 grid items-stretch gap-5 md:grid-cols-2">
+                <OwnershipChoice
+                  tone="yes"
+                  title="Yes"
+                  description="They know I'm driving it."
+                  onClick={() => {
+                    setPersonallySeen(true);
+                    revealDoor("values_misalignment");
+                  }}
+                />
+                <OwnershipChoice
+                  tone="no"
+                  title="No"
+                  description="The project succeeds, but the credit doesn't clearly come to me."
+                  onClick={() => {
+                    setPersonallySeen(false);
+                    revealDoor("story_of_contribution");
+                  }}
+                />
+              </div>
+              <div className="mt-5">
+                <StoNote>Important work helps only when your name travels with it.</StoNote>
+              </div>
+            </div>
+
+            <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
+              <button type="button" onClick={goBack} className="cursor-pointer font-bold text-[#0057c8]">
+                Back
+              </button>
+              <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+                Restart
+              </button>
+            </footer>
+          </section>
         </div>
       );
     }
@@ -3120,7 +3234,6 @@ export default function StoCareerBot({
             onBack={goBack}
             onRestart={reset}
             onContinue={() => goTo("result")}
-            onWalkthrough={() => goTo("result")}
           />
         );
       }
@@ -3131,7 +3244,6 @@ export default function StoCareerBot({
             onBack={goBack}
             onRestart={reset}
             onContinue={() => goTo("result")}
-            onWalkthrough={() => goTo("result")}
           />
         );
       }
@@ -3142,7 +3254,6 @@ export default function StoCareerBot({
             onBack={goBack}
             onRestart={reset}
             onContinue={() => goTo("result")}
-            onWalkthrough={() => goTo("result")}
           />
         );
       }
@@ -3163,12 +3274,13 @@ export default function StoCareerBot({
 
     if (step === "result" && resultCopy && door) {
       return (
-        <div className="mx-auto flex h-full w-full min-w-0 max-w-[980px] flex-col gap-4 overflow-x-hidden px-0 py-1 md:justify-center md:gap-5">
+        <div className="mx-auto flex h-full w-full min-w-0 max-w-[980px] flex-col gap-4 overflow-x-hidden px-0 py-2 md:justify-center md:gap-5 md:py-1">
+          <BclHeader />
           <section className="w-full min-w-0 rounded-[12px] border border-[#d8e4f6] bg-white px-4 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8 md:py-7">
             <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#dbe9ff] text-[#014BAA] shadow-[0_10px_22px_rgba(10,87,198,0.10)]">
               <BookOpen className="h-5 w-5" />
             </div>
-            <p className="mt-3 font-gotham text-[10px] font-bold uppercase tracking-[0.18em] text-[#014BAA] md:text-[11px]">Your full picture</p>
+            <p className="mt-4 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.18em] text-[#014BAA] md:text-[11px]">Your full picture</p>
             <h2 className="mx-auto mt-3 max-w-[18ch] font-quattrocento text-[25px] font-bold leading-[1.04] text-[#050817] md:text-[38px]">
               {resultCopy.title}
             </h2>
@@ -3183,11 +3295,29 @@ export default function StoCareerBot({
               ["What changes this", resultCopy.program],
             ].map(([title, copy]) => (
               <section key={title} className="min-w-0 rounded-[12px] border border-[#d8e4f6] bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:rounded-[16px] md:p-5">
-                <p className="break-words font-gotham text-[10px] font-bold uppercase tracking-[0.14em] text-[#014BAA] md:text-[11px]">{title}</p>
+                <p className="break-words pt-0.5 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.14em] text-[#014BAA] md:text-[11px]">{title}</p>
                 <p className="mt-2 break-words font-gotham text-[13px] leading-5 text-[#40506c] md:mt-3 md:text-[15px] md:leading-6">{copy}</p>
               </section>
             ))}
           </div>
+          {isEmbedded ? (
+            <div className="mt-1 space-y-3">
+              {controlsReady ? renderResultCtas() : <div className="min-h-[44px]" />}
+              <div className="flex min-h-[55px] w-full items-center justify-between bg-[#eef4ff] px-4 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px] md:px-8">
+                <button
+                  type="button"
+                  onClick={goBack}
+                  disabled={!history.length}
+                  className="cursor-pointer font-bold text-[#0057c8] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  Back
+                </button>
+                <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#111111]">
+                  Restart
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
       );
     }
@@ -3215,29 +3345,7 @@ export default function StoCareerBot({
     >
       <header className={isEmbedded ? "hidden" : "border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur"}>
         {isEmbedded ? (
-          step === "intro" || step === "q1" || step === "empathy" ? (
-            <div className="bg-white/90">
-              <div className="flex h-[64px] items-center justify-between gap-2 px-4 md:h-[70px] md:px-9">
-                <button
-                  type="button"
-                  onClick={step === "intro" ? reset : goBack}
-                  disabled={step !== "intro" && !history.length}
-                  className="inline-flex min-w-[58px] cursor-pointer items-center gap-1 font-gotham text-[12px] font-medium text-[#050817] hover:text-[#014BAA] disabled:cursor-not-allowed disabled:opacity-40 md:min-w-[100px] md:gap-4 md:text-[14px]"
-                >
-                  <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
-                  Back
-                </button>
-                <div className="min-w-0 text-center font-quattrocento text-[18px] font-bold leading-none text-[#050817] md:text-[25px]">
-                  Better <span className="text-[#014BAA]">Corporate Life</span>
-                </div>
-                <div className="min-w-[74px] text-right font-gotham text-[8px] font-bold uppercase tracking-[0.08em] text-[#5269a3] md:min-w-[100px] md:text-[11px] md:tracking-[0.26em]">
-                  {step === "intro" ? "Introduction" : "Your Situation"}
-                </div>
-              </div>
-            </div>
-          ) : (
-            null
-          )
+          null
         ) : (
           <>
             <div className="flex h-[72px] items-center justify-between px-5 md:h-[88px] md:px-8">
@@ -3264,40 +3372,13 @@ export default function StoCareerBot({
         )}
       </header>
 
-      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
         {renderVisualScreen()}
       </div>
 
-      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "importance" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
+      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
         {controlsReady && step === "result" && resultCopy && door ? (
-          <div className="mx-auto max-w-full space-y-3 md:max-w-[980px]">
-            <div className={`grid gap-3 ${activeDoorCtas?.secondary ? "md:grid-cols-2" : ""}`}>
-              <button
-                type="button"
-                onClick={activeDoorCtas?.primary.kind === "call" ? openCallModal : handlePrimaryCta}
-                disabled={activeDoorCtas?.primary.kind !== "call" && actionState === "loading"}
-                className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[12px] border border-[#014BAA] bg-[#014BAA] px-4 py-3.5 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:rounded-[14px] md:px-5 md:py-5"
-              >
-                {activeDoorCtas?.primary.kind !== "call" && actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
-                {activeDoorCtas?.primary.kind !== "call" && actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
-              </button>
-              {activeDoorCtas?.secondary ? (
-                <button
-                  type="button"
-                  onClick={activeDoorCtas.secondary.kind === "call" ? openCallModal : handlePaymentCta}
-                  disabled={activeDoorCtas.secondary.kind !== "call" && actionState === "loading"}
-                  className="w-full cursor-pointer rounded-[12px] border border-[#014BAA] bg-white px-4 py-3.5 text-center font-gotham text-[15px] font-bold text-[#014BAA] transition hover:border-[#0A57C6] hover:bg-[#f8fbff] md:rounded-[14px] md:px-5 md:py-5"
-                >
-                  {activeDoorCtas.secondary.kind !== "call" && actionState === "loading" ? "Processing..." : activeDoorCtas.secondary.label}
-                </button>
-              ) : null}
-            </div>
-            {actionMessage ? (
-              <p className="rounded-[18px] border border-[#f1d7d7] bg-[#fff4f4] px-4 py-3 font-gotham text-sm font-medium text-[#9f2d2d]">
-                {actionMessage}
-              </p>
-            ) : null}
-          </div>
+          renderResultCtas()
         ) : controlsReady && step !== "diagnostic" ? (
           <div className={isEmbedded ? "mx-auto max-w-[980px]" : ""}>{renderControls()}</div>
         ) : step !== "diagnostic" ? (

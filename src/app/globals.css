@@ -527,6 +527,17 @@ a[href],
     max-width: 100%;
   }
 
+  [data-sto-bot],
+  [data-sto-bot] * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  [data-sto-bot]::-webkit-scrollbar,
+  [data-sto-bot] *::-webkit-scrollbar {
+    display: none;
+  }
+
   [data-sto-bot] section,
   [data-sto-bot] div,
   [data-sto-bot] p,

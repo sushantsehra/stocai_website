@@ -2,7 +2,7 @@ import diagnosticHardWorkWide from "@/assets/diagnostic-hard-work.webp";
 import diagnosticManagerInvisibleWide from "@/assets/diagnostic-manager-invisible-wide.webp";
 import diagnosticMissedOpportunityWide from "@/assets/diagnostic-missed-opportunity-wide.webp";
 import diagnosticSelfDoubtWide from "@/assets/diagnostic-self-doubt-wide.webp";
-import type { DiagnosticDoorId, Q1OptionId } from "@/data/stoConversation";
+import type { Q1OptionId } from "@/data/stoConversation";
 import type { BotStep } from "./types";
 
 export const whatsappNumber = "918860403799";
@@ -15,6 +15,7 @@ export const stepMeta: Record<BotStep, { label: string; progress: number }> = {
   diagnostic: { label: "Diagnosis", progress: 42 },
   not_considered_formula: { label: "Diagnosis", progress: 54 },
   desire: { label: "Diagnosis", progress: 60 },
+  visibility_desire: { label: "Diagnosis", progress: 64 },
   desire_blocker: { label: "Diagnosis", progress: 72 },
   importance: { label: "Diagnosis", progress: 68 },
   personal_seen: { label: "Diagnosis", progress: 80 },
@@ -32,16 +33,9 @@ export const booleanAnswerLabel = (value: boolean | null, labels: { yes: string;
   return null;
 };
 
-export const getDoorCtas = (door: DiagnosticDoorId) => {
-  if (door === "values_misalignment" || door === "complex_situation") {
-    return {
-      primary: { label: "Book a clarity call", kind: "call" as const },
-    };
-  }
-
+export const getDoorCtas = () => {
   return {
-    primary: { label: "Take me there", kind: "payment" as const },
-    secondary: { label: "I'd like a call instead", kind: "call" as const },
+    primary: { label: "I'd like to be more promotable", kind: "payment" as const },
   };
 };
 
