@@ -10,6 +10,7 @@
     "dev:prod": "NODE_ENV=production next dev",
     "dev:prod:turbo": "NODE_ENV=production next dev --turbopack",
     "clean": "node ./scripts/clean-next-cache.mjs",
+    "verify": "node ./scripts/verify-next-build.mjs",
     "build": "next build",
     "build:staging": "NODE_ENV=staging next build",
     "build:prod": "NODE_ENV=production next build",

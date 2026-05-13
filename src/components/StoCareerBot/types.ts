@@ -8,6 +8,7 @@ export type BotStep =
   | "diagnostic"
   | "not_considered_formula"
   | "desire"
+  | "visibility_desire"
   | "desire_blocker"
   | "importance"
   | "personal_seen"
