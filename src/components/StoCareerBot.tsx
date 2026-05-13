@@ -1089,36 +1089,55 @@ const VisibilityDesireScreen = ({
 }) => (
   <div className="flex h-full min-h-[680px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
         <BclHeader />
-        <DiagnosticStageProgress />
+        <div className="mx-auto w-full max-w-[390px]">
+          <section className="rounded-[4px] bg-white px-[20px] pb-[22px] pt-[24px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+            <div className="mx-auto flex h-[25px] w-[55px] items-center justify-center">
+              <img src="/diagnostic/desire-icon.png" alt="" className="h-full w-full object-contain" aria-hidden />
+            </div>
 
-        <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[24px] pt-[19px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="mx-auto flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#1677ff] bg-[#eef4ff] text-[#0057c8]">
-            <Signal className="h-[30px] w-[30px]" strokeWidth={1.8} />
-          </div>
-          <p className="mt-[14px] font-gotham text-[12px] font-bold uppercase leading-none tracking-[0.12em] text-[#0057c8]">
-            Visibility
-          </p>
-          <h1 className="mx-auto mt-[13px] max-w-[16ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
-            Clearly, you have the desire for visibility.
-          </h1>
-          <p className="mx-auto mt-[17px] max-w-[34ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-            You made your intent known. Now we need to check whether the work itself matters to the people who decide.
-          </p>
+            <h1 className="mx-auto mt-[24px] max-w-[14ch] font-quattrocento text-[25px] font-bold leading-[1.08] text-black">
+              You made your desire visible.
+            </h1>
 
-          <div className="mt-[20px] rounded-[4px] bg-[#eef4ff] px-3 py-[10px] font-gotham text-[12px] font-semibold leading-none text-[#0057c8]">
-            Visibility = Desire x Importance
-          </div>
-        </section>
+            <div className="mx-auto mt-[18px] space-y-[10px] font-gotham text-[15px] font-normal leading-[1.35] text-[#06158f]">
+              <p>That matters. Many people never ask.</p>
+              <p>But visibility needs more than desire.</p>
+            </div>
 
-        <button
-          type="button"
-          onClick={onContinue}
-          className="mt-[24px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
-        >
-          Does leadership care about this work?
-        </button>
+            <div className="relative mt-[22px] rounded-[8px] border border-[#d9e8ff] bg-[#f7fbff] px-[23px] py-[13px] shadow-[inset_0_1px_8px_rgba(0,87,200,0.06)]">
+              <Sparkles className="absolute -right-[4px] -top-[11px] h-6 w-6 text-[#005dff]" strokeWidth={1.5} />
+              <div className="flex items-center justify-center gap-[13px] whitespace-nowrap font-quattrocento text-[17px] font-bold leading-none text-[#001072]">
+                <span>Visibility</span>
+                <span className="font-gotham text-[18px] font-normal text-[#001072]">=</span>
+                <span className="text-[#005dff]">Desire</span>
+                <span className="font-gotham text-[18px] font-normal text-[#001072]">x</span>
+                <span className="rounded-[8px] bg-[#eaf3ff] px-[10px] py-[7px] text-[#005dff]">Importance</span>
+              </div>
+            </div>
+
+            <p className="mx-auto mt-[23px] max-w-[31ch] font-gotham text-[19px] font-normal leading-[1.45] text-[#001072]">
+              You can do <span className="font-bold text-[#005dff]">strong work</span> and still be invisible if the right people don&apos;t <span className="font-bold text-[#005dff]">connect</span> you to that work.
+            </p>
+          </section>
+
+          <section className="mt-[16px] flex items-center gap-[12px] rounded-[4px] bg-[#fffdf9] px-[14px] py-[12px] text-left shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
+            <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[48px] w-[48px] shrink-0 rounded-full object-cover" />
+            <p className="font-gotham text-[11px] font-normal leading-[1.35] text-[#001072]">
+              <span className="font-bold text-[#0057c8]">Sto&apos;s note:</span> Desire gets you noticed. Importance gets you remembered.
+            </p>
+          </section>
+
+          <button
+            type="button"
+            onClick={onContinue}
+            className="mt-[18px] flex min-h-[48px] w-full cursor-pointer items-center justify-center rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
+          >
+            <span className="flex-1">Check importance</span>
+            <ArrowRight className="h-5 w-5" strokeWidth={2} />
+          </button>
+        </div>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -1600,6 +1619,120 @@ const SponsorNetworkScreen = ({
         >
           Show me how this gets fixed
         </button>
+      </div>
+
+      <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
+        <button type="button" onClick={onBack} className="cursor-pointer font-bold text-[#0057c8]">
+          Back
+        </button>
+        <button type="button" onClick={onRestart} className="cursor-pointer font-normal text-[#111111]">
+          Restart
+        </button>
+      </footer>
+    </section>
+  </div>
+);
+
+const CommunicationFrameworkScreen = ({
+  onBack,
+  onRestart,
+  onContinue,
+}: {
+  onBack: () => void;
+  onRestart: () => void;
+  onContinue: () => void;
+}) => (
+  <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
+    <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-3 md:px-8">
+        <BclHeader />
+        <div className="mx-auto w-full max-w-[390px]">
+          <div className="flex items-start gap-[14px] pl-[44px]">
+            <div className="w-[56px] shrink-0 text-center">
+              <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="mx-auto h-[56px] w-[56px] rounded-full object-cover" />
+              <p className="mt-[3px] font-gotham text-[11px] font-normal leading-none text-[#00103d]">Sto</p>
+            </div>
+            <div className="relative mt-[8px] max-w-[128px] rounded-[8px] border border-[#d8d8d8] bg-[#fbfbfb] px-[14px] py-[10px] font-gotham text-[11px] font-normal leading-[15px] text-[#00103d] shadow-[0_2px_5px_rgba(15,23,42,0.04)] before:absolute before:left-[-7px] before:top-[16px] before:h-[12px] before:w-[12px] before:rotate-45 before:border-b before:border-l before:border-[#d8d8d8] before:bg-[#fbfbfb]">
+              I think I see what&apos;s happening here.
+            </div>
+          </div>
+
+          <section className="mt-[6px] rounded-[6px] border border-[#e0e0e0] bg-white px-[14px] pb-[12px] pt-[11px] shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
+            <p className="inline-flex rounded-full bg-[#e8f7ea] px-[10px] py-[4px] font-gotham text-[9px] font-bold uppercase leading-none tracking-[0.18em] text-[#24713d]">
+              What&apos;s really going on
+            </p>
+            <h1 className="mt-[9px] font-quattrocento text-[29px] font-bold leading-[1.02] text-[#06103d]">
+              Win Alignment Gap
+            </h1>
+            <p className="mt-[8px] max-w-[35ch] font-gotham text-[11px] font-normal leading-[17px] text-[#06103d]">
+              Your sponsor has power, but won&apos;t spend it on you. That usually means one thing - your success does not yet feel like their success.
+            </p>
+
+        <div className="mx-auto mt-[10px] flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#005dff] bg-white px-[12px] py-[7px] text-[#005dff]">
+          <span className="flex h-[28px] w-[28px] items-end gap-[3px]" aria-hidden>
+            <span className="h-[8px] w-[5px] rounded-t-sm bg-[#005dff]" />
+            <span className="h-[14px] w-[5px] rounded-t-sm bg-[#005dff]" />
+            <span className="h-[21px] w-[5px] rounded-t-sm bg-[#005dff]" />
+          </span>
+          <span className="font-gotham text-[12px] font-bold leading-none text-[#06103d]">Your growth</span>
+        </div>
+
+        <div className="mx-auto flex h-[25px] w-px flex-col items-center justify-center">
+          <span className="h-[17px] border-l border-dashed border-[#005dff]" />
+          <span className="font-gotham text-[18px] leading-none text-[#005dff]">x</span>
+        </div>
+
+        <div className="mx-auto text-center">
+          <div className="relative mx-auto flex h-[70px] w-[70px] items-center justify-center rounded-full border border-[#c98a24] bg-white">
+            <UserSquare className="h-[38px] w-[38px] text-[#06103d]" strokeWidth={1.4} />
+            <span className="absolute bottom-[7px] font-gotham text-[9px] font-normal text-[#06103d]">Sponsor</span>
+            <span className="absolute -right-[5px] bottom-[13px] flex h-[24px] w-[24px] items-center justify-center rounded-full border border-[#c98a24] bg-[#ffd776] font-gotham text-[15px] font-bold text-[#7c4b09]">$</span>
+          </div>
+          <p className="mt-[3px] font-gotham text-[8px] font-normal italic leading-[11px] text-[#06103d]">
+            Holding back
+            <br />
+            political currency
+          </p>
+        </div>
+
+        <div className="mx-auto flex h-[18px] w-px border-l border-dashed border-[#005dff]" />
+
+        <div className="mx-auto flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#005dff] bg-white px-[12px] py-[8px] text-[#005dff]">
+          <BadgeCheck className="h-[27px] w-[27px]" strokeWidth={1.5} />
+          <span className="font-gotham text-[12px] font-bold leading-none text-[#06103d]">Their win</span>
+        </div>
+
+        <div className="mt-[8px] rounded-[6px] border border-[#f0c984] bg-[#fffaf2] px-[12px] py-[8px] text-center font-gotham text-[12px] font-bold leading-[16px] text-[#06103d]">
+          If they don&apos;t see what&apos;s in it for them,
+          <br />
+          they don&apos;t spend political currency.
+        </div>
+
+        <div className="mt-[8px] flex items-center gap-[12px] rounded-[6px] border border-[#f0c984] bg-[#fffdf8] px-[10px] py-[10px]">
+          <div className="flex h-[43px] w-[43px] shrink-0 items-center justify-center rounded-full border border-[#e2a247] text-[#c78323]">
+            <Sparkles className="h-[26px] w-[26px]" strokeWidth={1.5} />
+          </div>
+          <div className="text-left">
+            <p className="font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-[#c78323]">What changes this</p>
+            <p className="mt-[5px] font-gotham text-[11px] font-normal leading-[15px] text-[#06103d]">
+              Shift the conversation from asking for support to making the promotion feel like a win for them too.
+            </p>
+          </div>
+        </div>
+          </section>
+
+          <p className="mx-auto mt-[8px] max-w-[31ch] text-center font-gotham text-[10px] font-normal leading-[14px] text-[#06103d]">
+            Inside Better Corporate Life, we show you how to build this shift in simple steps.
+          </p>
+
+          <button
+            type="button"
+            onClick={onContinue}
+            className="mt-[8px] min-h-[40px] w-full cursor-pointer rounded-[5px] bg-[#0057c8] px-5 font-gotham text-[16px] font-medium text-white transition hover:bg-[#0A57C6]"
+          >
+            Show me detailed picture
+          </button>
+        </div>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -3248,6 +3381,16 @@ export default function StoCareerBot({
         );
       }
 
+      if (door === "communication_framework") {
+        return (
+          <CommunicationFrameworkScreen
+            onBack={goBack}
+            onRestart={reset}
+            onContinue={() => goTo("result")}
+          />
+        );
+      }
+
       if (door === "values_misalignment") {
         return (
           <DeeperDiagnosisScreen
@@ -3263,8 +3406,8 @@ export default function StoCareerBot({
           <QuestionPanel
             icon={<Lightbulb className="h-9 w-9" />}
             eyebrow="What's really going on"
-            title={doorDetails[door].name}
-            subtitle={doorDetails[door].summary}
+            title={doorDetails[door as DiagnosticDoorId].name}
+            subtitle={doorDetails[door as DiagnosticDoorId].summary}
             wide
           />
           <StoNote>Here&apos;s what I think is really going on.</StoNote>
@@ -3372,11 +3515,11 @@ export default function StoCareerBot({
         )}
       </header>
 
-      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
         {renderVisualScreen()}
       </div>
 
-      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
+      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
         {controlsReady && step === "result" && resultCopy && door ? (
           renderResultCtas()
         ) : controlsReady && step !== "diagnostic" ? (
