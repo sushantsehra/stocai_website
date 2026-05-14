@@ -54,8 +54,8 @@ export const situationImages: Record<Q1OptionId, typeof diagnosticHardWorkWide> 
 };
 
 export const situationCardImages: Record<Q1OptionId, string> = {
-  hard_work: "/diagnostic-cards/hard-work.png",
-  invisible: "/diagnostic-cards/manager-invisible.png",
-  missed_opportunity: "/diagnostic-cards/missed-opportunity.png",
-  self_doubt: "/diagnostic-cards/self-doubt.png",
+  hard_work: "/diagnostic-cards/hard-work-new.png",
+  invisible: "/diagnostic-cards/manager-invisible-new.png",
+  missed_opportunity: "/diagnostic-cards/missed-opportunity-new.png",
+  self_doubt: "/diagnostic-cards/self-doubt-new.png",
 };

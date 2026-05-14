@@ -17,7 +17,6 @@ import {
   PlayCircle,
   Signal,
   Sparkles,
-  Text,
   UserSquare,
   WifiOff,
   X,
@@ -1034,18 +1033,24 @@ const DesireAskEarlyScreen = ({
           <button
             type="button"
             onClick={onYes}
-            className="w-full cursor-pointer rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-4 py-[12px] text-left transition hover:border-[#0057c8]"
+            className="flex w-full cursor-pointer items-center gap-4 rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-4 py-[12px] text-left transition hover:border-[#0057c8]"
           >
-            <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#0057c8]">Yes</span>
-            <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I had made it clear early.</span>
+            <img src="/diagnostic/manager-early-yes-icon.png" alt="" className="h-[52px] w-[58px] shrink-0 object-contain" aria-hidden />
+            <span className="block">
+              <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#0057c8]">Yes</span>
+              <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I had made it clear early.</span>
+            </span>
           </button>
           <button
             type="button"
             onClick={onNo}
-            className="w-full cursor-pointer rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-4 py-[12px] text-left transition hover:border-[#c68432]"
+            className="flex w-full cursor-pointer items-center gap-4 rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-4 py-[12px] text-left transition hover:border-[#c68432]"
           >
-            <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#a54747]">No</span>
-            <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I mentioned it late or assumed they knew.</span>
+            <img src="/diagnostic/manager-early-no-icon.png" alt="" className="h-[52px] w-[58px] shrink-0 object-contain" aria-hidden />
+            <span className="block">
+              <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#a54747]">No</span>
+              <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I mentioned it late or assumed they knew.</span>
+            </span>
           </button>
         </div>
 
@@ -1886,13 +1891,6 @@ const ConsideredDecisionTableScreen = ({
         >
           Start decision check
         </button>
-        <button
-          type="button"
-          onClick={onBack}
-          className="mt-[16px] min-h-[48px] w-full cursor-pointer rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[17px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff]"
-        >
-          Go back
-        </button>
       </div>
 
       <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
@@ -1973,26 +1971,26 @@ const ImportanceChoice = ({
 
 const OwnershipCheckPanel = () => (
   <section className="mx-auto w-full max-w-[980px] rounded-[16px] border border-[#d8e4f6] bg-white px-6 py-7 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8">
-    <div className="mx-auto flex h-10 w-10 items-center justify-center text-[#0057c8]">
-      <BadgeCheck className="h-9 w-9" strokeWidth={1.7} />
+    <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#eef4ff]">
+      <img src="/diagnostic/ownership-check-badge.png" alt="" className="h-[26px] w-[26px] object-contain" aria-hidden />
     </div>
-    <p className="mt-3 font-gotham text-[12px] font-bold uppercase tracking-[0.18em] text-[#0057c8]">Ownership Check</p>
-    <div className="mx-auto mt-4 flex max-w-[500px] items-center justify-center gap-4 text-[#0057c8]">
-      <div className="flex items-center gap-3">
-        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
-          <Text className="h-8 w-8" strokeWidth={1.7} />
+    <p className="mt-3 font-gotham text-[12px] font-bold text-[#0057c8]">Ownership check</p>
+    <div className="mx-auto mt-4 grid max-w-[430px] grid-cols-[82px_1fr_82px] items-center gap-4 text-[#0057c8]">
+      <div className="flex flex-col items-center gap-2">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#b8d2ff] bg-[#f7fbff]">
+          <img src="/diagnostic/ownership-check-project.png" alt="" className="h-[32px] w-[32px] object-contain" aria-hidden />
         </span>
-        <span className="font-quattrocento text-[18px] font-bold text-[#242424] md:text-[20px]">Project</span>
+        <span className="font-gotham text-[10px] font-normal leading-none text-[#0057c8]">Project</span>
       </div>
-      <div className="flex min-w-[82px] flex-1 items-center justify-center" aria-hidden>
-        <div className="h-0 w-full max-w-[104px] border-t-2 border-dashed border-[#5d91f1]" />
-        <ArrowRight className="-ml-4 h-6 w-6 shrink-0 text-[#0057c8]" strokeWidth={2.2} />
+      <div className="flex items-center justify-center" aria-hidden>
+        <div className="h-0 w-full max-w-[110px] border-t border-[#0057c8]" />
+        <ArrowRight className="-ml-3 h-5 w-5 shrink-0 text-[#0057c8]" strokeWidth={1.8} />
       </div>
-      <div className="flex items-center gap-3">
-        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-[#b8d2ff] bg-[#f7fbff]">
-          <UserSquare className="h-8 w-8" strokeWidth={1.7} />
+      <div className="flex flex-col items-center gap-2">
+        <span className="flex h-[58px] w-[58px] items-center justify-center rounded-full border border-dashed border-[#b8d2ff] bg-[#f7fbff]">
+          <img src="/diagnostic/ownership-check-you.png" alt="" className="h-[29px] w-[29px] object-contain" aria-hidden />
         </span>
-        <span className="font-quattrocento text-[18px] font-bold text-[#242424] md:text-[20px]">You</span>
+        <span className="font-gotham text-[10px] font-normal leading-none text-[#0057c8]">You</span>
       </div>
     </div>
     <h2 className="mx-auto mt-5 max-w-[30ch] font-quattrocento text-[30px] font-bold leading-[1.08] text-[#242424] md:text-[38px]">
@@ -2020,18 +2018,20 @@ const OwnershipChoice = ({
     <button
       type="button"
       onClick={onClick}
-      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0057c8] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+      className={`group flex min-h-[118px] cursor-pointer flex-col items-center justify-center rounded-[6px] border px-5 py-[12px] text-center transition ${
+        isYes
+          ? "border-[#0094ff] bg-[#eef4ff] hover:border-[#0057c8]"
+          : "border-[#e8dfd6] bg-[#fbf8f4] hover:border-[#c68432]"
+      }`}
     >
-      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#242424]">{title}</span>
-      <span className="mt-2 max-w-[30ch] font-gotham text-[14px] font-medium leading-5 text-[#242424]">{description}</span>
-      <span className={`relative mt-4 flex h-[54px] w-[142px] items-center justify-center ${isYes ? "text-[#0057c8]" : "text-[#8c8f94]"}`}>
-        <Text className="absolute left-4 h-12 w-12" strokeWidth={1.75} />
-        <div className="h-0 w-11 border-t-2 border-dashed border-current opacity-70" />
-        <UserSquare className={`absolute right-4 h-10 w-10 ${isYes ? "" : "opacity-55"}`} strokeWidth={1.75} />
-        <span className="absolute inset-y-2 left-0 w-6 rounded-full border-l border-current opacity-60" />
-        <span className="absolute inset-y-2 right-0 w-6 rounded-full border-r border-current opacity-60" />
-        {isYes ? <Sparkles className="absolute bottom-0 right-2 h-5 w-5" strokeWidth={1.8} /> : null}
-      </span>
+      <span className={`font-quattrocento text-[24px] font-bold leading-none ${isYes ? "text-[#0057c8]" : "text-[#a16f2b]"}`}>{title}</span>
+      <span className="mt-[6px] max-w-[30ch] font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">{description}</span>
+      <img
+        src={isYes ? "/diagnostic/ownership-linked-yes-icon.png" : "/diagnostic/ownership-linked-no-icon.png"}
+        alt=""
+        className="mt-[10px] h-[41px] w-[177px] object-contain"
+        aria-hidden
+      />
     </button>
   );
 };
