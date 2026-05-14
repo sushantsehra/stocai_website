@@ -7,7 +7,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  BadgeCheck,
   BookOpen,
   Check,
   Clock3,
@@ -17,7 +16,6 @@ import {
   PlayCircle,
   Signal,
   Sparkles,
-  UserSquare,
   WifiOff,
   X,
 } from "lucide-react";
@@ -54,6 +52,11 @@ const BclHeader = () => (
     <div className="font-gotham text-[29px] font-bold leading-none text-[#0057c8]">BCL</div>
   </div>
 );
+
+const bclProductVideoSources = {
+  webm: "https://stocaistorage.blob.core.windows.net/videos/marketing/bcl_product_video/video.webm?sp=r&st=2026-05-14T11:41:31Z&se=2029-05-14T19:56:31Z&spr=https&sv=2025-11-05&sr=b&sig=5TW5cdUcEa94xMHKHpHQ41QuZzQXZxoPxy36SXNLD6w%3D",
+  mp4: "https://stocaistorage.blob.core.windows.net/videos/marketing/bcl_product_video/video.mp4?sp=r&st=2026-05-14T11:41:00Z&se=2029-05-14T19:56:00Z&spr=https&sv=2025-11-05&sr=b&sig=wNyMLeQCZyyqJgwYI2DuGRK5pGYT5UaXQFpnofFvaFQ%3D",
+};
 
 const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; onRestart: () => void }) => (
   <div className="diagnostic-intro-screen flex h-full min-h-0 w-full justify-center bg-[#eef4ff] md:items-center md:bg-[#f7f5f2]">
@@ -128,12 +131,21 @@ const CallInvestModal = ({
   isLoading: boolean;
   message: string;
 }) => {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
   useEffect(() => {
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key !== "Escape") return;
+
+      if (isVideoOpen) {
+        setIsVideoOpen(false);
+        return;
+      }
+
+      onClose();
     };
 
     document.body.style.overflow = "hidden";
@@ -143,7 +155,11 @@ const CallInvestModal = ({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, isVideoOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen) setIsVideoOpen(false);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -172,34 +188,55 @@ const CallInvestModal = ({
           <X className="h-5 w-5" strokeWidth={2.2} />
         </button>
 
-        <section className="flex min-h-[260px] items-center justify-center bg-[radial-gradient(circle_at_center,#1e66d6_0%,#0b2a58_48%,#061226_100%)] px-6 py-8 text-white md:min-h-[620px]">
-          <div className="w-full max-w-[420px] text-center">
-            <div className="mx-auto flex aspect-video w-full items-center justify-center rounded-[18px] border border-white/25 bg-black/20 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
-              <PlayCircle className="h-16 w-16 text-white/90" strokeWidth={1.5} />
-            </div>
-            <p className="mt-5 font-gotham text-[12px] font-bold uppercase tracking-[0.14em] text-[#bcd6ff]">Video walkthrough</p>
-            <h2 className="mt-2 font-quattrocento text-[30px] font-bold leading-[1.02] md:text-[38px]">See how the program works.</h2>
+        <section className="flex items-center justify-center bg-[radial-gradient(circle_at_center,#1e66d6_0%,#0b2a58_48%,#061226_100%)] px-4 py-4 text-white md:min-h-[620px] md:px-6 md:py-8">
+          <div className="w-full max-w-[460px] text-center">
+            <button
+              type="button"
+              onClick={() => setIsVideoOpen(true)}
+              className="group relative mx-auto flex aspect-video h-[170px] w-full max-w-[320px] cursor-pointer items-center justify-center overflow-hidden rounded-[14px] border border-white/25 bg-black shadow-[0_18px_48px_rgba(0,0,0,0.28),inset_0_0_0_1px_rgba(255,255,255,0.08)] transition hover:border-white/45 md:h-auto md:max-w-none"
+              aria-label="Play Be More Promotable product video"
+            >
+              <video
+                className="h-full w-full bg-black object-contain opacity-90"
+                muted
+                playsInline
+                preload="metadata"
+                aria-hidden
+              >
+                <source src={bclProductVideoSources.webm} type="video/webm" />
+                <source src={bclProductVideoSources.mp4} type="video/mp4" />
+              </video>
+              <span className="absolute inset-0 bg-black/10 transition group-hover:bg-black/0" />
+              <span className="absolute flex h-14 w-14 items-center justify-center rounded-full bg-white/92 text-[#0057c8] shadow-[0_12px_30px_rgba(0,0,0,0.26)] transition group-hover:scale-105 md:h-16 md:w-16">
+                <PlayCircle className="h-8 w-8 md:h-9 md:w-9" strokeWidth={1.7} />
+              </span>
+            </button>
+            <p className="mt-3 font-gotham text-[10px] font-bold uppercase tracking-[0.14em] text-[#bcd6ff] md:mt-5 md:text-[12px]">Be More Promotable</p>
+            <h2 className="mt-1 font-quattrocento text-[24px] font-bold leading-[1.02] md:mt-2 md:text-[38px]">See the system before you join.</h2>
+            <p className="mx-auto mt-2 max-w-[32ch] font-gotham text-[12px] font-medium leading-5 text-white/82 md:mt-3 md:max-w-[34ch] md:text-[14px] md:leading-6">
+              Watch how BCL helps turn strong work into promotion-ready visibility, sponsors, and next-level signals.
+            </p>
           </div>
         </section>
 
-        <section className="bg-white px-4 py-5 md:overflow-y-auto md:px-6 md:py-7">
+        <section className="bg-white px-4 py-4 md:overflow-y-auto md:px-6 md:py-7">
           <form
             onSubmit={handleSubmit}
-            className="relative rounded-[14px] border-2 border-[#0057c8] bg-white px-4 pb-4 pt-12 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-5 md:pt-9"
+            className="relative rounded-[14px] border-2 border-[#0057c8] bg-white px-4 pb-4 pt-10 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-5 md:pt-9"
           >
             <span className="absolute left-5 top-3 rounded-[5px] bg-[#e7f1ff] px-2 py-1 font-gotham text-[9px] font-bold uppercase tracking-[0.08em] text-[#0057c8]">
               Recommended
             </span>
             <div className="text-center">
-              <h3 className="font-gotham text-[22px] font-bold leading-tight text-[#0057c8] md:text-[23px]">Join the Program</h3>
-              <p className="mx-auto mt-2 max-w-[250px] font-gotham text-[13px] font-medium leading-5 text-[#242424] md:mt-1 md:text-[12px] md:leading-[18px]">
-                Build the operating system for faster promotion momentum.
+              <h3 className="font-gotham text-[21px] font-bold leading-tight text-[#0057c8] md:text-[23px]">Join the Program</h3>
+              <p className="mx-auto mt-2 max-w-[250px] font-gotham text-[12px] font-medium leading-[18px] text-[#242424] md:mt-1 md:text-[12px] md:leading-[18px]">
+                Build your promotion operating system after seeing what is blocking you.
               </p>
             </div>
 
-            <div className="mt-4 space-y-2">
-              {["Diagnose what is blocking momentum.", "Turn work into visible career value.", "Build a sharper promotion path."].map((label) => (
-                <div key={label} className="flex items-center gap-3 rounded-[8px] border border-[#edf1f7] bg-[#f8fbff] px-3 py-[8px]">
+            <div className="mt-4 space-y-2 md:mt-4">
+              {["Translate strong work into promotable signals.", "Build sponsor-ready visibility.", "Leave with a sharper next-level plan."].map((label) => (
+                <div key={label} className="flex items-center gap-3 rounded-[8px] border border-[#edf1f7] bg-[#f8fbff] px-3 py-[7px] md:py-[8px]">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#e6f1ff] text-[#0057c8]">
                     <Check className="h-4 w-4" strokeWidth={2.5} />
                   </span>
@@ -230,6 +267,39 @@ const CallInvestModal = ({
           </form>
         </section>
       </div>
+
+      {isVideoOpen ? (
+        <div
+          className="fixed inset-0 z-[10070] flex items-center justify-center bg-black p-0"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Be More Promotable product video"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setIsVideoOpen(false);
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setIsVideoOpen(false)}
+            className="absolute left-4 top-4 z-20 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/95 text-[#0f172a] shadow-[0_10px_30px_rgba(0,0,0,0.32)] transition hover:bg-white"
+            aria-label="Close video"
+          >
+            <X className="h-6 w-6" strokeWidth={2.2} />
+          </button>
+          <video
+            className="h-[100svh] w-full bg-black object-contain"
+            controls
+            autoPlay
+            playsInline
+            preload="auto"
+            aria-label="Be More Promotable product walkthrough"
+          >
+            <source src={bclProductVideoSources.webm} type="video/webm" />
+            <source src={bclProductVideoSources.mp4} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -1628,69 +1698,64 @@ const CommunicationFrameworkScreen = ({
             </div>
           </div>
 
-          <section className="mt-[6px] rounded-[6px] border border-[#e0e0e0] bg-white px-[14px] pb-[12px] pt-[11px] shadow-[0_6px_18px_rgba(15,23,42,0.04)]">
-            <p className="inline-flex rounded-[4px] bg-[#eef4ff] px-[10px] py-[5px] font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.12em] text-[#0057c8]">
+          <section className="mt-[6px] rounded-[6px] border border-[#e0e0e0] bg-white px-[13px] pb-[14px] pt-[14px] shadow-[0_3px_12px_rgba(15,23,42,0.10)]">
+            <p className="inline-flex rounded-full bg-[#eef4ff] px-[20px] py-[9px] font-gotham text-[11px] font-bold leading-none tracking-[-0.01em] text-[#0057c8]">
               What&apos;s really going on
             </p>
-            <h1 className="mt-[10px] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
+            <h1 className="mt-[17px] font-quattrocento text-[31px] font-bold leading-[1.02] text-[#242424]">
               Win Alignment Gap
             </h1>
-            <p className="mt-[12px] max-w-[36ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-              Your sponsor has power, but won&apos;t spend it on you. That usually means one thing - your success does not yet feel like their success.
+            <p className="mt-[13px] max-w-[37ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+              Your sponsor has power, but won&apos;t spend it on you. That usually means one thing - your success does not yet feel like their success. This stays between us.
             </p>
 
-        <div className="mx-auto mt-[12px] flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#7dafff] bg-[#eef4ff] px-[12px] py-[7px] text-[#0057c8]">
-          <span className="flex h-[28px] w-[28px] items-end gap-[3px]" aria-hidden>
-            <span className="h-[8px] w-[5px] rounded-t-sm bg-[#0057c8]" />
-            <span className="h-[14px] w-[5px] rounded-t-sm bg-[#0057c8]" />
-            <span className="h-[21px] w-[5px] rounded-t-sm bg-[#0057c8]" />
-          </span>
-          <span className="font-gotham text-[12px] font-bold leading-none text-[#242424]">Your growth</span>
-        </div>
+            <div className="mt-[18px] flex min-h-[56px] items-center justify-center gap-[15px] rounded-[5px] border border-[#7dafff] bg-[#eef4ff] px-4 text-[#0057c8]">
+              <img src="/diagnostic/alignment-growth.png" alt="" className="h-[32px] w-[32px] object-contain" aria-hidden />
+              <span className="font-quattrocento text-[25px] font-bold leading-none text-[#0057c8]">Your growth</span>
+            </div>
 
-        <div className="mx-auto flex h-[25px] w-px flex-col items-center justify-center">
-          <span className="h-[17px] border-l border-dashed border-[#1677ff]" />
-          <span className="font-gotham text-[18px] leading-none text-[#0057c8]">x</span>
-        </div>
+            <div className="mx-auto flex h-[39px] w-px flex-col items-center justify-center">
+              <span className="h-[18px] border-l border-dashed border-[#1677ff]" />
+              <span className="font-gotham text-[18px] leading-none text-[#0057c8]">x</span>
+              <span className="h-[14px] border-l border-dashed border-[#1677ff]" />
+            </div>
 
-        <div className="mx-auto text-center">
-          <div className="relative mx-auto flex h-[70px] w-[70px] items-center justify-center rounded-full border border-[#c68432] bg-[#fbf8f4]">
-            <UserSquare className="h-[38px] w-[38px] text-[#242424]" strokeWidth={1.4} />
-            <span className="absolute bottom-[7px] font-gotham text-[9px] font-normal text-[#242424]">Sponsor</span>
-            <span className="absolute -right-[5px] bottom-[13px] flex h-[24px] w-[24px] items-center justify-center rounded-full border border-[#c68432] bg-[#fbf8f4] font-gotham text-[15px] font-bold text-[#c68432]">$</span>
-          </div>
-          <p className="mt-[3px] font-gotham text-[8px] font-normal italic leading-[11px] text-[#242424]">
-            Holding back
-            <br />
-            political currency
-          </p>
-        </div>
+            <div className="mx-auto text-center">
+              <div className="relative mx-auto flex h-[60px] w-[60px] items-center justify-center rounded-full border border-[#e0c194] bg-[#fbf8f4]">
+                <img src="/diagnostic/alignment-sponsor.png" alt="" className="h-[32px] w-[32px] object-contain" aria-hidden />
+                <img src="/diagnostic/alignment-currency.png" alt="" className="absolute -right-[10px] bottom-[7px] h-[26px] w-[26px] object-contain" aria-hidden />
+              </div>
+              <p className="mt-[4px] font-gotham text-[11px] font-normal leading-none text-[#c68432]">Sponsor</p>
+              <p className="mt-[4px] font-gotham text-[11px] font-normal leading-[14px] text-[#242424]">
+                Holding back political currency
+              </p>
+            </div>
 
-        <div className="mx-auto flex h-[18px] w-px border-l border-dashed border-[#1677ff]" />
+            <div className="mx-auto flex h-[38px] w-px flex-col items-center justify-center">
+              <span className="h-[18px] border-l border-dashed border-[#1677ff]" />
+              <span className="font-gotham text-[18px] leading-none text-[#0057c8]">x</span>
+              <span className="h-[13px] border-l border-dashed border-[#1677ff]" />
+            </div>
 
-        <div className="mx-auto flex w-[140px] items-center justify-center gap-[11px] rounded-[4px] border border-[#7dafff] bg-[#eef4ff] px-[12px] py-[8px] text-[#0057c8]">
-          <BadgeCheck className="h-[27px] w-[27px]" strokeWidth={1.5} />
-          <span className="font-gotham text-[12px] font-bold leading-none text-[#242424]">Their win</span>
-        </div>
-
-        <div className="mt-[8px] rounded-[4px] border border-[#e8dfd6] bg-[#fbf8f4] px-[12px] py-[8px] text-center font-gotham text-[12px] font-bold leading-[16px] text-[#242424]">
-          If they don&apos;t see what&apos;s in it for them,
-          <br />
-          they don&apos;t spend political currency.
-        </div>
-
-        <div className="mt-[8px] flex items-center gap-[12px] rounded-[4px] bg-[#fffdf9] px-[10px] py-[10px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
-          <div className="flex h-[43px] w-[43px] shrink-0 items-center justify-center rounded-full border border-[#e8dfd6] text-[#c68432]">
-            <Sparkles className="h-[26px] w-[26px]" strokeWidth={1.5} />
-          </div>
-          <div className="text-left">
-            <p className="font-gotham text-[10px] font-bold uppercase leading-none tracking-[0.12em] text-[#c68432]">What changes this</p>
-            <p className="mt-[5px] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
-              Shift the conversation from asking for support to making the promotion feel like a win for them too.
-            </p>
-          </div>
-        </div>
+            <div className="flex min-h-[56px] items-center justify-center gap-[15px] rounded-[5px] border border-[#7dafff] bg-[#eef4ff] px-4 text-[#0057c8]">
+              <img src="/diagnostic/alignment-trophy.png" alt="" className="h-[33px] w-[33px] object-contain" aria-hidden />
+              <span className="font-quattrocento text-[25px] font-bold leading-none text-[#0057c8]">Their win</span>
+            </div>
           </section>
+
+          <div className="mt-[18px] rounded-[4px] border border-[#e0d8cf] bg-[#fffdf9] px-[18px] py-[12px] text-center font-gotham text-[12px] font-normal leading-[17px] text-[#242424] shadow-[0_2px_8px_rgba(15,23,42,0.16)]">
+            If they don&apos;t see what&apos;s in it for them, they don&apos;t spend political currency.
+          </div>
+
+          <div className="mt-[11px] flex items-center gap-[15px] rounded-[4px] border border-[#e0d8cf] bg-[#fffdf9] px-[12px] py-[12px] shadow-[0_2px_8px_rgba(15,23,42,0.16)]">
+            <img src="/diagnostic/alignment-spark.png" alt="" className="h-[43px] w-[43px] shrink-0 object-contain" aria-hidden />
+            <div className="text-left">
+              <p className="font-gotham text-[11px] font-bold leading-none text-[#c68432]">What changes this</p>
+              <p className="mt-[5px] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+                Shift the conversation from asking for support to making the promotion feel like a win for them too.
+              </p>
+            </div>
+          </div>
 
           <p className="mx-auto mt-[10px] max-w-[34ch] text-center font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
             Inside Better Corporate Life, we show you how to build this shift in simple steps.
