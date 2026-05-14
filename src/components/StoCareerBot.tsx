@@ -12,10 +12,8 @@ import {
   Clock3,
   Lightbulb,
   Loader2,
-  Network,
   PlayCircle,
   Signal,
-  Sparkles,
   WifiOff,
   X,
 } from "lucide-react";
@@ -394,6 +392,18 @@ const DiagnosticStageProgress = () => {
   return null;
 };
 
+const StoPromptHeader = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <div className={`flex items-start gap-3 text-left ${className}`}>
+    <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
+    <div className="min-w-0 pt-[2px]">
+      <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
+      <div className="mt-[6px] inline-block max-w-full rounded-[6px] border border-[#7dafff] bg-white px-2.5 py-[5px] font-gotham text-[10px] font-normal leading-[13px] text-[#0057c8]">
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
 const DiagnosticStoNote = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <section className={`mt-[20px] flex items-center gap-3 rounded-[4px] bg-[#fffdf9] px-4 py-[14px] shadow-[0_2px_8px_rgba(15,23,42,0.18)] ${className}`}>
     <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] shrink-0 rounded-full object-cover" />
@@ -493,21 +503,21 @@ const DiagnosticNotConsideredFormulaScreen = ({
           <DiagnosticStageProgress />
         </div>
 
-      <section className="relative mt-[20px] shrink-0 overflow-hidden rounded-[4px] border border-[#c7d8f9] bg-white pb-[18px] pt-[48px] shadow-[0_2px_8px_rgba(15,23,42,0.12)]">
+      <section className="relative mx-auto mt-[20px] min-h-[140px] w-full max-w-[338px] shrink-0 overflow-visible rounded-[4px] border border-[#c7d8f9] bg-white pb-[15px] pt-[47px] shadow-[0_2px_8px_rgba(15,23,42,0.12)]">
         <div className="absolute inset-x-0 top-0 h-[34px] rounded-t-[4px] bg-[#0057c8]" />
         <img
           src="/diagnostic/not-considered-badge.png"
           alt=""
-          className="absolute left-1/2 top-[13px] z-10 h-[44px] w-[44px] -translate-x-1/2 object-contain"
+          className="absolute left-1/2 top-[-23px] z-10 h-[46px] w-[46px] -translate-x-1/2 object-contain"
           aria-hidden
         />
-        <div className="flex items-center gap-4 px-4">
+        <div className="flex items-center gap-[18px] px-[18px]">
           <div className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full">
             <img src="/diagnostic/not-considered-person.png" alt="" className="h-[40px] w-[40px] object-contain" aria-hidden />
           </div>
           <div className="min-w-0 pt-1">
-            <h1 className="font-gotham text-[16px] font-normal leading-[20px] text-[#242424]">I was not even considered</h1>
-            <p className="mt-[3px] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+            <h1 className="font-quattrocento text-[18px] font-bold leading-[20px] text-[#242424]">I was not even considered</h1>
+            <p className="mt-[4px] font-gotham text-[11px] font-normal leading-[14px] text-[#242424]">
               You were not discussed, shortlisted, or seen as a contender.
             </p>
           </div>
@@ -571,29 +581,17 @@ const DecisionContextPill = ({ icon, label, wide = false }: { icon: string; labe
 const DecisionCheckScreen = ({
   onBack,
   onRestart,
-  onTalk,
-  onExplore,
-  isLoading,
+  onContinue,
 }: {
   onBack: () => void;
   onRestart: () => void;
-  onTalk: () => void;
-  onExplore: () => void;
-  isLoading: boolean;
+  onContinue: () => void;
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
         <BclHeader />
-        <div className="flex items-start gap-3">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[51px] w-[51px] rounded-full object-cover" />
-          <div>
-            <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
-            <div className="mt-[9px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[10px] font-normal leading-none text-[#0057c8]">
-              The main signals are in place.
-            </div>
-          </div>
-        </div>
+        <StoPromptHeader>The main signals are in place.</StoPromptHeader>
 
         <p className="mt-[19px] font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Deeper decision read</p>
         <h1 className="mt-[10px] max-w-[12ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
@@ -629,21 +627,10 @@ const DecisionCheckScreen = ({
         </p>
         <button
           type="button"
-          onClick={onTalk}
-          disabled={isLoading}
+          onClick={onContinue}
           className="mt-[22px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:bg-[#9dbbe8]"
         >
-          {isLoading ? "Opening..." : "Yes, let's talk"}
-        </button>
-        <button
-          type="button"
-          onClick={onExplore}
-          className="mt-[16px] inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[17px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff]"
-        >
-          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 border-[#0057c8]">
-            <img src="/diagnostic/decision-play.png" alt="" className="h-[11px] w-[11px] object-contain" aria-hidden />
-          </span>
-          Explore How It Works
+          This needs a deeper read
         </button>
       </div>
 
@@ -674,15 +661,7 @@ const StoryOfWorkScreen = ({
         <BclHeader />
         <DiagnosticStageProgress />
 
-        <div className="mt-[27px] flex items-start gap-3">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[51px] w-[51px] rounded-full object-cover" />
-          <div>
-            <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
-            <div className="mt-[9px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[10px] font-normal leading-none text-[#0057c8]">
-              I know what&apos;s missing.
-            </div>
-          </div>
-        </div>
+        <StoPromptHeader className="mt-[27px]">I know what&apos;s missing.</StoPromptHeader>
 
         <section className="mt-[20px] rounded-[4px] bg-white px-5 pb-[23px] pt-[16px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <p className="font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Story of the work</p>
@@ -750,7 +729,7 @@ const StoryOfWorkScreen = ({
           onClick={onContinue}
           className="mt-[21px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
-          Show me how this gets fixed
+          Show me the full picture
         </button>
       </div>
 
@@ -770,14 +749,10 @@ const StoryOfContributionScreen = ({
   onBack,
   onRestart,
   onContinue,
-  onCall,
-  isLoading,
 }: {
   onBack: () => void;
   onRestart: () => void;
   onContinue: () => void;
-  onCall: () => void;
-  isLoading: boolean;
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
@@ -786,17 +761,7 @@ const StoryOfContributionScreen = ({
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[23px] pt-[14px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3 text-left">
-            <div className="w-[96px] shrink-0">
-              <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[96px] w-[72px] object-contain" />
-              <p className="mt-1 whitespace-nowrap font-gotham text-[14px] font-bold leading-none text-[#0057c8]">
-                Sto <span className="text-[10px] font-normal text-[#8b8b8b]">Your Guide</span>
-              </p>
-            </div>
-            <div className="relative mt-[42px] rounded-[4px] border border-[#7dafff] px-3 py-[5px] font-gotham text-[10px] font-normal leading-none text-[#0057c8] before:absolute before:left-[-7px] before:top-[6px] before:h-[12px] before:w-[12px] before:rotate-45 before:border-b before:border-l before:border-[#7dafff] before:bg-white">
-              I know what&apos;s missing.
-            </div>
-          </div>
+          <StoPromptHeader>I know what&apos;s missing.</StoPromptHeader>
 
           <h1 className="mx-auto mt-[16px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
             The work is visible. Your contribution isn&apos;t travelling upward.
@@ -852,15 +817,7 @@ const StoryOfContributionScreen = ({
           onClick={onContinue}
           className="mt-[21px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
-          Show me how this gets fixed
-        </button>
-        <button
-          type="button"
-          onClick={onCall}
-          disabled={isLoading}
-          className="mt-[16px] min-h-[48px] w-full cursor-pointer rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[17px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff] disabled:cursor-not-allowed disabled:text-[#7dafff]"
-        >
-          {isLoading ? "Opening..." : "Request a call back"}
+          Show me the full picture
         </button>
       </div>
 
@@ -880,14 +837,10 @@ const ImposterSyndromeScreen = ({
   onBack,
   onRestart,
   onContinue,
-  onCall,
-  isLoading,
 }: {
   onBack: () => void;
   onRestart: () => void;
   onContinue: () => void;
-  onCall: () => void;
-  isLoading: boolean;
 }) => (
   <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
     <section className="flex h-full w-full max-w-full md:max-w-[640px] lg:max-w-[760px] flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:rounded-[4px] md:border md:border-[#d8e4f6]">
@@ -896,17 +849,7 @@ const ImposterSyndromeScreen = ({
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[21px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3 text-left">
-            <div className="w-[96px] shrink-0">
-              <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[96px] w-[72px] object-contain" />
-              <p className="mt-1 whitespace-nowrap font-gotham text-[14px] font-bold leading-none text-[#0057c8]">
-                Sto <span className="text-[10px] font-normal text-[#8b8b8b]">Your Guide</span>
-              </p>
-            </div>
-            <div className="relative mt-[42px] max-w-[142px] rounded-[4px] border border-[#7dafff] px-3 py-[6px] font-gotham text-[10px] font-normal leading-[13px] text-[#0057c8] before:absolute before:left-[-7px] before:top-[8px] before:h-[12px] before:w-[12px] before:rotate-45 before:border-b before:border-l before:border-[#7dafff] before:bg-white">
-              I think I see why you stayed silent.
-            </div>
-          </div>
+          <StoPromptHeader>I think I see why you stayed silent.</StoPromptHeader>
 
           <h1 className="mx-auto mt-[15px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
             You wanted growth. But asking for it felt loaded.
@@ -953,15 +896,7 @@ const ImposterSyndromeScreen = ({
           onClick={onContinue}
           className="mt-[24px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
-          Show me how this gets fixed
-        </button>
-        <button
-          type="button"
-          onClick={onCall}
-          disabled={isLoading}
-          className="mt-[16px] min-h-[48px] w-full cursor-pointer rounded-[6px] border border-[#0057c8] bg-white px-5 font-gotham text-[17px] font-medium text-[#0057c8] transition hover:bg-[#f8fbff] disabled:cursor-not-allowed disabled:text-[#7dafff]"
-        >
-          {isLoading ? "Opening..." : "Request a call back"}
+          Show me the full picture
         </button>
       </div>
 
@@ -1025,18 +960,38 @@ const ImportanceMobileScreen = ({
           <button
             type="button"
             onClick={onYes}
-            className="w-full cursor-pointer rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-4 py-[12px] text-left transition hover:border-[#0057c8]"
+            className="flex min-h-[78px] w-full cursor-pointer items-center gap-4 rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-5 py-[10px] text-left transition hover:border-[#0057c8]"
           >
-            <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#0057c8]">Yes</span>
-            <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">It&apos;s clearly important to them.</span>
+            <span className="flex h-[58px] w-[58px] shrink-0 items-center justify-center">
+              <img
+                src="/diagnostic/manager-early-yes-icon.png"
+                alt=""
+                className="h-[52px] w-[58px] object-contain"
+                aria-hidden
+              />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#0057c8]">Yes</span>
+              <span className="mt-[7px] block font-gotham text-[12px] font-normal leading-[15px] text-[#242424]">It&apos;s clearly important to them.</span>
+            </span>
           </button>
           <button
             type="button"
             onClick={onNo}
-            className="w-full cursor-pointer rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-4 py-[12px] text-left transition hover:border-[#c68432]"
+            className="flex min-h-[78px] w-full cursor-pointer items-center gap-4 rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-5 py-[10px] text-left transition hover:border-[#c68432]"
           >
-            <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#a54747]">No</span>
-            <span className="mt-1 block font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">I&apos;m not sure they see the value.</span>
+            <span className="flex h-[58px] w-[58px] shrink-0 items-center justify-center">
+              <img
+                src="/diagnostic/manager-early-no-icon.png"
+                alt=""
+                className="h-[52px] w-[58px] object-contain"
+                aria-hidden
+              />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-quattrocento text-[24px] font-bold leading-none text-[#a54747]">No</span>
+              <span className="mt-[7px] block font-gotham text-[12px] font-normal leading-[15px] text-[#242424]">I&apos;m not sure they see the value.</span>
+            </span>
           </button>
         </div>
 
@@ -1153,32 +1108,42 @@ const VisibilityDesireScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
         <BclHeader />
         <div className="mx-auto w-full max-w-[390px]">
-          <section className="rounded-[4px] bg-white px-[20px] pb-[22px] pt-[24px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-            <div className="mx-auto flex h-[25px] w-[55px] items-center justify-center">
-              <img src="/diagnostic/desire-icon.png" alt="" className="h-full w-full object-contain" aria-hidden />
+          <section className="rounded-[4px] bg-white px-[12px] pb-[19px] pt-[14px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
+            <div className="flex items-start gap-3 text-left">
+              <div className="w-[76px] shrink-0">
+                <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[78px] w-[58px] object-contain" />
+                <p className="mt-1 whitespace-nowrap font-gotham text-[12px] font-bold leading-none text-[#0057c8]">
+                  Sto <span className="text-[9px] font-normal text-[#8b8b8b]">Your Guide</span>
+                </p>
+              </div>
+              <div className="mt-[16px] inline-flex min-h-[30px] items-center rounded-full bg-[#eef4ff] px-7 font-gotham text-[12px] font-medium text-[#0057c8]">
+                Deeper Diagnosis
+              </div>
             </div>
 
-            <h1 className="mx-auto mt-[24px] max-w-[15ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
+            <h1 className="mx-auto mt-[10px] max-w-[15ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
               You made your desire visible.
             </h1>
 
-            <div className="mx-auto mt-[17px] space-y-[8px] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+            <div className="mx-auto mt-[10px] space-y-[3px] font-gotham text-[10px] font-normal leading-[14px] text-[#242424]">
               <p>That matters. Many people never ask.</p>
               <p>But visibility needs more than desire.</p>
             </div>
 
-            <div className="relative mt-[20px] rounded-[4px] border border-[#7dafff] bg-[#eef4ff] px-3 py-[10px] shadow-[inset_0_1px_8px_rgba(0,87,200,0.05)]">
-              <Sparkles className="absolute -right-[5px] -top-[11px] h-6 w-6 text-[#0057c8]" strokeWidth={1.5} />
-              <div className="flex items-center justify-center gap-[11px] whitespace-nowrap font-gotham text-[12px] font-semibold leading-none text-[#0057c8]">
-                <span>Visibility</span>
-                <span className="font-normal text-[#242424]">=</span>
-                <span>Desire</span>
-                <span className="font-normal text-[#242424]">x</span>
-                <span className="rounded-[4px] bg-white px-2 py-[6px]">Importance</span>
+            <div className="mt-[22px] flex items-center justify-center gap-[9px] whitespace-nowrap">
+              <span className="font-quattrocento text-[18px] font-bold leading-none text-[#242424]">Visibility =</span>
+              <div className="flex min-h-[70px] w-[65px] flex-col items-center justify-center rounded-[6px] border border-[#7dafff] bg-[#eef4ff] px-2 py-[8px]">
+                <img src="/diagnostic/desire-visible-icon.png" alt="" className="h-[31px] w-[31px] object-contain" aria-hidden />
+                <span className="mt-[6px] font-quattrocento text-[11px] font-bold leading-none text-[#242424]">Desire</span>
+              </div>
+              <span className="font-gotham text-[18px] font-normal leading-none text-[#0057c8]">x</span>
+              <div className="flex min-h-[70px] w-[65px] flex-col items-center justify-center rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-2 py-[8px]">
+                <img src="/diagnostic/importance-download-icon.png" alt="" className="h-[31px] w-[31px] object-contain" aria-hidden />
+                <span className="mt-[6px] font-quattrocento text-[11px] font-bold leading-none text-[#242424]">Importance</span>
               </div>
             </div>
 
-            <p className="mx-auto mt-[19px] max-w-[34ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
+            <p className="mx-auto mt-[28px] max-w-[31ch] font-gotham text-[12px] font-normal leading-[17px] text-[#242424]">
               You can do <span className="font-bold text-[#0057c8]">strong work</span> and still be invisible if the right people don&apos;t <span className="font-bold text-[#0057c8]">connect</span> you to that work.
             </p>
           </section>
@@ -1226,15 +1191,7 @@ const SponsorWillingScreen = ({
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3">
-            <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
-            <div>
-              <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
-              <div className="mt-[9px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[10px] font-normal leading-none text-[#0057c8]">
-                Let&apos;s test sponsor commitment.
-              </div>
-            </div>
-          </div>
+          <StoPromptHeader>Let&apos;s test sponsor commitment.</StoPromptHeader>
 
           <p className="mt-[18px] font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Sponsor has power</p>
           <h1 className="mt-[8px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
@@ -1308,15 +1265,7 @@ const SponsorPowerScreen = ({
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3">
-            <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
-            <div>
-              <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
-              <div className="mt-[9px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[10px] font-normal leading-none text-[#0057c8]">
-                Let&apos;s test sponsor strength.
-              </div>
-            </div>
-          </div>
+          <StoPromptHeader>Let&apos;s test sponsor strength.</StoPromptHeader>
 
           <p className="mt-[18px] font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Sponsor strength check</p>
           <h1 className="mt-[8px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
@@ -1390,15 +1339,7 @@ const NextLevelSignalScreen = ({
         <DiagnosticStageProgress />
 
         <section className="mt-[16px] rounded-[4px] bg-white px-[16px] pb-[12px] pt-[14px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3">
-            <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[50px] w-[50px] rounded-full object-cover" />
-            <div>
-              <p className="font-gotham text-[14px] font-bold leading-[17px] text-[#0057c8]">Sto</p>
-              <div className="mt-[9px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[10px] font-normal leading-none text-[#0057c8]">
-                Now let&apos;s test next-level signal.
-              </div>
-            </div>
-          </div>
+          <StoPromptHeader>Now let&apos;s test next-level signal.</StoPromptHeader>
 
           <p className="mt-[18px] font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Next-level signal check</p>
           <h1 className="mt-[8px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
@@ -1469,15 +1410,7 @@ const BrillianceImageTrapScreen = ({
         <BclHeader />
         <DiagnosticStageProgress />
 
-        <div className="mt-[27px] flex items-start gap-3">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[42px] w-[42px] rounded-full object-cover" />
-          <div>
-            <p className="font-gotham text-[12px] font-bold leading-[15px] text-[#0057c8]">Sto</p>
-            <div className="mt-[7px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[9px] font-normal leading-none text-[#0057c8]">
-              I think I see the gap.
-            </div>
-          </div>
-        </div>
+        <StoPromptHeader className="mt-[27px]">I think I see the gap.</StoPromptHeader>
 
         <section className="mt-[20px] rounded-[4px] bg-white px-[16px] pb-[15px] pt-[13px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <p className="font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Brilliance image trap</p>
@@ -1520,7 +1453,7 @@ const BrillianceImageTrapScreen = ({
           onClick={onContinue}
           className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
-          Show me how this gets fixed
+          Show me the full picture
         </button>
       </div>
 
@@ -1551,15 +1484,7 @@ const SponsorNetworkScreen = ({
         <BclHeader />
         <DiagnosticStageProgress />
 
-        <div className="mt-[27px] flex items-start gap-3">
-          <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="h-[42px] w-[42px] rounded-full object-cover" />
-          <div>
-            <p className="font-gotham text-[12px] font-bold leading-[15px] text-[#0057c8]">Sto</p>
-            <div className="mt-[7px] rounded-[4px] border border-[#7dafff] px-2 py-[5px] font-gotham text-[9px] font-normal leading-none text-[#0057c8]">
-              I think I see the gap.
-            </div>
-          </div>
-        </div>
+        <StoPromptHeader className="mt-[27px]">I think I see the gap.</StoPromptHeader>
 
         <section className="mt-[20px] rounded-[4px] bg-white px-[16px] pb-[15px] pt-[13px] shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <p className="font-gotham text-[16px] font-bold leading-none text-[#0057c8]">Sponsor gap</p>
@@ -1578,7 +1503,10 @@ const SponsorNetworkScreen = ({
               </div>
               <div className="relative h-[68px]">
                 <div className="absolute left-[17px] top-1/2 h-px w-[104px] -translate-y-1/2 bg-[#7dafff]" />
-                <div className="absolute left-[22px] top-[2px] flex h-[64px] w-[64px] items-center justify-center rounded-full border border-dashed border-[#1677ff]">
+                <div className="absolute left-[14px] top-[-7px] h-[82px] w-[82px] rounded-full border border-dashed border-[#7dafff] opacity-70" aria-hidden />
+                <div className="absolute left-[20px] top-[-1px] h-[70px] w-[70px] rounded-full border border-dashed border-[#7dafff] opacity-85" aria-hidden />
+                <div className="absolute left-[27px] top-[6px] h-[56px] w-[56px] rounded-full border border-dashed border-[#1677ff]" aria-hidden />
+                <div className="absolute left-[22px] top-[2px] flex h-[64px] w-[64px] items-center justify-center rounded-full">
                   <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-white">
                     <img src="/diagnostic/sponsor-network-blue.png" alt="" className="h-[26px] w-[26px]" aria-hidden />
                   </div>
@@ -1604,30 +1532,31 @@ const SponsorNetworkScreen = ({
 
           <div className="mt-[10px] rounded-[4px] border border-[#e8dfd6] bg-[#fbf8f4] px-3 py-3">
             <div className="grid grid-cols-[92px_1fr] gap-2">
-              <div>
+              <div className="pt-1">
                 <p className="font-gotham text-[11px] font-bold leading-[14px] text-[#242424]">Sponsor network</p>
                 <p className="mt-1 font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">More influence. More momentum.</p>
               </div>
-              <div className="relative h-[106px]">
-                <svg className="absolute inset-0 h-full w-full" viewBox="0 0 138 106" fill="none" aria-hidden>
-                  <path d="M65 50L26 16M65 50L105 16M65 50L26 88M65 50L105 88M26 16L105 88M105 16L26 88" stroke="#e2a75d" strokeWidth="1" strokeDasharray="3 3" />
+              <div className="relative h-[104px]">
+                <svg className="absolute left-[6px] top-[2px] h-[91px] w-[145px]" viewBox="0 0 145 91" fill="none" aria-hidden>
+                  <path d="M28 15L116 15L116 70L72 84L28 70Z" stroke="#c08a3e" strokeWidth="1.1" strokeDasharray="3 3" />
+                  <path d="M78 45L28 15M78 45L116 15M78 45L28 70M78 45L116 70M78 45L72 84" stroke="#c08a3e" strokeWidth="1.1" />
                 </svg>
                 {[
-                  ["Executive Sponsor", "left-[24px] top-0"],
-                  ["Senior Leader", "right-0 top-[30px]"],
-                  ["Cross-functional Ally", "right-[4px] bottom-0"],
-                  ["Mentor", "left-[44px] bottom-0"],
-                  ["Influential Peer", "left-0 bottom-[18px]"],
+                  ["Executive Sponsor", "left-[22px] top-0"],
+                  ["Senior Leader", "right-[3px] top-[2px]"],
+                  ["Cross-functional Ally", "right-[2px] bottom-[2px]"],
+                  ["Mentor", "left-[62px] bottom-0"],
+                  ["Influential Peer", "left-[2px] bottom-[2px]"],
                 ].map(([label, className]) => (
                   <div key={label} className={`absolute ${className} text-center`}>
-                    <div className="mx-auto flex h-[30px] w-[30px] items-center justify-center rounded-full border border-[#e2a75d] bg-white">
-                      <img src="/diagnostic/sponsor-network-gold.png" alt="" className="h-[18px] w-[18px]" aria-hidden />
+                    <div className="mx-auto flex h-[26px] w-[26px] items-center justify-center rounded-full border border-[#c08a3e] bg-white">
+                      <img src="/diagnostic/sponsor-network-gold.png" alt="" className="h-[16px] w-[16px]" aria-hidden />
                     </div>
-                    <p className="mt-1 max-w-[48px] font-gotham text-[7px] leading-[8px] text-[#242424]">{label}</p>
+                    <p className="mt-[2px] max-w-[45px] font-gotham text-[6px] leading-[7px] text-[#242424]">{label}</p>
                   </div>
                 ))}
-                <div className="absolute left-[52px] top-[38px] text-center">
-                  <div className="mx-auto flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[#1677ff] bg-white">
+                <div className="absolute left-[66px] top-[31px] text-center">
+                  <div className="mx-auto flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[#1677ff] bg-white shadow-[0_2px_8px_rgba(0,87,200,0.12)]">
                     <img src="/diagnostic/sponsor-network-blue.png" alt="" className="h-[22px] w-[22px]" aria-hidden />
                   </div>
                   <p className="font-gotham text-[8px] leading-none text-[#0057c8]">You</p>
@@ -1658,7 +1587,7 @@ const SponsorNetworkScreen = ({
           onClick={onContinue}
           className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
         >
-          Show me how this gets fixed
+          Show me the full picture
         </button>
       </div>
 
@@ -1688,15 +1617,7 @@ const CommunicationFrameworkScreen = ({
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-3 md:px-8">
         <BclHeader />
         <div className="mx-auto w-full max-w-[390px]">
-          <div className="flex items-start gap-[14px] pl-[44px]">
-            <div className="w-[56px] shrink-0 text-center">
-              <img src="/diagnostic/context-sto-avatar.png" alt="Sto" className="mx-auto h-[56px] w-[56px] rounded-full object-cover" />
-              <p className="mt-[3px] font-gotham text-[12px] font-bold leading-none text-[#0057c8]">Sto</p>
-            </div>
-            <div className="relative mt-[8px] max-w-[142px] rounded-[4px] border border-[#7dafff] bg-white px-3 py-[6px] font-gotham text-[10px] font-normal leading-[13px] text-[#0057c8] before:absolute before:left-[-7px] before:top-[10px] before:h-[12px] before:w-[12px] before:rotate-45 before:border-b before:border-l before:border-[#7dafff] before:bg-white">
-              I think I see what&apos;s happening here.
-            </div>
-          </div>
+          <StoPromptHeader className="pl-[44px]">I think I see what&apos;s happening here.</StoPromptHeader>
 
           <section className="mt-[6px] rounded-[6px] border border-[#e0e0e0] bg-white px-[13px] pb-[14px] pt-[14px] shadow-[0_3px_12px_rgba(15,23,42,0.10)]">
             <p className="inline-flex rounded-full bg-[#eef4ff] px-[20px] py-[9px] font-gotham text-[11px] font-bold leading-none tracking-[-0.01em] text-[#0057c8]">
@@ -1766,7 +1687,7 @@ const CommunicationFrameworkScreen = ({
             onClick={onContinue}
             className="mt-[14px] min-h-[48px] w-full cursor-pointer rounded-[6px] bg-[#0057c8] px-5 font-gotham text-[17px] font-medium text-white transition hover:bg-[#0A57C6]"
           >
-            Show me detailed picture
+            Show me the full picture
           </button>
         </div>
       </div>
@@ -1805,21 +1726,9 @@ const DeeperDiagnosisScreen = ({
         <BclHeader />
         <DiagnosticStageProgress />
 
-        <div className="mt-[27px] flex items-start gap-3">
-          <div className="w-[96px] shrink-0">
-            <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[116px] w-[78px] object-contain" />
-            <p className="mt-1 whitespace-nowrap font-gotham text-[14px] font-bold leading-none text-[#0057c8]">
-              Sto <span className="text-[10px] font-normal text-[#8b8b8b]">Your Guide</span>
-            </p>
-          </div>
-          <div className="relative mt-[21px] rounded-[4px] border border-[#7dafff] px-3 py-[9px] font-gotham text-[12px] font-normal leading-[14px] text-[#0057c8] before:absolute before:left-[-9px] before:top-[10px] before:h-[16px] before:w-[16px] before:rotate-45 before:border-b before:border-l before:border-[#7dafff] before:bg-white">
-            We&apos;ve ruled out
-            <br />
-            the obvious
-            <br />
-            visibility gaps.
-          </div>
-        </div>
+        <StoPromptHeader className="mt-[27px]">
+          We&apos;ve ruled out the obvious visibility gaps.
+        </StoPromptHeader>
 
         <section className="mt-[23px] rounded-[4px] bg-white px-[12px] pb-[25px] pt-[16px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
           <div className="mx-auto inline-flex min-h-[30px] items-center rounded-full bg-[#eef4ff] px-7 font-gotham text-[12px] font-medium text-[#0057c8]">
@@ -1900,17 +1809,7 @@ const ConsideredDecisionTableScreen = ({
         <DiagnosticStageProgress />
 
         <section className="mt-[35px] rounded-[4px] bg-white px-[11px] pb-[26px] pt-[12px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
-          <div className="flex items-start gap-3 text-left">
-            <div className="w-[96px] shrink-0">
-              <img src="/diagnostic/deeper-sto-thinking.png" alt="Sto" className="h-[96px] w-[72px] object-contain" />
-              <p className="mt-1 whitespace-nowrap font-gotham text-[14px] font-bold leading-none text-[#0057c8]">
-                Sto <span className="text-[10px] font-normal text-[#8b8b8b]">Your Guide</span>
-              </p>
-            </div>
-            <div className="mt-[39px] inline-flex min-h-[30px] items-center rounded-full bg-[#eef4ff] px-6 font-gotham text-[12px] font-medium text-[#0057c8]">
-              Deeper Diagnosis
-            </div>
-          </div>
+          <StoPromptHeader>Deeper Diagnosis</StoPromptHeader>
 
           <h1 className="mx-auto mt-[12px] max-w-[18ch] font-quattrocento text-[30px] font-bold leading-[1.03] text-[#242424]">
             You made it to the decision table. Now let&apos;s see what tipped the decision.
@@ -1933,7 +1832,11 @@ const ConsideredDecisionTableScreen = ({
             <div className="font-gotham text-[18px] font-bold text-[#0057c8]">x</div>
             <div className="flex min-h-[102px] flex-col items-center justify-center rounded-[6px] border border-[#e8dfd6] bg-[#fbf8f4] px-2">
               <img src="/diagnostic/considered-next-level.png" alt="" className="h-[38px] w-[38px] object-contain" aria-hidden />
-              <p className="mt-2 font-quattrocento text-[13px] font-bold leading-[14px] text-[#242424]">Next-Level Signal</p>
+              <p className="mt-2 font-quattrocento text-[12px] font-bold leading-[14px] text-[#242424]">
+                <span className="whitespace-nowrap">Next-Level</span>
+                <br />
+                Signal
+              </p>
             </div>
           </div>
 
@@ -1943,7 +1846,11 @@ const ConsideredDecisionTableScreen = ({
               <p className="mt-1 font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">Who goes to bat for you - and with what impact.</p>
             </div>
             <div className="rounded-[4px] border border-[#e8dfd6] bg-[#fbf8f4] px-4 py-[10px]">
-              <p className="font-gotham text-[13px] font-bold leading-[16px] text-[#242424]">Next-Level Signal</p>
+              <p className="font-gotham text-[12px] font-bold leading-[16px] text-[#242424]">
+                <span className="whitespace-nowrap">Next-Level</span>
+                <br />
+                Signal
+              </p>
               <p className="mt-1 font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">Whether leaders can already see you in the next role.</p>
             </div>
           </div>
@@ -2020,15 +1927,23 @@ const ImportanceChoice = ({
     <button
       type="button"
       onClick={onClick}
-      className="group flex min-h-[136px] cursor-pointer flex-col items-center justify-center rounded-[14px] border border-[#eadcc8] bg-white px-5 py-5 text-center shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[#0057c8] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+      className={`group flex min-h-[86px] cursor-pointer items-center gap-4 rounded-[6px] border px-5 py-4 text-left transition hover:-translate-y-0.5 ${
+        isYes
+          ? "border-[#7dafff] bg-[#eef4ff] hover:border-[#0057c8] hover:shadow-[0_14px_30px_rgba(10,87,198,0.10)]"
+          : "border-[#e8dfd6] bg-[#fbf8f4] hover:border-[#c68432] hover:shadow-[0_14px_30px_rgba(198,132,50,0.10)]"
+      }`}
     >
-      <span className="font-quattrocento text-[28px] font-bold leading-none text-[#242424]">{title}</span>
-      <span className="mt-2 font-gotham text-[14px] font-medium leading-5 text-[#242424]">{description}</span>
-      <span className={`relative mt-4 flex h-[54px] w-[104px] items-center justify-center ${isYes ? "text-[#0057c8]" : "text-[#8c8f94]"}`}>
-        <Network className="h-14 w-14" strokeWidth={1.75} />
-        <span className="absolute inset-y-2 left-0 w-7 rounded-full border-l border-current opacity-60" />
-        <span className="absolute inset-y-2 right-0 w-7 rounded-full border-r border-current opacity-60" />
-        {isYes ? <Sparkles className="absolute bottom-0 right-5 h-5 w-5" strokeWidth={1.8} /> : null}
+      <span className="flex h-[58px] w-[58px] shrink-0 items-center justify-center">
+        <img
+          src={isYes ? "/diagnostic/manager-early-yes-icon.png" : "/diagnostic/manager-early-no-icon.png"}
+          alt=""
+          className="h-[52px] w-[58px] object-contain"
+          aria-hidden
+        />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className={`block font-quattrocento text-[24px] font-bold leading-none ${isYes ? "text-[#0057c8]" : "text-[#a54747]"}`}>{title}</span>
+        <span className="mt-[7px] block font-gotham text-[12px] font-normal leading-[15px] text-[#242424]">{description}</span>
       </span>
     </button>
   );
@@ -2627,6 +2542,14 @@ export default function StoCareerBot({
     return `https://wa.me/${whatsappNumber}?text=${message}`;
   }, [door]);
 
+  const callbackWhatsappHref = useMemo(() => {
+    const doorName = door ? doorDetails[door].name : "my result";
+    const message = encodeURIComponent(
+      `Hi, I completed the Sto career diagnostic and got "${doorName}". Please request a call back for me.`,
+    );
+    return `https://wa.me/${whatsappNumber}?text=${message}`;
+  }, [door]);
+
   const { actionState, actionMessage, handlePaymentCta, resetPaymentState } = useStoPayment({
     activeDoorCtas,
     door,
@@ -2651,6 +2574,18 @@ export default function StoCareerBot({
     });
     setIsCallModalOpen(true);
   };
+
+  const openCallbackWhatsapp = () => {
+    if (!door) return;
+    trackBotEvent("sto_call_clicked", {
+      door,
+      q1,
+      placement: isEmbedded ? "diagnostic_route" : "floating_bot",
+      source: "full_picture_callback_cta",
+    });
+    window.open(callbackWhatsappHref, "_blank", "noopener,noreferrer");
+  };
+
 
   useEffect(() => {
     if (!isEmbedded) return;
@@ -2968,6 +2903,16 @@ export default function StoCareerBot({
             {actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
             {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
           </button>
+          {door === "values_misalignment" || door === "complex_situation" ? (
+            <button
+              type="button"
+              onClick={openCallbackWhatsapp}
+              disabled={actionState === "loading"}
+              className="inline-flex w-full cursor-pointer items-center justify-center rounded-[12px] border border-[#0057c8] bg-white px-4 py-3.5 font-gotham text-[15px] font-bold text-[#0057c8] transition hover:bg-[#f8fbff] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:text-[#7dafff] md:rounded-[14px] md:px-5 md:py-5"
+            >
+              Request a call back
+            </button>
+          ) : null}
         </div>
         {actionMessage ? (
           <p className="rounded-[18px] border border-[#f1d7d7] bg-[#fff4f4] px-4 py-3 font-gotham text-sm font-medium text-[#9f2d2d]">
@@ -3016,18 +2961,7 @@ export default function StoCareerBot({
         <div className="flex h-full w-full flex-col justify-start gap-3 pb-4 pt-2 md:pt-4">
           <BclHeader />
           <div className="mx-auto w-full max-w-[980px]">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <div className="flex shrink-0 items-center gap-3">
-                <Image src={stoHeadshot} alt="Sto headshot" width={64} height={64} className="h-[54px] w-[54px] shrink-0 rounded-full border border-[#d8e4f6] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.08)] md:h-[66px] md:w-[66px]" />
-                <div>
-                  <p className="font-gotham text-[14px] font-bold leading-5 text-[#242424]">Sto</p>
-                  <p className="font-gotham text-[12px] font-medium leading-5 text-[#242424]">Your guide</p>
-                </div>
-              </div>
-              <div className="relative w-full max-w-[500px] rounded-[20px] bg-[#f0f2f7] px-7 py-3.5 font-gotham text-[14px] font-medium leading-5 text-[#242424] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] before:absolute before:left-[-16px] before:top-1/2 before:hidden before:h-0 before:w-0 before:-translate-y-1/2 before:border-y-[12px] before:border-r-[18px] before:border-y-transparent before:border-r-[#f0f2f7] sm:ml-8 sm:before:block">
-                Let&apos;s get real about what&apos;s going on for you at work.
-              </div>
-            </div>
+            <StoPromptHeader>Let&apos;s get real about what&apos;s going on for you at work.</StoPromptHeader>
             <h2 className="mt-4 max-w-[29ch] font-quattrocento text-[29px] font-bold leading-[1.04] text-[#242424] md:text-[35px]">
               Which of these feels closest to what&apos;s happening at work right now?
             </h2>
@@ -3351,9 +3285,7 @@ export default function StoCareerBot({
           <DecisionCheckScreen
             onBack={goBack}
             onRestart={reset}
-            onTalk={openCallModal}
-            onExplore={() => goTo("result")}
-            isLoading={actionState === "loading"}
+            onContinue={() => goTo("result")}
           />
         );
       }
@@ -3374,8 +3306,6 @@ export default function StoCareerBot({
             onBack={goBack}
             onRestart={reset}
             onContinue={() => goTo("result")}
-            onCall={openCallModal}
-            isLoading={actionState === "loading"}
           />
         );
       }
@@ -3386,8 +3316,6 @@ export default function StoCareerBot({
             onBack={goBack}
             onRestart={reset}
             onContinue={() => goTo("result")}
-            onCall={openCallModal}
-            isLoading={actionState === "loading"}
           />
         );
       }
