@@ -7,11 +7,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  BookOpen,
   Check,
   Clock3,
   Lightbulb,
   Loader2,
+  PhoneCall,
   PlayCircle,
   Signal,
   WifiOff,
@@ -346,7 +346,7 @@ const DiagnosticContextScreen = ({
             value={targetRole}
             onChange={(event) => onTargetRoleChange(event.target.value)}
             placeholder="E.g. 'I want to become Senior Manager' or 'I want my work to matter more.'"
-            className="mt-[17px] min-h-[61px] w-full resize-none rounded-[4px] border border-[#e4e4e4] bg-white px-3 py-3 font-gotham text-[14px] font-normal leading-[1.35] text-[#242424] outline-none transition placeholder:text-[#4f4f4f] focus:border-[#0057c8]"
+            className="mt-[17px] min-h-[61px] w-full resize-none rounded-[4px] border border-[#e4e4e4] bg-white px-3 py-3 font-gotham text-[14px] font-normal leading-[1.35] text-[#242424] outline-none transition placeholder:text-[#4f4f4f] focus:border-[#0057c8] focus:placeholder:text-transparent"
           />
         </section>
 
@@ -2888,41 +2888,6 @@ export default function StoCareerBot({
     return null;
   };
 
-  const renderResultCtas = () => {
-    if (!resultCopy || !door) return null;
-
-    return (
-      <div className="mx-auto max-w-full space-y-3 md:max-w-[980px]">
-        <div className="grid gap-3">
-          <button
-            type="button"
-            onClick={openCallModal}
-            disabled={actionState === "loading"}
-            className="inline-flex w-full cursor-pointer items-center justify-center gap-3 rounded-[12px] border border-[#0057c8] bg-[#0057c8] px-4 py-3.5 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:bg-[#d1d5db] disabled:opacity-100 md:rounded-[14px] md:px-5 md:py-5"
-          >
-            {actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
-            {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
-          </button>
-          {door === "values_misalignment" || door === "complex_situation" ? (
-            <button
-              type="button"
-              onClick={openCallbackWhatsapp}
-              disabled={actionState === "loading"}
-              className="inline-flex w-full cursor-pointer items-center justify-center rounded-[12px] border border-[#0057c8] bg-white px-4 py-3.5 font-gotham text-[15px] font-bold text-[#0057c8] transition hover:bg-[#f8fbff] disabled:cursor-not-allowed disabled:border-[#c6d4ea] disabled:text-[#7dafff] md:rounded-[14px] md:px-5 md:py-5"
-            >
-              Request a call back
-            </button>
-          ) : null}
-        </div>
-        {actionMessage ? (
-          <p className="rounded-[18px] border border-[#f1d7d7] bg-[#fff4f4] px-4 py-3 font-gotham text-sm font-medium text-[#9f2d2d]">
-            {actionMessage}
-          </p>
-        ) : null}
-      </div>
-    );
-  };
-
   const renderVisualScreen = () => {
     if (!isEmbedded) {
       return (
@@ -3376,50 +3341,128 @@ export default function StoCareerBot({
 
     if (step === "result" && resultCopy && door) {
       return (
-        <div className="mx-auto flex h-full w-full min-w-0 max-w-[980px] flex-col gap-4 overflow-x-hidden px-0 py-2 md:justify-center md:gap-5 md:py-1">
-          <BclHeader />
-          <section className="w-full min-w-0 rounded-[12px] border border-[#d8e4f6] bg-white px-4 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:px-8 md:py-7">
-            <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#dbe9ff] text-[#0057c8] shadow-[0_10px_22px_rgba(10,87,198,0.10)]">
-              <BookOpen className="h-5 w-5" />
-            </div>
-            <p className="mt-4 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.18em] text-[#0057c8] md:text-[11px]">Your full picture</p>
-            <h2 className="mx-auto mt-3 max-w-[18ch] font-quattrocento text-[25px] font-bold leading-[1.04] text-[#242424] md:text-[38px]">
-              {resultCopy.title}
-            </h2>
-            <p className="mx-auto mt-3 max-w-[34ch] break-words font-gotham text-[13px] leading-5 text-[#242424] md:max-w-[56ch] md:text-[16px] md:leading-6">
-              {resultCopy.summary}
-            </p>
-          </section>
-          <div className="grid min-w-0 gap-3 md:grid-cols-3 md:gap-4">
-            {[
-              ["What's actually hurting", resultCopy.pain],
-              ["Why this is happening", resultCopy.concept],
-              ["What changes this", resultCopy.program],
-            ].map(([title, copy]) => (
-              <section key={title} className="min-w-0 rounded-[12px] border border-[#d8e4f6] bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:rounded-[16px] md:p-5">
-                <p className="break-words pt-0.5 font-gotham text-[10px] font-bold uppercase leading-5 tracking-[0.14em] text-[#0057c8] md:text-[11px]">{title}</p>
-                <p className="mt-2 break-words font-gotham text-[13px] leading-5 text-[#242424] md:mt-3 md:text-[15px] md:leading-6">{copy}</p>
-              </section>
-            ))}
+        <div className="mx-auto min-h-full w-full max-w-[760px] bg-[linear-gradient(180deg,#fffaf3_0%,#f7f1e8_42%,#efe3d2_100%)] px-4 pb-5 md:max-w-[1040px] md:px-8 md:pb-6">
+          <div className="flex h-[52px] shrink-0 items-start pt-4 md:h-[58px]">
+            <div className="font-gotham text-[29px] font-bold leading-none text-[#2a2118]">BCL</div>
           </div>
-          {isEmbedded ? (
-            <div className="mt-1 space-y-3">
-              {controlsReady ? renderResultCtas() : <div className="min-h-[44px]" />}
-              <div className="flex min-h-[55px] w-full items-center justify-between bg-[#eef4ff] px-4 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px] md:px-8">
+
+          <section className="relative overflow-hidden border-b border-[#decfbd] px-5 pb-6 pt-5 text-center md:px-8 md:pb-8 md:pt-7">
+                <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-16 w-40 bg-[radial-gradient(circle_at_center,#f3dfbd_0%,rgba(243,223,189,0)_68%)]" />
+                <div className="relative mx-auto flex h-8 w-8 items-center justify-center rounded-full border border-[#d2b48c] bg-white text-[#9a6a2f] shadow-[0_6px_16px_rgba(74,54,35,0.10)]">
+                  <Signal className="h-4 w-4" strokeWidth={2.1} />
+                </div>
+                <p className="relative mt-3 font-gotham text-[9px] font-bold uppercase leading-none tracking-[0.2em] text-[#8a5a2b]">
+                  Your full picture
+                </p>
+                <h2 className="relative mx-auto mt-3 max-w-[15ch] break-words font-quattrocento text-[26px] font-bold leading-[1.08] text-[#211912] md:text-[40px]">
+                  {resultCopy.title}
+                </h2>
+                <div className="relative mx-auto mt-2 h-px w-12 bg-[#d2b48c]" />
+                <p className="relative mx-auto mt-3 max-w-[35ch] break-words font-gotham text-[12px] font-normal leading-[18px] text-[#3f3328] md:max-w-[54ch] md:text-[15px] md:leading-6">
+                  {resultCopy.summary}
+                </p>
+              </section>
+
+              <div className="my-3 flex items-center justify-center gap-3 font-gotham text-[8px] font-bold uppercase leading-none tracking-[0.22em] text-[#8a6a4b]">
+                <span className="h-px w-8 bg-[#d2b48c]" />
+                <span>Result</span>
+                <span className="h-1 w-1 rounded-full bg-[#d2b48c]" />
+                <span>{doorDetails[door].shortName}</span>
+                <span className="h-px w-8 bg-[#d2b48c]" />
+              </div>
+
+              <section className="grid gap-4 border-b border-[#decfbd] px-5 py-5 md:grid-cols-[84px_1fr] md:px-6 md:py-7">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#decfbd] bg-[#f4eadc] text-[#9a6a2f] md:h-14 md:w-14">
+                  <Lightbulb className="h-5 w-5" strokeWidth={1.9} />
+                </div>
+                <div>
+                  <h3 className="font-quattrocento text-[21px] font-bold leading-[1.08] text-[#211912] md:text-[26px]">
+                    What&apos;s actually happening
+                  </h3>
+                  <p className="mt-2 break-words font-gotham text-[12px] leading-[18px] text-[#3f3328] md:max-w-[58ch] md:text-[15px] md:leading-6">
+                    {resultCopy.pain}
+                  </p>
+                </div>
+              </section>
+
+              <section className="grid gap-4 border-b border-[#decfbd] px-5 py-5 md:grid-cols-[84px_1fr] md:px-6 md:py-7">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#decfbd] bg-[#f4eadc] text-[#9a6a2f] md:h-14 md:w-14">
+                  <Signal className="h-5 w-5" strokeWidth={1.9} />
+                </div>
+                <div>
+                  <h3 className="font-quattrocento text-[21px] font-bold leading-[1.08] text-[#211912] md:text-[26px]">
+                    Why this is happening
+                  </h3>
+                  <p className="mt-2 break-words font-gotham text-[12px] leading-[18px] text-[#3f3328] md:max-w-[58ch] md:text-[15px] md:leading-6">
+                    {resultCopy.concept}
+                  </p>
+                </div>
+              </section>
+
+              <section className="px-5 py-5 md:px-6 md:py-7">
+                <div className="grid gap-4 md:grid-cols-[84px_1fr]">
+                  <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-[#d8b77d] bg-[#fffaf3] text-[#8a5a2b] shadow-[0_0_0_8px_rgba(216,183,125,0.12)]">
+                    <ArrowRight className="h-5 w-5" strokeWidth={1.9} />
+                  </div>
+                  <div className="relative border-l border-[#d2b48c] pl-4 md:border-l-0 md:pl-0">
+                    <h3 className="font-quattrocento text-[21px] font-bold leading-[1.08] text-[#211912] md:text-[26px]">
+                      What changes this
+                    </h3>
+                    <p className="mt-2 break-words font-gotham text-[12px] leading-[18px] text-[#3f3328] md:max-w-[58ch] md:text-[15px] md:leading-6">
+                      {resultCopy.program}
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mt-3 overflow-hidden rounded-[4px] bg-[#1f1711] px-5 py-5 text-[#fffaf3] shadow-[0_12px_28px_rgba(43,31,22,0.28)] md:px-8 md:py-6">
+                <p className="font-gotham text-[9px] font-bold uppercase leading-none tracking-[0.18em] text-[#d8b77d]">
+                  Next step
+                </p>
+                <h3 className="mt-3 max-w-[16ch] font-quattrocento text-[24px] font-bold leading-[1.06] md:text-[34px]">
+                  Take the next step with this diagnosis.
+                </h3>
+                <div className="mt-4 grid gap-3">
+                  <button
+                    type="button"
+                    onClick={openCallModal}
+                    disabled={actionState === "loading"}
+                    className="inline-flex min-h-[48px] w-full cursor-pointer items-center justify-center gap-3 rounded-[4px] border border-[#d8b77d] bg-[#fffaf3] px-4 font-gotham text-[14px] font-bold text-[#211912] shadow-[0_0_0_2px_rgba(216,183,125,0.18)] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {actionState === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
+                    {actionState === "loading" ? "Processing..." : activeDoorCtas?.primary.label}
+                    {actionState !== "loading" ? <ArrowRight className="h-4 w-4" strokeWidth={2} /> : null}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={openCallbackWhatsapp}
+                    disabled={actionState === "loading"}
+                    className="inline-flex min-h-[42px] w-full cursor-pointer items-center justify-center gap-3 rounded-[4px] border border-[#d8b77d] bg-transparent px-4 font-gotham text-[12px] font-bold text-[#fffaf3] transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <PhoneCall className="h-4 w-4" strokeWidth={1.9} />
+                    I&apos;d like a call instead
+                  </button>
+                </div>
+                {actionMessage ? (
+                  <p className="mt-3 rounded-[4px] border border-[#f1d7d7] bg-[#fff4f4] px-3 py-2 font-gotham text-xs font-medium text-[#9f2d2d]">
+                    {actionMessage}
+                  </p>
+                ) : null}
+              </section>
+
+              <footer className="mt-3 flex min-h-[55px] items-center justify-between bg-[#efe3d2] px-4 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px] md:px-8">
                 <button
                   type="button"
                   onClick={goBack}
                   disabled={!history.length}
-                  className="cursor-pointer font-bold text-[#0057c8] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="cursor-pointer font-bold text-[#8a5a2b] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Back
                 </button>
-                <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#242424]">
+                <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#3f3328]">
                   Restart
                 </button>
-              </div>
-            </div>
-          ) : null}
+              </footer>
         </div>
       );
     }
@@ -3474,13 +3517,13 @@ export default function StoCareerBot({
         )}
       </header>
 
-      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
         {renderVisualScreen()}
       </div>
 
       <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
-        {controlsReady && step === "result" && resultCopy && door ? (
-          renderResultCtas()
+        {step === "result" ? (
+          null
         ) : controlsReady && step !== "diagnostic" ? (
           <div className={isEmbedded ? "mx-auto max-w-[980px]" : ""}>{renderControls()}</div>
         ) : step !== "diagnostic" ? (
