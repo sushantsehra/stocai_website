@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
+import { writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import certificate from "../assets/certificate.png";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
@@ -261,20 +262,15 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   };
 
   const handleGetUnstuck = () => {
-    if (typeof window !== "undefined") {
-      window.sessionStorage.setItem(
-        "stoDiagnosticContext",
-        JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
-          countryCode: countryCode.trim(),
-          referenceId: initialReferenceId?.trim() || "",
-          waitlistId: initialWaitlistId?.trim() || initialReferenceId?.trim() || "",
-          source: source.trim(),
-        }),
-      );
-    }
+    writeStoDiagnosticContext({
+      name,
+      email,
+      phone,
+      countryCode,
+      referenceId: initialReferenceId || initialWaitlistId || "",
+      waitlistId: initialWaitlistId || initialReferenceId || "",
+      source,
+    });
 
     posthog.capture("sto_diagnostic_route_opened", {
       source,

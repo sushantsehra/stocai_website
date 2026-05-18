@@ -21,6 +21,7 @@ import { getAttributionForApi } from "@/lib/analytics/attribution";
 import posthog from "posthog-js";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
+import { getWaitlistReferenceFromResponse, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 
 // Define interface for full modal data
 interface UserData {
@@ -30,6 +31,7 @@ interface UserData {
   countryCode: string;
   source: string;
   referenceId?: string;
+  waitlistId?: string;
 }
 
 // Define type for waitlist submission (matches modal onSubmit)
@@ -71,6 +73,7 @@ const BMPPromotableComponents: React.FC = () => {
   // Save to database with timeout and better error handling
   const handleRequestAccess = async (userData: UserData) => {
     console.log("Request Access Data:", userData);
+    writeStoDiagnosticContext(userData);
     
     // Store user data for modal
     setModalInitialData(userData);
@@ -112,10 +115,14 @@ const BMPPromotableComponents: React.FC = () => {
         throw new Error(waitlistData?.error || "Unable to join the waitlist.");
       }
 
-      userData.referenceId = waitlistData?.reference_id;
+      const referenceId = getWaitlistReferenceFromResponse(waitlistData);
+      userData.referenceId = referenceId;
+      userData.waitlistId = referenceId;
+      writeStoDiagnosticContext(userData);
       setModalInitialData((current) => ({
         ...current,
-        referenceId: waitlistData?.reference_id,
+        referenceId,
+        waitlistId: referenceId,
       }));
 
       if (waitlistData?.updated === true) {
@@ -215,6 +222,7 @@ const BMPPromotableComponents: React.FC = () => {
         initialPhone={modalInitialData.phone}
         initialCountryCode={modalInitialData.countryCode}
         initialReferenceId={modalInitialData.referenceId}
+        initialWaitlistId={modalInitialData.waitlistId}
         source={modalInitialData.source}
         onSubmit={handleWaitlistSubmit}
       />
