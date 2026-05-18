@@ -1496,10 +1496,6 @@ const BrillianceImageTrapScreen = ({
           </p>
         </section>
 
-        <p className="mx-auto mt-[16px] max-w-[31ch] text-center font-gotham text-[10px] font-normal leading-[14px] text-[#242424]">
-          Inside Better Corporate Life, we show you how to build next-level signals in simple steps. Give us 8 weeks, and you&apos;ll see the difference.
-        </p>
-
         <button
           type="button"
           onClick={onContinue}
@@ -1629,10 +1625,6 @@ const SponsorNetworkScreen = ({
             Build relationships with multiple stakeholders who can influence your career.
           </p>
         </section>
-
-        <p className="mx-auto mt-[16px] max-w-[31ch] text-center font-gotham text-[10px] font-normal leading-[14px] text-[#242424]">
-          Inside Better Corporate Life, we show you how to build next-level signals in simple steps. Give us 8 weeks, and you&apos;ll see the difference.
-        </p>
 
         <button
           type="button"
