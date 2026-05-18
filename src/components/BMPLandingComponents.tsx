@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 // import Testimonial from "./Testimonial";
 import FAQ from "./FAQ";
 import Header from "./LandingHeader";
@@ -30,6 +31,7 @@ import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
+import { getWaitlistReferenceFromResponse, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 // import FounderSection from "./FounderSection";
 import FounderNoteSection from "./FounderNoteSection";
 
@@ -60,6 +62,7 @@ const pushToDataLayer = (payload: Record<string, unknown>) => {
 };
 
 const BMPLandingComponents = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInitialData, setModalInitialData] = useState<UserData>({
     name: "",
@@ -69,8 +72,13 @@ const BMPLandingComponents = () => {
     source: "",
   });
 
+  React.useEffect(() => {
+    router.prefetch("/diagnostic");
+  }, [router]);
+
   // Called by both StickyCTA and WaitlistSection when user clicks "Request Access"
   const handleRequestAccess = async (userData: UserData) => {
+    writeStoDiagnosticContext(userData);
     // ── Call waitlist API immediately 
     try {
       const fullPhone =
@@ -102,8 +110,10 @@ const BMPLandingComponents = () => {
       const waitlistData = await response.json().catch(() => ({}));
 
       if (response.ok) {
-        userData.referenceId = waitlistData?.reference_id;
-        userData.waitlistId = waitlistData?.reference_id;
+        const referenceId = getWaitlistReferenceFromResponse(waitlistData);
+        userData.referenceId = referenceId;
+        userData.waitlistId = referenceId;
+        writeStoDiagnosticContext(userData);
         if (waitlistData?.updated === true) {
           trackAlreadyWaitlisted(userData.source, {
             context: "bmp_request_access",

@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import type { DiagnosticDoorId, Q1OptionId } from "@/data/stoConversation";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { getWaitlistReferenceFromResponse, readStoDiagnosticContext, writeStoDiagnosticContext, type StoDiagnosticContext } from "@/lib/diagnosticContext";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 import { pushToDataLayer, trackBotEvent } from "./analytics";
 import type { BotSessionResponse, BotStep } from "./types";
 
@@ -162,10 +165,73 @@ export const useStoPayment = ({
   const [actionState, setActionState] = useState<"idle" | "loading" | "error">("idle");
   const [actionMessage, setActionMessage] = useState("");
 
-  const createPaymentLink = useCallback(async () => {
-    const trimmedPhone = paymentPhone.trim();
-    const fullPhone = trimmedPhone.startsWith("+") ? trimmedPhone : `${paymentCountryCode}${trimmedPhone}`;
+  const storedContext = useMemo<StoDiagnosticContext>(readStoDiagnosticContext, []);
+  const resolvedReferenceId = waitlistReferenceId || storedContext.referenceId || storedContext.waitlistId || "";
+  const resolvedName = paymentName || storedContext.name || "";
+  const resolvedEmail = paymentEmail || storedContext.email || "";
+  const resolvedPhone = paymentPhone || storedContext.phone || "";
+  const resolvedCountryCode = paymentCountryCode || storedContext.countryCode || "+91";
 
+  const getFullPhone = useCallback(() => {
+    const trimmedPhone = resolvedPhone.trim();
+    return trimmedPhone.startsWith("+") ? trimmedPhone : `${resolvedCountryCode}${trimmedPhone}`;
+  }, [resolvedCountryCode, resolvedPhone]);
+
+  const ensureWaitlistReference = useCallback(async () => {
+    if (resolvedReferenceId) return resolvedReferenceId;
+
+    if (!resolvedName.trim() || !resolvedEmail.trim() || !resolvedPhone.trim()) {
+      throw new Error("Waitlist record not found. Please restart from the waitlist form.");
+    }
+
+    const response = await fetch(`${env.apiUrl}/waitlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: resolvedName.trim(),
+        email: resolvedEmail.trim(),
+        phone: getFullPhone(),
+        source,
+        visitorId: getWaitlistVisitorId(),
+        attribution: getAttributionForApi(),
+      }),
+    });
+
+    const data = (await response.json().catch(() => ({}))) as {
+      reference_id?: string;
+      referenceId?: string;
+      waitlist_id?: string;
+      waitlistId?: string;
+      id?: string;
+      error?: string;
+    };
+
+    if (!response.ok) {
+      throw new Error(data?.error || "Unable to restore waitlist record. Please try again.");
+    }
+
+    const referenceId = getWaitlistReferenceFromResponse(data);
+    if (!referenceId) {
+      throw new Error("Waitlist record was saved, but no reference was returned. Please try again.");
+    }
+
+    writeStoDiagnosticContext({
+      name: resolvedName,
+      email: resolvedEmail,
+      phone: resolvedPhone,
+      countryCode: resolvedCountryCode,
+      referenceId,
+      waitlistId: referenceId,
+      source,
+    });
+
+    return referenceId;
+  }, [getFullPhone, resolvedCountryCode, resolvedEmail, resolvedName, resolvedPhone, resolvedReferenceId, source]);
+
+  const createPaymentLink = useCallback(async (referenceId: string) => {
     const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
       method: "POST",
       headers: {
@@ -173,10 +239,10 @@ export const useStoPayment = ({
         Accept: "application/json",
       },
       body: JSON.stringify({
-        name: paymentName || undefined,
-        email: paymentEmail || undefined,
-        phone: fullPhone,
-        reference_id: waitlistReferenceId || `waitlist_${Date.now()}`,
+        name: resolvedName || undefined,
+        email: resolvedEmail || undefined,
+        phone: getFullPhone(),
+        reference_id: referenceId,
         amount: 197000,
       }),
     });
@@ -192,16 +258,14 @@ export const useStoPayment = ({
     }
 
     return shortUrl;
-  }, [paymentCountryCode, paymentEmail, paymentName, paymentPhone, waitlistReferenceId]);
+  }, [getFullPhone, resolvedEmail, resolvedName]);
 
   const handlePaymentRedirect = useCallback(async () => {
-    if (!waitlistReferenceId) {
-      throw new Error("Waitlist record not found. Please restart from the waitlist form.");
-    }
-
-    if (!paymentPhone.trim()) {
+    if (!resolvedPhone.trim()) {
       throw new Error("Phone number is missing. Please restart from the waitlist form.");
     }
+
+    const paymentReferenceId = await ensureWaitlistReference();
 
     posthog.capture("waitlist_submit_attempt", {
       source,
@@ -221,7 +285,7 @@ export const useStoPayment = ({
       payment_started: true,
     });
 
-    const shortUrl = await createPaymentLink();
+    const shortUrl = await createPaymentLink(paymentReferenceId);
 
     posthog.capture("payment_redirected", {
       source,
@@ -234,7 +298,7 @@ export const useStoPayment = ({
     });
 
     window.location.href = shortUrl;
-  }, [createPaymentLink, paymentPhone, source, waitlistReferenceId]);
+  }, [createPaymentLink, ensureWaitlistReference, resolvedPhone, source]);
 
   const handlePaymentCta = useCallback(async () => {
     if (!door) return;

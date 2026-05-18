@@ -465,6 +465,31 @@ a[href],
 }
 
 @media (min-width: 768px) {
+  [data-sto-bot] .sto-invest-hero--playing {
+    min-height: 620px;
+    padding: 0 !important;
+  }
+
+  [data-sto-bot] .sto-invest-hero-inner--playing {
+    height: 100%;
+    max-width: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-video--playing {
+    height: 100% !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-video--playing video {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: contain !important;
+  }
+
   .bmp-modal-brand {
     font-size: 32px;
   }
@@ -638,8 +663,273 @@ a[href],
     max-width: 100%;
     overflow-x: hidden;
   }
+
+  [data-sto-bot] .sto-invest-modal {
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 50% 24%, rgba(25, 54, 126, 0.68), rgba(5, 18, 42, 0) 38%),
+      #061328 !important;
+    padding: 0 !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-shell {
+    display: flex !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    height: 100svh !important;
+    overflow-y: auto !important;
+    border-radius: 0 !important;
+    background:
+      radial-gradient(circle at 50% 24%, rgba(25, 54, 126, 0.58), rgba(5, 18, 42, 0) 37%),
+      #061328 !important;
+    box-shadow: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-close {
+    right: 17px !important;
+    top: 10px !important;
+    height: 38px !important;
+    width: 38px !important;
+    border: 1.5px solid rgba(221, 186, 121, 0.88) !important;
+    background: #0a1831 !important;
+    color: #e4c17a !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.26) !important;
+  }
+
+  [data-sto-bot] .sto-invest-hero {
+    display: block !important;
+    min-height: 0 !important;
+    flex: none !important;
+    padding: 37px 37px 0 !important;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(42, 80, 166, 0.52), rgba(6, 19, 40, 0) 39%),
+      linear-gradient(180deg, #07152d 0%, #061328 100%) !important;
+  }
+
+  [data-sto-bot] .sto-invest-hero-inner {
+    max-width: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-video {
+    height: auto !important;
+    max-width: none !important;
+    aspect-ratio: 324 / 173 !important;
+    border-radius: 14px !important;
+    border: 1.5px solid rgba(220, 186, 124, 0.78) !important;
+    background:
+      radial-gradient(ellipse at center, rgba(35, 77, 164, 0.62), rgba(7, 18, 38, 0.58) 58%),
+      #061328 !important;
+    box-shadow: inset 0 0 32px rgba(16, 70, 180, 0.28) !important;
+  }
+
+  [data-sto-bot] .sto-invest-video video {
+    object-fit: cover !important;
+    opacity: 0.48 !important;
+  }
+
+  [data-sto-bot] .sto-invest-play {
+    height: 56px !important;
+    width: 56px !important;
+    border: 2px solid #e4c17a !important;
+    background: #fffaf2 !important;
+    color: #0b58c9 !important;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.24) !important;
+  }
+
+  [data-sto-bot] .sto-invest-eyebrow {
+    margin-top: 15px !important;
+    color: #d9b66e !important;
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
+    line-height: 1.1 !important;
+  }
+
+  [data-sto-bot] .sto-invest-title {
+    margin-top: 6px !important;
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    color: #ffffff !important;
+  }
+
+  [data-sto-bot] .sto-invest-copy {
+    display: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-offer {
+    flex: 1 0 auto !important;
+    padding: 19px 17px 13px !important;
+    background: #061328 !important;
+  }
+
+  [data-sto-bot] .sto-invest-card {
+    min-height: 0 !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #d9b66e !important;
+    background: #fffaf2 !important;
+    padding: 48px 19px 17px !important;
+    box-shadow:
+      0 0 0 2px rgba(217, 182, 110, 0.28),
+      0 14px 28px rgba(0, 0, 0, 0.28) !important;
+  }
+
+  [data-sto-bot] .sto-invest-badge {
+    left: 21px !important;
+    top: 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    border-radius: 999px !important;
+    background: #f1e6cf !important;
+    padding: 5px 11px !important;
+    color: #96723c !important;
+    font-size: 9px !important;
+    letter-spacing: 0.15em !important;
+  }
+
+  [data-sto-bot] .sto-invest-badge svg {
+    display: block !important;
+    height: 10px !important;
+    width: 10px !important;
+  }
+
+  [data-sto-bot] .sto-invest-card-title {
+    color: #08162d !important;
+    font-size: 24px !important;
+    line-height: 1.08 !important;
+  }
+
+  [data-sto-bot] .sto-invest-card-copy {
+    display: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-divider {
+    display: flex !important;
+    margin: 15px 10px 13px !important;
+  }
+
+  [data-sto-bot] .sto-invest-divider span {
+    position: relative;
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: #eadfcf;
+  }
+
+  [data-sto-bot] .sto-invest-divider span::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 8px;
+    width: 8px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: #d9b66e;
+  }
+
+  [data-sto-bot] .sto-invest-benefits {
+    margin-top: 0 !important;
+    display: grid !important;
+    gap: 8px !important;
+  }
+
+  [data-sto-bot] .sto-invest-benefit {
+    min-height: 54px !important;
+    border-color: #eadfcf !important;
+    border-radius: 7px !important;
+    background: #fffaf2 !important;
+    padding: 8px 11px !important;
+  }
+
+  [data-sto-bot] .sto-invest-benefit-icon {
+    height: 32px !important;
+    width: 32px !important;
+    border-radius: 999px !important;
+    background: #f1e6cf !important;
+    color: #0a57c6 !important;
+  }
+
+  [data-sto-bot] .sto-invest-benefit-text {
+    color: #232736 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.32 !important;
+  }
+
+  [data-sto-bot] .sto-invest-price-label {
+    display: block !important;
+    margin-top: 13px !important;
+  }
+
+  [data-sto-bot] .sto-invest-price {
+    margin-top: 6px !important;
+    gap: 18px !important;
+  }
+
+  [data-sto-bot] .sto-invest-price-old {
+    color: #8b9099 !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+
+  [data-sto-bot] .sto-invest-price-new {
+    color: #0a57c6 !important;
+    font-size: 31px !important;
+    line-height: 1 !important;
+  }
+
+  [data-sto-bot] .sto-invest-cta {
+    min-height: 45px !important;
+    margin-top: 11px !important;
+    border-radius: 7px !important;
+    background: linear-gradient(180deg, #2e66f4 0%, #064bd4 100%) !important;
+    font-size: 15px !important;
+    box-shadow: 0 9px 18px rgba(0, 87, 217, 0.28) !important;
+  }
+
+  [data-sto-bot] .sto-invest-call-cta {
+    min-height: 42px !important;
+    margin-top: 12px !important;
+    border: 1px solid #d9b66e !important;
+    border-radius: 4px !important;
+    background: #21140e !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+  }
+
+  [data-sto-bot] .sto-invest-call-cta svg {
+    height: 16px !important;
+    width: 16px !important;
+    color: #ffffff !important;
+  }
 }
 
+@media (max-width: 380px) {
+  [data-sto-bot] .sto-invest-hero {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+  }
+
+  [data-sto-bot] .sto-invest-offer {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  [data-sto-bot] .sto-invest-title {
+    font-size: 21px !important;
+  }
+
+  [data-sto-bot] .sto-invest-card {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
 @media (max-width: 767px) and (max-height: 700px) {
   [data-sto-bot] .diagnostic-intro-content {
     padding-top: 28px !important;

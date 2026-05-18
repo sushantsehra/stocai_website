@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import posthog from "posthog-js";
 import env from "@/utils/env";
-import applicationIcon from "../assets/application.png";
+import { writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import certificate from "../assets/certificate.png";
 import communitiesIcon from "../assets/communities.png";
 import delegateIcon from "../assets/delegate.png";
@@ -253,6 +253,33 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     if (e.target === e.currentTarget) {
       onClose();
     }
+  };
+
+  const handleGetUnstuck = () => {
+    writeStoDiagnosticContext({
+      name,
+      email,
+      phone,
+      countryCode,
+      referenceId: initialReferenceId || initialWaitlistId || "",
+      waitlistId: initialWaitlistId || initialReferenceId || "",
+      source,
+    });
+
+    posthog.capture("sto_diagnostic_route_opened", {
+      source,
+      waitlist_reference_id: initialReferenceId,
+      waitlist_id: initialWaitlistId || initialReferenceId,
+    });
+    pushToDataLayer({
+      event: "sto_diagnostic_route_opened",
+      source,
+      waitlist_reference_id: initialReferenceId,
+      waitlist_id: initialWaitlistId || initialReferenceId,
+    });
+
+    onClose();
+    router.push("/diagnostic");
   };
 
   if (!isOpen) return null;

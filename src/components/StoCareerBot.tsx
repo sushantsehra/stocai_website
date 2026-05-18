@@ -12,8 +12,10 @@ import {
   Lightbulb,
   Loader2,
   PhoneCall,
+  Play,
   PlayCircle,
   Signal,
+  Star,
   WifiOff,
   X,
 } from "lucide-react";
@@ -120,16 +122,19 @@ const CallInvestModal = ({
   isOpen,
   onClose,
   onInvest,
+  onCallInstead,
   isLoading,
   message,
 }: {
   isOpen: boolean;
   onClose: () => void;
   onInvest: () => void;
+  onCallInstead: () => void;
   isLoading: boolean;
   message: string;
 }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isInlineVideoPlaying, setIsInlineVideoPlaying] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -156,7 +161,10 @@ const CallInvestModal = ({
   }, [isOpen, isVideoOpen, onClose]);
 
   useEffect(() => {
-    if (!isOpen) setIsVideoOpen(false);
+    if (!isOpen) {
+      setIsVideoOpen(false);
+      setIsInlineVideoPlaying(false);
+    }
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -166,9 +174,18 @@ const CallInvestModal = ({
     onInvest();
   };
 
+  const handleVideoPreviewClick = () => {
+    if (window.matchMedia("(min-width: 768px)").matches) {
+      setIsInlineVideoPlaying(true);
+      return;
+    }
+
+    setIsVideoOpen(true);
+  };
+
   return (
     <div
-      className="fixed inset-0 z-[10050] flex items-center justify-center bg-[#071326]/65 p-3 backdrop-blur-[2px] md:p-6"
+      className="sto-invest-modal fixed inset-0 z-[10050] flex items-center justify-center bg-[#071326]/65 p-3 backdrop-blur-[2px] md:p-6"
       role="dialog"
       aria-modal="true"
       aria-label="Career investment options"
@@ -176,85 +193,120 @@ const CallInvestModal = ({
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="relative flex max-h-[calc(100svh-24px)] w-full max-w-[980px] flex-col overflow-y-auto rounded-[14px] bg-white shadow-[0_24px_80px_rgba(2,8,23,0.34)] md:grid md:max-h-[720px] md:grid-cols-[1fr_420px] md:overflow-hidden">
+      <div className="sto-invest-shell relative flex max-h-[calc(100svh-24px)] w-full max-w-[980px] flex-col overflow-y-auto rounded-[14px] bg-white shadow-[0_24px_80px_rgba(2,8,23,0.34)] md:grid md:max-h-[720px] md:grid-cols-[1fr_420px] md:overflow-hidden">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-3 top-3 z-20 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white/90 text-[#0f172a] shadow-[0_8px_24px_rgba(15,23,42,0.18)] transition hover:bg-white"
+          className="sto-invest-close absolute right-3 top-3 z-20 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white/90 text-[#0f172a] shadow-[0_8px_24px_rgba(15,23,42,0.18)] transition hover:bg-white"
           aria-label="Close"
         >
           <X className="h-5 w-5" strokeWidth={2.2} />
         </button>
 
-        <section className="flex items-center justify-center bg-[radial-gradient(circle_at_center,#1e66d6_0%,#0b2a58_48%,#061226_100%)] px-4 py-4 text-white md:min-h-[620px] md:px-6 md:py-8">
-          <div className="w-full max-w-[460px] text-center">
+        <section className={`sto-invest-hero flex items-center justify-center bg-[radial-gradient(circle_at_center,#1e66d6_0%,#0b2a58_48%,#061226_100%)] px-4 py-4 text-white md:min-h-[620px] md:px-6 md:py-8 ${isInlineVideoPlaying ? "sto-invest-hero--playing" : ""}`}>
+          <div className={`sto-invest-hero-inner w-full max-w-[460px] text-center ${isInlineVideoPlaying ? "sto-invest-hero-inner--playing" : ""}`}>
             <button
               type="button"
-              onClick={() => setIsVideoOpen(true)}
-              className="group relative mx-auto flex aspect-video h-[170px] w-full max-w-[320px] cursor-pointer items-center justify-center overflow-hidden rounded-[14px] border border-white/25 bg-black shadow-[0_18px_48px_rgba(0,0,0,0.28),inset_0_0_0_1px_rgba(255,255,255,0.08)] transition hover:border-white/45 md:h-auto md:max-w-none"
+              onClick={handleVideoPreviewClick}
+              className={`sto-invest-video group relative mx-auto flex aspect-video h-[170px] w-full max-w-[320px] cursor-pointer items-center justify-center overflow-hidden rounded-[14px] border border-white/25 bg-black shadow-[0_18px_48px_rgba(0,0,0,0.28),inset_0_0_0_1px_rgba(255,255,255,0.08)] transition hover:border-white/45 md:h-auto md:max-w-none ${isInlineVideoPlaying ? "sto-invest-video--playing" : ""}`}
               aria-label="Play Be More Promotable product video"
             >
-              <video
-                className="h-full w-full bg-black object-contain opacity-90"
-                muted
-                playsInline
-                preload="metadata"
-                aria-hidden
-              >
-                <source src={bclProductVideoSources.webm} type="video/webm" />
-                <source src={bclProductVideoSources.mp4} type="video/mp4" />
-              </video>
-              <span className="absolute inset-0 bg-black/10 transition group-hover:bg-black/0" />
-              <span className="absolute flex h-14 w-14 items-center justify-center rounded-full bg-white/92 text-[#0057c8] shadow-[0_12px_30px_rgba(0,0,0,0.26)] transition group-hover:scale-105 md:h-16 md:w-16">
-                <PlayCircle className="h-8 w-8 md:h-9 md:w-9" strokeWidth={1.7} />
-              </span>
+              {isInlineVideoPlaying ? (
+                <video
+                  className="h-full w-full bg-black object-contain"
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="auto"
+                  aria-label="Be More Promotable product walkthrough"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <source src={bclProductVideoSources.webm} type="video/webm" />
+                  <source src={bclProductVideoSources.mp4} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <>
+                  <img
+                    src="/diagnostic/thumbnail.jpeg"
+                    alt=""
+                    className="h-full w-full bg-black object-cover opacity-90"
+                    aria-hidden
+                  />
+                  <span className="absolute inset-0 bg-black/10 transition group-hover:bg-black/0" />
+                  <span className="sto-invest-play absolute flex h-14 w-14 items-center justify-center rounded-full bg-white/92 text-[#0057c8] shadow-[0_12px_30px_rgba(0,0,0,0.26)] transition group-hover:scale-105 md:h-16 md:w-16">
+                    <PlayCircle className="hidden h-8 w-8 md:block md:h-9 md:w-9" strokeWidth={1.7} />
+                    <Play className="h-7 w-7 fill-current md:hidden" strokeWidth={1.8} />
+                  </span>
+                </>
+              )}
             </button>
-            <p className="mt-3 font-gotham text-[10px] font-bold uppercase tracking-[0.14em] text-[#bcd6ff] md:mt-5 md:text-[12px]">Be More Promotable</p>
-            <h2 className="mt-1 font-quattrocento text-[24px] font-bold leading-[1.02] md:mt-2 md:text-[38px]">See the system before you join.</h2>
-            <p className="mx-auto mt-2 max-w-[32ch] font-gotham text-[12px] font-medium leading-5 text-white/82 md:mt-3 md:max-w-[34ch] md:text-[14px] md:leading-6">
-              Watch how BCL helps turn strong work into promotion-ready visibility, sponsors, and next-level signals.
-            </p>
+            {!isInlineVideoPlaying ? (
+              <>
+                <p className="sto-invest-eyebrow mt-3 font-gotham text-[10px] font-bold uppercase tracking-[0.14em] text-[#bcd6ff] md:mt-5 md:text-[12px]">Be More Promotable</p>
+                <h2 className="sto-invest-title mt-1 font-gotham text-[24px] font-bold leading-[1.08] md:mt-2 md:text-[38px]">See the system before you join.</h2>
+                <p className="sto-invest-copy mx-auto mt-2 max-w-[32ch] font-gotham text-[12px] font-medium leading-5 text-white/82 md:mt-3 md:max-w-[34ch] md:text-[14px] md:leading-6">
+                  Watch how BCL helps turn strong work into promotion-ready visibility, sponsors, and next-level signals.
+                </p>
+              </>
+            ) : null}
           </div>
         </section>
 
-        <section className="bg-white px-4 py-4 md:overflow-y-auto md:px-6 md:py-7">
+        <section className="sto-invest-offer bg-white px-4 py-4 md:overflow-y-auto md:px-6 md:py-7">
           <form
             onSubmit={handleSubmit}
-            className="relative rounded-[14px] border-2 border-[#0057c8] bg-white px-4 pb-4 pt-10 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-5 md:pt-9"
+            className="sto-invest-card relative rounded-[14px] border-2 border-[#0057c8] bg-white px-4 pb-4 pt-10 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-5 md:pt-9"
           >
-            <span className="absolute left-5 top-3 rounded-[5px] bg-[#e7f1ff] px-2 py-1 font-gotham text-[9px] font-bold uppercase tracking-[0.08em] text-[#0057c8]">
+            <span className="sto-invest-badge absolute left-5 top-3 inline-flex items-center gap-1 rounded-[5px] bg-[#e7f1ff] px-2 py-1 font-gotham text-[9px] font-bold uppercase tracking-[0.08em] text-[#0057c8]">
+              <Star className="hidden h-3 w-3 fill-current md:hidden" strokeWidth={2} />
               Recommended
             </span>
             <div className="text-center">
-              <h3 className="font-gotham text-[21px] font-bold leading-tight text-[#0057c8] md:text-[23px]">Join the Program</h3>
-              <p className="mx-auto mt-2 max-w-[250px] font-gotham text-[12px] font-medium leading-[18px] text-[#242424] md:mt-1 md:text-[12px] md:leading-[18px]">
+              <h3 className="sto-invest-card-title font-gotham text-[21px] font-bold leading-tight text-[#0057c8] md:text-[23px]">Join the Program</h3>
+              <p className="sto-invest-card-copy mx-auto mt-2 max-w-[250px] font-gotham text-[12px] font-medium leading-[18px] text-[#242424] md:mt-1 md:text-[12px] md:leading-[18px]">
                 Build your promotion operating system after seeing what is blocking you.
               </p>
             </div>
 
-            <div className="mt-4 space-y-2 md:mt-4">
+            <div className="sto-invest-divider mt-4 hidden items-center justify-center md:hidden" aria-hidden>
+              <span />
+            </div>
+
+            <div className="sto-invest-benefits mt-4 space-y-2 md:mt-4">
               {["Translate strong work into promotable signals.", "Build sponsor-ready visibility.", "Leave with a sharper next-level plan."].map((label) => (
-                <div key={label} className="flex items-center gap-3 rounded-[8px] border border-[#edf1f7] bg-[#f8fbff] px-3 py-[7px] md:py-[8px]">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#e6f1ff] text-[#0057c8]">
+                <div key={label} className="sto-invest-benefit flex items-center gap-3 rounded-[8px] border border-[#edf1f7] bg-[#f8fbff] px-3 py-[7px] md:py-[8px]">
+                  <span className="sto-invest-benefit-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#e6f1ff] text-[#0057c8]">
                     <Check className="h-4 w-4" strokeWidth={2.5} />
                   </span>
-                  <span className="font-gotham text-[13px] font-medium leading-5 text-[#242424]">{label}</span>
+                  <span className="sto-invest-benefit-text font-gotham text-[13px] font-medium leading-5 text-[#242424]">{label}</span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-5 flex items-end justify-center gap-5 md:gap-4">
-              <span className="pb-1 font-gotham text-[16px] font-bold text-[#9aa4b2] line-through">{"\u20b9"}4,999</span>
-              <span className="font-gotham text-[30px] font-bold leading-none text-[#0057c8] md:text-[32px]">{"\u20b9"}1,970</span>
+            <p className="sto-invest-price-label mt-5 hidden text-center font-gotham text-[11px] font-medium text-[#5c6170] md:hidden">Early access price</p>
+            <div className="sto-invest-price mt-5 flex items-end justify-center gap-5 md:gap-4">
+              <span className="sto-invest-price-old pb-1 font-gotham text-[16px] font-bold text-[#9aa4b2] line-through">{"\u20b9"}4,999</span>
+              <span className="sto-invest-price-new font-gotham text-[30px] font-bold leading-none text-[#0057c8] md:text-[32px]">{"\u20b9"}1,970</span>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[9px] bg-[#0057c8] px-4 font-gotham text-[16px] font-bold text-white shadow-[0_12px_24px_rgba(0,87,217,0.22)] transition hover:bg-[#0A57C6] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-55"
+              className="sto-invest-cta mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[9px] bg-[#0057c8] px-4 font-gotham text-[16px] font-bold text-white shadow-[0_12px_24px_rgba(0,87,217,0.22)] transition hover:bg-[#0A57C6] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-55"
             >
               {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
               {isLoading ? "Processing..." : "I'll Invest in My Career"}
+            </button>
+
+            <button
+              type="button"
+              onClick={onCallInstead}
+              disabled={isLoading}
+              className="sto-invest-call-cta mt-3 inline-flex min-h-[42px] w-full cursor-pointer items-center justify-center gap-3 rounded-[6px] border border-[#d8b77d] bg-transparent px-4 font-gotham text-[12px] font-bold text-[#211912] transition hover:bg-[#fffaf3] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <PhoneCall className="h-4 w-4" strokeWidth={1.9} />
+              I&apos;d like a call instead
             </button>
 
             {message ? (
@@ -433,11 +485,11 @@ const DiagnosticEmpathyScreen = ({
       <div className="scrollbar-hide flex min-h-0 flex-1 flex-col overflow-y-auto px-8 pb-5">
         <BclHeader />
         <div className="flex items-center gap-2">
-          <div className="flex h-[36px] min-w-[91px] items-center justify-center rounded-[4px] bg-[#f5f7fb] px-2 font-gotham text-[12px] font-bold leading-none text-[#0057c8]">
+          <div className="flex h-[36px] min-w-[91px] items-center justify-center rounded-[4px] bg-[#f5f7fb] px-2 font-gotham text-[12px] font-bold leading-none text-[#0057c8] md:h-[46px]">
             You selected
           </div>
-          <div className="flex min-h-[36px] flex-1 items-center gap-2 rounded-[4px] bg-[#fbfaf8] px-2">
-            {selectedImage ? <img src={selectedImage} alt="" className="h-[29px] w-[45px] object-cover" aria-hidden /> : null}
+          <div className="flex min-h-[36px] flex-1 items-center gap-2 rounded-[4px] bg-[#fbfaf8] px-2 md:min-h-[46px] md:gap-3">
+            {selectedImage ? <img src={selectedImage} alt="" className="h-[29px] w-[45px] object-cover md:h-[40px] md:w-[62px]" aria-hidden /> : null}
             <span className="font-gotham text-[13px] font-normal leading-[15px] text-[#242424]">{selectedLabel}</span>
           </div>
         </div>
@@ -503,7 +555,7 @@ const DiagnosticNotConsideredFormulaScreen = ({
           <DiagnosticStageProgress />
         </div>
 
-      <section className="relative mx-auto mt-[20px] min-h-[140px] w-full max-w-[338px] shrink-0 overflow-visible rounded-[4px] border border-[#c7d8f9] bg-white pb-[15px] pt-[47px] shadow-[0_2px_8px_rgba(15,23,42,0.12)]">
+      <section className="relative mx-auto mt-[20px] min-h-[140px] w-full max-w-[338px] shrink-0 overflow-visible rounded-[4px] border border-[#c7d8f9] bg-white pb-[15px] pt-[47px] shadow-[0_2px_8px_rgba(15,23,42,0.12)] md:max-w-none">
         <div className="absolute inset-x-0 top-0 h-[34px] rounded-t-[4px] bg-[#0057c8]" />
         <img
           src="/diagnostic/not-considered-badge.png"
@@ -511,13 +563,13 @@ const DiagnosticNotConsideredFormulaScreen = ({
           className="absolute left-1/2 top-[-23px] z-10 h-[46px] w-[46px] -translate-x-1/2 object-contain"
           aria-hidden
         />
-        <div className="flex items-center gap-[18px] px-[18px]">
-          <div className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full">
-            <img src="/diagnostic/not-considered-person.png" alt="" className="h-[40px] w-[40px] object-contain" aria-hidden />
+        <div className="flex items-center gap-[18px] px-[18px] md:gap-5 md:px-8">
+          <div className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full md:h-[48px] md:w-[48px]">
+            <img src="/diagnostic/not-considered-person.png" alt="" className="h-[40px] w-[40px] object-contain md:h-[48px] md:w-[48px]" aria-hidden />
           </div>
           <div className="min-w-0 pt-1">
-            <h1 className="font-quattrocento text-[18px] font-bold leading-[20px] text-[#242424]">I was not even considered</h1>
-            <p className="mt-[4px] font-gotham text-[11px] font-normal leading-[14px] text-[#242424]">
+            <h1 className="font-quattrocento text-[18px] font-bold leading-[20px] text-[#242424] md:text-[22px] md:leading-[24px]">I was not even considered</h1>
+            <p className="mt-[4px] font-gotham text-[11px] font-normal leading-[14px] text-[#242424] md:mt-[6px] md:text-[13px] md:leading-[17px]">
               You were not discussed, shortlisted, or seen as a contender.
             </p>
           </div>
@@ -673,10 +725,10 @@ const StoryOfWorkScreen = ({
           </p>
 
           <div className="relative mt-[22px] min-h-[155px]">
-            <div className="absolute left-[178px] top-[6px] w-[82px] font-gotham text-[10px] font-normal leading-[13px] text-[#0057c8]">
+            <div className="absolute left-[178px] top-[6px] w-[82px] font-gotham text-[10px] font-normal leading-[13px] text-[#0057c8] md:left-[398px]">
               Telling better story of work will fix it
             </div>
-            <svg className="absolute left-[152px] top-[20px] h-[64px] w-[46px] text-[#1677ff]" viewBox="0 0 46 64" fill="none" aria-hidden>
+            <svg className="absolute left-[152px] top-[20px] h-[64px] w-[46px] text-[#1677ff] md:left-[390px]" viewBox="0 0 46 64" fill="none" aria-hidden>
               <path d="M36 4C11 10 4 33 18 52" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
               <path d="M13 48L18 54L24 49" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -1107,7 +1159,7 @@ const VisibilityDesireScreen = ({
     <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
         <BclHeader />
-        <div className="mx-auto w-full max-w-[390px]">
+        <div className="mx-auto w-full max-w-[390px] md:max-w-none">
           <section className="rounded-[4px] bg-white px-[12px] pb-[19px] pt-[14px] text-center shadow-[0_2px_12px_rgba(15,23,42,0.12)]">
             <div className="flex items-start gap-3 text-left">
               <div className="w-[76px] shrink-0">
@@ -1495,28 +1547,28 @@ const SponsorNetworkScreen = ({
             Without strong sponsorship, growth slows down. And relying on one sponsor is risky.
           </p>
 
-          <div className="mt-[13px] rounded-[4px] border border-[#1677ff] bg-[#eef4ff] px-3 py-3">
-            <div className="grid grid-cols-[88px_1fr] items-center gap-3">
+          <div className="mt-[13px] rounded-[4px] border border-[#1677ff] bg-[#eef4ff] px-3 py-3 md:px-4">
+            <div className="grid grid-cols-[88px_1fr] items-center gap-3 md:grid-cols-[128px_1fr] md:gap-6">
               <div>
                 <p className="font-gotham text-[11px] font-bold leading-[14px] text-[#242424]">One sponsor</p>
                 <p className="mt-1 font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">Growth depends on one person.</p>
               </div>
-              <div className="relative h-[68px]">
-                <div className="absolute left-[17px] top-1/2 h-px w-[104px] -translate-y-1/2 bg-[#7dafff]" />
-                <div className="absolute left-[14px] top-[-7px] h-[82px] w-[82px] rounded-full border border-dashed border-[#7dafff] opacity-70" aria-hidden />
-                <div className="absolute left-[20px] top-[-1px] h-[70px] w-[70px] rounded-full border border-dashed border-[#7dafff] opacity-85" aria-hidden />
-                <div className="absolute left-[27px] top-[6px] h-[56px] w-[56px] rounded-full border border-dashed border-[#1677ff]" aria-hidden />
-                <div className="absolute left-[22px] top-[2px] flex h-[64px] w-[64px] items-center justify-center rounded-full">
+              <div className="relative h-[68px] md:h-[82px]">
+                <div className="absolute left-[17px] right-[42px] top-1/2 h-px -translate-y-1/2 bg-[#7dafff] md:left-[72px] md:right-[58px]" />
+                <div className="absolute left-[14px] top-[-7px] h-[82px] w-[82px] rounded-full border border-dashed border-[#7dafff] opacity-70 md:left-[34px] md:top-0" aria-hidden />
+                <div className="absolute left-[20px] top-[-1px] h-[70px] w-[70px] rounded-full border border-dashed border-[#7dafff] opacity-85 md:left-[40px] md:top-[6px]" aria-hidden />
+                <div className="absolute left-[27px] top-[6px] h-[56px] w-[56px] rounded-full border border-dashed border-[#1677ff] md:left-[47px] md:top-[13px]" aria-hidden />
+                <div className="absolute left-[22px] top-[2px] flex h-[64px] w-[64px] items-center justify-center rounded-full md:left-[42px] md:top-[9px]">
                   <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-white">
                     <img src="/diagnostic/sponsor-network-blue.png" alt="" className="h-[26px] w-[26px]" aria-hidden />
                   </div>
                   <span className="absolute -bottom-3 font-gotham text-[8px] text-[#242424]">You</span>
                 </div>
-                <div className="absolute right-0 top-[12px] flex h-[44px] w-[44px] items-center justify-center rounded-full border border-[#1677ff] bg-white">
+                <div className="absolute right-0 top-[12px] flex h-[44px] w-[44px] items-center justify-center rounded-full border border-[#1677ff] bg-white md:right-[8px] md:top-[19px]">
                   <img src="/diagnostic/sponsor-network-blue.png" alt="" className="h-[25px] w-[25px]" aria-hidden />
                   <span className="absolute -bottom-4 font-gotham text-[8px] text-[#242424]">Sponsor</span>
                 </div>
-                <span className="absolute right-[-7px] top-[-8px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#1677ff] font-gotham text-[12px] font-bold text-white">!</span>
+                <span className="absolute right-[-7px] top-[-8px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#1677ff] font-gotham text-[12px] font-bold text-white md:right-[1px] md:top-[-1px]">!</span>
               </div>
             </div>
           </div>
@@ -1530,38 +1582,38 @@ const SponsorNetworkScreen = ({
           </div>
           <p className="mt-[3px] text-center font-gotham text-[10px] font-bold leading-none text-[#0057c8]">The Gap</p>
 
-          <div className="mt-[10px] rounded-[4px] border border-[#e8dfd6] bg-[#fbf8f4] px-3 py-3">
-            <div className="grid grid-cols-[92px_1fr] gap-2">
+          <div className="mt-[10px] rounded-[4px] border border-[#e8dfd6] bg-[#fbf8f4] px-3 py-3 md:px-4">
+            <div className="grid grid-cols-[92px_1fr] gap-2 md:grid-cols-[128px_1fr] md:gap-6">
               <div className="pt-1">
                 <p className="font-gotham text-[11px] font-bold leading-[14px] text-[#242424]">Sponsor network</p>
                 <p className="mt-1 font-gotham text-[10px] font-normal leading-[13px] text-[#242424]">More influence. More momentum.</p>
               </div>
-              <div className="relative h-[104px]">
-                <svg className="absolute left-[6px] top-[2px] h-[91px] w-[145px]" viewBox="0 0 145 91" fill="none" aria-hidden>
+              <div className="relative h-[104px] md:mx-auto md:h-[118px] md:w-[380px]">
+                <svg className="absolute left-[6px] top-[2px] h-[91px] w-[145px] md:left-[78px] md:top-[6px] md:h-[100px] md:w-[220px]" viewBox="0 0 145 91" fill="none" aria-hidden>
                   <path d="M28 15L116 15L116 70L72 84L28 70Z" stroke="#c08a3e" strokeWidth="1.1" strokeDasharray="3 3" />
                   <path d="M78 45L28 15M78 45L116 15M78 45L28 70M78 45L116 70M78 45L72 84" stroke="#c08a3e" strokeWidth="1.1" />
                 </svg>
                 {[
-                  ["Executive Sponsor", "left-[22px] top-0"],
-                  ["Senior Leader", "right-[3px] top-[2px]"],
-                  ["Cross-functional Ally", "right-[2px] bottom-[2px]"],
-                  ["Mentor", "left-[62px] bottom-0"],
-                  ["Influential Peer", "left-[2px] bottom-[2px]"],
+                  ["Executive Sponsor", "left-[22px] top-0 md:left-[108px] md:top-[4px]"],
+                  ["Senior Leader", "right-[3px] top-[2px] md:left-[242px] md:right-auto md:top-[4px]"],
+                  ["Cross-functional Ally", "right-[2px] bottom-[2px] md:left-[242px] md:right-auto md:bottom-[5px]"],
+                  ["Mentor", "left-[62px] bottom-0 md:left-[183px] md:bottom-[1px]"],
+                  ["Influential Peer", "left-[2px] bottom-[2px] md:left-[108px] md:bottom-[5px]"],
                 ].map(([label, className]) => (
                   <div key={label} className={`absolute ${className} text-center`}>
-                    <div className="mx-auto flex h-[26px] w-[26px] items-center justify-center rounded-full border border-[#c08a3e] bg-white">
-                      <img src="/diagnostic/sponsor-network-gold.png" alt="" className="h-[16px] w-[16px]" aria-hidden />
+                    <div className="mx-auto flex h-[26px] w-[26px] items-center justify-center rounded-full border border-[#c08a3e] bg-white md:h-[30px] md:w-[30px]">
+                      <img src="/diagnostic/sponsor-network-gold.png" alt="" className="h-[16px] w-[16px] md:h-[18px] md:w-[18px]" aria-hidden />
                     </div>
-                    <p className="mt-[2px] max-w-[45px] font-gotham text-[6px] leading-[7px] text-[#242424]">{label}</p>
+                    <p className="mt-[2px] max-w-[45px] font-gotham text-[6px] leading-[7px] text-[#242424] md:max-w-[58px] md:text-[7px] md:leading-[8px]">{label}</p>
                   </div>
                 ))}
-                <div className="absolute left-[66px] top-[31px] text-center">
-                  <div className="mx-auto flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[#1677ff] bg-white shadow-[0_2px_8px_rgba(0,87,200,0.12)]">
-                    <img src="/diagnostic/sponsor-network-blue.png" alt="" className="h-[22px] w-[22px]" aria-hidden />
+                <div className="absolute left-[66px] top-[31px] text-center md:left-[178px] md:top-[40px]">
+                  <div className="mx-auto flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[#1677ff] bg-white shadow-[0_2px_8px_rgba(0,87,200,0.12)] md:h-[40px] md:w-[40px]">
+                    <img src="/diagnostic/sponsor-network-blue.png" alt="" className="h-[22px] w-[22px] md:h-[24px] md:w-[24px]" aria-hidden />
                   </div>
                   <p className="font-gotham text-[8px] leading-none text-[#0057c8]">You</p>
                 </div>
-                <span className="absolute right-[-2px] top-[-6px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#d7953c] text-white">
+                <span className="absolute right-[-2px] top-[-6px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#d7953c] text-white md:left-[273px] md:right-auto md:top-[1px]">
                   <Check className="h-[12px] w-[12px]" strokeWidth={3} />
                 </span>
               </div>
@@ -1616,7 +1668,7 @@ const CommunicationFrameworkScreen = ({
     <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-3 md:px-8">
         <BclHeader />
-        <div className="mx-auto w-full max-w-[390px]">
+        <div className="mx-auto w-full max-w-[390px] md:max-w-none">
           <StoPromptHeader className="pl-[44px]">I think I see what&apos;s happening here.</StoPromptHeader>
 
           <section className="mt-[6px] rounded-[6px] border border-[#e0e0e0] bg-white px-[13px] pb-[14px] pt-[14px] shadow-[0_3px_12px_rgba(15,23,42,0.10)]">
@@ -3552,6 +3604,7 @@ export default function StoCareerBot({
         isOpen={isCallModalOpen}
         onClose={() => setIsCallModalOpen(false)}
         onInvest={handlePaymentCta}
+        onCallInstead={openCallbackWhatsapp}
         isLoading={actionState === "loading"}
         message={actionMessage}
       />

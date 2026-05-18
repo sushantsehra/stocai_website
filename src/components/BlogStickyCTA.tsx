@@ -6,6 +6,7 @@ import env from "@/utils/env";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
+import { getWaitlistReferenceFromResponse, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import PromotableHeroWaitlist from "./PromotableHeroWaitlist";
 import StickyCTA from "./StickyCTA";
 
@@ -39,6 +40,7 @@ const BlogStickyCTA = () => {
   });
 
   const handleRequestAccess = async (userData: UserData) => {
+    writeStoDiagnosticContext(userData);
     try {
       const fullPhone = userData.fullPhone || `${userData.countryCode}${userData.phone}`;
 
@@ -68,7 +70,8 @@ const BlogStickyCTA = () => {
       const waitlistData = await response.json().catch(() => ({}));
 
       if (response.ok) {
-        userData.referenceId = waitlistData?.reference_id;
+        userData.referenceId = getWaitlistReferenceFromResponse(waitlistData);
+        writeStoDiagnosticContext(userData);
         if (waitlistData?.updated === true) {
           trackAlreadyWaitlisted(userData.source, {
             context: "blog_request_access",
