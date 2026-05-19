@@ -66,7 +66,7 @@ const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; on
         <div className="diagnostic-intro-card mt-2 shrink-0 overflow-hidden rounded-[4px] border border-[#eef1f6] bg-[#f8fbff] shadow-[0_2px_10px_rgba(15,23,42,0.16)]">
           <div className="diagnostic-intro-art relative aspect-[300/173] max-h-[400px] w-full overflow-hidden bg-[#eef5ff]">
             <img
-              src="/diagnostic/intro-office-sto.png"
+              src="/diagnostic/intro-office-sto.jpeg"
               alt="Sto standing in a bright office"
               className="h-full w-full object-cover"
             />
@@ -1473,7 +1473,7 @@ const BrillianceImageTrapScreen = ({
             This is the <span className="font-bold text-[#0057c8]">Brilliance Image Trap</span>. People see what you do today, not what you could do tomorrow.
           </p>
 
-          <img src="/diagnostic/brilliance-current-role.png" alt="Current role certificate" className="mt-[12px] w-full rounded-[6px] object-contain" />
+          <img src="/diagnostic/brilliance-current-role.jpeg" alt="Current role certificate" className="mt-[12px] w-full rounded-[6px] object-contain" />
 
           <div className="mt-[10px] grid grid-cols-[1fr_48px_1fr] items-center gap-3">
             <div className="border-t border-dashed border-[#7dafff]" />
@@ -1484,7 +1484,7 @@ const BrillianceImageTrapScreen = ({
           </div>
           <p className="mt-[3px] text-center font-gotham text-[10px] font-bold leading-none text-[#0057c8]">The Gap</p>
 
-          <img src="/diagnostic/brilliance-next-level.png" alt="Next level certificate" className="mt-[10px] w-full rounded-[6px] object-contain" />
+          <img src="/diagnostic/brilliance-next-level.jpeg" alt="Next level certificate" className="mt-[10px] w-full rounded-[6px] object-contain" />
         </section>
 
         <section className="mt-[16px] flex items-center gap-3 rounded-[4px] bg-white px-4 py-[13px] shadow-[0_2px_8px_rgba(15,23,42,0.18)]">
