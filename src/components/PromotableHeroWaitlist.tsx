@@ -2,15 +2,23 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import {
+  BarChart3,
+  CheckCircle2,
+  Compass,
+  Lock,
+  Megaphone,
+  Search,
+  Sparkles,
+  UserRoundCheck,
+  UsersRound,
+  X,
+} from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
-import applicationIcon from "../assets/applicationIcon.png";
+import { writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import certificate from "../assets/certificate.png";
-import communitiesIcon from "../assets/communities.png";
-import delegateIcon from "../assets/delegate.png";
-import leaderIcon from "../assets/leader.png";
-import marketingIcon from "../assets/marketing.png";
-import roadmapIcon from "../assets/roadmap.png";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -39,29 +47,24 @@ type HeroWaitlistProps = {
   }) => void;
 };
 
-const curriculumCards = [
-  ["Stakeholder", "management"],
-  ["Leadership", "signalling"],
-  ["Executive", "presence"],
-  ["Promotion", "pitches"],
-  ["Action", "Plan"],
-  ["Art of", "delegation"],
+const programFeatures = [
+  { label: "Stakeholder management", icon: UsersRound },
+  { label: "Leadership signalling", icon: Megaphone },
+  { label: "Executive presence", icon: UserRoundCheck },
+  { label: "Promotion pitches", icon: BarChart3 },
 ];
 
-const curriculumIcons = [
-  applicationIcon,
-  communitiesIcon,
-  leaderIcon,
-  marketingIcon,
-  roadmapIcon,
-  delegateIcon,
+const clarityFeatures = [
+  { label: "Identify the real roadblock", icon: Search },
+  { label: "Get direction on the next move", icon: Compass },
+  { label: "See whether the program is right for you", icon: CheckCircle2 },
 ];
 
 const supportPillars = [
-  ["AI coach for", "reflection"],
-  ["1344 mins of", "strategic insights"],
-  ["Accountability", "partner"],
-  ["12 month access", "apps for execution"],
+  { label: "AI coach", icon: Sparkles },
+  { label: "Strategic insights", icon: BarChart3 },
+  { label: "Accountability support", icon: UsersRound },
+  { label: "12-month access", icon: Lock },
 ];
 
 const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
@@ -69,12 +72,14 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
+  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
   source = "waitlist_modal",
   onSubmit,
 }) => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -88,8 +93,9 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setEmail(initialEmail || "");
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
+      router.prefetch("/diagnostic");
     }
-  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
+  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, router]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -255,12 +261,39 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     }
   };
 
+  const handleGetUnstuck = () => {
+    writeStoDiagnosticContext({
+      name,
+      email,
+      phone,
+      countryCode,
+      referenceId: initialReferenceId || initialWaitlistId || "",
+      waitlistId: initialWaitlistId || initialReferenceId || "",
+      source,
+    });
+
+    posthog.capture("sto_diagnostic_route_opened", {
+      source,
+      waitlist_reference_id: initialReferenceId,
+      waitlist_id: initialWaitlistId || initialReferenceId,
+    });
+    pushToDataLayer({
+      event: "sto_diagnostic_route_opened",
+      source,
+      waitlist_reference_id: initialReferenceId,
+      waitlist_id: initialWaitlistId || initialReferenceId,
+    });
+
+    onClose();
+    router.push("/diagnostic");
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-2">
       <div
-        className="absolute inset-0 z-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 z-0 bg-black/45 backdrop-blur-[6px]"
         onClick={handleBackdropClick}
         aria-label="Close waitlist"
       />
@@ -269,7 +302,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="relative z-10 w-full max-w-[325px] max-h-[92vh] overflow-hidden rounded-[22px] border border-[#D2D6DC] bg-white pointer-events-auto shadow-[0_24px_60px_rgba(0,0,0,0.28)] md:max-w-[820px] md:rounded-[32px]"
+        className="pointer-events-auto relative z-10 max-h-[calc(100vh-24px)] w-full max-w-[405px] overflow-hidden rounded-[28px] border border-[#d9e4f2] bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] md:max-h-[calc(100vh-16px)] md:max-w-[850px] md:rounded-[28px]"
       >
         <button
           type="button"
@@ -277,245 +310,139 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             event.stopPropagation();
             onClose("x_button");
           }}
-          className="hidden md:inline-flex absolute right-6 top-6 z-20 h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#667085] shadow-[0_10px_24px_rgba(15,23,42,0.14)] transition hover:bg-[#f6f8fb] focus:outline-none focus:ring-2 focus:ring-blue-500 md:right-6 md:top-6"
           aria-label="Close waitlist"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M6 6l12 12" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" />
-            <path d="M18 6l-12 12" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" />
-          </svg>
+          <X className="h-5 w-5" />
         </button>
 
-        <div className="max-h-[90vh] overflow-y-auto">
-          <div className="px-[16px] pt-[21px] md:px-[40px] md:pt-[34px]">
-            <div className="mb-[22px] flex items-center gap-[12px] md:hidden">
-              <div className="inline-flex h-[37px] w-[37px] items-center justify-center rounded-[4px] bg-[#0A57C6] p-[6px] shadow-[0_6px_14px_rgba(10,87,198,0.24)] md:h-[54px] md:w-[54px] md:rounded-[8px] md:p-[8px]">
-                <Image
-                  src={certificate}
-                  width={24}
-                  height={24}
-                  alt="BCL icon"
-                  className="object-contain md:h-[36px] md:w-[36px]"
-                />
-              </div>
-              <span className="bmp-modal-brand text-[#0A57C6]">
-                BCL
-              </span>
+        <div className="max-h-[calc(100vh-24px)] overflow-y-auto px-5 pb-7 pt-7 md:max-h-[calc(100vh-16px)] md:px-10 md:pb-5 md:pt-5">
+          <div className="text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#0A57C6] p-2 shadow-[0_10px_24px_rgba(10,87,198,0.26)] md:mb-2 md:h-10 md:w-10">
+              <Image src={certificate} width={26} height={26} alt="BCL certificate" className="object-contain" />
             </div>
-
-            <div className="mb-[20px] w-[299px] md:hidden">
-              <h2 className="bmp-modal-body text-[#111111]">
-                Promotability is a skill.
-              </h2>
-              <h3 className="bmp-modal-body-strong text-[#111111]">
-                And like any skill, <span className="bmp-modal-highlight">it can be learnt.</span>
-              </h3>
-              <p className="bmp-modal-subcopy mt-[4px] text-[#000000]">
-                Ready to change your career trajectory?
-              </p>
-            </div>
-
-            <div className="mb-[5px] w-[292px] md:hidden">
-              <p className="bmp-modal-section-title text-[#111111]">
-                You know you are capable of more.
-              </p>
-              <p className="bmp-modal-section-title bmp-modal-highlight">
-                You just need the operating system.
-              </p>
-            </div>
-
-            <div className="mb-[10px] grid grid-cols-3 gap-[4px] md:hidden">
-              {curriculumCards.map((card, index) => (
-                <div
-                  key={card.join(" ")}
-                  className="h-[45px] w-[95px] rounded-[10px] bg-[#E6F1FF] px-[7px] pb-[6px] pt-[6px]"
-                >
-                  <div className="flex justify-end">
-                    <Image
-                      src={curriculumIcons[index]}
-                      alt=""
-                      width={13}
-                      height={13}
-                      aria-hidden
-                      className="h-[13px] w-[13px] brightness-0"
-                    />
-                  </div>
-                  <p className="bmp-modal-card-text text-[#111111]">
-                    {card[0]}
-                    <br />
-                    {card[1]}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mb-[9px] h-[55px] w-[292px] rounded-[8px] bg-[#014BAA] p-[7px] md:hidden">
-              <div className="grid h-full grid-cols-[139px_1fr] gap-[7px]">
-                <div className="flex items-center justify-center rounded-[6px] bg-[#0E58B6]">
-                  <span className="bmp-modal-price text-white/50 line-through">
-                    ₹4,999/-
-                  </span>
-                </div>
-                <div className="flex items-center justify-center rounded-[6px] bg-[#003A86]">
-                  <span className="bmp-modal-price text-white">
-                    ₹1970/-
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-[18px] flex w-[292px] items-start justify-between md:hidden">
-              {supportPillars.map((item, index) => (
-                <React.Fragment key={item.join(" ")}>
-                  <div className="w-fit">
-                    <p className="bmp-modal-support-text text-left text-[#014BAA]">
-                      {item[0]}
-                      <br />
-                      {item[1]}
-                    </p>
-                  </div>
-                  {index < supportPillars.length - 1 && (
-                    <span
-                      className="mt-[-2px] h-[30px] w-[0.5px] shrink-0 bg-black"
-                      aria-hidden
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            <div className="hidden md:block">
-              <div className="mb-[12px] flex justify-center">
-                <div className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-[4px] bg-[#0A57C6] p-[4px] shadow-[0_6px_14px_rgba(10,87,198,0.2)]">
-                  <Image src={certificate} width={22} height={22} alt="certificate" className="object-contain" />
-                </div>
-              </div>
-
-              <h2 className="mb-[12px] text-center font-jakarta text-[36px] font-bold leading-[1.1] text-[#0A57C6]">
-                Be More Promotable
-              </h2>
-
-              <div className="text-center">
-                <p className="font-inter text-[22px] font-medium leading-[1.2] text-[#111111]">
-                  Promotability is a skill. <span className="font-bold">And like any skill, </span>
-                  <span className="font-bold text-[#0A57C6]">it can be learnt.</span>
-                </p>
-                <p className="mt-[10px] font-quattrocento text-[17px] font-bold leading-[22px] text-[#000000]">
-                  Ready to change your career trajectory?
-                </p>
-              </div>
-
-              <div className="mt-[22px] grid grid-cols-[270px_1fr] gap-[30px]">
-                <div className="pt-[24px]">
-                  <p className="font-inter text-[16px] font-medium leading-[1.2] text-[#111111]">
-                    You know you are capable of more.
-                  </p>
-                  <p className="mt-[14px] font-inter text-[20px] font-bold leading-[1.15] text-[#0A57C6]">
-                    You just need the
-                    <br />
-                    operating system.
-                  </p>
-
-                  <div className="mt-[52px] h-[56px] w-[280px] rounded-[8px] bg-[#014BAA] p-[6px]">
-                    <div className="grid h-full grid-cols-[132px_1fr] gap-[6px]">
-                      <div className="flex items-center justify-center rounded-[6px] bg-[#0E58B6]">
-                        <span className="font-inter text-[18px] font-bold leading-[20px] text-white/50 line-through">
-                          ₹4,999/-
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-center rounded-[6px] bg-[#003A86]">
-                        <span className="font-inter text-[22px] font-bold leading-[20px] text-white">
-                          ₹1970/-
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="grid grid-cols-3 gap-[10px]">
-                    {curriculumCards.map((card, index) => (
-                      <div
-                        key={`desktop-${card.join(" ")}`}
-                        className="h-[68px] rounded-[10px] bg-[#E6F1FF] px-[12px] pb-[9px] pt-[8px]"
-                      >
-                        <div className="flex justify-end">
-                          <Image
-                            src={curriculumIcons[index]}
-                            alt=""
-                            width={16}
-                            height={16}
-                            aria-hidden
-                            className="h-[16px] w-[16px] brightness-0"
-                          />
-                        </div>
-                        <p className="font-quattrocento text-[12px] font-bold leading-[14px] text-[#111111]">
-                          {card[0]}
-                          <br />
-                          {card[1]}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-[18px] flex items-start justify-between pr-[10px]">
-                    {supportPillars.map((item, index) => (
-                      <React.Fragment key={`desktop-support-${item.join(" ")}`}>
-                        <div className="w-fit">
-                          <p className="font-quattrocento text-left text-[12px] font-bold leading-[15px] text-[#014BAA]">
-                            {item[0]}
-                            <br />
-                            {item[1]}
-                          </p>
-                        </div>
-                        {index < supportPillars.length - 1 && (
-                          <span className="mt-[-3px] h-[38px] w-[0.5px] shrink-0 bg-black" aria-hidden />
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h2 className="font-gotham text-[31px] font-bold leading-[1.08] text-[#0A57C6] md:text-[38px]">
+              Be More Promotable
+            </h2>
+            <p className="mx-auto mt-3 max-w-[610px] font-gotham text-[16px] leading-6 text-[#273348] md:mt-2 md:text-[15px] md:leading-5">
+              <span className="md:hidden">Choose the next best step for your career.</span>
+              <span className="hidden md:inline">You know you are capable of more. Choose the next best step for your career.</span>
+            </p>
+            <p className="mx-auto mt-1 hidden max-w-[610px] font-gotham text-[12px] leading-5 text-[#7b8798] md:block md:text-[13px] md:leading-4">
+              Pick the path that fits where you are right now.
+            </p>
           </div>
 
-          <div className="mt-0 rounded-b-[21px] bg-black px-[14px] pb-[23px] pt-[18px] md:mt-[18px] md:rounded-b-[32px] md:px-[40px] md:pb-[30px] md:pt-[26px]">
-            <form onSubmit={handleSubmit} className="mx-auto max-w-[260px] text-center md:max-w-[620px]">
-              <h3 className="bmp-modal-footer-title text-white md:hidden">
-                Invest in your growth
-              </h3>
-              <p className="bmp-modal-footer-title text-white md:hidden">
-                We&apos;re here to help you lead.
-              </p>
-              <p className="hidden font-inter text-center text-[19px] font-bold leading-[1.2] text-white md:block">
-                Invest in your growth. We&apos;re here to help you lead.
-              </p>
+          <div className="relative mt-5 grid gap-4 md:mt-4 md:grid-cols-[1fr_36px_1fr] md:items-stretch md:gap-4">
+            <form
+              onSubmit={handleSubmit}
+              className="relative rounded-[14px] border-2 border-[#0A57C6] bg-white px-4 pb-4 pt-12 shadow-[0_18px_36px_rgba(10,87,198,0.08)] md:px-5 md:pb-4 md:pt-8"
+            >
+              <span className="absolute left-5 top-3 rounded-[5px] bg-[#e7f1ff] px-2 py-1 font-gotham text-[9px] font-bold uppercase tracking-[0.08em] text-[#0A57C6]">
+                Recommended
+              </span>
+              <div className="text-center">
+                <h3 className="font-gotham text-[22px] font-bold leading-tight text-[#0A57C6] md:text-[23px]">
+                  Join the Program
+                </h3>
+                <p className="mx-auto mt-2 max-w-[250px] font-gotham text-[13px] font-medium leading-5 text-[#273348] md:mt-1 md:text-[12px] md:leading-[18px]">
+                  <span className="md:hidden">Build your promotion operating system.</span>
+                  <span className="hidden md:inline">Build the operating system for faster promotion momentum.</span>
+                </p>
+              </div>
+
+              <div className="mt-3 hidden space-y-2 md:block">
+                {programFeatures.map(({ label, icon: Icon }) => (
+                  <div key={label} className="flex items-center gap-3 rounded-[8px] border border-[#edf1f7] bg-[#f8fbff] px-3 py-[7px]">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#e6f1ff] text-[#0A57C6]">
+                      <Icon className="h-4 w-4" strokeWidth={2.5} />
+                    </span>
+                    <span className="font-gotham text-[13px] font-medium text-[#273348]">{label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 flex items-end justify-center gap-5 md:mt-3 md:gap-4">
+                <span className="pb-1 font-gotham text-[16px] font-bold text-[#9aa4b2] line-through">{"\u20b9"}4,999</span>
+                <span className="font-gotham text-[30px] font-bold leading-none text-[#0A57C6] md:text-[28px]">{"\u20b9"}1,970</span>
+              </div>
 
               <input type="hidden" name="name" value={name} readOnly />
               <input type="hidden" name="email" value={email} readOnly />
               <input type="hidden" name="phone" value={phone} readOnly />
               <input type="hidden" name="countryCode" value={countryCode} readOnly />
 
-              <div className="mt-[16px] md:mt-[18px]">
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="bmp-modal-cta-text inline-flex cursor-pointer items-center justify-center rounded-[7px] bg-[#357BF2] px-[16px] py-[10px] text-white transition hover:bg-[#1f6dea] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-50 md:rounded-[8px] md:px-[44px]"
-                >
-                  {status === "loading" ? "Processing..." : "I'll Invest in My Career"}
-                </button>
-              </div>
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-[9px] bg-[#0057D9] px-4 font-gotham text-[16px] font-bold text-white shadow-[0_12px_24px_rgba(0,87,217,0.22)] transition hover:bg-[#0A57C6] focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-55 md:mt-3 md:min-h-11 md:text-[15px]"
+              >
+                {status === "loading" ? "Processing..." : "I'll Invest in My Career"}
+              </button>
 
-              {message && (
-                <p
-                  className="mt-4 text-center text-sm text-red-300"
-                  role="status"
-                  aria-live="polite"
-                >
+              {message ? (
+                <p className="mt-3 text-center font-gotham text-xs font-medium text-[#b42318]" role="status" aria-live="polite">
                   {message}
                 </p>
-              )}
+              ) : null}
             </form>
+
+            <div className="relative flex items-center justify-center md:flex">
+              <span className="absolute h-px w-full bg-[#d9dfe8] md:inset-y-2 md:h-auto md:w-px" />
+              <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#e4e8ef] bg-white font-gotham text-[15px] font-bold text-[#273348] shadow-[0_8px_20px_rgba(15,23,42,0.08)]">
+                or
+              </span>
+            </div>
+
+            <section className="rounded-[14px] border border-[#e2e6ee] bg-white px-4 py-5 shadow-[0_14px_32px_rgba(15,23,42,0.06)] md:px-6 md:py-7">
+              <div className="text-center">
+                <h3 className="font-gotham text-[22px] font-bold leading-tight text-[#202939] md:text-[23px]">
+                  Get Unstuck First
+                </h3>
+                <p className="mx-auto mt-2 max-w-[270px] font-gotham text-[13px] font-medium leading-5 text-[#667085] md:mt-1 md:text-[12px] md:leading-[18px]">
+                  <span className="md:hidden">Not ready yet? Get clarity first.</span>
+                  <span className="hidden md:inline">Not ready to join yet? Start with clarity on what is blocking your promotion momentum.</span>
+                </p>
+              </div>
+
+              <div className="mt-5 hidden space-y-3 md:block">
+                {clarityFeatures.map(({ label, icon: Icon }) => (
+                  <div key={label} className="flex items-center gap-4">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-[#e6f1ff] text-[#0A57C6]">
+                      <Icon className="h-4 w-4" strokeWidth={2.4} />
+                    </span>
+                    <span className="font-gotham text-[13px] font-medium leading-5 text-[#273348]">{label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={handleGetUnstuck}
+                className="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-[9px] border border-[#0A57C6] bg-white px-4 font-gotham text-[16px] font-bold text-[#0A57C6] transition hover:bg-[#f7fbff] focus:outline-none focus:ring-2 focus:ring-blue-400 md:mt-5 md:min-h-11 md:text-[15px]"
+              >
+                Get Unstuck
+              </button>
+            </section>
+          </div>
+
+          <div className="mt-5 border-t border-[#d9dfe8] pt-4 md:mt-4 md:pt-3">
+            <div className="mb-3 flex items-center gap-3 md:hidden">
+              <span className="h-px flex-1 bg-[#d9dfe8]" />
+              <span className="font-gotham text-[13px] font-medium text-[#667085]">What&apos;s included</span>
+              <span className="h-px flex-1 bg-[#d9dfe8]" />
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-[#526177] md:flex md:flex-wrap md:items-center md:justify-center md:gap-x-4 md:gap-y-1">
+              {supportPillars.map(({ label, icon: Icon }, index) => (
+                <React.Fragment key={label}>
+                  <span className="inline-flex min-h-11 items-center gap-2 rounded-[9px] border border-[#edf1f7] bg-white px-3 font-gotham text-[12px] font-medium shadow-[0_8px_18px_rgba(15,23,42,0.03)] md:min-h-0 md:border-0 md:bg-transparent md:px-0 md:text-[12px] md:shadow-none">
+                    <Icon className="h-4 w-4 text-[#526177]" />
+                    {label}
+                  </span>
+                  {index < supportPillars.length - 1 ? <span className="hidden h-5 w-px bg-[#cfd6e0] md:inline-block" /> : null}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </div>
       </div>
