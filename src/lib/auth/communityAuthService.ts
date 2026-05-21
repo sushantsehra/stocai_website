@@ -73,6 +73,14 @@ function normalizeResponse(
   };
 }
 
+function splitFullName(fullName: string): { firstName: string; lastName: string } {
+  const [firstName, ...lastNameParts] = fullName.trim().split(/\s+/);
+  return {
+    firstName: firstName || fullName,
+    lastName: lastNameParts.join(" "),
+  };
+}
+
 async function postCommunityAuth<TBody extends Record<string, unknown>>(
   endpoint: string,
   body: TBody,
@@ -103,12 +111,15 @@ async function postCommunityAuth<TBody extends Record<string, unknown>>(
 
 export class CommunityAuthService {
   static async signUp(data: SignUpData): Promise<AuthResponse> {
+    const { firstName, lastName } = splitFullName(data.fullName);
+
     return postCommunityAuth(
       "/community/signUp",
       {
-        full_name: data.fullName,
         email: data.email,
         password: data.password,
+        firstName,
+        lastName,
         access_tier: "community",
         source: "blog_auth_modal",
       },
