@@ -214,7 +214,7 @@ const handleLoginRedirect = () => {
               onClick={scrollToWaitlist}
               className="bg-[#0B64F4] hover:bg-blue-700 text-white text-[14px] px-4 py-2 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             >
-              Get Early Access
+              Get Unstuck
             </button>
 
             {user ? (
@@ -304,7 +304,7 @@ const handleLoginRedirect = () => {
               onClick={scrollToWaitlist}
               className="cursor-pointer bg-[#0B64F4] text-white py-2 rounded-[4px] font-jakarta font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             >
-              Get Early Access
+              Get Unstuck
             </button>
 
             {user ? (

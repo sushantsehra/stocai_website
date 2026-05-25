@@ -83,7 +83,7 @@ export default function BePromotableFirstFold() {
             
             {/* Get Early Access Button */}
             <button onClick={scrollToWaitlist} className="bg-[#0B64F4] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-lg px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
-              Get Early Access
+              Get Unstuck
             </button>
           </div>
 
@@ -488,7 +488,7 @@ export default function BePromotableFirstFold() {
           onClick={scrollToWaitlist}
           className="bg-[#0B64F4] hover:bg-[#0952d4] text-white font-jakarta font-semibold text-base px-8 py-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl"
         >
-          Get Early Access
+          Get Unstuck
         </button>
       </div>
     </div>

@@ -138,7 +138,7 @@ const SuccessStories: React.FC<{ testimonials?: Testimonial[] }> = ({
               type="button"
               className="inline-flex items-center gap-3 rounded-[12px] bg-[#014BAA] text-white px-6 py-3 text-sm sm:text-base md:text-[16px] font-normal shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-[#174BAA]/50"
             >
-              Get Early Access
+              Get Unstuck
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 <path d="M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
