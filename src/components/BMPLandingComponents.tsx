@@ -156,7 +156,7 @@ const BMPLandingComponents = () => {
 
     // Store data to pre-fill modal, then open it
     setModalInitialData(userData);
-    setIsModalOpen(true);
+    router.push("/diagnostic");
   };
 
   const handleCloseModal = (reason?: string) => {
