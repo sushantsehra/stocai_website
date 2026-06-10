@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import ApoorvaMalhotra from "../assets/ApoorvaMalhotra.png";
 import learning from "../assets/learning.png";
@@ -9,6 +9,10 @@ import qualityCertificate from "../assets/qualityCertificate.png";
 import realtor from "../assets/realtor.png";
 import WhoIsThisFor from "./WhoIsThisFor";
 
+const BCL_PRODUCT_VIDEO_SOURCES = {
+  webm: "https://stocaistorage.blob.core.windows.net/videos/marketing/bcl_product_video/video.webm?sp=r&st=2026-05-14T11:41:31Z&se=2029-05-14T19:56:31Z&spr=https&sv=2025-11-05&sr=b&sig=5TW5cdUcEa94xMHKHpHQ41QuZzQXZxoPxy36SXNLD6w%3D",
+  mp4: "https://stocaistorage.blob.core.windows.net/videos/marketing/bcl_product_video/video.mp4?sp=r&st=2026-05-14T11:41:00Z&se=2029-05-14T19:56:00Z&spr=https&sv=2025-11-05&sr=b&sig=wNyMLeQCZyyqJgwYI2DuGRK5pGYT5UaXQFpnofFvaFQ%3D",
+};
 
 // const FEATURES = [
 //   {
@@ -61,8 +65,60 @@ const FEATURES = [
 ];
 
 const TestimonialFeatures: React.FC = () => {
+  const explainerVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = explainerVideoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {
+            // Autoplay can still be blocked by browser or device settings.
+          });
+          return;
+        }
+
+        video.pause();
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="w-full bg-[#FFFFFF]">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-6 md:pb-14 md:pt-12">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="font-inter text-[14px] font-semibold uppercase tracking-[0.14em] text-[#014BAA] md:text-[15px]">
+            See how it works
+          </p>
+          <h2 className="mt-3 font-quattrocento text-[28px] font-bold leading-tight text-[#1D1D1D] md:text-[48px]">
+            The system behind becoming more promotable.
+          </h2>
+        </div>
+
+        <div className="mx-auto mt-6 max-w-5xl overflow-hidden rounded-[12px] border border-[#D8E8FF] bg-black shadow-[0_22px_60px_rgba(1,75,170,0.16)] md:mt-9">
+          <video
+            ref={explainerVideoRef}
+            className="aspect-video w-full bg-black object-contain"
+            controls
+            muted
+            playsInline
+            preload="metadata"
+            poster="/diagnostic/thumbnail.jpeg"
+            aria-label="Be More Promotable explainer video"
+          >
+            <source src={BCL_PRODUCT_VIDEO_SOURCES.webm} type="video/webm" />
+            <source src={BCL_PRODUCT_VIDEO_SOURCES.mp4} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto py-2 pt-1 pb-10 md:py-1 flex flex-col md:flex-row gap-4 md:gap-0 items-end">
 
         {/* LEFT — Testimonial Card */}

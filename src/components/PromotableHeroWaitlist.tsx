@@ -396,7 +396,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             <section className="rounded-[6px] border border-[#88b9ff] bg-white px-3 pb-4 pt-5 md:rounded-[10px] md:px-5 md:pb-5 md:pt-8">
               <div className="text-center">
                 <h3 className="font-quattrocento text-[28px] font-bold leading-tight text-[#075ff0] md:text-[28px]">
-                  Get Unstuck First
+                  Take Sto Quiz First
                 </h3>
                 <p className="mx-auto mt-1 max-w-[245px] font-jakarta text-[11px] font-medium leading-[16px] text-black md:text-[12px] md:leading-[17px]">
                   Not ready to join yet? Start with clarity on what is blocking your promotion momentum.
@@ -419,7 +419,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 onClick={handleGetUnstuck}
                 className="mt-[31px] inline-flex min-h-[46px] w-full cursor-pointer items-center justify-center rounded-[5px] border border-[#075ff0] bg-white px-4 font-jakarta text-[16px] font-semibold text-[#075ff0] transition hover:bg-[#f3f7ff] focus:outline-none focus:ring-2 focus:ring-[#88b9ff] md:mt-7 md:min-h-[44px] md:text-[15px]"
               >
-                Get Unstuck
+                Take Sto Quiz
               </button>
             </section>
           </div>

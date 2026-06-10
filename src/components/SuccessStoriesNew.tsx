@@ -121,7 +121,7 @@ const SuccessStories = () => {
               onClick={scrollToWaitlist}
               className="font-bold font-inter p-2.5 text-[10px] rounded-md bg-[#FFFFFF] text-[#014BAA] hover:bg-[#013A7A] transition-colors duration-200"
             >
-              Get Unstuck <span className="translate-y-[-3px]"><GoArrowRight size={15} className="inline" /></span>
+              Get Access <span className="translate-y-[-3px]"><GoArrowRight size={15} className="inline" /></span>
             </button>
           </div>
         </div>
@@ -208,7 +208,7 @@ const SuccessStories = () => {
               onClick={scrollToWaitlist}
               className="bg-[#014BAA] text-white px-10 py-4 text-[18px] rounded-md font-medium font-inter hover:bg-[#013A7A] transition-colors duration-200"
             >
-              Get Unstuck →
+              Get Access →
             </button>
           </div>
         </div>

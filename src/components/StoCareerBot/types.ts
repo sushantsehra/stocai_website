@@ -17,6 +17,7 @@ export type BotStep =
   | "sponsor_willing"
   | "next_level"
   | "door"
+  | "contact_capture"
   | "result";
 
 export type StoCareerBotProps = {

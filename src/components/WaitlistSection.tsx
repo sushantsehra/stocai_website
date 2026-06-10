@@ -160,7 +160,7 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
               disabled={isLoading}
               className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white text-sm md:text-base lg:text-[18px] min-h-[44px] lg:min-h-[48px] font-bold cursor-pointer px-4 md:px-6 py-2 md:py-3 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Saving..." : "Get Unstuck"}
+              {isLoading ? "Saving..." : "Get Access"}
             </button>
           </div>
 
@@ -170,7 +170,7 @@ const WaitlistSection: React.FC<WaitlistSectionProps> = ({ onRequestAccess }) =>
             disabled={isLoading}
             className="block sm:hidden w-[40%] sm:w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] rounded-[9.36px] text-[10px] sm:text-[18.71px] text-black min-h-[40px] sm:min-h-[49.9px] cursor-pointer font-bold font-jakarta p-1 sm:p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Saving..." : "Get Unstuck"}
+            {isLoading ? "Saving..." : "Get Access"}
           </button>
         </div>
       </div>

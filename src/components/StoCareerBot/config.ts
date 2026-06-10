@@ -24,6 +24,7 @@ export const stepMeta: Record<BotStep, { label: string; progress: number }> = {
   sponsor_willing: { label: "Diagnosis", progress: 70 },
   next_level: { label: "Diagnosis", progress: 80 },
   door: { label: "What's really going on", progress: 90 },
+  contact_capture: { label: "Your details", progress: 96 },
   result: { label: "Your full picture", progress: 100 },
 };
 

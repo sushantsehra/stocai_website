@@ -20,6 +20,10 @@ import {
   X,
 } from "lucide-react";
 import stoHeadshot from "@/assets/sto-headshot.png";
+import { getAttributionForApi } from "@/lib/analytics/attribution";
+import { getWaitlistReferenceFromResponse, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
+import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
+import env from "@/utils/env";
 import {
   buildResultCopy,
   ContextAnswers,
@@ -57,6 +61,29 @@ const bclProductVideoSources = {
   webm: "https://stocaistorage.blob.core.windows.net/videos/marketing/bcl_product_video/video.webm?sp=r&st=2026-05-14T11:41:31Z&se=2029-05-14T19:56:31Z&spr=https&sv=2025-11-05&sr=b&sig=5TW5cdUcEa94xMHKHpHQ41QuZzQXZxoPxy36SXNLD6w%3D",
   mp4: "https://stocaistorage.blob.core.windows.net/videos/marketing/bcl_product_video/video.mp4?sp=r&st=2026-05-14T11:41:00Z&se=2029-05-14T19:56:00Z&spr=https&sv=2025-11-05&sr=b&sig=wNyMLeQCZyyqJgwYI2DuGRK5pGYT5UaXQFpnofFvaFQ%3D",
 };
+
+const countryCodes = [
+  { code: "+91", flag: "IN" },
+  { code: "+1", flag: "US" },
+  { code: "+44", flag: "UK" },
+  { code: "+971", flag: "AE" },
+  { code: "+65", flag: "SG" },
+  { code: "+86", flag: "CN" },
+  { code: "+81", flag: "JP" },
+  { code: "+82", flag: "KR" },
+  { code: "+61", flag: "AU" },
+  { code: "+49", flag: "DE" },
+  { code: "+33", flag: "FR" },
+  { code: "+39", flag: "IT" },
+  { code: "+34", flag: "ES" },
+  { code: "+7", flag: "RU" },
+  { code: "+55", flag: "BR" },
+  { code: "+52", flag: "MX" },
+  { code: "+27", flag: "ZA" },
+  { code: "+62", flag: "ID" },
+  { code: "+60", flag: "MY" },
+  { code: "+66", flag: "TH" },
+];
 
 const DiagnosticIntroScreen = ({ onStart, onRestart }: { onStart: () => void; onRestart: () => void }) => (
   <div className="diagnostic-intro-screen flex h-full min-h-0 w-full justify-center bg-[#eef4ff] md:items-center md:bg-[#f7f5f2]">
@@ -2096,8 +2123,29 @@ export default function StoCareerBot({
   const [debouncedAnswersPayload, setDebouncedAnswersPayload] = useState<Record<string, unknown>>({});
   const [debouncedResultPayload, setDebouncedResultPayload] = useState<Record<string, unknown>>({});
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+  const [contactName, setContactName] = useState(paymentName);
+  const [contactEmail, setContactEmail] = useState(paymentEmail);
+  const [contactPhone, setContactPhone] = useState(paymentPhone);
+  const [contactCountryCode, setContactCountryCode] = useState(paymentCountryCode || "+91");
+  const [contactReferenceId, setContactReferenceId] = useState(waitlistReferenceId || waitlistId || "");
+  const [contactStatus, setContactStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [contactMessage, setContactMessage] = useState("");
 
   const selectedQ1 = q1Options.find((option) => option.id === q1);
+  const resolvedWaitlistId = contactReferenceId || waitlistId;
+  const hasResultAccessContact = Boolean(
+    contactName.trim() &&
+      contactEmail.trim() &&
+      contactPhone.trim(),
+  );
+
+  useEffect(() => {
+    if (paymentName) setContactName(paymentName);
+    if (paymentEmail) setContactEmail(paymentEmail);
+    if (paymentPhone) setContactPhone(paymentPhone);
+    if (paymentCountryCode) setContactCountryCode(paymentCountryCode);
+    if (waitlistReferenceId || waitlistId) setContactReferenceId(waitlistReferenceId || waitlistId || "");
+  }, [paymentCountryCode, paymentEmail, paymentName, paymentPhone, waitlistId, waitlistReferenceId]);
 
   const resultCopy = useMemo(() => {
     if (!q1 || !door) return null;
@@ -2156,7 +2204,7 @@ export default function StoCareerBot({
       desireBlockerLabel: desireBlocker || null,
       door,
       doorLabel: door ? doorDetails[door].name : null,
-      waitlistReferenceId,
+      waitlistReferenceId: contactReferenceId || waitlistReferenceId,
     }),
     [
       context,
@@ -2172,6 +2220,7 @@ export default function StoCareerBot({
       sponsorHasPower,
       sponsorWillSpendCapital,
       selectedQ1,
+      contactReferenceId,
       waitlistReferenceId,
     ],
   );
@@ -2197,7 +2246,7 @@ export default function StoCareerBot({
   const activeDoorCtas = door ? getDoorCtas() : null;
   const { resetSession } = useBotSessionPersistence({
     isEmbedded,
-    waitlistId,
+    waitlistId: resolvedWaitlistId,
     sessionActivated,
     sessionStartedAt,
     step,
@@ -2519,6 +2568,22 @@ export default function StoCareerBot({
     setStep(nextStep);
   };
 
+  const continueToResult = () => {
+    if (hasResultAccessContact) {
+      goTo("result");
+      return;
+    }
+
+    setContactStatus("idle");
+    setContactMessage("");
+    trackBotEvent("sto_contact_capture_shown", {
+      q1,
+      door,
+      placement: isEmbedded ? "diagnostic_route" : "floating_bot",
+    });
+    goTo("contact_capture");
+  };
+
   const goBack = () => {
     setHistory((current) => {
       const previous = current[current.length - 1];
@@ -2546,6 +2611,8 @@ export default function StoCareerBot({
     setSponsorWillSpendCapital(null);
     setNextLevelEvidence(null);
     setDoor(null);
+    setContactStatus("idle");
+    setContactMessage("");
     resetSession();
     setSessionStartedAt(null);
     setSessionActivated(false);
@@ -2561,6 +2628,80 @@ export default function StoCareerBot({
       diagnostic_path: diagnosticPath,
     });
     goTo("door");
+  };
+
+  const handleContactCaptureSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setContactStatus("loading");
+    setContactMessage("");
+
+    const trimmedName = contactName.trim();
+    const trimmedEmail = contactEmail.trim();
+    const trimmedPhone = contactPhone.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPhone) {
+      setContactStatus("error");
+      setContactMessage("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const fullPhone = `${contactCountryCode}${trimmedPhone}`;
+      const response = await fetch(`${env.apiUrl}/waitlist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          phone: fullPhone,
+          source: source || "diagnostic_direct",
+          visitorId: getWaitlistVisitorId(),
+          attribution: getAttributionForApi(),
+        }),
+      });
+
+      const waitlistData = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(waitlistData?.error || "Unable to save your details. Please try again.");
+      }
+
+      const referenceId = getWaitlistReferenceFromResponse(waitlistData);
+      if (!referenceId) {
+        throw new Error("Your details were saved, but no waitlist reference was returned. Please try again.");
+      }
+
+      setContactReferenceId(referenceId);
+      writeStoDiagnosticContext({
+        name: trimmedName,
+        email: trimmedEmail,
+        phone: trimmedPhone,
+        countryCode: contactCountryCode,
+        referenceId,
+        waitlistId: referenceId,
+        source: source || "diagnostic_direct",
+      });
+      trackBotEvent("sto_contact_capture_submitted", {
+        q1,
+        door,
+        waitlist_reference_id: referenceId,
+        placement: isEmbedded ? "diagnostic_route" : "floating_bot",
+      });
+      setContactStatus("idle");
+      goTo("result");
+    } catch (error) {
+      setContactStatus("error");
+      setContactMessage(error instanceof Error ? error.message : "Something went wrong.");
+      trackBotEvent("sto_contact_capture_failed", {
+        q1,
+        door,
+        error: error instanceof Error ? error.message : "unknown_error",
+        placement: isEmbedded ? "diagnostic_route" : "floating_bot",
+      });
+    }
   };
 
   const openBot = () => {
@@ -2601,11 +2742,11 @@ export default function StoCareerBot({
     isEmbedded,
     source,
     whatsappHref,
-    waitlistReferenceId,
-    paymentName,
-    paymentEmail,
-    paymentPhone,
-    paymentCountryCode,
+    waitlistReferenceId: contactReferenceId || waitlistReferenceId,
+    paymentName: contactName,
+    paymentEmail: contactEmail,
+    paymentPhone: contactPhone,
+    paymentCountryCode: contactCountryCode,
   });
 
   const openCallModal = () => {
@@ -2637,9 +2778,9 @@ export default function StoCareerBot({
       placement: "diagnostic_route",
       modal_source: source,
       waitlist_id: waitlistId,
-      waitlist_reference_id: waitlistReferenceId,
+      waitlist_reference_id: contactReferenceId || waitlistReferenceId,
     });
-  }, [isEmbedded, source, waitlistId, waitlistReferenceId]);
+  }, [contactReferenceId, isEmbedded, source, waitlistId, waitlistReferenceId]);
 
   useEffect(() => {
     const shouldDebounce = step === "context";
@@ -2922,7 +3063,7 @@ export default function StoCareerBot({
         <button
           type="button"
           className="w-full cursor-pointer rounded-[18px] border border-[#0057c8] bg-[#0057c8] px-5 py-4 font-gotham text-[15px] font-bold text-white transition hover:bg-[#0A57C6] md:py-5"
-          onClick={() => goTo("result")}
+          onClick={continueToResult}
         >
           Show my full picture
         </button>
@@ -3294,7 +3435,7 @@ export default function StoCareerBot({
           <DecisionCheckScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3304,7 +3445,7 @@ export default function StoCareerBot({
           <StoryOfWorkScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3314,7 +3455,7 @@ export default function StoCareerBot({
           <StoryOfContributionScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3324,7 +3465,7 @@ export default function StoCareerBot({
           <ImposterSyndromeScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3334,7 +3475,7 @@ export default function StoCareerBot({
           <BrillianceImageTrapScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3344,7 +3485,7 @@ export default function StoCareerBot({
           <SponsorNetworkScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3354,7 +3495,7 @@ export default function StoCareerBot({
           <CommunicationFrameworkScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3364,7 +3505,7 @@ export default function StoCareerBot({
           <DeeperDiagnosisScreen
             onBack={goBack}
             onRestart={reset}
-            onContinue={() => goTo("result")}
+            onContinue={continueToResult}
           />
         );
       }
@@ -3379,6 +3520,94 @@ export default function StoCareerBot({
             wide
           />
           <StoNote>Here&apos;s what I think is really going on.</StoNote>
+        </div>
+      );
+    }
+
+    if (step === "contact_capture") {
+      return (
+        <div className="flex h-full min-h-[720px] w-full justify-center bg-[#eef4ff] md:min-h-0 md:items-center md:bg-[#f7f5f2]">
+          <section className="flex h-full w-full max-w-full flex-col overflow-hidden bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)] md:h-full md:min-h-0 md:max-w-[640px] md:rounded-[4px] md:border md:border-[#d8e4f6] lg:max-w-[760px]">
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-5 md:px-8">
+              <BclHeader />
+              <div className="mx-auto mt-6 w-full max-w-[560px] rounded-[4px] border border-[#d8e4f6] bg-[#f8fbff] px-5 py-6 shadow-[0_14px_34px_rgba(1,75,170,0.08)] md:mt-10 md:px-7 md:py-8">
+                <p className="font-gotham text-[10px] font-bold uppercase tracking-[0.18em] text-[#0057c8]">
+                  One last step
+                </p>
+                <h2 className="mt-3 font-quattrocento text-[30px] font-bold leading-[1.04] text-[#242424] md:text-[38px]">
+                  Unlock your full picture.
+                </h2>
+                <p className="mt-3 font-gotham text-[14px] leading-6 text-[#4b5563]">
+                  Enter your details so we can save your diagnostic and show your personalized result.
+                </p>
+
+                <form onSubmit={handleContactCaptureSubmit} className="mt-6 grid gap-3">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={contactName}
+                    onChange={(event) => setContactName(event.target.value)}
+                    disabled={contactStatus === "loading"}
+                    className="min-h-[48px] w-full rounded-[6px] border border-[#d8e4f6] bg-white px-4 font-gotham text-[14px] text-[#111827] outline-none transition focus:border-[#0057c8] focus:ring-2 focus:ring-[#cfe0ff] disabled:opacity-60"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    value={contactEmail}
+                    onChange={(event) => setContactEmail(event.target.value)}
+                    disabled={contactStatus === "loading"}
+                    className="min-h-[48px] w-full rounded-[6px] border border-[#d8e4f6] bg-white px-4 font-gotham text-[14px] text-[#111827] outline-none transition focus:border-[#0057c8] focus:ring-2 focus:ring-[#cfe0ff] disabled:opacity-60"
+                  />
+                  <div className="grid grid-cols-[112px_1fr] gap-3">
+                    <select
+                      value={contactCountryCode}
+                      onChange={(event) => setContactCountryCode(event.target.value)}
+                      disabled={contactStatus === "loading"}
+                      className="min-h-[48px] rounded-[6px] border border-[#d8e4f6] bg-white px-3 font-gotham text-[13px] text-[#111827] outline-none transition focus:border-[#0057c8] focus:ring-2 focus:ring-[#cfe0ff] disabled:opacity-60"
+                    >
+                      {countryCodes.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.flag} {country.code}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      placeholder="Phone Number"
+                      value={contactPhone}
+                      onChange={(event) => setContactPhone(event.target.value.replace(/[^0-9]/g, ""))}
+                      disabled={contactStatus === "loading"}
+                      className="min-h-[48px] min-w-0 rounded-[6px] border border-[#d8e4f6] bg-white px-4 font-gotham text-[14px] text-[#111827] outline-none transition focus:border-[#0057c8] focus:ring-2 focus:ring-[#cfe0ff] disabled:opacity-60"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={contactStatus === "loading"}
+                    className="mt-2 inline-flex min-h-[50px] w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] bg-[#0057c8] px-5 font-gotham text-[15px] font-bold text-white shadow-[0_12px_26px_rgba(1,75,170,0.18)] transition hover:bg-[#0A57C6] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {contactStatus === "loading" ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
+                    {contactStatus === "loading" ? "Saving..." : "Show my full picture"}
+                  </button>
+
+                  {contactMessage ? (
+                    <p className="rounded-[4px] border border-[#f1d7d7] bg-[#fff4f4] px-3 py-2 font-gotham text-xs font-medium text-[#9f2d2d]" role="status" aria-live="polite">
+                      {contactMessage}
+                    </p>
+                  ) : null}
+                </form>
+              </div>
+            </div>
+
+            <footer className="flex min-h-[55px] items-center justify-between bg-[#eef4ff] px-8 pb-[env(safe-area-inset-bottom)] font-gotham text-[12px]">
+              <button type="button" onClick={goBack} className="cursor-pointer font-bold text-[#0057c8]">
+                Back
+              </button>
+              <button type="button" onClick={reset} className="cursor-pointer font-normal text-[#242424]">
+                Restart
+              </button>
+            </footer>
+          </section>
         </div>
       );
     }
@@ -3528,8 +3757,8 @@ export default function StoCareerBot({
       aria-modal={isEmbedded ? undefined : true}
       aria-label="Sto career diagnostic"
       data-sto-bot
-      data-waitlist-id={waitlistId}
-      data-waitlist-reference-id={waitlistReferenceId}
+      data-waitlist-id={resolvedWaitlistId}
+      data-waitlist-reference-id={contactReferenceId || waitlistReferenceId}
       className={shellClassName}
     >
       <header className={isEmbedded ? "hidden" : "border-b border-[#dce8f8] bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)] backdrop-blur"}>
@@ -3561,11 +3790,11 @@ export default function StoCareerBot({
         )}
       </header>
 
-      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
+      <div className={isEmbedded ? `relative z-10 min-h-0 max-w-full overflow-x-hidden overflow-y-auto ${step === "intro" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "contact_capture" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "p-0" : `px-4 md:px-9 ${step === "q1" ? "py-0" : "py-4 md:py-6"}`}` : "flex-1 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)] px-5 py-6 md:px-8 md:py-8"}>
         {renderVisualScreen()}
       </div>
 
-      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
+      <footer className={isEmbedded ? `${step === "intro" || step === "q1" || step === "empathy" || step === "context" || step === "not_considered_formula" || step === "considered_formula" || step === "desire" || step === "visibility_desire" || step === "importance" || step === "personal_seen" || step === "sponsor_power" || step === "sponsor_willing" || step === "next_level" || step === "contact_capture" || step === "result" || (step === "door" && (door === "complex_situation" || door === "story_of_work" || door === "story_of_contribution" || door === "imposter_syndrome" || door === "brilliance_image_trap" || door === "sponsor_network" || door === "communication_framework" || door === "values_misalignment")) ? "hidden" : "relative z-20 max-w-full shrink-0 overflow-x-hidden bg-white px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] md:px-9 md:pb-4"}` : "bg-gradient-to-t from-white from-[62%] to-white/0 px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-6 md:px-8"}>
         {step === "result" ? (
           null
         ) : controlsReady && step !== "diagnostic" ? (
