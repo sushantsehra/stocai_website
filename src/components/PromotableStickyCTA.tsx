@@ -161,7 +161,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
               }}
               className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 shrink-0"
             >
-              Get Unstuck
+              Get Access
             </button>
           </div>
         ) : (
@@ -220,7 +220,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
                 disabled={isLoading}
                 className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white text-sm min-h-[40px] font-bold cursor-pointer px-4 md:px-5 py-2 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Saving..." : "Get Unstuck"}
+                {isLoading ? "Saving..." : "Get Access"}
               </button>
             </div>
 
@@ -230,7 +230,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
               disabled={isLoading}
               className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Saving..." : "Get Unstuck"}
+              {isLoading ? "Saving..." : "Get Access"}
             </button>
           </div>
         )}

@@ -12,7 +12,6 @@ import CareerStalledSection from './CareerStalledSection';
 import BePromotableFirstFold from './BePromotableFirstFold';
 import SectionViewTracker from '@/app/_components/SectionViewTracker';
 import PromotableStickyCTA from './PromotableStickyCTA';
-import StickyCTA from './StickyCTA';
 import PromotableWaitListSection from './PromotableWaitListSection';
 import PromotableHeroWaitlist from './PromotableHeroWaitlist';
 import AdditionalBenefits from './AdditionalBenefits';
@@ -169,7 +168,6 @@ const BMPPromotableComponents: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <StickyCTA />
       <PromotableStickyCTA onRequestAccess={handleRequestAccess} />
       <SectionViewTracker />
       

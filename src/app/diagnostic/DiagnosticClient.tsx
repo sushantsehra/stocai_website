@@ -42,7 +42,7 @@ const defaultContext: DiagnosticContext = {
   countryCode: "+91",
   referenceId: "",
   waitlistId: "",
-  source: "waitlist_modal",
+  source: "diagnostic_direct",
 };
 
 export default function DiagnosticClient() {
@@ -59,7 +59,7 @@ export default function DiagnosticClient() {
         countryCode: parsed.countryCode || "+91",
         referenceId: parsed.referenceId || "",
         waitlistId: parsed.waitlistId || "",
-        source: parsed.source || "waitlist_modal",
+        source: parsed.source || "diagnostic_direct",
       });
     } catch {
       setContext(defaultContext);

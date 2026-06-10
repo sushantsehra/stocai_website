@@ -225,7 +225,7 @@ const LearningExperience = () => {
             // "
             className="w-[206px] md:w-[215px] h-[54px] py-8 rounded-[12px] bg-[radial-gradient(ellipse_at_top,_#FFFFFF_0%,_#ADADAD_220%)] shadow-[0_5px_20px_rgba(0,0,0,0.3)] text-black cursor-pointer flex items-center justify-center font-bold font-jakarta text-lg md:text-[20px] transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 hover:shadow-[0_0_15px_rgba(11,100,244,0.4)]"
           >
-            Get Unstuck
+            Get Access
           </button>
         </div>
       </div>
