@@ -243,13 +243,16 @@ export const useStoPayment = ({
         email: resolvedEmail || undefined,
         phone: getFullPhone(),
         reference_id: referenceId,
-        amount: 197000,
       }),
     });
 
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error((data as { error?: string })?.error || "Unable to start payment.");
+      throw new Error(
+        (data as { detail?: string; error?: string })?.detail ||
+          (data as { detail?: string; error?: string })?.error ||
+          "Unable to start payment."
+      );
     }
 
     const shortUrl = (data as { short_url?: string; shortUrl?: string })?.short_url || (data as { short_url?: string; shortUrl?: string })?.shortUrl;
@@ -257,7 +260,15 @@ export const useStoPayment = ({
       throw new Error("Payment link was not returned.");
     }
 
-    return shortUrl;
+    return {
+      shortUrl,
+      pricing: (data as {
+        pricing?: {
+          final_amount?: number;
+          discount_code?: string;
+        };
+      })?.pricing,
+    };
   }, [getFullPhone, resolvedEmail, resolvedName]);
 
   const handlePaymentRedirect = useCallback(async () => {
@@ -285,19 +296,21 @@ export const useStoPayment = ({
       payment_started: true,
     });
 
-    const shortUrl = await createPaymentLink(paymentReferenceId);
+    const payment = await createPaymentLink(paymentReferenceId);
 
     posthog.capture("payment_redirected", {
       source,
-      amount: 197000,
+      amount: payment.pricing?.final_amount,
+      discount_code: payment.pricing?.discount_code,
     });
     pushToDataLayer({
       event: "payment_redirected",
       source,
-      amount: 197000,
+      amount: payment.pricing?.final_amount,
+      discount_code: payment.pricing?.discount_code,
     });
 
-    window.location.href = shortUrl;
+    window.location.href = payment.shortUrl;
   }, [createPaymentLink, ensureWaitlistReference, resolvedPhone, source]);
 
   const handlePaymentCta = useCallback(async () => {

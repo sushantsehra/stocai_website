@@ -42,6 +42,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91"); // Default India
+  const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -123,7 +124,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     email?: string;
     phone: string;
     reference_id?: string;
-    amount: number;
+    discount_code?: string;
   }) => {
     const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
       method: "POST",
@@ -136,14 +137,14 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
         email: payload.email || email,
         phone: payload.phone,
         reference_id: payload.reference_id || `waitlist_${Date.now()}`,
-        amount: payload.amount,
+        discount_code: payload.discount_code || undefined,
       }),
     });
 
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data?.error || "Unable to start payment.");
+      throw new Error(data?.detail || data?.error || "Unable to start payment.");
     }
 
     const shortUrl = data?.short_url || data?.shortUrl;
@@ -151,7 +152,18 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       throw new Error("Payment link was not returned.");
     }
 
-    return shortUrl as string;
+    return {
+      shortUrl: shortUrl as string,
+      pricing: data?.pricing as
+        | {
+            original_amount?: number;
+            discount_amount?: number;
+            final_amount?: number;
+            currency?: string;
+            discount_code?: string;
+          }
+        | undefined,
+    };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -190,23 +202,25 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       });
 
       if (shouldStartPayment) {
-        const shortUrl = await createPaymentLink({
+        const payment = await createPaymentLink({
           name,
           email,
           phone: fullPhone,
           reference_id: initialReferenceId,
-          amount: 399900,
+          discount_code: discountCode.trim(),
         });
         posthog.capture("payment_redirected", {
           source,
-          amount: 399900,
+          amount: payment.pricing?.final_amount,
+          discount_code: payment.pricing?.discount_code,
         });
         pushToDataLayer({
           event: "payment_redirected",
           source,
-          amount: 399900,
+          amount: payment.pricing?.final_amount,
+          discount_code: payment.pricing?.discount_code,
         });
-        window.location.href = shortUrl;
+        window.location.href = payment.shortUrl;
         return;
       }
 
@@ -456,6 +470,17 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 </div> */}
 
                 <div className="text-center">
+                  <label className="mb-4 block text-left text-sm font-semibold text-white">
+                    Discount code
+                    <input
+                      type="text"
+                      value={discountCode}
+                      onChange={(event) => setDiscountCode(event.target.value.toUpperCase())}
+                      placeholder="Optional"
+                      className="mt-1 h-[44px] w-full rounded-[10px] bg-white px-4 font-jakarta text-[14px] font-semibold uppercase tracking-wide text-gray-900 placeholder:text-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      autoComplete="off"
+                    />
+                  </label>
                   <button
                     type="submit"
                     disabled={status === "loading"}

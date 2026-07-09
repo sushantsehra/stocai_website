@@ -85,6 +85,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
+  const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -94,6 +95,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setEmail(initialEmail || "");
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
+      setDiscountCode("");
       router.prefetch("/diagnostic");
     }
   }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, router]);
@@ -152,7 +154,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     email?: string;
     phone: string;
     reference_id?: string;
-    amount: number;
+    discount_code?: string;
   }) => {
     const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
       method: "POST",
@@ -165,14 +167,14 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         email: payload.email || email,
         phone: payload.phone,
         reference_id: payload.reference_id || `waitlist_${Date.now()}`,
-        amount: payload.amount,
+        discount_code: payload.discount_code || undefined,
       }),
     });
 
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data?.error || "Unable to start payment.");
+      throw new Error(data?.detail || data?.error || "Unable to start payment.");
     }
 
     const shortUrl = data?.short_url || data?.shortUrl;
@@ -180,7 +182,18 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       throw new Error("Payment link was not returned.");
     }
 
-    return shortUrl as string;
+    return {
+      shortUrl: shortUrl as string,
+      pricing: data?.pricing as
+        | {
+            original_amount?: number;
+            discount_amount?: number;
+            final_amount?: number;
+            currency?: string;
+            discount_code?: string;
+          }
+        | undefined,
+    };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -224,23 +237,25 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         payment_started: true,
       });
 
-      const shortUrl = await createPaymentLink({
+      const payment = await createPaymentLink({
         name,
         email,
         phone: fullPhone,
         reference_id: initialReferenceId,
-        amount: 197000,
+        discount_code: discountCode.trim(),
       });
       posthog.capture("payment_redirected", {
         source,
-        amount: 197000,
+        amount: payment.pricing?.final_amount,
+        discount_code: payment.pricing?.discount_code,
       });
       pushToDataLayer({
         event: "payment_redirected",
         source,
-        amount: 197000,
+        amount: payment.pricing?.final_amount,
+        discount_code: payment.pricing?.discount_code,
       });
-      window.location.href = shortUrl;
+      window.location.href = payment.shortUrl;
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -365,6 +380,18 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 <span className="pb-1 font-jakarta text-[22px] font-bold leading-none text-[#1a3768] line-through md:text-[19px]">{"\u20b9"}4,999</span>
                 <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">{"\u20b9"}1,970</span>
               </div>
+
+              <label className="mt-4 block text-left font-jakarta text-[11px] font-semibold text-white/90">
+                Discount code
+                <input
+                  type="text"
+                  value={discountCode}
+                  onChange={(event) => setDiscountCode(event.target.value.toUpperCase())}
+                  placeholder="Optional"
+                  className="mt-1 h-10 w-full rounded-[5px] border border-white/30 bg-white px-3 text-[13px] font-semibold uppercase tracking-wide text-[#232323] placeholder:text-[#8d98aa] focus:outline-none focus:ring-2 focus:ring-white/70"
+                  autoComplete="off"
+                />
+              </label>
 
               <input type="hidden" name="name" value={name} readOnly />
               <input type="hidden" name="email" value={email} readOnly />
