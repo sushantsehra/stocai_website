@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import {
   BarChart3,
   CheckCircle2,
@@ -18,7 +17,6 @@ import {
 } from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
-import { writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import promotableRibbonIcon from "../assets/promotable-ribbon-icon.png";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
@@ -48,6 +46,8 @@ type HeroWaitlistProps = {
   }) => void;
 };
 
+type ConsultationSlot = { start: string; end: string; start_utc?: string; end_utc?: string };
+
 const programFeatures = [
   { label: "Stakeholder management", icon: UsersRound },
   { label: "Leadership signalling", icon: Megaphone },
@@ -55,10 +55,10 @@ const programFeatures = [
   { label: "Promotion pitches", icon: BarChart3 },
 ];
 
-const clarityFeatures = [
-  { label: "Identify the real roadblock", icon: Search },
-  { label: "Get direction on the next move", icon: Compass },
-  { label: "See whether the program is right for you", icon: CheckCircle2 },
+const consultationFeatures = [
+  { label: "Discuss your promotion roadblocks", icon: Search },
+  { label: "Get a focused next-step plan", icon: Compass },
+  { label: "Decide whether the program fits", icon: CheckCircle2 },
 ];
 
 const supportPillars = [
@@ -73,14 +73,12 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
-  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
   source = "waitlist_modal",
   onSubmit,
 }) => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -88,6 +86,13 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [consultationStatus, setConsultationStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [consultationMessage, setConsultationMessage] = useState("");
+  const [consultationAmount, setConsultationAmount] = useState<number | null>(null);
+  const [consultationSlots, setConsultationSlots] = useState<ConsultationSlot[]>([]);
+  const [selectedSlotStart, setSelectedSlotStart] = useState("");
+  const [selectedConsultationDate, setSelectedConsultationDate] = useState("");
+  const [showConsultationSlots, setShowConsultationSlots] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -96,9 +101,23 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
       setDiscountCode("");
-      router.prefetch("/diagnostic");
     }
-  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, router]);
+  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetch(`${env.apiUrl}/consultations/slots`)
+      .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
+      .then(({ ok, data }) => {
+        if (ok && data?.enabled) {
+          setConsultationAmount(data.amount || null);
+          setConsultationSlots(Array.isArray(data.slots) ? data.slots : []);
+        } else {
+          setConsultationAmount(null);
+        }
+      })
+      .catch(() => setConsultationAmount(null));
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -277,32 +296,55 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     }
   };
 
-  const handleGetUnstuck = () => {
-    writeStoDiagnosticContext({
-      name,
-      email,
-      phone,
-      countryCode,
-      referenceId: initialReferenceId || initialWaitlistId || "",
-      waitlistId: initialWaitlistId || initialReferenceId || "",
-      source,
-    });
-
-    posthog.capture("sto_diagnostic_route_opened", {
-      source,
-      waitlist_reference_id: initialReferenceId,
-      waitlist_id: initialWaitlistId || initialReferenceId,
-    });
-    pushToDataLayer({
-      event: "sto_diagnostic_route_opened",
-      source,
-      waitlist_reference_id: initialReferenceId,
-      waitlist_id: initialWaitlistId || initialReferenceId,
-    });
-
-    onClose();
-    router.push("/diagnostic");
+  const handleBookConsultation = async () => {
+    if (!showConsultationSlots) {
+      setShowConsultationSlots(true);
+      if (!selectedConsultationDate && consultationSlots[0]) {
+        setSelectedConsultationDate(new Date(consultationSlots[0].start).toLocaleDateString("en-CA"));
+      }
+      return;
+    }
+    setConsultationStatus("loading");
+    setConsultationMessage("");
+    try {
+      if (!initialReferenceId || !name.trim() || !email.trim() || !phone.trim()) {
+        throw new Error("Missing contact details. Please submit the request access form first.");
+      }
+      const selectedSlot = consultationSlots.find((slot) => slot.start === selectedSlotStart);
+      if (!selectedSlot) throw new Error("Please select a consultation slot.");
+      const response = await fetch(`${env.apiUrl}/consultations/payment-link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          waitlist_reference_id: initialReferenceId,
+          slot_start: selectedSlot.start_utc || selectedSlot.start,
+          slot_end: selectedSlot.end_utc || selectedSlot.end,
+          callback_url: `${window.location.origin}/consultation/confirmation`,
+          name,
+          email,
+          phone: `${countryCode}${phone}`,
+        }),
+      });
+      const booking = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(booking?.detail || "Unable to start consultation payment.");
+      if (!booking?.short_url) throw new Error("Payment link was not returned.");
+      posthog.capture("consultation_payment_redirected", { source, amount: booking.amount, slot_start: selectedSlot.start });
+      pushToDataLayer({ event: "consultation_payment_redirected", source, amount: booking.amount, slot_start: selectedSlot.start });
+      window.location.href = booking.short_url;
+    } catch (error) {
+      setConsultationStatus("error");
+      setConsultationMessage(error instanceof Error ? error.message : "Unable to book the consultation.");
+    }
   };
+
+  const consultationDays = useMemo(() => {
+    const days = new Map<string, ConsultationSlot[]>();
+    consultationSlots.forEach((slot) => {
+      const key = new Date(slot.start).toLocaleDateString("en-CA");
+      days.set(key, [...(days.get(key) || []), slot]);
+    });
+    return Array.from(days.entries()).slice(0, 5);
+  }, [consultationSlots]);
 
   if (!isOpen) return null;
 
@@ -423,15 +465,15 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             <section className="rounded-[6px] border border-[#88b9ff] bg-white px-3 pb-4 pt-5 md:rounded-[10px] md:px-5 md:pb-5 md:pt-8">
               <div className="text-center">
                 <h3 className="font-quattrocento text-[28px] font-bold leading-tight text-[#075ff0] md:text-[28px]">
-                  Take Sto Quiz First
+                  Book a Consultation First
                 </h3>
                 <p className="mx-auto mt-1 max-w-[245px] font-jakarta text-[11px] font-medium leading-[16px] text-black md:text-[12px] md:leading-[17px]">
-                  Not ready to join yet? Start with clarity on what is blocking your promotion momentum.
+                  Speak with an expert first, get clarity on your next move, and subscribe when you are ready.
                 </p>
               </div>
 
               <div className="mt-5 space-y-2 md:mt-6">
-                {clarityFeatures.map(({ label, icon: Icon }) => (
+                {consultationFeatures.map(({ label, icon: Icon }) => (
                   <div key={label} className="flex min-h-[39px] items-center gap-3 rounded-[5px] border border-[#9ac3ff] bg-[#f3f7ff] px-[7px] text-[#232323] md:min-h-[43px]">
                     <span className="flex h-[31px] w-[31px] shrink-0 items-center justify-center rounded-[3px] bg-white text-[#1265f5]">
                       <Icon className="h-[19px] w-[19px]" strokeWidth={2.6} />
@@ -441,13 +483,34 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={handleGetUnstuck}
-                className="mt-[31px] inline-flex min-h-[46px] w-full cursor-pointer items-center justify-center rounded-[5px] border border-[#075ff0] bg-white px-4 font-jakarta text-[16px] font-semibold text-[#075ff0] transition hover:bg-[#f3f7ff] focus:outline-none focus:ring-2 focus:ring-[#88b9ff] md:mt-7 md:min-h-[44px] md:text-[15px]"
-              >
-                Take Sto Quiz
+              {showConsultationSlots ? (
+                <div className="mt-5 rounded-lg bg-[#f7f9ff] p-3 font-jakarta">
+                  <p className="text-sm font-semibold text-[#23314d]">Choose your consultation</p>
+                  <div className="mt-3 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Consultation dates">
+                    {consultationDays.map(([date]) => {
+                      const value = new Date(`${date}T12:00:00`);
+                      const active = date === selectedConsultationDate;
+                      return <button key={date} type="button" role="tab" aria-selected={active} onClick={() => { setSelectedConsultationDate(date); setSelectedSlotStart(""); }} className={`min-w-[58px] rounded-lg border px-2 py-2 text-center transition ${active ? "border-[#075ff0] bg-[#075ff0] text-white" : "border-[#c9dcff] bg-white text-[#344054] hover:border-[#75a9ff]"}`}><span className="block text-[10px] font-semibold uppercase">{value.toLocaleDateString("en-IN", { weekday: "short" })}</span><span className="mt-0.5 block text-base font-bold">{value.getDate()}</span><span className="block text-[10px]">{value.toLocaleDateString("en-IN", { month: "short" })}</span></button>;
+                    })}
+                  </div>
+                  <p className="mt-3 text-xs font-semibold text-[#667085]">Available times</p>
+                  <div className="mt-2 grid grid-cols-3 gap-2">
+                    {(consultationDays.find(([date]) => date === selectedConsultationDate)?.[1] || []).map((slot) => {
+                      const active = selectedSlotStart === slot.start;
+                      return <button key={slot.start} type="button" onClick={() => setSelectedSlotStart(slot.start)} className={`rounded-md border px-2 py-2 text-xs font-semibold transition ${active ? "border-[#075ff0] bg-[#eaf2ff] text-[#075ff0] ring-1 ring-[#075ff0]" : "border-[#c9dcff] bg-white text-[#344054] hover:border-[#75a9ff]"}`}>{new Date(slot.start).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" })}</button>;
+                    })}
+                  </div>
+                  {selectedSlotStart ? <p className="mt-3 text-center text-xs font-medium text-[#067647]">✓ Time selected</p> : null}
+                </div>
+              ) : null}
+              <button type="button" onClick={handleBookConsultation} disabled={consultationStatus === "loading" || consultationAmount === null || (showConsultationSlots && (!consultationSlots.length || !selectedSlotStart))} className="mt-4 inline-flex min-h-[46px] w-full cursor-pointer items-center justify-center rounded-[7px] border border-[#075ff0] bg-white px-4 font-jakarta text-[16px] font-semibold text-[#075ff0] transition hover:bg-[#f3f7ff] focus:outline-none focus:ring-2 focus:ring-[#88b9ff] disabled:cursor-not-allowed disabled:border-[#cbd5e1] disabled:text-[#98a2b3] md:min-h-[44px] md:text-[15px]">
+                {consultationStatus === "loading" ? "Opening payment..." : showConsultationSlots ? `Pay & Book — ₹${((consultationAmount || 0) / 100).toLocaleString("en-IN")}` : consultationAmount ? `Choose a Time — ₹${(consultationAmount / 100).toLocaleString("en-IN")}` : "Consultations unavailable"}
               </button>
+              {consultationMessage ? (
+                <p className="mt-3 text-center font-jakarta text-xs font-medium text-red-600" role="status">
+                  {consultationMessage}
+                </p>
+              ) : null}
             </section>
           </div>
 
