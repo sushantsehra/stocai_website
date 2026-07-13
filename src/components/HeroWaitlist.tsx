@@ -476,7 +476,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
                       type="text"
                       value={discountCode}
                       onChange={(event) => setDiscountCode(event.target.value.toUpperCase())}
-                      placeholder="Optional"
+                      placeholder="Enter code if you have one"
                       className="mt-1 h-[44px] w-full rounded-[10px] bg-white px-4 font-jakarta text-[14px] font-semibold uppercase tracking-wide text-gray-900 placeholder:text-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-blue-400"
                       autoComplete="off"
                     />

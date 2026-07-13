@@ -4,13 +4,15 @@ import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {
   BarChart3,
-  CheckCircle2,
-  Compass,
+  Clock3,
+  Gift,
   Lock,
   Megaphone,
-  Search,
+  ShieldCheck,
   Sparkles,
   Star,
+  Target,
+  UserRound,
   UserRoundCheck,
   UsersRound,
   X,
@@ -55,12 +57,6 @@ const programFeatures = [
   { label: "Promotion pitches", icon: BarChart3 },
 ];
 
-const consultationFeatures = [
-  { label: "Discuss your promotion roadblocks", icon: Search },
-  { label: "Get a focused next-step plan", icon: Compass },
-  { label: "Decide whether the program fits", icon: CheckCircle2 },
-];
-
 const supportPillars = [
   { label: "AI coach", icon: Sparkles },
   { label: "Strategic insights", icon: BarChart3 },
@@ -86,6 +82,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [subscriptionAmount, setSubscriptionAmount] = useState<number | null>(null);
   const [consultationStatus, setConsultationStatus] = useState<"idle" | "loading" | "error">("idle");
   const [consultationMessage, setConsultationMessage] = useState("");
   const [consultationAmount, setConsultationAmount] = useState<number | null>(null);
@@ -106,6 +103,13 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
   useEffect(() => {
     if (!isOpen) return;
+    fetch(`${env.apiUrl}/payments/razorpay/settings`)
+      .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
+      .then(({ ok, data }) => {
+        setSubscriptionAmount(ok && data?.subscription_amount ? data.subscription_amount : null);
+      })
+      .catch(() => setSubscriptionAmount(null));
+
     fetch(`${env.apiUrl}/consultations/slots`)
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
       .then(({ ok, data }) => {
@@ -360,7 +364,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[375px] sm:rounded-[24px] md:max-w-[860px] md:rounded-[26px]"
+        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[390px] sm:rounded-[24px] md:max-w-[1120px] md:rounded-[26px]"
       >
         <button
           type="button"
@@ -374,7 +378,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
           <X className="h-5 w-5" />
         </button>
 
-        <div className="h-full max-h-screen overflow-y-auto px-[30px] pb-7 pt-3 sm:max-h-[calc(100vh-24px)] md:px-10 md:pb-5 md:pt-5">
+        <div className="h-full max-h-screen overflow-y-auto px-[26px] pb-7 pt-3 sm:max-h-[calc(100vh-24px)] md:px-10 md:pb-5 md:pt-5 lg:px-12">
           <div className="text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#eef3ff] p-2 md:h-12 md:w-12">
               <Image src={promotableRibbonIcon} width={29} height={29} alt="Promotable badge" className="object-contain" />
@@ -419,8 +423,15 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               </div>
 
               <div className="mt-8 flex items-end justify-center gap-4 md:mt-5">
-                <span className="pb-1 font-jakarta text-[22px] font-bold leading-none text-[#1a3768] line-through md:text-[19px]">{"\u20b9"}4,999</span>
-                <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">{"\u20b9"}1,970</span>
+                <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">
+                  {subscriptionAmount
+                    ? new Intl.NumberFormat("en-IN", {
+                        style: "currency",
+                        currency: "INR",
+                        maximumFractionDigits: 0,
+                      }).format(subscriptionAmount / 100)
+                    : "Price available at checkout"}
+                </span>
               </div>
 
               <label className="mt-4 block text-left font-jakarta text-[11px] font-semibold text-white/90">
@@ -429,7 +440,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                   type="text"
                   value={discountCode}
                   onChange={(event) => setDiscountCode(event.target.value.toUpperCase())}
-                  placeholder="Optional"
+                  placeholder="Enter code if you have one"
                   className="mt-1 h-10 w-full rounded-[5px] border border-white/30 bg-white px-3 text-[13px] font-semibold uppercase tracking-wide text-[#232323] placeholder:text-[#8d98aa] focus:outline-none focus:ring-2 focus:ring-white/70"
                   autoComplete="off"
                 />
@@ -462,29 +473,51 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               </span>
             </div>
 
-            <section className="rounded-[6px] border border-[#88b9ff] bg-white px-3 pb-4 pt-5 md:rounded-[10px] md:px-5 md:pb-5 md:pt-8">
-              <div className="text-center">
-                <h3 className="font-quattrocento text-[28px] font-bold leading-tight text-[#075ff0] md:text-[28px]">
-                  Book a Consultation First
+            <section className="relative flex flex-col rounded-[10px] border border-[#d9a64f] bg-[#fffcf7] px-4 pb-4 pt-8 text-[#34291f] shadow-[0_8px_24px_rgba(124,83,24,0.05)] md:px-6 md:pb-5 md:pt-8 lg:px-7">
+              <span className="absolute left-4 top-2 rounded-md bg-[#fff0d0] px-3 py-1 font-jakarta text-[9px] font-bold tracking-wide text-[#9a6516] md:left-1/2 md:top-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:border md:border-[#d9a64f] md:bg-[#fffcf7] md:text-[10px]">
+                NEED CLARITY FIRST
+              </span>
+
+              <div className="text-left md:text-center">
+                <h3 className="font-quattrocento text-[24px] font-bold leading-tight text-[#34291f] md:text-[28px]">
+                  Promotion Clarity Session
                 </h3>
-                <p className="mx-auto mt-1 max-w-[245px] font-jakarta text-[11px] font-medium leading-[16px] text-black md:text-[12px] md:leading-[17px]">
-                  Speak with an expert first, get clarity on your next move, and subscribe when you are ready.
+                <p className="mt-1.5 font-jakarta text-[12px] font-medium leading-[17px] text-[#29231e] md:mx-auto md:max-w-[390px] md:text-[12px] md:leading-[17px]">
+                  A private 1:1 session to understand what may be slowing your career—and what to do next.
                 </p>
               </div>
 
-              <div className="mt-5 space-y-2 md:mt-6">
-                {consultationFeatures.map(({ label, icon: Icon }) => (
-                  <div key={label} className="flex min-h-[39px] items-center gap-3 rounded-[5px] border border-[#9ac3ff] bg-[#f3f7ff] px-[7px] text-[#232323] md:min-h-[43px]">
-                    <span className="flex h-[31px] w-[31px] shrink-0 items-center justify-center rounded-[3px] bg-white text-[#1265f5]">
-                      <Icon className="h-[19px] w-[19px]" strokeWidth={2.6} />
-                    </span>
-                    <span className="font-jakarta text-[15px] font-medium leading-tight md:text-[14px]">{label}</span>
-                  </div>
-                ))}
+              <div className="mt-4 grid grid-cols-3 gap-2 font-jakarta text-[10px] font-semibold md:text-[11px]">
+                <ClarityPill icon={UserRound}>1:1 Video Call</ClarityPill>
+                <ClarityPill icon={Clock3}>45 Minutes</ClarityPill>
+                <ClarityPill icon={Target}>Tailored to You</ClarityPill>
+              </div>
+
+              <p className="mt-4 font-jakarta text-[11px] font-bold text-[#b57916] md:text-[12px]">In this session, you will:</p>
+              <div className="mt-3 grid gap-4 md:grid-cols-[minmax(0,1fr)_155px] md:items-center md:gap-5">
+                <div className="space-y-3">
+                  <ClarityStep number="01" title="Understand your situation">
+                    We unpack your role, recent history, key relationships and current roadblocks.
+                  </ClarityStep>
+                  <ClarityStep number="02" title="Find the likely gap">
+                    We identify the real issue—visibility, influence, positioning, sponsorship or other.
+                  </ClarityStep>
+                  <ClarityStep number="03" title="Map your next move">
+                    You get clarity on the conversations, signals and actions that will make the biggest difference.
+                  </ClarityStep>
+                </div>
+
+                <div className="rounded-md border border-[#d9a64f] bg-white/60 px-4 py-4 text-center font-jakarta md:px-4 md:py-6">
+                  <Gift className="mx-auto h-7 w-7 text-[#b57916]" strokeWidth={1.7} />
+                  <h4 className="mt-2 text-[12px] font-bold md:text-[13px]">You’ll leave with</h4>
+                  <p className="mt-2 text-[11px] font-medium leading-[16px] md:text-[12px] md:leading-[18px]">
+                    A personalised diagnosis and a focused path forward. You also receive a <strong>written summary after</strong> the session.
+                  </p>
+                </div>
               </div>
 
               {showConsultationSlots ? (
-                <div className="mt-5 rounded-lg bg-[#f7f9ff] p-3 font-jakarta">
+                <div className="mt-4 rounded-lg border border-[#ead3aa] bg-white p-3 font-jakarta">
                   <p className="text-sm font-semibold text-[#23314d]">Choose your consultation</p>
                   <div className="mt-3 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Consultation dates">
                     {consultationDays.map(([date]) => {
@@ -503,9 +536,13 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
                   {selectedSlotStart ? <p className="mt-3 text-center text-xs font-medium text-[#067647]">✓ Time selected</p> : null}
                 </div>
               ) : null}
-              <button type="button" onClick={handleBookConsultation} disabled={consultationStatus === "loading" || consultationAmount === null || (showConsultationSlots && (!consultationSlots.length || !selectedSlotStart))} className="mt-4 inline-flex min-h-[46px] w-full cursor-pointer items-center justify-center rounded-[7px] border border-[#075ff0] bg-white px-4 font-jakarta text-[16px] font-semibold text-[#075ff0] transition hover:bg-[#f3f7ff] focus:outline-none focus:ring-2 focus:ring-[#88b9ff] disabled:cursor-not-allowed disabled:border-[#cbd5e1] disabled:text-[#98a2b3] md:min-h-[44px] md:text-[15px]">
-                {consultationStatus === "loading" ? "Opening payment..." : showConsultationSlots ? `Pay & Book — ₹${((consultationAmount || 0) / 100).toLocaleString("en-IN")}` : consultationAmount ? `Choose a Time — ₹${(consultationAmount / 100).toLocaleString("en-IN")}` : "Consultations unavailable"}
+              <button type="button" onClick={handleBookConsultation} disabled={consultationStatus === "loading" || consultationAmount === null || (showConsultationSlots && (!consultationSlots.length || !selectedSlotStart))} className="mt-4 inline-flex min-h-[42px] w-full cursor-pointer items-center justify-center rounded-[4px] bg-[#bd861d] px-4 font-jakarta text-[13px] font-semibold text-white transition hover:bg-[#a97415] focus:outline-none focus:ring-2 focus:ring-[#d9a64f] disabled:cursor-not-allowed disabled:bg-[#cbb58d] md:mt-auto md:min-h-[42px] md:text-[13px]">
+                {consultationStatus === "loading" ? "Opening payment..." : showConsultationSlots ? `Pay & Book — ₹${((consultationAmount || 0) / 100).toLocaleString("en-IN")}` : consultationAmount ? `Book My Clarity Session — ₹${(consultationAmount / 100).toLocaleString("en-IN")}` : "Clarity sessions unavailable"}
               </button>
+              <div className="mt-2.5 flex items-center justify-center gap-2 font-jakarta text-[10px] font-medium text-[#5f6773] md:text-[11px]">
+                <ShieldCheck className="h-4 w-4 text-[#b57916]" strokeWidth={1.7} />
+                <span>No obligation to join the program. No generic career advice.</span>
+              </div>
               {consultationMessage ? (
                 <p className="mt-3 text-center font-jakarta text-xs font-medium text-red-600" role="status">
                   {consultationMessage}
@@ -539,3 +576,22 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 };
 
 export default PromotableHeroWaitlist;
+
+const ClarityPill = ({ icon: Icon, children }: { icon: React.ElementType; children: React.ReactNode }) => (
+  <div className="flex min-h-8 items-center justify-center gap-1.5 rounded border border-[#ead3aa] bg-white/60 px-1.5 text-center">
+    <Icon className="h-[17px] w-[17px] shrink-0 text-[#714a1a]" strokeWidth={1.7} />
+    <span>{children}</span>
+  </div>
+);
+
+const ClarityStep = ({ number, title, children }: { number: string; title: string; children: React.ReactNode }) => (
+  <div className="relative flex gap-3 font-jakarta after:absolute after:left-[11px] after:top-[24px] after:h-[calc(100%+12px)] after:w-px after:bg-[#e5bd78] last:after:hidden">
+    <span className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#bd861d] text-[10px] font-bold text-white">
+      {number}
+    </span>
+    <div>
+      <h4 className="text-[11px] font-bold leading-[14px] text-[#2f2923] md:text-[12px] md:leading-[15px]">{title}</h4>
+      <p className="mt-0.5 text-[10px] font-medium leading-[14px] text-[#3f3a35] md:text-[11px] md:leading-[15px]">{children}</p>
+    </div>
+  </div>
+);
