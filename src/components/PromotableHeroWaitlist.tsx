@@ -1,24 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import {
   BarChart3,
-  CheckCircle2,
-  Compass,
+  Clock3,
+  Gift,
   Lock,
   Megaphone,
-  Search,
+  ShieldCheck,
   Sparkles,
   Star,
+  Target,
+  UserRound,
   UserRoundCheck,
   UsersRound,
   X,
 } from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
-import { writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import promotableRibbonIcon from "../assets/promotable-ribbon-icon.png";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
@@ -48,17 +48,13 @@ type HeroWaitlistProps = {
   }) => void;
 };
 
+type ConsultationSlot = { start: string; end: string; start_utc?: string; end_utc?: string };
+
 const programFeatures = [
   { label: "Stakeholder management", icon: UsersRound },
   { label: "Leadership signalling", icon: Megaphone },
   { label: "Executive presence", icon: UserRoundCheck },
   { label: "Promotion pitches", icon: BarChart3 },
-];
-
-const clarityFeatures = [
-  { label: "Identify the real roadblock", icon: Search },
-  { label: "Get direction on the next move", icon: Compass },
-  { label: "See whether the program is right for you", icon: CheckCircle2 },
 ];
 
 const supportPillars = [
@@ -73,20 +69,27 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
-  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
   source = "waitlist_modal",
   onSubmit,
 }) => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
+  const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [subscriptionAmount, setSubscriptionAmount] = useState<number | null>(null);
+  const [consultationStatus, setConsultationStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [consultationMessage, setConsultationMessage] = useState("");
+  const [consultationAmount, setConsultationAmount] = useState<number | null>(null);
+  const [consultationSlots, setConsultationSlots] = useState<ConsultationSlot[]>([]);
+  const [selectedSlotStart, setSelectedSlotStart] = useState("");
+  const [selectedConsultationDate, setSelectedConsultationDate] = useState("");
+  const [showConsultationSlots, setShowConsultationSlots] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -94,9 +97,49 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setEmail(initialEmail || "");
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
-      router.prefetch("/diagnostic");
+      setDiscountCode("");
+      setSubscriptionAmount(null);
+      setConsultationAmount(null);
+      setConsultationSlots([]);
+      setConsultationStatus("idle");
+      setConsultationMessage("");
+      setSelectedSlotStart("");
+      setSelectedConsultationDate("");
+      setShowConsultationSlots(false);
     }
-  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, router]);
+  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const controller = new AbortController();
+    fetch(`${env.apiUrl}/payments/razorpay/settings`, { signal: controller.signal })
+      .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
+      .then(({ ok, data }) => {
+        setSubscriptionAmount(ok && data?.subscription_amount ? data.subscription_amount : null);
+      })
+      .catch((reason) => {
+        if (reason?.name !== "AbortError") setSubscriptionAmount(null);
+      });
+
+    fetch(`${env.apiUrl}/consultations/slots`, { signal: controller.signal })
+      .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
+      .then(({ ok, data }) => {
+        if (ok && data?.enabled) {
+          setConsultationAmount(data.amount || null);
+          setConsultationSlots(Array.isArray(data.slots) ? data.slots : []);
+        } else {
+          setConsultationAmount(null);
+          setConsultationSlots([]);
+        }
+      })
+      .catch((reason) => {
+        if (reason?.name !== "AbortError") {
+          setConsultationAmount(null);
+          setConsultationSlots([]);
+        }
+      });
+    return () => controller.abort();
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -152,7 +195,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     email?: string;
     phone: string;
     reference_id?: string;
-    amount: number;
+    discount_code?: string;
   }) => {
     const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
       method: "POST",
@@ -165,14 +208,14 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         email: payload.email || email,
         phone: payload.phone,
         reference_id: payload.reference_id || `waitlist_${Date.now()}`,
-        amount: payload.amount,
+        discount_code: payload.discount_code || undefined,
       }),
     });
 
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data?.error || "Unable to start payment.");
+      throw new Error(data?.detail || data?.error || "Unable to start payment.");
     }
 
     const shortUrl = data?.short_url || data?.shortUrl;
@@ -180,7 +223,18 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       throw new Error("Payment link was not returned.");
     }
 
-    return shortUrl as string;
+    return {
+      shortUrl: shortUrl as string,
+      pricing: data?.pricing as
+        | {
+            original_amount?: number;
+            discount_amount?: number;
+            final_amount?: number;
+            currency?: string;
+            discount_code?: string;
+          }
+        | undefined,
+    };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -224,23 +278,25 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         payment_started: true,
       });
 
-      const shortUrl = await createPaymentLink({
+      const payment = await createPaymentLink({
         name,
         email,
         phone: fullPhone,
         reference_id: initialReferenceId,
-        amount: 197000,
+        discount_code: discountCode.trim(),
       });
       posthog.capture("payment_redirected", {
         source,
-        amount: 197000,
+        amount: payment.pricing?.final_amount,
+        discount_code: payment.pricing?.discount_code,
       });
       pushToDataLayer({
         event: "payment_redirected",
         source,
-        amount: 197000,
+        amount: payment.pricing?.final_amount,
+        discount_code: payment.pricing?.discount_code,
       });
-      window.location.href = shortUrl;
+      window.location.href = payment.shortUrl;
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -262,32 +318,55 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     }
   };
 
-  const handleGetUnstuck = () => {
-    writeStoDiagnosticContext({
-      name,
-      email,
-      phone,
-      countryCode,
-      referenceId: initialReferenceId || initialWaitlistId || "",
-      waitlistId: initialWaitlistId || initialReferenceId || "",
-      source,
-    });
-
-    posthog.capture("sto_diagnostic_route_opened", {
-      source,
-      waitlist_reference_id: initialReferenceId,
-      waitlist_id: initialWaitlistId || initialReferenceId,
-    });
-    pushToDataLayer({
-      event: "sto_diagnostic_route_opened",
-      source,
-      waitlist_reference_id: initialReferenceId,
-      waitlist_id: initialWaitlistId || initialReferenceId,
-    });
-
-    onClose();
-    router.push("/diagnostic");
+  const handleBookConsultation = async () => {
+    if (!showConsultationSlots) {
+      setShowConsultationSlots(true);
+      if (!selectedConsultationDate && consultationSlots[0]) {
+        setSelectedConsultationDate(new Date(consultationSlots[0].start).toLocaleDateString("en-CA"));
+      }
+      return;
+    }
+    setConsultationStatus("loading");
+    setConsultationMessage("");
+    try {
+      if (!initialReferenceId || !name.trim() || !email.trim() || !phone.trim()) {
+        throw new Error("Missing contact details. Please submit the request access form first.");
+      }
+      const selectedSlot = consultationSlots.find((slot) => slot.start === selectedSlotStart);
+      if (!selectedSlot) throw new Error("Please select a consultation slot.");
+      const response = await fetch(`${env.apiUrl}/consultations/payment-link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          waitlist_reference_id: initialReferenceId,
+          slot_start: selectedSlot.start_utc || selectedSlot.start,
+          slot_end: selectedSlot.end_utc || selectedSlot.end,
+          callback_url: `${window.location.origin}/consultation/confirmation`,
+          name,
+          email,
+          phone: `${countryCode}${phone}`,
+        }),
+      });
+      const booking = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(booking?.detail || "Unable to start consultation payment.");
+      if (!booking?.short_url) throw new Error("Payment link was not returned.");
+      posthog.capture("consultation_payment_redirected", { source, amount: booking.amount, slot_start: selectedSlot.start });
+      pushToDataLayer({ event: "consultation_payment_redirected", source, amount: booking.amount, slot_start: selectedSlot.start });
+      window.location.href = booking.short_url;
+    } catch (error) {
+      setConsultationStatus("error");
+      setConsultationMessage(error instanceof Error ? error.message : "Unable to book the consultation.");
+    }
   };
+
+  const consultationDays = useMemo(() => {
+    const days = new Map<string, ConsultationSlot[]>();
+    consultationSlots.forEach((slot) => {
+      const key = new Date(slot.start).toLocaleDateString("en-CA");
+      days.set(key, [...(days.get(key) || []), slot]);
+    });
+    return Array.from(days.entries()).slice(0, 5);
+  }, [consultationSlots]);
 
   if (!isOpen) return null;
 
@@ -303,7 +382,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[375px] sm:rounded-[24px] md:max-w-[860px] md:rounded-[26px]"
+        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[390px] sm:rounded-[24px] md:max-w-[1120px] md:rounded-[26px]"
       >
         <button
           type="button"
@@ -317,7 +396,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
           <X className="h-5 w-5" />
         </button>
 
-        <div className="h-full max-h-screen overflow-y-auto px-[30px] pb-7 pt-3 sm:max-h-[calc(100vh-24px)] md:px-10 md:pb-5 md:pt-5">
+        <div className="h-full max-h-screen overflow-y-auto px-[26px] pb-7 pt-3 sm:max-h-[calc(100vh-24px)] md:px-10 md:pb-5 md:pt-5 lg:px-12">
           <div className="text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#eef3ff] p-2 md:h-12 md:w-12">
               <Image src={promotableRibbonIcon} width={29} height={29} alt="Promotable badge" className="object-contain" />
@@ -362,9 +441,28 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               </div>
 
               <div className="mt-8 flex items-end justify-center gap-4 md:mt-5">
-                <span className="pb-1 font-jakarta text-[22px] font-bold leading-none text-[#1a3768] line-through md:text-[19px]">{"\u20b9"}4,999</span>
-                <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">{"\u20b9"}1,970</span>
+                <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">
+                  {subscriptionAmount
+                    ? new Intl.NumberFormat("en-IN", {
+                        style: "currency",
+                        currency: "INR",
+                        maximumFractionDigits: 0,
+                      }).format(subscriptionAmount / 100)
+                    : "Price available at checkout"}
+                </span>
               </div>
+
+              <label className="mt-4 block text-left font-jakarta text-[11px] font-semibold text-white/90">
+                Discount code
+                <input
+                  type="text"
+                  value={discountCode}
+                  onChange={(event) => setDiscountCode(event.target.value.toUpperCase())}
+                  placeholder="Enter code if you have one"
+                  className="mt-1 h-10 w-full rounded-[5px] border border-white/30 bg-white px-3 text-[13px] font-semibold uppercase tracking-wide text-[#232323] placeholder:text-[#8d98aa] focus:outline-none focus:ring-2 focus:ring-white/70"
+                  autoComplete="off"
+                />
+              </label>
 
               <input type="hidden" name="name" value={name} readOnly />
               <input type="hidden" name="email" value={email} readOnly />
@@ -393,34 +491,81 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               </span>
             </div>
 
-            <section className="rounded-[6px] border border-[#88b9ff] bg-white px-3 pb-4 pt-5 md:rounded-[10px] md:px-5 md:pb-5 md:pt-8">
-              <div className="text-center">
-                <h3 className="font-quattrocento text-[28px] font-bold leading-tight text-[#075ff0] md:text-[28px]">
-                  Take Sto Quiz First
+            <section className="relative flex flex-col rounded-[10px] border border-[#d9a64f] bg-[#fffcf7] px-4 pb-4 pt-8 text-[#34291f] shadow-[0_8px_24px_rgba(124,83,24,0.05)] md:px-6 md:pb-5 md:pt-8 lg:px-7">
+              <span className="absolute left-4 top-2 rounded-md bg-[#fff0d0] px-3 py-1 font-jakarta text-[9px] font-bold tracking-wide text-[#9a6516] md:left-1/2 md:top-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:border md:border-[#d9a64f] md:bg-[#fffcf7] md:text-[10px]">
+                NEED CLARITY FIRST
+              </span>
+
+              <div className="text-left md:text-center">
+                <h3 className="font-quattrocento text-[24px] font-bold leading-tight text-[#34291f] md:text-[28px]">
+                  Promotion Clarity Session
                 </h3>
-                <p className="mx-auto mt-1 max-w-[245px] font-jakarta text-[11px] font-medium leading-[16px] text-black md:text-[12px] md:leading-[17px]">
-                  Not ready to join yet? Start with clarity on what is blocking your promotion momentum.
+                <p className="mt-1.5 font-jakarta text-[12px] font-medium leading-[17px] text-[#29231e] md:mx-auto md:max-w-[390px] md:text-[12px] md:leading-[17px]">
+                  A private 1:1 session to understand what may be slowing your career—and what to do next.
                 </p>
               </div>
 
-              <div className="mt-5 space-y-2 md:mt-6">
-                {clarityFeatures.map(({ label, icon: Icon }) => (
-                  <div key={label} className="flex min-h-[39px] items-center gap-3 rounded-[5px] border border-[#9ac3ff] bg-[#f3f7ff] px-[7px] text-[#232323] md:min-h-[43px]">
-                    <span className="flex h-[31px] w-[31px] shrink-0 items-center justify-center rounded-[3px] bg-white text-[#1265f5]">
-                      <Icon className="h-[19px] w-[19px]" strokeWidth={2.6} />
-                    </span>
-                    <span className="font-jakarta text-[15px] font-medium leading-tight md:text-[14px]">{label}</span>
-                  </div>
-                ))}
+              <div className="mt-4 grid grid-cols-3 gap-2 font-jakarta text-[10px] font-semibold md:text-[11px]">
+                <ClarityPill icon={UserRound}>1:1 Video Call</ClarityPill>
+                <ClarityPill icon={Clock3}>45 Minutes</ClarityPill>
+                <ClarityPill icon={Target}>Tailored to You</ClarityPill>
               </div>
 
-              <button
-                type="button"
-                onClick={handleGetUnstuck}
-                className="mt-[31px] inline-flex min-h-[46px] w-full cursor-pointer items-center justify-center rounded-[5px] border border-[#075ff0] bg-white px-4 font-jakarta text-[16px] font-semibold text-[#075ff0] transition hover:bg-[#f3f7ff] focus:outline-none focus:ring-2 focus:ring-[#88b9ff] md:mt-7 md:min-h-[44px] md:text-[15px]"
-              >
-                Take Sto Quiz
+              <p className="mt-4 font-jakarta text-[11px] font-bold text-[#b57916] md:text-[12px]">In this session, you will:</p>
+              <div className="mt-3 grid gap-4 md:grid-cols-[minmax(0,1fr)_155px] md:items-center md:gap-5">
+                <div className="space-y-3">
+                  <ClarityStep number="01" title="Understand your situation">
+                    We unpack your role, recent history, key relationships and current roadblocks.
+                  </ClarityStep>
+                  <ClarityStep number="02" title="Find the likely gap">
+                    We identify the real issue—visibility, influence, positioning, sponsorship or other.
+                  </ClarityStep>
+                  <ClarityStep number="03" title="Map your next move">
+                    You get clarity on the conversations, signals and actions that will make the biggest difference.
+                  </ClarityStep>
+                </div>
+
+                <div className="rounded-md border border-[#d9a64f] bg-white/60 px-4 py-4 text-center font-jakarta md:px-4 md:py-6">
+                  <Gift className="mx-auto h-7 w-7 text-[#b57916]" strokeWidth={1.7} />
+                  <h4 className="mt-2 text-[12px] font-bold md:text-[13px]">You’ll leave with</h4>
+                  <p className="mt-2 text-[11px] font-medium leading-[16px] md:text-[12px] md:leading-[18px]">
+                    A personalised diagnosis and a focused path forward. You also receive a <strong>written summary after</strong> the session.
+                  </p>
+                </div>
+              </div>
+
+              {showConsultationSlots ? (
+                <div className="mt-4 rounded-lg border border-[#ead3aa] bg-white p-3 font-jakarta">
+                  <p className="text-sm font-semibold text-[#23314d]">Choose your consultation</p>
+                  <div className="mt-3 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Consultation dates">
+                    {consultationDays.map(([date]) => {
+                      const value = new Date(`${date}T12:00:00`);
+                      const active = date === selectedConsultationDate;
+                      return <button key={date} type="button" role="tab" aria-selected={active} onClick={() => { setSelectedConsultationDate(date); setSelectedSlotStart(""); }} className={`min-w-[58px] rounded-lg border px-2 py-2 text-center transition ${active ? "border-[#075ff0] bg-[#075ff0] text-white" : "border-[#c9dcff] bg-white text-[#344054] hover:border-[#75a9ff]"}`}><span className="block text-[10px] font-semibold uppercase">{value.toLocaleDateString("en-IN", { weekday: "short" })}</span><span className="mt-0.5 block text-base font-bold">{value.getDate()}</span><span className="block text-[10px]">{value.toLocaleDateString("en-IN", { month: "short" })}</span></button>;
+                    })}
+                  </div>
+                  <p className="mt-3 text-xs font-semibold text-[#667085]">Available times</p>
+                  <div className="mt-2 grid grid-cols-3 gap-2">
+                    {(consultationDays.find(([date]) => date === selectedConsultationDate)?.[1] || []).map((slot) => {
+                      const active = selectedSlotStart === slot.start;
+                      return <button key={slot.start} type="button" onClick={() => setSelectedSlotStart(slot.start)} className={`rounded-md border px-2 py-2 text-xs font-semibold transition ${active ? "border-[#075ff0] bg-[#eaf2ff] text-[#075ff0] ring-1 ring-[#075ff0]" : "border-[#c9dcff] bg-white text-[#344054] hover:border-[#75a9ff]"}`}>{new Date(slot.start).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" })}</button>;
+                    })}
+                  </div>
+                  {selectedSlotStart ? <p className="mt-3 text-center text-xs font-medium text-[#067647]">✓ Time selected</p> : null}
+                </div>
+              ) : null}
+              <button type="button" onClick={handleBookConsultation} disabled={consultationStatus === "loading" || consultationAmount === null || (showConsultationSlots && (!consultationSlots.length || !selectedSlotStart))} className="mt-4 inline-flex min-h-[42px] w-full cursor-pointer items-center justify-center rounded-[4px] bg-[#bd861d] px-4 font-jakarta text-[13px] font-semibold text-white transition hover:bg-[#a97415] focus:outline-none focus:ring-2 focus:ring-[#d9a64f] disabled:cursor-not-allowed disabled:bg-[#cbb58d] md:mt-auto md:min-h-[42px] md:text-[13px]">
+                {consultationStatus === "loading" ? "Opening payment..." : showConsultationSlots ? `Pay & Book — ₹${((consultationAmount || 0) / 100).toLocaleString("en-IN")}` : consultationAmount ? `Book My Clarity Session — ₹${(consultationAmount / 100).toLocaleString("en-IN")}` : "Clarity sessions unavailable"}
               </button>
+              <div className="mt-2.5 flex items-center justify-center gap-2 font-jakarta text-[10px] font-medium text-[#5f6773] md:text-[11px]">
+                <ShieldCheck className="h-4 w-4 text-[#b57916]" strokeWidth={1.7} />
+                <span>No obligation to join the program. No generic career advice.</span>
+              </div>
+              {consultationMessage ? (
+                <p className="mt-3 text-center font-jakarta text-xs font-medium text-red-600" role="status">
+                  {consultationMessage}
+                </p>
+              ) : null}
             </section>
           </div>
 
@@ -449,3 +594,22 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 };
 
 export default PromotableHeroWaitlist;
+
+const ClarityPill = ({ icon: Icon, children }: { icon: React.ElementType; children: React.ReactNode }) => (
+  <div className="flex min-h-8 items-center justify-center gap-1.5 rounded border border-[#ead3aa] bg-white/60 px-1.5 text-center">
+    <Icon className="h-[17px] w-[17px] shrink-0 text-[#714a1a]" strokeWidth={1.7} />
+    <span>{children}</span>
+  </div>
+);
+
+const ClarityStep = ({ number, title, children }: { number: string; title: string; children: React.ReactNode }) => (
+  <div className="relative flex gap-3 font-jakarta after:absolute after:left-[11px] after:top-[24px] after:h-[calc(100%+12px)] after:w-px after:bg-[#e5bd78] last:after:hidden">
+    <span className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#bd861d] text-[10px] font-bold text-white">
+      {number}
+    </span>
+    <div>
+      <h4 className="text-[11px] font-bold leading-[14px] text-[#2f2923] md:text-[12px] md:leading-[15px]">{title}</h4>
+      <p className="mt-0.5 text-[10px] font-medium leading-[14px] text-[#3f3a35] md:text-[11px] md:leading-[15px]">{children}</p>
+    </div>
+  </div>
+);
