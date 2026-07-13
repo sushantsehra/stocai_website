@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import env from "@/utils/env";
+import { getConsultationConfirmationCopy } from "@/lib/consultationConfirmation";
 
 type Booking = { status?: string; slot_start?: string; calendar_link?: string; detail?: string };
 
@@ -10,6 +11,7 @@ function ConsultationConfirmationContent() {
   const params = useSearchParams();
   const [booking, setBooking] = useState<Booking | null>(null);
   const [error, setError] = useState("");
+  const confirmationCopy = getConsultationConfirmationCopy(booking?.status);
 
   useEffect(() => {
     const payload = {
@@ -51,10 +53,12 @@ function ConsultationConfirmationContent() {
         {error ? <><h1 className="text-2xl font-bold text-[#b42318]">We couldn&apos;t confirm the booking</h1><p className="mt-3 text-[#667085]">{error}</p></> : null}
         {booking ? (
           <>
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#eaf2ff] text-2xl text-[#075ff0]">✓</div>
-            <h1 className="mt-5 text-3xl font-bold text-[#075ff0]">Consultation booked</h1>
+            <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full text-2xl ${confirmationCopy.confirmed ? "bg-[#eaf2ff] text-[#075ff0]" : "bg-amber-50 text-amber-700"}`}>✓</div>
+            <h1 className={`mt-5 text-3xl font-bold ${confirmationCopy.confirmed ? "text-[#075ff0]" : "text-amber-800"}`}>
+              {confirmationCopy.title}
+            </h1>
             {booking.slot_start ? <p className="mt-4 text-lg font-semibold text-[#232323]">{new Intl.DateTimeFormat("en-IN", { dateStyle: "full", timeStyle: "short" }).format(new Date(booking.slot_start))}</p> : null}
-            <p className="mt-3 text-[#667085]">A calendar invitation has been sent to your email.</p>
+            {confirmationCopy.showCalendarInvite ? <p className="mt-3 text-[#667085]">A calendar invitation has been sent to your email.</p> : null}
             {booking.calendar_link ? <a href={booking.calendar_link} target="_blank" rel="noreferrer" className="mt-6 inline-flex rounded-lg bg-[#075ff0] px-6 py-3 font-semibold text-white">Open calendar event</a> : null}
             {booking.status === "paid_needs_reschedule" ? <p className="mt-5 rounded-lg bg-amber-50 p-4 text-amber-800">Your payment is confirmed, but the selected slot was taken. Our team will contact you to choose another time.</p> : null}
           </>

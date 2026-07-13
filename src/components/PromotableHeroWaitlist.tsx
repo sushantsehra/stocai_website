@@ -98,19 +98,30 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
       setDiscountCode("");
+      setSubscriptionAmount(null);
+      setConsultationAmount(null);
+      setConsultationSlots([]);
+      setConsultationStatus("idle");
+      setConsultationMessage("");
+      setSelectedSlotStart("");
+      setSelectedConsultationDate("");
+      setShowConsultationSlots(false);
     }
   }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
 
   useEffect(() => {
     if (!isOpen) return;
-    fetch(`${env.apiUrl}/payments/razorpay/settings`)
+    const controller = new AbortController();
+    fetch(`${env.apiUrl}/payments/razorpay/settings`, { signal: controller.signal })
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
       .then(({ ok, data }) => {
         setSubscriptionAmount(ok && data?.subscription_amount ? data.subscription_amount : null);
       })
-      .catch(() => setSubscriptionAmount(null));
+      .catch((reason) => {
+        if (reason?.name !== "AbortError") setSubscriptionAmount(null);
+      });
 
-    fetch(`${env.apiUrl}/consultations/slots`)
+    fetch(`${env.apiUrl}/consultations/slots`, { signal: controller.signal })
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
       .then(({ ok, data }) => {
         if (ok && data?.enabled) {
@@ -118,9 +129,16 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
           setConsultationSlots(Array.isArray(data.slots) ? data.slots : []);
         } else {
           setConsultationAmount(null);
+          setConsultationSlots([]);
         }
       })
-      .catch(() => setConsultationAmount(null));
+      .catch((reason) => {
+        if (reason?.name !== "AbortError") {
+          setConsultationAmount(null);
+          setConsultationSlots([]);
+        }
+      });
+    return () => controller.abort();
   }, [isOpen]);
 
   useEffect(() => {
