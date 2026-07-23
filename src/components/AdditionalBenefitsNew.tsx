@@ -9,8 +9,13 @@ import bookIcon from "../assets/book.png";
 import connectionIcon from "../assets/communities.png";
 import achieveIcon from "../assets/roadmap.png";
 import aiIcon from "../assets/chatbot.png";
+import useSubscriptionAmount, {
+  formatSubscriptionAmount,
+} from "@/hooks/useSubscriptionAmount";
 
 const AdditionalBenefitsNew = () => {
+  const subscriptionAmount = useSubscriptionAmount();
+
   const scrollToWaitlist = () => {
     const element = document.getElementById("waitlist");
     if (element) {
@@ -177,7 +182,9 @@ const AdditionalBenefitsNew = () => {
 
             {/* New Price */}
             <p className="text-white font-bold text-[24px] font-inter sm:text-5xl md:text-5xl tracking-wider">
-              ₹1970
+              {subscriptionAmount
+                ? formatSubscriptionAmount(subscriptionAmount)
+                : "Price available at checkout"}
             </p>
           </div>
           {/* Button */}
