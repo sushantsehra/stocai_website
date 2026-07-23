@@ -20,6 +20,9 @@ import {
 import posthog from "posthog-js";
 import env from "@/utils/env";
 import promotableRibbonIcon from "../assets/promotable-ribbon-icon.png";
+import useSubscriptionAmount, {
+  formatSubscriptionAmount,
+} from "@/hooks/useSubscriptionAmount";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -82,7 +85,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
-  const [subscriptionAmount, setSubscriptionAmount] = useState<number | null>(null);
+  const subscriptionAmount = useSubscriptionAmount(isOpen);
   const [consultationStatus, setConsultationStatus] = useState<"idle" | "loading" | "error">("idle");
   const [consultationMessage, setConsultationMessage] = useState("");
   const [consultationAmount, setConsultationAmount] = useState<number | null>(null);
@@ -98,7 +101,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setPhone(initialPhone || "");
       setCountryCode(initialCountryCode || "+91");
       setDiscountCode("");
-      setSubscriptionAmount(null);
       setConsultationAmount(null);
       setConsultationSlots([]);
       setConsultationStatus("idle");
@@ -112,15 +114,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   useEffect(() => {
     if (!isOpen) return;
     const controller = new AbortController();
-    fetch(`${env.apiUrl}/payments/razorpay/settings`, { signal: controller.signal })
-      .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
-      .then(({ ok, data }) => {
-        setSubscriptionAmount(ok && data?.subscription_amount ? data.subscription_amount : null);
-      })
-      .catch((reason) => {
-        if (reason?.name !== "AbortError") setSubscriptionAmount(null);
-      });
-
     fetch(`${env.apiUrl}/consultations/slots`, { signal: controller.signal })
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
       .then(({ ok, data }) => {
@@ -443,11 +436,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               <div className="mt-8 flex items-end justify-center gap-4 md:mt-5">
                 <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">
                   {subscriptionAmount
-                    ? new Intl.NumberFormat("en-IN", {
-                        style: "currency",
-                        currency: "INR",
-                        maximumFractionDigits: 0,
-                      }).format(subscriptionAmount / 100)
+                    ? formatSubscriptionAmount(subscriptionAmount)
                     : "Price available at checkout"}
                 </span>
               </div>
