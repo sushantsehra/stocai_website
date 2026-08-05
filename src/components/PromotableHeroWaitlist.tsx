@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import {
-  BarChart3,
+  ArrowRight,
+  Award,
+  BadgeCheck,
+  CheckCircle2,
   Clock3,
+  FileText,
   Gift,
   Lock,
-  Megaphone,
+  MessageCircle,
   ShieldCheck,
-  Sparkles,
-  Star,
   Target,
   UserRound,
-  UserRoundCheck,
   UsersRound,
   X,
+  Zap,
 } from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
-import promotableRibbonIcon from "../assets/promotable-ribbon-icon.png";
 import useSubscriptionAmount, {
   formatSubscriptionAmount,
 } from "@/hooks/useSubscriptionAmount";
@@ -53,18 +53,12 @@ type HeroWaitlistProps = {
 
 type ConsultationSlot = { start: string; end: string; start_utc?: string; end_utc?: string };
 
-const programFeatures = [
-  { label: "Stakeholder management", icon: UsersRound },
-  { label: "Leadership signalling", icon: Megaphone },
-  { label: "Executive presence", icon: UserRoundCheck },
-  { label: "Promotion pitches", icon: BarChart3 },
-];
-
-const supportPillars = [
-  { label: "AI coach", icon: Sparkles },
-  { label: "Strategic insights", icon: BarChart3 },
-  { label: "Accountability", icon: UsersRound },
-  { label: "12-month access", icon: Lock },
+const promotionBenefits = [
+  { label: "Get credit for your work", icon: Award },
+  { label: "Become your boss's go-to", icon: UsersRound },
+  { label: "Do more without burnout", icon: Zap },
+  { label: "Build a promotion pitch that wins", icon: FileText },
+  { label: "Speak up with confidence", icon: MessageCircle },
 ];
 
 const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
@@ -375,7 +369,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[390px] sm:rounded-[24px] md:max-w-[1120px] md:rounded-[26px]"
+        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[390px] sm:rounded-[18px]"
       >
         <button
           type="button"
@@ -389,66 +383,69 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
           <X className="h-5 w-5" />
         </button>
 
-        <div className="h-full max-h-screen overflow-y-auto px-[26px] pb-7 pt-3 sm:max-h-[calc(100vh-24px)] md:px-10 md:pb-5 md:pt-5 lg:px-12">
-          <div className="text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#eef3ff] p-2 md:h-12 md:w-12">
-              <Image src={promotableRibbonIcon} width={29} height={29} alt="Promotable badge" className="object-contain" />
+        <div className="h-full max-h-screen overflow-y-auto sm:max-h-[calc(100vh-24px)]">
+          <div className="relative px-5 pb-0 pt-5 sm:px-7 sm:pt-6 md:px-8">
+            <div className="inline-flex items-center gap-2 rounded-lg border border-[#dcecdf] bg-[#f4faf5] px-2.5 py-1.5 font-jakarta text-[9px] leading-tight text-[#1d2939] sm:text-[10px]">
+              <BadgeCheck className="h-4 w-4 fill-[#39b867] text-[#39b867]" />
+              <span><strong className="font-semibold">Trusted by 500+ professionals</strong><br />4.8/5 average rating <span className="tracking-[-1px] text-[#ffbd21]">★★★★★</span></span>
             </div>
-            <h2 className="mt-3 font-quattrocento text-[27px] font-bold leading-tight text-[#0b64f4] md:text-[40px]">
-              Be More Promotable
+
+            <h2 className="mt-4 max-w-[330px] font-jakarta text-[30px] font-extrabold leading-[1.08] tracking-[-1.2px] text-[#080d18] sm:text-[34px]">
+              Never Get Rejected<br />for a <span className="relative inline-block text-[#0865df] after:absolute after:bottom-[-2px] after:left-0 after:h-[3px] after:w-full after:-rotate-1 after:bg-[#2eaf68]">Promotion</span>.
             </h2>
-            <p className="mx-auto mt-1 max-w-[285px] font-jakarta text-[11px] font-medium leading-[15px] text-black md:max-w-[610px] md:text-[15px] md:leading-5">
-              You know you are capable of more. Choose the next best step for your career.
+            <p className="mt-3 max-w-[340px] font-jakarta text-[12px] font-medium leading-[17px] text-[#222936] sm:text-[13px] sm:leading-[18px]">
+              The one skill that has changed career trajectory of many corporate employees.
             </p>
           </div>
 
-          <div className="relative mt-3 grid gap-7 md:mt-4 md:grid-cols-[1fr_36px_1fr] md:items-stretch md:gap-4">
-            <form
-              onSubmit={handleSubmit}
-              className="relative overflow-hidden rounded-[5px] bg-[#1265f5] px-4 pb-[22px] pt-10 text-white shadow-[0_18px_36px_rgba(18,101,245,0.18)] md:rounded-[10px] md:px-5 md:pb-5 md:pt-10"
-            >
-              <div className="absolute right-0 top-0 h-12 w-12 bg-[#dbe8ff] [clip-path:polygon(0_0,100%_100%,100%_0)] md:h-14 md:w-14">
-                <Star className="absolute right-[7px] top-[7px] h-4 w-4 fill-[#1265f5] text-[#1265f5] md:right-2 md:top-2" />
-              </div>
-              <span className="absolute left-1/2 top-[11px] -translate-x-1/2 rounded-full bg-[#eaf2ff] px-3 py-1 font-jakarta text-[11px] font-medium text-[#075ff0] md:top-4 md:text-[11px]">
-                Recommended
-              </span>
-              <div className="text-center">
-                <h3 className="font-quattrocento text-[28px] font-bold leading-none text-white md:text-[28px]">
-                  Join the Program
-                </h3>
-                <p className="mx-auto mt-3 max-w-[225px] font-jakarta text-[11px] font-medium leading-[16px] text-white md:text-[12px] md:leading-[17px]">
-                  Build the operating system for faster promotion momentum.
-                </p>
-              </div>
+          <div className="mt-3 flex items-center gap-3 bg-gradient-to-r from-[#edf4ff] to-[#f6f9ff] px-5 py-3.5 sm:px-7 md:px-8">
+            <Target className="h-11 w-11 shrink-0 text-[#1768dd]" strokeWidth={2.2} />
+            <p className="font-jakarta text-[11px] font-medium leading-[17px] text-[#26334a] sm:text-[12px]">
+              A proven system to help you earn your next promotion, even during a <strong className="font-bold text-[#0757c4]">recession, office politics,</strong> or <strong className="font-bold text-[#0757c4]">organizational uncertainty.</strong>
+            </p>
+          </div>
 
-              <div className="mt-[29px] space-y-2 md:mt-5">
-                {programFeatures.map(({ label, icon: Icon }) => (
-                  <div key={label} className="flex min-h-[39px] items-center gap-3 rounded-[5px] bg-white px-[7px] text-[#232323] md:min-h-[43px]">
-                    <span className="flex h-[31px] w-[31px] shrink-0 items-center justify-center rounded-[3px] bg-[#e9f2ff] text-[#1265f5]">
-                      <Icon className="h-[19px] w-[19px]" strokeWidth={2.6} />
+          <div className="relative mx-auto grid gap-0 px-5 pt-3 sm:px-7 md:px-8">
+            <form
+              id="promotion-checkout-form"
+              onSubmit={handleSubmit}
+              className="relative"
+            >
+              <h3 className="font-jakarta text-[13px] font-extrabold leading-[17px] text-[#111827]">
+                Get a trusted <span className="text-[#075dcc]">Promotion Strategy System</span><br />that helps you:
+              </h3>
+
+              <div className="mt-2">
+                {promotionBenefits.map(({ label, icon: Icon }) => (
+                  <div key={label} className="flex min-h-[34px] items-center gap-2 border-b border-[#e2e5e9] py-1 last:border-0">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#075dcc] text-white">
+                      <Icon className="h-3.5 w-3.5" strokeWidth={2.2} />
                     </span>
-                    <span className="font-jakarta text-[15px] font-medium leading-tight md:text-[14px]">{label}</span>
+                    <span className="font-jakarta text-[11px] font-bold leading-tight text-[#18202d] sm:text-[12px]">{label}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 flex items-end justify-center gap-4 md:mt-5">
-                <span className="font-jakarta text-[31px] font-bold leading-none text-white md:text-[31px]">
-                  {subscriptionAmount
-                    ? formatSubscriptionAmount(subscriptionAmount)
-                    : "Price available at checkout"}
+              <div className="relative mt-3 grid min-h-[58px] grid-cols-[44%_56%] overflow-visible rounded-lg border border-[#1469e8] bg-white">
+                <span className="absolute -right-px -top-[10px] rounded bg-[#3bb56a] px-2 py-1 font-jakarta text-[9px] font-bold text-white">
+                  {subscriptionAmount ? `${Math.max(0, Math.round((1 - subscriptionAmount / 1500000) * 100))}% OFF` : "SPECIAL OFFER"}
                 </span>
+                <div className="flex items-center justify-center border-r border-[#e4e7ec] font-jakarta text-[18px] font-semibold text-[#8a9099] line-through sm:text-[20px]">
+                  ₹15,000/-
+                </div>
+                <div className="flex items-center justify-center font-jakarta text-[31px] font-extrabold leading-none text-[#0757c4] sm:text-[34px]">
+                  {subscriptionAmount ? `${formatSubscriptionAmount(subscriptionAmount)}/-` : "At checkout"}
+                </div>
               </div>
 
-              <label className="mt-4 block text-left font-jakarta text-[11px] font-semibold text-white/90">
-                Discount code
+              <label className="hidden">
+                Have a discount code?
                 <input
                   type="text"
                   value={discountCode}
                   onChange={(event) => setDiscountCode(event.target.value.toUpperCase())}
-                  placeholder="Enter code if you have one"
-                  className="mt-1 h-10 w-full rounded-[5px] border border-white/30 bg-white px-3 text-[13px] font-semibold uppercase tracking-wide text-[#232323] placeholder:text-[#8d98aa] focus:outline-none focus:ring-2 focus:ring-white/70"
+                  placeholder="Enter code"
+                  className="mt-1 h-8 w-full rounded-md border border-[#d5dce6] bg-white px-3 text-[11px] font-semibold uppercase tracking-wide text-[#232323] placeholder:text-[#98a2b3] focus:border-[#075dcc] focus:outline-none focus:ring-1 focus:ring-[#075dcc]"
                   autoComplete="off"
                 />
               </label>
@@ -458,29 +455,21 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               <input type="hidden" name="phone" value={phone} readOnly />
               <input type="hidden" name="countryCode" value={countryCode} readOnly />
 
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="mt-5 inline-flex min-h-[46px] w-full cursor-pointer items-center justify-center rounded-[5px] bg-[#0657b8] px-4 font-jakarta text-[16px] font-medium text-white transition hover:bg-[#034fa9] focus:outline-none focus:ring-2 focus:ring-white/70 disabled:cursor-not-allowed disabled:opacity-55 md:min-h-[44px] md:text-[15px]"
-              >
-                {status === "loading" ? "Processing..." : "I'll Invest in My Career"}
-              </button>
-
               {message ? (
-                <p className="mt-3 text-center font-jakarta text-xs font-medium text-white" role="status" aria-live="polite">
+                <p className="mt-2 text-center font-jakarta text-xs font-medium text-red-600" role="status" aria-live="polite">
                   {message}
                 </p>
               ) : null}
             </form>
 
-            <div className="relative flex items-center justify-center">
+            <div className="hidden">
               <span className="absolute h-px w-full border-t border-dotted border-[#1265f5] md:inset-y-2 md:h-auto md:w-px md:border-l md:border-t-0" />
               <span className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full bg-[#f0f3fa] font-jakarta text-[18px] font-medium text-[#075ff0] md:h-10 md:w-10 md:text-[16px]">
                 or
               </span>
             </div>
 
-            <section className="relative flex flex-col rounded-[10px] border border-[#d9a64f] bg-[#fffcf7] px-4 pb-4 pt-8 text-[#34291f] shadow-[0_8px_24px_rgba(124,83,24,0.05)] md:px-6 md:pb-5 md:pt-8 lg:px-7">
+            <section className="hidden">
               <span className="absolute left-4 top-2 rounded-md bg-[#fff0d0] px-3 py-1 font-jakarta text-[9px] font-bold tracking-wide text-[#9a6516] md:left-1/2 md:top-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-full md:border md:border-[#d9a64f] md:bg-[#fffcf7] md:text-[10px]">
                 NEED CLARITY FIRST
               </span>
@@ -558,23 +547,42 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             </section>
           </div>
 
-          <div className="mt-6 md:mt-4">
-            <div className="mb-[18px] flex items-center gap-1 md:mb-3 md:gap-4">
-              <span className="h-px flex-1 border-t border-dotted border-[#1265f5]" />
-              <span className="shrink-0 font-jakarta text-[11px] font-medium text-[#232323] md:text-[12px]">What&apos;s included</span>
-              <span className="h-px flex-1 border-t border-dotted border-[#1265f5]" />
+          <div className="grid grid-cols-3 gap-2 px-5 pb-2 pt-2.5 sm:px-7 md:px-8">
+            <div className="flex items-center gap-1.5 font-jakarta text-[#16335c]">
+              <Target className="h-6 w-6 shrink-0 text-[#075dcc]" />
+              <p className="text-[8px] font-medium leading-[10px]"><strong className="block font-bold text-[#075dcc]">Action Plan</strong>for strategic clarity</p>
             </div>
-            <div className="grid grid-cols-2 gap-[9px] md:flex md:flex-wrap md:items-center md:justify-center md:gap-0">
-              {supportPillars.map(({ label, icon: Icon }, index) => (
-                <React.Fragment key={label}>
-                  <span className="inline-flex min-h-[42px] items-center gap-2 rounded-[5px] border border-[#b5d1ff] bg-[#f3f7ff] px-[7px] font-jakarta text-[12px] font-medium text-[#0757c4] md:min-h-0 md:border-0 md:bg-transparent md:px-3 md:text-[12px] md:text-[#526177]">
-                    <Icon className="h-[19px] w-[19px] shrink-0 text-[#1265f5] md:h-4 md:w-4 md:text-[#526177]" strokeWidth={2.6} />
-                    <span>{label}</span>
-                  </span>
-                  {index < supportPillars.length - 1 ? <span className="hidden h-5 w-px bg-[#cfd6e0] md:inline-block" /> : null}
-                </React.Fragment>
-              ))}
+            <div className="flex items-center gap-1.5 border-x border-[#dde3eb] px-2 font-jakarta text-[#16335c]">
+              <Clock3 className="h-6 w-6 shrink-0 text-[#075dcc]" />
+              <p className="text-[8px] font-medium leading-[10px]"><strong className="block font-bold text-[#075dcc]">1344 mins</strong>of strategic insights</p>
             </div>
+            <div className="flex items-center gap-1.5 font-jakarta text-[#16335c]">
+              <UserRound className="h-6 w-6 shrink-0 fill-[#4e82df] text-[#4e82df]" />
+              <p className="text-[8px] font-medium leading-[10px]"><strong className="block font-bold text-[#075dcc]">AI coach &amp;</strong>accountability partner</p>
+            </div>
+          </div>
+
+          <div className="mt-1 bg-[#07111f] px-5 pb-2.5 pt-3 text-center text-white sm:px-7 md:px-8">
+            <h3 className="flex items-center justify-center gap-1.5 font-jakarta text-[13px] font-bold text-[#3bd06b]">
+              <ShieldCheck className="h-5 w-5 fill-[#3bd06b] text-[#3bd06b]" />
+              100% Money Back Guarantee
+            </h3>
+            <p className="mx-auto mt-1 max-w-[320px] font-jakarta text-[9px] font-medium leading-[11px] text-white">
+              Complete the program. If you don&apos;t believe it has improved your understanding of how promotions work, we&apos;ll refund your money. No questions asked.
+            </p>
+            <button
+              type="submit"
+              form="promotion-checkout-form"
+              disabled={status === "loading"}
+              className="mt-2.5 inline-flex min-h-[40px] w-full cursor-pointer items-center justify-center gap-3 rounded-md bg-gradient-to-b from-[#ffdc20] to-[#ffca05] px-4 font-jakarta text-[12px] font-extrabold text-[#121820] shadow-[0_5px_10px_rgba(208,163,0,0.25)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-55"
+            >
+              <Lock className="h-4 w-4 fill-[#111827]" />
+              {status === "loading" ? "Processing..." : "Proceed to Secure Checkout"}
+              <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-[#111827] text-white"><ArrowRight className="h-3.5 w-3.5" /></span>
+            </button>
+            <p className="mt-2 flex items-center justify-center gap-1 font-jakarta text-[8px] font-medium text-[#d8e0ea]">
+              <CheckCircle2 className="h-3 w-3 text-[#3bd06b]" /> Instant access after secure payment
+            </p>
           </div>
         </div>
       </div>
