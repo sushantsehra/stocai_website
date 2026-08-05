@@ -1,9 +1,79 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { BarChart3, Eye, Handshake, Sparkles, Trophy } from "lucide-react";
+import sushantPicture from "@/assets/SushantPicture.png";
+import eleenaPicture from "@/assets/EleenaR.jpg";
+import hussainPicture from "@/assets/MHussain.jpg";
+import venkatramanPicture from "@/assets/VenkatramanA.jpg";
+import accentureLogo from "@/assets/accenture.png";
+import citiLogo from "@/assets/citi_logo.png";
+import deloitteLogo from "@/assets/deloitte.png";
+import mahindraLogo from "@/assets/mahindra.png";
+import nvidiaLogo from "@/assets/nvidia.png";
+import morganStanleyLogo from "@/assets/morganstanley.png";
+import edelweissLogo from "@/assets/edelweiss.png";
 import PromotionIdentityComparison from "./PromotionIdentityComparison";
 import PromotionSequence from "./PromotionSequence";
+import ExitIntentPopup from "./ExitIntentPopup";
 import styles from "./page.module.css";
+
+const outcomes = [
+  ["01", "Get credited for the work you already do", "Stop watching your work get absorbed into someone else's slide."],
+  ["02", "Look like the next level before you hold the title", "Lead the way the level above leads: set direction, delegate, and make the case too clear to file under ‘maybe next cycle.’"],
+  ["03", "Make your case impossible to ignore", "Turn what you did into a story that lands in the room—the impact, in the language decision-makers use."],
+  ["04", "Get the people who decide into your corner", "Turn the relationships you already have into people who stake their name on yours when you are not in the room."],
+];
+
+const formulaItems = [
+  { label: "Seen", copy: "The right people know your work.", Icon: Eye },
+  { label: "Believed", copy: "They can already picture you at the next level.", Icon: Sparkles },
+  { label: "Backed", copy: "Someone in the room will stake their credibility on you.", Icon: Handshake },
+];
+
+const planSteps = [
+  ["Learn", "The lessons show you how the decision actually gets made—and the moves that shift it."],
+  ["Build", "The app turns that into a plan mapped to your real role and the people who decide it."],
+  ["Rehearse", "The AI coach helps you practise the awkward conversations until they stop feeling awkward."],
+];
+
+const offerItems = [
+  "The full program: how the promotion decision gets made, and the moves that shift it",
+  "A personalised 30-60-90 promotion plan built around your real role and decision-makers",
+  "The app that builds the plan with you, mapped to your actual situation",
+  "A private AI coach to rehearse the conversations that decide it",
+];
+
+const shifts = [
+  "See the game clearly",
+  "Get seen on purpose",
+  "Build the reputation that travels",
+  "Close the promotion",
+];
+
+const testimonials = [
+  { quote: "How decisions get made when you're not in the room. That changed how I show up completely.", role: "Director of Operations · Bengaluru · Consulting", image: eleenaPicture },
+  { quote: "Finally understood how to communicate impact without it feeling like self-promotion. That was my biggest block.", role: "Senior Product Manager · Gurugram · Global SaaS", image: hussainPicture },
+  { quote: "Practising my promotion pitch with the AI coach before the real conversation—that is what made the difference.", role: "Engineering Head · Pune · Global Product", image: venkatramanPicture },
+];
+
+const memberCompanies = [
+  { name: "Accenture", logo: accentureLogo },
+  { name: "Citi", logo: citiLogo },
+  { name: "Deloitte", logo: deloitteLogo },
+  { name: "Mahindra", logo: mahindraLogo },
+  { name: "NVIDIA", logo: nvidiaLogo },
+  { name: "Morgan Stanley", logo: morganStanleyLogo },
+  { name: "Edelweiss Life", logo: edelweissLogo },
+];
+
+const faqs = [
+  ["What if I do it and nothing changes?", "Then you get every rupee back. Do the program, apply the plan, and if you see no movement toward your promotion, we refund you. You will still walk into your next cycle knowing exactly where you stand."],
+  ["I've got 12+ years in. Is this still for me?", "More, not less. Sponsorship, visibility, and how you are perceived matter more the higher you go. Delivery stopped being the only differentiator years ago."],
+  ["My decision-makers are remote, or abroad.", "That is exactly the case this is built for. When leadership cannot see you work, perception and backing do the deciding. This is how you shape both from a distance."],
+  ["How is this different from every other leadership course?", "Most courses teach you to be a better leader. This teaches you how the promotion decision actually gets made and how to position for it in your real situation—not in theory."],
+  ["I don't have time for another course.", "Move at your own pace and revisit any module anytime. Most modules are short and end with something you can use at work that week."],
+];
 
 export const dynamic = "force-static";
 
@@ -85,6 +155,162 @@ export default function PromotionStoryPage() {
           <p className={styles.closingQuestion}>What am I still not seeing?</p>
         </div>
       </section>
+
+      <section className={`${styles.contentSection} ${styles.formulaSection}`}>
+        <div className={styles.sectionInner}>
+          <p className={styles.eyebrow}>Somewhere along the way, the rules changed</p>
+          <h2>Early in your career, good work moves you forward. Later, it only keeps you in the running.</h2>
+          <p className={styles.sectionLead}>Good work still matters. It is just no longer the whole case.</p>
+          <div className={styles.formula} aria-label="Seen times believed times backed equals promoted">
+            {formulaItems.map(({ label, copy, Icon }, index) => (
+              <div className={styles.formulaPart} key={label}>
+                <div className={styles.formulaCard}>
+                  <div className={styles.formulaVisual}><Icon aria-hidden="true" /></div>
+                  <div className={styles.formulaCopy}><strong>{label}</strong><span>{copy}</span></div>
+                </div>
+                <span className={styles.operator} aria-hidden="true">{index === 2 ? "=" : "×"}</span>
+              </div>
+            ))}
+            <div className={`${styles.formulaCard} ${styles.formulaResult}`}>
+              <div className={styles.formulaVisual}><Trophy aria-hidden="true" /></div>
+              <div className={styles.formulaCopy}><strong>Promoted</strong><span>The decision goes your way.</span></div>
+            </div>
+          </div>
+          <p className={styles.formulaLine}>Good work gets you considered. <strong>Seen × Believed × Backed</strong> is what gets you promoted.</p>
+        </div>
+      </section>
+
+      <section className={`${styles.contentSection} ${styles.outcomesSection}`}>
+        <div className={styles.sectionInner}>
+          <p className={styles.transitionLine}>You already do the work. This is what it takes to get promoted for it.</p>
+          <h2>Become the obvious choice, before the next cycle opens.</h2>
+          <div className={styles.outcomeGrid}>
+            {outcomes.map(([number, title, copy]) => <article className={styles.outcomeCard} key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}
+          </div>
+          <div className={styles.productStatement}>
+            <p>That is the whole point of <strong>Be More Promotable.</strong> Not more hours. The moves that turn the work you already do into a promotion.</p>
+            <Link href="#offer" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link>
+          </div>
+          <blockquote className={styles.seedQuote}>“The stakeholder framework alone was worth the entire program.”<cite>Finance Head · Mumbai · Financial Services</cite></blockquote>
+        </div>
+      </section>
+
+      <section className={`${styles.contentSection} ${styles.planSection}`}>
+        <div className={styles.sectionInner}>
+          <p className={styles.eyebrow}>What you actually walk away with</p>
+          <h2>A plan built around your actual job.</h2>
+          <p className={styles.sectionLead}>This is not a course to watch. It is a plan you build—and run.</p>
+          <div className={styles.planLayout}>
+            <div className={styles.planPreview} aria-label="Personalised promotion plan preview">
+              <div className={styles.previewTop}><span>YOUR PROMOTION PLAN</span><span>30 · 60 · 90</span></div>
+              <div className={styles.previewTrack}><i /><i /><i /></div>
+              <div className={styles.previewRows}><span>Decision map</span><b>5 people</b><span>Next-level signal</span><b>Defined</b><span>Monday move</span><b>Ready</b></div>
+            </div>
+            <div className={styles.planCopy}><p className={styles.takeaway}>You leave with your <em>personalised</em> promotion plan.</p><p>Not a template. A 30-60-90 built around who decides your next promotion, the version of you they need to see, and the specific moves to get there before your next cycle. You finish knowing what to do Monday, and every Monday after.</p></div>
+          </div>
+          <div className={styles.steps}>{planSteps.map(([title, copy], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+          <div className={styles.planClosing}>
+            <p className={styles.planClose}>You see it coming, and you walk in ready.</p>
+            <Link href="#offer" className={styles.softCta}>Come build your plan <span>→</span></Link>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.contentSection} ${styles.stakesSection}`}>
+        <div className={styles.sectionInner}>
+          <p className={styles.eyebrow}>The cost of waiting</p>
+          <h2>A promotion delayed by two years follows you for a decade.</h2>
+          <p className={styles.sectionLead}>Your salary follows your title. Miss a cycle and the raise you did not get is not a one-time loss. Every future raise compounds off the lower number.</p>
+          <div className={styles.chart}>
+            <div className={styles.chartHeader}>
+              <div><span>Illustrative annual compensation</span><strong>₹ LPA</strong></div>
+              <div className={styles.chartLegend}><span><i className={styles.strategicDot} />Earlier promotion</span><span><i className={styles.reactiveDot} />Delayed promotion</span></div>
+            </div>
+            <div className={styles.chartBody}>
+              <div className={styles.chartGraphic}>
+                <svg viewBox="0 0 760 390" role="img" aria-labelledby="promotion-chart-title promotion-chart-desc">
+                  <title id="promotion-chart-title">Compensation paths over twelve years</title>
+                  <desc id="promotion-chart-desc">The earlier-promotion path grows from 15 to 120 lakh per annum while the delayed-promotion path grows from 15 to 70 lakh per annum.</desc>
+                  {[15, 50, 85, 120].map((value, index) => <g key={value}><line x1="58" y1={315 - index * 82} x2="708" y2={315 - index * 82} className={styles.gridLine} /><text x="42" y={320 - index * 82} textAnchor="end" className={styles.axisLabel}>{value}</text></g>)}
+                  <line x1="58" y1="315" x2="708" y2="315" className={styles.axisLine} />
+                  <polyline points="58,287 166,270 274,248 382,210 490,164 598,110 706,55" className={styles.strategicLine} />
+                  <polyline points="58,287 166,281 274,270 382,255 490,236 598,212 706,164" className={styles.reactiveLine} />
+                  {[15,24,36,52,70,92,120].map((value,index) => { const x=58+index*108; const y=[287,270,248,210,164,110,55][index]; return <g key={`s-${value}`}><circle cx={x} cy={y} r="6" className={styles.strategicPoint} /><text x={x} y={y-14} textAnchor="middle" className={styles.strategicValue}>{value}</text></g>; })}
+                  {[15,18,24,32,42,55,70].map((value,index) => { const x=58+index*108; const y=[287,281,270,255,236,212,164][index]; return <g key={`r-${value}`}><circle cx={x} cy={y} r="5" className={styles.reactivePoint} /><text x={x} y={y+23} textAnchor="middle" className={styles.reactiveValue}>{value}</text></g>; })}
+                  <line x1="706" y1="67" x2="706" y2="152" className={styles.gapLine} />
+                  <path d="M699 74 L706 64 L713 74 M699 145 L706 155 L713 145" className={styles.gapArrow} />
+                  <g className={styles.gapBadge}><rect x="538" y="84" width="148" height="48" rx="8" /><text x="612" y="104" textAnchor="middle">₹50 LPA gap</text><text x="612" y="121" textAnchor="middle">every year by year 12</text></g>
+                  {[0,2,4,6,8,10,12].map((year,index) => <text key={year} x={58+index*108} y="347" textAnchor="middle" className={styles.yearLabel}>{year}</text>)}
+                  <text x="382" y="378" textAnchor="middle" className={styles.axisTitle}>YEARS IN CORPORATE</text>
+                </svg>
+              </div>
+              <aside className={styles.chartSummary} aria-label="Twelve year compensation comparison">
+                <p>After 12 years</p>
+                <div><span>Earlier promotion</span><strong>₹1.20 crore</strong><small>annual compensation</small></div>
+                <div><span>Delayed promotion</span><strong>₹70 lakh</strong><small>annual compensation</small></div>
+                <div className={styles.summaryGap}><span>The difference</span><strong>₹50 lakh<br />every year</strong></div>
+              </aside>
+            </div>
+            <div className={styles.compoundNote}><span><BarChart3 aria-hidden="true" /></span><strong>Promotions compound.<br />So does the cost of delay.</strong><p>Your salary follows your title.<br /><b>Your salary follows how quickly you reach that title.</b></p></div>
+            <p className={styles.chartDisclaimer}>Illustrative example only. Individual outcomes depend on performance, company, role, market conditions, and other factors.</p>
+          </div>
+          <p className={styles.stakesPull}>Two paths, same person. By year 12, the gap is about <strong>₹50 lakh every year.</strong> Over a decade, more than ₹1 crore.</p>
+        </div>
+      </section>
+
+      <section id="offer" className={`${styles.contentSection} ${styles.offerSection}`}>
+        <div className={`${styles.sectionInner} ${styles.offerInner}`}>
+          <div className={styles.offerIntro}><p className={styles.eyebrow}>Be More Promotable</p><h2>Get on the earlier curve.</h2><p className={styles.price}>₹7,000 <span>one payment · 12-month access</span></p></div>
+          <div className={styles.offerCard}>
+            <p className={styles.offerLabel}>Everything you need to make the next cycle different</p>
+            <ul>{offerItems.map(item => <li key={item}><span>✓</span>{item}</li>)}</ul>
+            <details className={styles.curriculum}><summary>See everything inside the program <span>+</span></summary><ol>{shifts.map((shift, index) => <li key={shift}><span>Shift {index + 1}</span>{shift}</li>)}</ol></details>
+            <p className={styles.guarantee}><strong>The movement guarantee.</strong> Do the program, apply the plan, and if you see no movement toward your promotion, we refund every rupee. <b>The only thing you risk is staying on the curve you&apos;re already on.</b></p>
+            <Link href="/diagnostic" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link>
+            <small>Get chosen first. Get backed for the next level.</small>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.contentSection} ${styles.founderSection}`}>
+        <div className={`${styles.sectionInner} ${styles.founderLayout}`}>
+          <div className={styles.founderImage}><Image src={sushantPicture} alt="Sushant Sehra, founder of Be More Promotable" priority={false} /></div>
+          <div className={styles.founderCopy}>
+            <p className={styles.eyebrow}>Why this exists</p>
+            <p>For years I believed what most professionals are taught. Work hard, stay patient, the promotion will come. Then I watched talented people get overlooked cycle after cycle, while others moved ahead because they understood how visibility, influence, and leadership perception actually work.</p>
+            <p>So I spent years studying the rules most professionals are never taught, then turned them into a step-by-step system experienced professionals could act on.</p>
+            <h2 className={styles.founderConclusion}>That system is Be More Promotable.</h2>
+            <div className={styles.founderIdentity}>
+              <p className={styles.signature}>Sushant Sehra <span>Founder, Be More Promotable</span></p>
+              <a href="https://www.linkedin.com/in/sushantsehra/" target="_blank" rel="noreferrer" className={styles.textLink}>LinkedIn ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.contentSection} ${styles.proofSection}`}>
+        <div className={styles.sectionInner}>
+          <p className={styles.eyebrow}>From professionals doing the work</p><h2>Small shifts. Different conversations.</h2>
+          <div className={styles.testimonialGrid}>{testimonials.map(({ quote, role, image }) => <blockquote key={role}><div className={styles.memberPortrait}><Image src={image} alt="" fill sizes="72px" /></div><div><span className={styles.quoteMark} aria-hidden="true">“</span>{quote}<cite>{role}</cite></div></blockquote>)}</div>
+          <div className={styles.companies}>
+            <span>Our members come from teams like</span>
+            <div className={styles.companyRail}>
+              <div className={styles.companyTrack}>
+                {[...memberCompanies, ...memberCompanies].map(({ name, logo }, index) => <div className={styles.companyLogo} key={`${name}-${index}`} aria-hidden={index >= memberCompanies.length}><Image src={logo} alt={index < memberCompanies.length ? name : ""} fill sizes="140px" /></div>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className={`${styles.contentSection} ${styles.faqSection}`}>
+        <div className={styles.sectionInner}><p className={styles.eyebrow}>Questions worth asking</p><h2>Before you decide.</h2><div className={styles.faqList}>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div>
+      </section>
+
+      <section className={styles.finalCta}>
+        <div className={styles.sectionInner}><p className={styles.eyebrow}>The next cycle is coming</p><h2>Work harder and hope—or understand how the decision is actually made.</h2><p>One of these has worked for you so far. The other is what gets you promoted.</p><Link href="/diagnostic" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link><small>₹7,000 · one payment · 12-month access</small></div>
+      </section>
+      <ExitIntentPopup />
     </main>
   );
 }
