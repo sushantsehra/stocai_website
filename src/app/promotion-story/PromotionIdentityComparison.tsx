@@ -9,6 +9,7 @@ function Pin({ dark = false }: { dark?: boolean }) {
 
 export default function PromotionIdentityComparison() {
   return (
+    <div className={styles.mobileBoardStory}>
     <div className={styles.investigationBoard}>
       <div className={styles.boardHeading}>
         <span>Case file 03</span>
@@ -23,8 +24,8 @@ export default function PromotionIdentityComparison() {
         <path className={styles.primaryThread} d="M310 238 Q230 278 152 55 M310 238 Q395 278 472 62 M310 238 Q230 345 115 450 M310 238 Q405 340 515 435 M310 238 Q235 540 155 700 M310 238 Q405 535 500 705" />
       </svg>
 
-      <svg className={`${styles.evidenceThreads} ${styles.mobileThreads}`} viewBox="0 0 360 1350" preserveAspectRatio="none" aria-hidden="true">
-        <path className={styles.primaryThread} d="M180 458 Q120 330 118 68 M180 458 Q250 390 244 244 M180 458 Q120 560 108 730 M180 458 Q245 620 250 865 M180 458 Q125 720 124 1028 M180 458 Q250 800 252 1182" />
+      <svg className={`${styles.evidenceThreads} ${styles.mobileThreads}`} viewBox="0 0 689 870" preserveAspectRatio="none" aria-hidden="true">
+        <path className={styles.primaryThread} d="M345 286 Q252 224 158 98 M345 286 Q440 220 530 92 M345 286 Q220 332 107 328 M345 286 Q470 326 582 310 M345 286 Q250 535 145 696 M345 286 Q455 532 551 690" />
       </svg>
 
       <article className={`${styles.evidencePiece} ${styles.youDossier}`}>
@@ -47,7 +48,7 @@ export default function PromotionIdentityComparison() {
         <div className={styles.notPromotedStamp}>Not promoted</div>
       </article>
 
-      <article className={`${styles.evidencePiece} ${styles.promotionClipping}`}>
+      <article className={`${styles.evidencePiece} ${styles.promotionClipping}`} data-clue="2">
         <Pin />
         <p className={styles.clippingSource}>The company chronicle · People</p>
         <h3>Leadership appointments announced</h3>
@@ -60,7 +61,7 @@ export default function PromotionIdentityComparison() {
         <p className={styles.markerUnderline}>Joined after you</p>
       </article>
 
-      <article className={`${styles.evidencePiece} ${styles.reviewEvidence}`}>
+      <article className={`${styles.evidencePiece} ${styles.reviewEvidence}`} data-clue="1">
         <Pin />
         <p className={styles.evidenceLabel}>Exhibit A · Performance review</p>
         <blockquote>“Consistently exceeds expectations and can always be relied upon.”</blockquote>
@@ -68,7 +69,7 @@ export default function PromotionIdentityComparison() {
         <span className={`${styles.suspectTag} ${styles.bossSuspect}`}>My boss is the problem</span>
       </article>
 
-      <article className={`${styles.evidencePiece} ${styles.credentialsEvidence}`}>
+      <article className={`${styles.evidencePiece} ${styles.credentialsEvidence}`} data-clue="3">
         <Pin dark />
         <p className={styles.handDate}>Tuesday, 11:40 PM</p>
         <p className={styles.handwrittenLine}>B.Tech ✓</p>
@@ -78,7 +79,7 @@ export default function PromotionIdentityComparison() {
         <span className={`${styles.suspectTag} ${styles.certificationSuspect}`}>Need another certification</span>
       </article>
 
-      <article className={`${styles.evidencePiece} ${styles.winsEvidence}`}>
+      <article className={`${styles.evidencePiece} ${styles.winsEvidence}`} data-clue="4">
         <Pin />
         <p className={styles.evidenceLabel}>Exhibit C · Track record</p>
         <ul>
@@ -90,7 +91,7 @@ export default function PromotionIdentityComparison() {
         <span className={`${styles.suspectTag} ${styles.presenceSuspect}`}>No executive presence?</span>
       </article>
 
-      <article className={`${styles.evidencePiece} ${styles.timelineEvidence}`}>
+      <article className={`${styles.evidencePiece} ${styles.timelineEvidence}`} data-clue="5">
         <Pin dark />
         <p className={styles.evidenceLabel}>Career map · same destination?</p>
         <svg className={styles.careerMap} viewBox="0 0 280 120" aria-hidden="true">
@@ -110,11 +111,12 @@ export default function PromotionIdentityComparison() {
       <aside className={`${styles.suspectTag} ${styles.jobSuspect}`}>I need a new job</aside>
       <aside className={`${styles.suspectTag} ${styles.visibilitySuspect}`}>Need more visibility</aside>
 
-      <aside className={styles.unansweredNote}>
+      <aside className={styles.unansweredNote} data-clue="6">
         <Pin />
         <span>What am I</span>
         <strong>not seeing?</strong>
       </aside>
+    </div>
     </div>
   );
 }

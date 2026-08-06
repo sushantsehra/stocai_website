@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BarChart3, Eye, Handshake, Sparkles, Trophy } from "lucide-react";
+import { BadgeCheck, BarChart3, FileCheck2, Presentation, Users } from "lucide-react";
 import sushantPicture from "@/assets/SushantPicture.png";
 import eleenaPicture from "@/assets/EleenaR.jpg";
 import hussainPicture from "@/assets/MHussain.jpg";
@@ -19,16 +19,16 @@ import ExitIntentPopup from "./ExitIntentPopup";
 import styles from "./page.module.css";
 
 const outcomes = [
-  ["01", "Get credited for the work you already do", "Stop watching your work get absorbed into someone else's slide."],
-  ["02", "Look like the next level before you hold the title", "Lead the way the level above leads: set direction, delegate, and make the case too clear to file under ‘maybe next cycle.’"],
-  ["03", "Make your case impossible to ignore", "Turn what you did into a story that lands in the room—the impact, in the language decision-makers use."],
-  ["04", "Get the people who decide into your corner", "Turn the relationships you already have into people who stake their name on yours when you are not in the room."],
+  { number: "01", state: "Seen", title: "Get credit", copy: "Make sure the impact of your work carries your name.", Icon: FileCheck2 },
+  { number: "02", state: "Believed", title: "Signal the next level", copy: "Look ready for the role before you hold the title.", Icon: BadgeCheck },
+  { number: "03", state: "Seen", title: "Command the meeting room", copy: "Shape the room when reputation and decisions are being made.", Icon: Presentation },
+  { number: "04", state: "Backed", title: "Get sponsored", copy: "Build advocates who back you when you are not in the room.", Icon: Users },
 ];
 
 const formulaItems = [
-  { label: "Seen", copy: "The right people know your work.", Icon: Eye },
-  { label: "Believed", copy: "They can already picture you at the next level.", Icon: Sparkles },
-  { label: "Backed", copy: "Someone in the room will stake their credibility on you.", Icon: Handshake },
+  { label: "Seen", copy: "The right people know your work.", image: "/promotion-formula/seen.png" },
+  { label: "Believed", copy: "They can already picture you at the next level.", image: "/promotion-formula/believed.png" },
+  { label: "Backed", copy: "Someone in the room will stake their credibility on you.", image: "/promotion-formula/backed-v2.png" },
 ];
 
 const planSteps = [
@@ -162,17 +162,17 @@ export default function PromotionStoryPage() {
           <h2>Early in your career, good work moves you forward. Later, it only keeps you in the running.</h2>
           <p className={styles.sectionLead}>Good work still matters. It is just no longer the whole case.</p>
           <div className={styles.formula} aria-label="Seen times believed times backed equals promoted">
-            {formulaItems.map(({ label, copy, Icon }, index) => (
+            {formulaItems.map(({ label, copy, image }, index) => (
               <div className={styles.formulaPart} key={label}>
                 <div className={styles.formulaCard}>
-                  <div className={styles.formulaVisual}><Icon aria-hidden="true" /></div>
+                  <div className={styles.formulaVisual}><Image src={image} alt="" fill sizes="(max-width: 600px) 28vw, 180px" /></div>
                   <div className={styles.formulaCopy}><strong>{label}</strong><span>{copy}</span></div>
                 </div>
                 <span className={styles.operator} aria-hidden="true">{index === 2 ? "=" : "×"}</span>
               </div>
             ))}
             <div className={`${styles.formulaCard} ${styles.formulaResult}`}>
-              <div className={styles.formulaVisual}><Trophy aria-hidden="true" /></div>
+              <div className={styles.formulaVisual}><Image src="/promotion-formula/promoted.png" alt="" fill sizes="(max-width: 600px) 112px, 180px" /></div>
               <div className={styles.formulaCopy}><strong>Promoted</strong><span>The decision goes your way.</span></div>
             </div>
           </div>
@@ -181,18 +181,37 @@ export default function PromotionStoryPage() {
       </section>
 
       <section className={`${styles.contentSection} ${styles.outcomesSection}`}>
-        <div className={styles.sectionInner}>
-          <p className={styles.transitionLine}>You already do the work. This is what it takes to get promoted for it.</p>
-          <h2>Become the obvious choice, before the next cycle opens.</h2>
-          <div className={styles.outcomeGrid}>
-            {outcomes.map(([number, title, copy]) => <article className={styles.outcomeCard} key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}
+        <div className={styles.architectInner}>
+          <span className={styles.pageMark} aria-hidden="true">PA / 01</span>
+          <p className={styles.architectEyebrow}><span />Introducing</p>
+          <h2>Promotion Architect</h2>
+          <p className={styles.architectLead}>An advanced online system that designs your personal strategy for becoming the first choice for promotion.</p>
+          <div className={styles.strategyLabel}><span>Your strategy is designed to help you</span><i /></div>
+          <div className={styles.architectMap}>
+            <svg className={styles.desktopPath} viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true">
+              <path className={styles.pathShadow} d="M40 438 L150 365 L350 365 L430 265 L610 265 L685 165 L855 165 L930 65 L1070 65 L1150 18" />
+              <path className={styles.pathLine} d="M40 438 L150 365 L350 365 L430 265 L610 265 L685 165 L855 165 L930 65 L1070 65 L1150 18" />
+              <path className={styles.guideLine} d="M75 465 L1150 55" />
+              {[[150,365],[430,265],[685,165],[1008,65]].map(([cx,cy]) => <g key={cx}><circle className={styles.pathHalo} cx={cx} cy={cy} r="12" /><circle className={styles.pathDot} cx={cx} cy={cy} r="5" /></g>)}
+            </svg>
+            <div className={styles.mobilePath} aria-hidden="true"><i /><i /><i /><i /></div>
+            {outcomes.map(({ number, state, title, copy, Icon }) => (
+              <article className={`${styles.architectStep} ${styles[`architectStep${number}`]}`} key={number}>
+                <div className={styles.stepMeta}><span>{number}</span><b>{state}</b></div>
+                <h3>{title}</h3><p>{copy}</p><Icon aria-hidden="true" />
+              </article>
+            ))}
+            <div className={styles.architectOutcome}><span>Outcome</span><strong>Promoted<br />first</strong></div>
           </div>
-          <div className={styles.productStatement}>
-            <p>That is the whole point of <strong>Be More Promotable.</strong> Not more hours. The moves that turn the work you already do into a promotion.</p>
-            <Link href="#offer" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link>
-          </div>
-          <blockquote className={styles.seedQuote}>“The stakeholder framework alone was worth the entire program.”<cite>Finance Head · Mumbai · Financial Services</cite></blockquote>
+          <div className={styles.architectLegend}><span>Seen</span><i /><span>Believed</span><i /><span>Seen</span><i /><span>Backed</span></div>
         </div>
+        <blockquote className={styles.architectQuote}>
+          <div><span aria-hidden="true">“</span><p>The stakeholder framework alone was worth the entire program.</p></div>
+          <cite>
+            <span className={styles.architectQuoteAvatar}><Image src="/promotion-story/finance-head-testimonial.png" alt="" fill sizes="56px" /></span>
+            <span className={styles.architectQuoteIdentity}><strong>Finance Head</strong><span>Mumbai · Financial Services</span></span>
+          </cite>
+        </blockquote>
       </section>
 
       <section className={`${styles.contentSection} ${styles.planSection}`}>
