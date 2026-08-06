@@ -30,6 +30,9 @@ export default function PromotionSequence() {
 
   return (
     <figure className={styles.promotionSequence}>
+      <div className={styles.sequenceLoader} role="status" aria-label="The next part of the story is loading">
+        <i /><i /><i />
+      </div>
       <div className={styles.teamPhoto}>
         <Image
           src="/promotion-team-offsite.png"
@@ -49,6 +52,10 @@ export default function PromotionSequence() {
           >
             <svg className={styles.faceCircle} viewBox="0 0 120 150">
               <ellipse cx="60" cy="75" rx="52" ry="66" />
+            </svg>
+            <svg className={styles.facePointer} viewBox="0 0 110 76" aria-hidden="true">
+              <path className={styles.pointerOutline} d="M8 13 C38 10 65 25 84 48 M70 43 L86 50 L82 33" />
+              <path className={styles.pointerLine} d="M8 13 C38 10 65 25 84 48 M70 43 L86 50 L82 33" />
             </svg>
             <p className={styles.quoteCard}>
               {moments[index]}
