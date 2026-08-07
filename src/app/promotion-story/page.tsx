@@ -16,6 +16,8 @@ import edelweissLogo from "@/assets/edelweiss.png";
 import PromotionIdentityComparison from "./PromotionIdentityComparison";
 import PromotionSequence from "./PromotionSequence";
 import ExitIntentPopup from "./ExitIntentPopup";
+import OfferJourney from "./OfferJourney";
+import PromotionStoryAccessFlow from "./PromotionStoryAccessFlow";
 import styles from "./page.module.css";
 
 const outcomes = [
@@ -31,24 +33,12 @@ const formulaItems = [
   { label: "Backed", copy: "Someone in the room will stake their credibility on you.", image: "/promotion-formula/backed-v2.png" },
 ];
 
-const planSteps = [
-  ["Learn", "The lessons show you how the decision actually gets made—and the moves that shift it."],
-  ["Build", "The app turns that into a plan mapped to your real role and the people who decide it."],
-  ["Rehearse", "The AI coach helps you practise the awkward conversations until they stop feeling awkward."],
-];
-
-const offerItems = [
-  "The full program: how the promotion decision gets made, and the moves that shift it",
-  "A personalised 30-60-90 promotion plan built around your real role and decision-makers",
-  "The app that builds the plan with you, mapped to your actual situation",
-  "A private AI coach to rehearse the conversations that decide it",
-];
-
-const shifts = [
-  "See the game clearly",
-  "Get seen on purpose",
-  "Build the reputation that travels",
-  "Close the promotion",
+const transformationSteps = [
+  { number: "01", label: "Video", title: "Awareness Videos", subtitle: "See what you are missing.", copy: "Short videos explain the frameworks using psychology, coaching, marketing and real corporate experience.", visual: "awareness" },
+  { number: "02", label: "Personal plan", title: "Your 30–60–90 Day Plan", subtitle: "Know what moves to make.", copy: "Build a plan based on your role, your stakeholders and the promotion you want.", visual: "plan" },
+  { number: "03", label: "Apps", title: "Promotion Apps", subtitle: "Start using the plan at work.", copy: "Use the Stakeholder Map, Delegation and Personal Branding apps.", visual: "apps" },
+  { number: "04", label: "Practice", title: "AI Coach", subtitle: "Practice before the real conversation.", copy: "Work through personal barriers and practice your promotion pitch.", visual: "coach" },
+  { number: "05", label: "Human support", title: "Accountability Partner + Coach on Call", subtitle: "Keep moving when work gets busy.", copy: "Someone keeps you on track. You can call a coach when a real situation gets difficult.", visual: "support" },
 ];
 
 const testimonials = [
@@ -215,22 +205,30 @@ export default function PromotionStoryPage() {
       </section>
 
       <section className={`${styles.contentSection} ${styles.planSection}`}>
-        <div className={styles.sectionInner}>
-          <p className={styles.eyebrow}>What you actually walk away with</p>
-          <h2>A plan built around your actual job.</h2>
-          <p className={styles.sectionLead}>This is not a course to watch. It is a plan you build—and run.</p>
-          <div className={styles.planLayout}>
-            <div className={styles.planPreview} aria-label="Personalised promotion plan preview">
-              <div className={styles.previewTop}><span>YOUR PROMOTION PLAN</span><span>30 · 60 · 90</span></div>
-              <div className={styles.previewTrack}><i /><i /><i /></div>
-              <div className={styles.previewRows}><span>Decision map</span><b>5 people</b><span>Next-level signal</span><b>Defined</b><span>Monday move</span><b>Ready</b></div>
+        <div className={styles.transformationInner}>
+          <header className={styles.transformationHeader}>
+            <div>
+              <p className={styles.transformationEyebrow}><span />Inside Promotion Architect</p>
+              <h2>Everything you need to get promotion ready in less than 8 weeks.</h2>
+              <p>Awareness videos. A 30–60–90 day plan. Apps. AI coach. Human support. Use them at your own pace.</p>
             </div>
-            <div className={styles.planCopy}><p className={styles.takeaway}>You leave with your <em>personalised</em> promotion plan.</p><p>Not a template. A 30-60-90 built around who decides your next promotion, the version of you they need to see, and the specific moves to get there before your next cycle. You finish knowing what to do Monday, and every Monday after.</p></div>
-          </div>
-          <div className={styles.steps}>{planSteps.map(([title, copy], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-          <div className={styles.planClosing}>
-            <p className={styles.planClose}>You see it coming, and you walk in ready.</p>
-            <Link href="#offer" className={styles.softCta}>Come build your plan <span>→</span></Link>
+            <dl className={styles.transformationFacts}>
+              <div><dt>Format</dt><dd>Self-paced</dd></div><div><dt>Duration</dt><dd>Less than 8 weeks</dd></div><div><dt>Support</dt><dd>Human + AI</dd></div>
+            </dl>
+          </header>
+          <div className={styles.transformationTimeline}>
+            {transformationSteps.map((step) => <article className={styles.transformationStep} key={step.number}>
+              <span className={styles.transformationNumber}>{step.number}</span>
+              <div className={styles.transformationCopy}><p>{step.label}</p><h3>{step.title}</h3><strong>{step.subtitle}</strong><span>{step.copy}</span></div>
+              <div className={`${styles.transformationVisual} ${styles[`visual${step.visual}`]}`} aria-hidden="true">
+                <small>{step.visual === "plan" ? "Your promotion plan" : step.label}</small>
+                {step.visual === "awareness" && <div className={styles.awarenessGraphic}><i /><i /><i /><b>You</b><span>Work</span><span>Perception</span><span>Pattern</span></div>}
+                {step.visual === "plan" && <div className={styles.daysGraphic}>{[30,60,90].map(day => <div key={day}><b>{day}</b><small>Days</small><i /><i /><i /></div>)}</div>}
+                {step.visual === "apps" && <div className={styles.appsGraphic}><div>Stakeholder Map<small>Map influence</small></div><div>Delegation</div><div>Personal Brand<small>Shape perception</small></div></div>}
+                {step.visual === "coach" && <div className={styles.coachGraphic}><div><b>You</b>I know the work. I don&apos;t know how to talk about it.</div><div><b>AI coach</b>Okay. Tell me what changed because of your work.</div><div><b>Practice</b>&ldquo;Because of my work...&rdquo;</div></div>}
+                {step.visual === "support" && <div className={styles.supportGraphic}><ul><li>Did this week&apos;s move</li><li>Spoke to stakeholder</li><li>Next move</li><li>Weekly check-in</li></ul><div><b>↗</b><strong>Coach<br/>on call</strong><small>For real situations</small></div></div>}
+              </div>
+            </article>)}
           </div>
         </div>
       </section>
@@ -277,30 +275,18 @@ export default function PromotionStoryPage() {
         </div>
       </section>
 
-      <section id="offer" className={`${styles.contentSection} ${styles.offerSection}`}>
-        <div className={`${styles.sectionInner} ${styles.offerInner}`}>
-          <div className={styles.offerIntro}><p className={styles.eyebrow}>Be More Promotable</p><h2>Get on the earlier curve.</h2><p className={styles.price}>₹7,000 <span>one payment · 12-month access</span></p></div>
-          <div className={styles.offerCard}>
-            <p className={styles.offerLabel}>Everything you need to make the next cycle different</p>
-            <ul>{offerItems.map(item => <li key={item}><span>✓</span>{item}</li>)}</ul>
-            <details className={styles.curriculum}><summary>See everything inside the program <span>+</span></summary><ol>{shifts.map((shift, index) => <li key={shift}><span>Shift {index + 1}</span>{shift}</li>)}</ol></details>
-            <p className={styles.guarantee}><strong>The movement guarantee.</strong> Do the program, apply the plan, and if you see no movement toward your promotion, we refund every rupee. <b>The only thing you risk is staying on the curve you&apos;re already on.</b></p>
-            <Link href="/diagnostic" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link>
-            <small>Get chosen first. Get backed for the next level.</small>
-          </div>
-        </div>
-      </section>
+      <OfferJourney />
 
       <section className={`${styles.contentSection} ${styles.founderSection}`}>
         <div className={`${styles.sectionInner} ${styles.founderLayout}`}>
-          <div className={styles.founderImage}><Image src={sushantPicture} alt="Sushant Sehra, founder of Be More Promotable" priority={false} /></div>
+          <div className={styles.founderImage}><Image src={sushantPicture} alt="Sushant Sehra, founder of Promotion Architect" priority={false} /></div>
           <div className={styles.founderCopy}>
             <p className={styles.eyebrow}>Why this exists</p>
             <p>For years I believed what most professionals are taught. Work hard, stay patient, the promotion will come. Then I watched talented people get overlooked cycle after cycle, while others moved ahead because they understood how visibility, influence, and leadership perception actually work.</p>
             <p>So I spent years studying the rules most professionals are never taught, then turned them into a step-by-step system experienced professionals could act on.</p>
-            <h2 className={styles.founderConclusion}>That system is Be More Promotable.</h2>
+            <h2 className={styles.founderConclusion}>That system is Promotion Architect.</h2>
             <div className={styles.founderIdentity}>
-              <p className={styles.signature}>Sushant Sehra <span>Founder, Be More Promotable</span></p>
+              <p className={styles.signature}>Sushant Sehra <span>Founder, Promotion Architect</span></p>
               <a href="https://www.linkedin.com/in/sushantsehra/" target="_blank" rel="noreferrer" className={styles.textLink}>LinkedIn ↗</a>
             </div>
           </div>
@@ -323,12 +309,13 @@ export default function PromotionStoryPage() {
       </section>
 
       <section id="faq" className={`${styles.contentSection} ${styles.faqSection}`}>
-        <div className={styles.sectionInner}><p className={styles.eyebrow}>Questions worth asking</p><h2>Before you decide.</h2><div className={styles.faqList}>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div>
+        <div className={styles.sectionInner}><p className={styles.eyebrow}>Questions worth asking</p><h2>FAQs</h2><div className={styles.faqList}>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div>
       </section>
 
       <section className={styles.finalCta}>
         <div className={styles.sectionInner}><p className={styles.eyebrow}>The next cycle is coming</p><h2>Work harder and hope—or understand how the decision is actually made.</h2><p>One of these has worked for you so far. The other is what gets you promoted.</p><Link href="/diagnostic" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link><small>₹7,000 · one payment · 12-month access</small></div>
       </section>
+      <PromotionStoryAccessFlow />
       <ExitIntentPopup />
     </main>
   );

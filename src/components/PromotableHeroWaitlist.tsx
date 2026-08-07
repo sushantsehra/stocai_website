@@ -2,21 +2,13 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  ArrowRight,
-  Award,
-  BadgeCheck,
   CheckCircle2,
   Clock3,
-  FileText,
   Gift,
-  Lock,
-  MessageCircle,
   ShieldCheck,
   Target,
   UserRound,
-  UsersRound,
   X,
-  Zap,
 } from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
@@ -54,11 +46,11 @@ type HeroWaitlistProps = {
 type ConsultationSlot = { start: string; end: string; start_utc?: string; end_utc?: string };
 
 const promotionBenefits = [
-  { label: "Get credit for your work", icon: Award },
-  { label: "Become your boss's go-to", icon: UsersRound },
-  { label: "Do more without burnout", icon: Zap },
-  { label: "Build a promotion pitch that wins", icon: FileText },
-  { label: "Speak up with confidence", icon: MessageCircle },
+  ["Get credit", "for your work"],
+  ["Become your boss's", "go-to."],
+  ["Do more", "without burnout."],
+  ["Build a promotion pitch", "that wins."],
+  ["Speak up", "with confidence."],
 ];
 
 const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
@@ -369,7 +361,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_28px_80px_rgba(15,23,42,0.24)] sm:h-auto sm:max-h-[calc(100vh-24px)] sm:max-w-[390px] sm:rounded-[18px]"
+        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:h-auto sm:max-h-[calc(100vh-32px)] sm:max-w-[680px] sm:rounded-[42px] sm:border sm:border-[#aeb4bc]"
       >
         <button
           type="button"
@@ -377,63 +369,63 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             event.stopPropagation();
             onClose("x_button");
           }}
-          className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-[#667085] shadow-[0_10px_24px_rgba(15,23,42,0.14)] transition hover:bg-[#f6f8fb] focus:outline-none focus:ring-2 focus:ring-blue-500 md:right-6 md:top-6"
+          className="absolute right-5 top-5 z-20 inline-flex h-11 w-11 items-center justify-center rounded-[13px] bg-[#eeeeee] text-black transition hover:bg-[#dedede] focus:outline-none focus:ring-2 focus:ring-blue-500 sm:right-10 sm:top-10"
           aria-label="Close waitlist"
         >
-          <X className="h-5 w-5" />
+          <X className="h-7 w-7" strokeWidth={3.5} />
         </button>
 
-        <div className="h-full max-h-screen overflow-y-auto sm:max-h-[calc(100vh-24px)]">
-          <div className="relative px-5 pb-0 pt-5 sm:px-7 sm:pt-6 md:px-8">
-            <div className="inline-flex items-center gap-2 rounded-lg border border-[#dcecdf] bg-[#f4faf5] px-2.5 py-1.5 font-jakarta text-[9px] leading-tight text-[#1d2939] sm:text-[10px]">
-              <BadgeCheck className="h-4 w-4 fill-[#39b867] text-[#39b867]" />
-              <span><strong className="font-semibold">Trusted by 500+ professionals</strong><br />4.8/5 average rating <span className="tracking-[-1px] text-[#ffbd21]">★★★★★</span></span>
+        <div className="h-full max-h-screen overflow-y-auto sm:max-h-[calc(100vh-32px)]">
+          <div className="relative px-6 pb-0 pt-7 sm:px-10 sm:pt-10">
+            <div className="inline-flex items-center gap-3 rounded-xl bg-[#eaf8ef] px-4 py-2.5 font-jakarta text-[12px] leading-tight text-[#1d2939] sm:text-[15px]">
+              <span className="text-[30px] leading-none text-[#20b568]">★</span>
+              <span><strong className="font-extrabold">Trusted by 500+ professionals</strong><br /><span className="text-[#596273]">4.8/5 average rating</span> <span className="ml-2 tracking-[2px] text-[#ffc20a]">★★★★★</span></span>
             </div>
 
-            <h2 className="mt-4 max-w-[330px] font-jakarta text-[30px] font-extrabold leading-[1.08] tracking-[-1.2px] text-[#080d18] sm:text-[34px]">
+            <h2 className="mt-8 max-w-[590px] font-jakarta text-[38px] font-extrabold leading-[1.03] tracking-[-1.8px] text-[#080d18] sm:text-[54px]">
               Never Get Rejected<br />for a <span className="relative inline-block text-[#0865df] after:absolute after:bottom-[-2px] after:left-0 after:h-[3px] after:w-full after:-rotate-1 after:bg-[#2eaf68]">Promotion</span>.
             </h2>
-            <p className="mt-3 max-w-[340px] font-jakarta text-[12px] font-medium leading-[17px] text-[#222936] sm:text-[13px] sm:leading-[18px]">
+            <p className="mt-5 max-w-[570px] font-jakarta text-[17px] font-medium leading-[1.4] text-[#50545c] sm:text-[22px]">
               The one skill that has changed career trajectory of many corporate employees.
             </p>
           </div>
 
-          <div className="mt-3 flex items-center gap-3 bg-gradient-to-r from-[#edf4ff] to-[#f6f9ff] px-5 py-3.5 sm:px-7 md:px-8">
-            <Target className="h-11 w-11 shrink-0 text-[#1768dd]" strokeWidth={2.2} />
-            <p className="font-jakarta text-[11px] font-medium leading-[17px] text-[#26334a] sm:text-[12px]">
+          <div className="mt-5 flex items-center gap-5 bg-[#eef3ff] px-6 py-5 sm:px-10">
+            <Target className="h-12 w-12 shrink-0 text-black" strokeWidth={2.4} />
+            <p className="font-jakarta text-[15px] font-medium leading-[1.4] text-[#111827] sm:text-[20px]">
               A proven system to help you earn your next promotion, even during a <strong className="font-bold text-[#0757c4]">recession, office politics,</strong> or <strong className="font-bold text-[#0757c4]">organizational uncertainty.</strong>
             </p>
           </div>
 
-          <div className="relative mx-auto grid gap-0 px-5 pt-3 sm:px-7 md:px-8">
+          <div className="relative mx-auto grid gap-0 px-6 pt-7 sm:px-10">
             <form
               id="promotion-checkout-form"
               onSubmit={handleSubmit}
               className="relative"
             >
-              <h3 className="font-jakarta text-[13px] font-extrabold leading-[17px] text-[#111827]">
-                Get a trusted <span className="text-[#075dcc]">Promotion Strategy System</span><br />that helps you:
+              <h3 className="font-jakarta text-[17px] font-extrabold leading-[1.35] text-[#111827] sm:text-[20px]">
+                Get a trusted <span className="text-[#075dcc]">Promotion Strategy System</span> that helps you:
               </h3>
 
-              <div className="mt-2">
-                {promotionBenefits.map(({ label, icon: Icon }) => (
-                  <div key={label} className="flex min-h-[34px] items-center gap-2 border-b border-[#e2e5e9] py-1 last:border-0">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#075dcc] text-white">
-                      <Icon className="h-3.5 w-3.5" strokeWidth={2.2} />
+              <div className="mt-4 space-y-3">
+                {promotionBenefits.map(([lead, rest]) => (
+                  <div key={lead} className="flex items-center gap-4">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[#075dcc] text-white">
+                      <CheckCircle2 className="h-4 w-4" strokeWidth={2.5} />
                     </span>
-                    <span className="font-jakarta text-[11px] font-bold leading-tight text-[#18202d] sm:text-[12px]">{label}</span>
+                    <span className="font-jakarta text-[16px] leading-tight text-[#18202d] sm:text-[20px]"><strong>{lead}</strong> {rest}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="relative mt-3 grid min-h-[58px] grid-cols-[44%_56%] overflow-visible rounded-lg border border-[#1469e8] bg-white">
-                <span className="absolute -right-px -top-[10px] rounded bg-[#3bb56a] px-2 py-1 font-jakarta text-[9px] font-bold text-white">
+              <div className="relative mt-7 grid min-h-[90px] grid-cols-[40%_60%] overflow-visible rounded-[22px] border-2 border-[#1469e8] bg-white">
+                <span className="absolute -right-2 -top-[18px] rounded-full bg-[#24af5b] px-4 py-1.5 font-jakarta text-[14px] font-bold text-white sm:text-[17px]">
                   {subscriptionAmount ? `${Math.max(0, Math.round((1 - subscriptionAmount / 1500000) * 100))}% OFF` : "SPECIAL OFFER"}
                 </span>
-                <div className="flex items-center justify-center border-r border-[#e4e7ec] font-jakarta text-[18px] font-semibold text-[#8a9099] line-through sm:text-[20px]">
+                <div className="flex items-center justify-center border-r-2 border-[#1469e8] font-jakarta text-[22px] font-semibold text-[#8a9099] line-through sm:text-[28px]">
                   ₹15,000/-
                 </div>
-                <div className="flex items-center justify-center font-jakarta text-[31px] font-extrabold leading-none text-[#0757c4] sm:text-[34px]">
+                <div className="flex items-center justify-center font-jakarta text-[38px] font-extrabold leading-none text-[#0757c4] sm:text-[50px]">
                   {subscriptionAmount ? `${formatSubscriptionAmount(subscriptionAmount)}/-` : "At checkout"}
                 </div>
               </div>
@@ -547,41 +539,36 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             </section>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 px-5 pb-2 pt-2.5 sm:px-7 md:px-8">
-            <div className="flex items-center gap-1.5 font-jakarta text-[#16335c]">
-              <Target className="h-6 w-6 shrink-0 text-[#075dcc]" />
-              <p className="text-[8px] font-medium leading-[10px]"><strong className="block font-bold text-[#075dcc]">Action Plan</strong>for strategic clarity</p>
+          <div className="mt-5 grid grid-cols-3 gap-0 px-6 pb-5 sm:px-10">
+            <div className="font-jakarta text-[#16335c]">
+              <p className="text-[10px] font-medium leading-[1.25] sm:text-[13px]"><strong className="block text-[15px] font-extrabold text-[#075dcc] sm:text-[20px]">Action Plan</strong>for strategic clarity</p>
             </div>
-            <div className="flex items-center gap-1.5 border-x border-[#dde3eb] px-2 font-jakarta text-[#16335c]">
-              <Clock3 className="h-6 w-6 shrink-0 text-[#075dcc]" />
-              <p className="text-[8px] font-medium leading-[10px]"><strong className="block font-bold text-[#075dcc]">1344 mins</strong>of strategic insights</p>
+            <div className="border-x border-[#aeb7c2] px-4 font-jakarta text-[#16335c]">
+              <p className="text-[10px] font-medium leading-[1.25] sm:text-[13px]"><strong className="block text-[15px] font-extrabold text-[#075dcc] sm:text-[20px]">1344 mins</strong>of strategic insights</p>
             </div>
-            <div className="flex items-center gap-1.5 font-jakarta text-[#16335c]">
-              <UserRound className="h-6 w-6 shrink-0 fill-[#4e82df] text-[#4e82df]" />
-              <p className="text-[8px] font-medium leading-[10px]"><strong className="block font-bold text-[#075dcc]">AI coach &amp;</strong>accountability partner</p>
+            <div className="pl-4 font-jakarta text-[#16335c]">
+              <p className="text-[10px] font-medium leading-[1.25] sm:text-[13px]"><strong className="block text-[15px] font-extrabold text-[#075dcc] sm:text-[20px]">AI coach &amp;</strong>Accountability Partner</p>
             </div>
           </div>
 
-          <div className="mt-1 bg-[#07111f] px-5 pb-2.5 pt-3 text-center text-white sm:px-7 md:px-8">
-            <h3 className="flex items-center justify-center gap-1.5 font-jakarta text-[13px] font-bold text-[#3bd06b]">
-              <ShieldCheck className="h-5 w-5 fill-[#3bd06b] text-[#3bd06b]" />
+          <div className="bg-black px-6 pb-7 pt-8 text-center text-white sm:px-10 sm:pb-10">
+            <h3 className="flex items-center justify-center gap-2 font-jakarta text-[22px] font-extrabold text-[#3bd06b] sm:text-[29px]">
+              <ShieldCheck className="h-7 w-7 fill-[#3bd06b] text-[#3bd06b]" />
               100% Money Back Guarantee
             </h3>
-            <p className="mx-auto mt-1 max-w-[320px] font-jakarta text-[9px] font-medium leading-[11px] text-white">
+            <p className="mx-auto mt-4 max-w-[550px] font-jakarta text-[14px] font-medium leading-[1.45] text-[#e3e6eb] sm:text-[18px]">
               Complete the program. If you don&apos;t believe it has improved your understanding of how promotions work, we&apos;ll refund your money. No questions asked.
             </p>
             <button
               type="submit"
               form="promotion-checkout-form"
               disabled={status === "loading"}
-              className="mt-2.5 inline-flex min-h-[40px] w-full cursor-pointer items-center justify-center gap-3 rounded-md bg-gradient-to-b from-[#ffdc20] to-[#ffca05] px-4 font-jakarta text-[12px] font-extrabold text-[#121820] shadow-[0_5px_10px_rgba(208,163,0,0.25)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-55"
+              className="mt-7 inline-flex min-h-[62px] w-full cursor-pointer items-center justify-center rounded-[16px] bg-gradient-to-b from-[#ffdc20] to-[#ffca05] px-5 font-jakarta text-[20px] font-extrabold text-[#121820] shadow-[0_5px_10px_rgba(208,163,0,0.25)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-55 sm:text-[25px]"
             >
-              <Lock className="h-4 w-4 fill-[#111827]" />
               {status === "loading" ? "Processing..." : "Proceed to Secure Checkout"}
-              <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-[#111827] text-white"><ArrowRight className="h-3.5 w-3.5" /></span>
             </button>
-            <p className="mt-2 flex items-center justify-center gap-1 font-jakarta text-[8px] font-medium text-[#d8e0ea]">
-              <CheckCircle2 className="h-3 w-3 text-[#3bd06b]" /> Instant access after secure payment
+            <p className="mt-4 flex items-center justify-center gap-2 font-jakarta text-[13px] font-medium text-[#d8e0ea] sm:text-[17px]">
+              <CheckCircle2 className="h-5 w-5 text-[#d8e0ea]" /> Instant access after secure payment
             </p>
           </div>
         </div>
