@@ -8,6 +8,7 @@ type PromotableStickyCTAProps = {
   defaultExpanded?: boolean;
   anchorId?: string;
   useIsoCountryLabels?: boolean;
+  variant?: "default" | "promotion";
   onRequestAccess?: (data: {
     name: string;
     email: string;
@@ -23,6 +24,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
   defaultExpanded = false,
   anchorId,
   useIsoCountryLabels = false,
+  variant = "default",
 }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -177,7 +179,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
   }
 
   return (
-    <div id={anchorId} className="fixed -bottom-1 left-0 w-full z-[9999] bg-[#1B294B] text-white py-3">
+    <div id={anchorId} className={`fixed -bottom-1 left-0 w-full z-[9999] text-white ${variant === "promotion" ? "bg-[#061A34] border-t border-[#31506F] py-2.5" : "bg-[#1B294B] py-3"}`}>
       <div className="max-w-7xl mx-auto px-4">
         {!isExpanded ? (
           <div className="flex items-center justify-center py-1.5">
@@ -186,14 +188,14 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
                 trackGetEarlyAccess();
                 setIsExpanded(true);
               }}
-              className="bg-[#0B64F4] hover:bg-blue-700 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-[12px] font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 shrink-0"
+              className={`bg-[#0B64F4] hover:bg-[#2678FA] text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 font-jakarta cursor-pointer font-bold transition-transform duration-200 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0 shrink-0 ${variant === "promotion" ? "rounded-[9px]" : "rounded-[12px]"}`}
             >
               Get Access
             </button>
           </div>
         ) : (
           <div className="flex flex-col gap-3 sm:flex-row justify-center items-center py-2">
-            <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto bg-[#F5F5F5] rounded-[20px] shadow-lg px-3 py-2.5 gap-2 md:gap-3">
+            <div className={`flex flex-col sm:flex-row items-center w-full sm:w-auto px-3 py-2.5 gap-2 md:gap-3 ${variant === "promotion" ? "bg-[#EAF3FF] rounded-[12px] shadow-[0_8px_28px_rgba(0,0,0,.18)]" : "bg-[#F5F5F5] rounded-[20px] shadow-lg"}`}>
               {/* Name Input */}
               <input
                 ref={nameInputRef}
@@ -201,7 +203,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
                 placeholder="Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 rounded-md text-black text-sm outline-none bg-white"
+                className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 rounded-[8px] text-[#061A34] text-sm outline-none bg-white border border-[#D8E4F1] focus:border-[#0B64F4]"
                 required
                 disabled={isLoading}
               />
@@ -212,7 +214,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full sm:w-[160px] md:w-[180px] lg:w-[200px] px-3 py-2 rounded-md text-black text-sm outline-none bg-white"
+                className="w-full sm:w-[160px] md:w-[180px] lg:w-[200px] px-3 py-2 rounded-[8px] text-[#061A34] text-sm outline-none bg-white border border-[#D8E4F1] focus:border-[#0B64F4]"
                 required
                 disabled={isLoading}
               />
@@ -221,7 +223,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
               <select
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
-                className="px-2 py-2 rounded-md bg-white text-black text-sm outline-none"
+                className="px-2 py-2 rounded-[8px] bg-white text-[#061A34] text-sm outline-none border border-[#D8E4F1] focus:border-[#0B64F4]"
                 disabled={isLoading}
               >
                 {countryCodes.map((c) => (
@@ -237,7 +239,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
                 placeholder="Phone Number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ""))}
-                className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 text-black text-sm outline-none bg-white rounded-md"
+                className="w-full sm:w-[140px] md:w-[160px] lg:w-[180px] px-3 py-2 text-[#061A34] text-sm outline-none bg-white rounded-[8px] border border-[#D8E4F1] focus:border-[#0B64F4]"
                 required
                 disabled={isLoading}
               />
@@ -246,7 +248,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
               <button
                 onClick={handleRequestAccess}
                 disabled={isLoading}
-                className="hidden sm:block bg-gradient-to-r from-[#024BAB] to-[#3C83F6] hover:bg-blue-700 rounded-[10px] md:rounded-[12px] text-white text-sm min-h-[40px] font-bold cursor-pointer px-4 md:px-5 py-2 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`hidden sm:block bg-[#0B64F4] hover:bg-[#2678FA] text-white text-sm min-h-[40px] font-bold cursor-pointer px-4 md:px-5 py-2 transition-transform duration-200 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed ${variant === "promotion" ? "rounded-[9px]" : "rounded-[12px]"}`}
               >
                 {isLoading ? "Saving..." : "Get Access"}
               </button>
@@ -256,7 +258,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
             <button
               onClick={handleRequestAccess}
               disabled={isLoading}
-              className="block sm:hidden w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] hover:bg-blue-700 rounded-[9.36px] text-[18.71px] text-black min-h-[49.9px] cursor-pointer font-bold font-jakarta p-3.5 transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`block sm:hidden min-h-[48px] cursor-pointer font-bold font-jakarta px-6 py-3 text-base transition-transform duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed ${variant === "promotion" ? "w-fit bg-[#0B64F4] hover:bg-[#2678FA] rounded-[9px] text-white" : "w-[60%] bg-gradient-to-r from-[#ADADAD] to-[#FFFFFF] rounded-[9.36px] text-black"}`}
             >
               {isLoading ? "Saving..." : "Get Access"}
             </button>

@@ -88,7 +88,7 @@ export default function PromotionStoryPage() {
             <span>Better Corporate Life</span>
           </Link>
           <Link href="#promotion-story-access" className={styles.navCta}>
-            Find your blind spot
+            Find your blind spot <span aria-hidden="true">→</span>
           </Link>
         </nav>
 
@@ -172,7 +172,7 @@ export default function PromotionStoryPage() {
         </div>
       </section>
 
-      <section className={`${styles.contentSection} ${styles.outcomesSection}`}>
+      <section id="program" className={`${styles.contentSection} ${styles.outcomesSection}`}>
         <div className={styles.architectInner}>
           <span className={styles.pageMark} aria-hidden="true">PA / 01</span>
           <p className={styles.architectEyebrow}><span />Introducing</p>
@@ -206,7 +206,7 @@ export default function PromotionStoryPage() {
         </blockquote>
       </section>
 
-      <section className={`${styles.contentSection} ${styles.planSection}`}>
+      <section id="modules" className={`${styles.contentSection} ${styles.planSection}`}>
         <div className={styles.transformationInner}>
           <header className={styles.transformationHeader}>
             <div>
@@ -295,7 +295,7 @@ export default function PromotionStoryPage() {
         </div>
       </section>
 
-      <section className={`${styles.contentSection} ${styles.proofSection}`}>
+      <section id="testimonials" className={`${styles.contentSection} ${styles.proofSection}`}>
         <div className={styles.sectionInner}>
           <p className={styles.eyebrow}>From professionals doing the work</p><h2>Small shifts. Different conversations.</h2>
           <div className={styles.testimonialGrid}>{testimonials.map(({ quote, role, image }) => <blockquote key={role}><div className={styles.memberPortrait}><Image src={image} alt="" fill sizes="72px" /></div><div><span className={styles.quoteMark} aria-hidden="true">“</span>{quote}<cite>{role}</cite></div></blockquote>)}</div>
@@ -330,7 +330,7 @@ export default function PromotionStoryPage() {
         <PromotionStoryAccessFlow />
         <ExitIntentPopup />
       </main>
-      <Footer className={styles.promotionFooter} />
+      <Footer className={styles.promotionFooter} variant="promotion" />
     </>
   );
 }

@@ -74,6 +74,7 @@ export default function PromotionStoryAccessFlow() {
     <PromotableStickyCTA
       anchorId="promotion-story-access"
       useIsoCountryLabels
+      variant="promotion"
       onRequestAccess={handleRequestAccess}
     />
     <PromotableHeroWaitlist

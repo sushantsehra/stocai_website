@@ -9,13 +9,20 @@ import { usePathname, useRouter } from "next/navigation";
 
 type FooterProps = {
   className?: string;
+  variant?: "default" | "promotion";
 };
 
-const Footer = ({ className = "" }: FooterProps) => {
+const Footer = ({ className = "", variant = "default" }: FooterProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
   const scrollToSection = (id: string) => {
+    if (variant === "promotion") {
+      const el = document.getElementById(id);
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
     if (pathname !== "/") {
       router.push(`/#${id}`);
       return;
@@ -34,10 +41,12 @@ const Footer = ({ className = "" }: FooterProps) => {
           {/* Column 1 */}
           <div className="text-center md:text-left max-w-md">
             <h3 className="text-[13px] sm:text-2xl lg:text-[24px] font-bold font-jakarta mb-3 md:mb-4">
-              Be More <span className="text-[#2474F5]">Promotable</span>
+              {variant === "promotion" ? <>Promotion <span className="text-[#2474F5]">Architect</span></> : <>Be More <span className="text-[#2474F5]">Promotable</span></>}
             </h3>
             <p className="text-white/70 mb-5 sm:mb-6 text-[8px] sm:text-sm lg:text-base font-jakarta font-normal leading-3 sm:leading-5.5 max-w-sm sm:max-w-auto">
-              A career acceleration program by BCL. We help experienced professionals break through career plateaus using proven frameworks for visibility, credibility, and influence.
+              {variant === "promotion"
+                ? "A promotion-readiness system by Better Corporate Life, built to help experienced professionals become seen, believed, and backed."
+                : "A career acceleration program by BCL. We help experienced professionals break through career plateaus using proven frameworks for visibility, credibility, and influence."}
             </p>
             <div className="flex gap-3 justify-center md:justify-start">
               <Link
@@ -75,12 +84,12 @@ const Footer = ({ className = "" }: FooterProps) => {
             <h4 className="mb-2 sm:mb-4 text-[9px] sm:text-base font-bold font-jakarta">Quick Links</h4>
             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base hidden md:block">
             <li>
-              <button onClick={() => scrollToSection("framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors">
+              <button onClick={() => scrollToSection(variant === "promotion" ? "program" : "framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors">
                 About the Program
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors">
+              <button onClick={() => scrollToSection(variant === "promotion" ? "modules" : "framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors">
                 Modules
               </button>
             </li>
@@ -90,7 +99,7 @@ const Footer = ({ className = "" }: FooterProps) => {
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("waitlist")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors">
+              <button onClick={() => scrollToSection(variant === "promotion" ? "offer" : "waitlist")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors">
                 Pricing
               </button>
             </li>
@@ -103,12 +112,12 @@ const Footer = ({ className = "" }: FooterProps) => {
 
                 <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base block md:hidden flex gap-2 justify-center">
             <li>
-              <button onClick={() => scrollToSection("framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors border-r border-white/70 pr-2">
+              <button onClick={() => scrollToSection(variant === "promotion" ? "program" : "framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors border-r border-white/70 pr-2">
                 About the Program 
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors border-r border-white/70 pr-2">
+              <button onClick={() => scrollToSection(variant === "promotion" ? "modules" : "framework")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors border-r border-white/70 pr-2">
                 Modules  
               </button>
             </li>
@@ -118,7 +127,7 @@ const Footer = ({ className = "" }: FooterProps) => {
               </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection("waitlist")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors border-r border-white/70 pr-2">
+              <button onClick={() => scrollToSection(variant === "promotion" ? "offer" : "waitlist")} className=" cursor-pointertext-white/70 font-normal font-jakarta text-[9px] sm:text-[16px] text-white/70 hover:text-white transition-colors border-r border-white/70 pr-2">
                 Pricing 
               </button>
             </li>
