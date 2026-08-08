@@ -25,7 +25,7 @@ export default function PromotionIdentityComparison() {
       </svg>
 
       <svg className={`${styles.evidenceThreads} ${styles.mobileThreads}`} viewBox="0 0 689 870" preserveAspectRatio="none" aria-hidden="true">
-        <path className={styles.primaryThread} d="M345 286 Q252 224 158 98 M345 286 Q440 220 530 92 M345 286 Q220 332 107 328 M345 286 Q470 326 582 310 M345 286 Q250 535 145 696 M345 286 Q455 532 551 690" />
+        <path className={styles.primaryThread} d="M345 261 Q252 218 148 96 M345 261 Q440 214 541 91 M345 261 Q220 326 103 356 M345 261 Q470 320 589 347 M345 261 Q250 535 141 706 M345 261 Q455 532 558 713" />
       </svg>
 
       <article className={`${styles.evidencePiece} ${styles.youDossier}`}>

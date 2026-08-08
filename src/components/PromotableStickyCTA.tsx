@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import posthog from "posthog-js";
 
 // ✅ Define prop types
 type PromotableStickyCTAProps = {
+  defaultExpanded?: boolean;
+  anchorId?: string;
+  useIsoCountryLabels?: boolean;
   onRequestAccess?: (data: {
     name: string;
     email: string;
@@ -15,8 +18,13 @@ type PromotableStickyCTAProps = {
   }) => Promise<void>; // ✅ Changed to async
 };
 
-const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAccess }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
+  onRequestAccess,
+  defaultExpanded = false,
+  anchorId,
+  useIsoCountryLabels = false,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // ✅ NEW
 
@@ -24,6 +32,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
+  const nameInputRef = useRef<HTMLInputElement>(null);
   const source = "promotable_sticky_cta";
 
   const pushToDataLayer = (payload: Record<string, unknown>) => {
@@ -53,26 +62,26 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
 
   // Popular country codes
   const countryCodes = [
-    { code: "+91", country: "India", flag: "🇮🇳" },
-    { code: "+1", country: "USA", flag: "🇺🇸" },
-    { code: "+44", country: "UK", flag: "🇬🇧" },
-    { code: "+971", country: "UAE", flag: "🇦🇪" },
-    { code: "+65", country: "Singapore", flag: "🇸🇬" },
-    { code: "+86", country: "China", flag: "🇨🇳" },
-    { code: "+81", country: "Japan", flag: "🇯🇵" },
-    { code: "+82", country: "South Korea", flag: "🇰🇷" },
-    { code: "+61", country: "Australia", flag: "🇦🇺" },
-    { code: "+49", country: "Germany", flag: "🇩🇪" },
-    { code: "+33", country: "France", flag: "🇫🇷" },
-    { code: "+39", country: "Italy", flag: "🇮🇹" },
-    { code: "+34", country: "Spain", flag: "🇪🇸" },
-    { code: "+7", country: "Russia", flag: "🇷🇺" },
-    { code: "+55", country: "Brazil", flag: "🇧🇷" },
-    { code: "+52", country: "Mexico", flag: "🇲🇽" },
-    { code: "+27", country: "South Africa", flag: "🇿🇦" },
-    { code: "+62", country: "Indonesia", flag: "🇮🇩" },
-    { code: "+60", country: "Malaysia", flag: "🇲🇾" },
-    { code: "+66", country: "Thailand", flag: "🇹🇭" },
+    { code: "+91", country: "India", iso: "IN", flag: "🇮🇳" },
+    { code: "+1", country: "USA", iso: "US", flag: "🇺🇸" },
+    { code: "+44", country: "UK", iso: "GB", flag: "🇬🇧" },
+    { code: "+971", country: "UAE", iso: "AE", flag: "🇦🇪" },
+    { code: "+65", country: "Singapore", iso: "SG", flag: "🇸🇬" },
+    { code: "+86", country: "China", iso: "CN", flag: "🇨🇳" },
+    { code: "+81", country: "Japan", iso: "JP", flag: "🇯🇵" },
+    { code: "+82", country: "South Korea", iso: "KR", flag: "🇰🇷" },
+    { code: "+61", country: "Australia", iso: "AU", flag: "🇦🇺" },
+    { code: "+49", country: "Germany", iso: "DE", flag: "🇩🇪" },
+    { code: "+33", country: "France", iso: "FR", flag: "🇫🇷" },
+    { code: "+39", country: "Italy", iso: "IT", flag: "🇮🇹" },
+    { code: "+34", country: "Spain", iso: "ES", flag: "🇪🇸" },
+    { code: "+7", country: "Russia", iso: "RU", flag: "🇷🇺" },
+    { code: "+55", country: "Brazil", iso: "BR", flag: "🇧🇷" },
+    { code: "+52", country: "Mexico", iso: "MX", flag: "🇲🇽" },
+    { code: "+27", country: "South Africa", iso: "ZA", flag: "🇿🇦" },
+    { code: "+62", country: "Indonesia", iso: "ID", flag: "🇮🇩" },
+    { code: "+60", country: "Malaysia", iso: "MY", flag: "🇲🇾" },
+    { code: "+66", country: "Thailand", iso: "TH", flag: "🇹🇭" },
   ];
 
   // Listen for modal events
@@ -94,6 +103,24 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
       window.removeEventListener("waitlist-modal-closed", handleModalClose);
     };
   }, []);
+
+  useEffect(() => {
+    if (!anchorId) return;
+
+    const openAccessForm = (event: MouseEvent) => {
+      const target = event.target as Element | null;
+      const link = target?.closest<HTMLAnchorElement>(`a[href="#${anchorId}"]`);
+      if (!link) return;
+
+      event.preventDefault();
+      trackGetEarlyAccess();
+      setIsExpanded(true);
+      window.setTimeout(() => nameInputRef.current?.focus(), 0);
+    };
+
+    document.addEventListener("click", openAccessForm);
+    return () => document.removeEventListener("click", openAccessForm);
+  }, [anchorId]);
 
   // Check DOM for modal presence (backup)
   useEffect(() => {
@@ -150,7 +177,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
   }
 
   return (
-    <div className="fixed -bottom-1 left-0 w-full z-[9999] bg-[#1B294B] text-white py-3">
+    <div id={anchorId} className="fixed -bottom-1 left-0 w-full z-[9999] bg-[#1B294B] text-white py-3">
       <div className="max-w-7xl mx-auto px-4">
         {!isExpanded ? (
           <div className="flex items-center justify-center py-1.5">
@@ -169,6 +196,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
             <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto bg-[#F5F5F5] rounded-[20px] shadow-lg px-3 py-2.5 gap-2 md:gap-3">
               {/* Name Input */}
               <input
+                ref={nameInputRef}
                 type="text"
                 placeholder="Your Name"
                 value={name}
@@ -198,7 +226,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({ onRequestAcce
               >
                 {countryCodes.map((c) => (
                   <option key={c.code} value={c.code}>
-                    {c.flag} {c.code}
+                    {useIsoCountryLabels ? c.iso : c.flag} {c.code}
                   </option>
                 ))}
               </select>

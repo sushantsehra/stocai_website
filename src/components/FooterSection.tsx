@@ -7,7 +7,11 @@ import { FaLock } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-const Footer = () => {
+type FooterProps = {
+  className?: string;
+};
+
+const Footer = ({ className = "" }: FooterProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -24,7 +28,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#0e1729] text-white py-10 px-4 sm:px-6">
+    <footer className={`bg-[#0e1729] text-white py-10 px-4 sm:px-6 ${className}`}>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6 sm:mb-8">
           {/* Column 1 */}

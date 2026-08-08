@@ -18,6 +18,7 @@ import PromotionSequence from "./PromotionSequence";
 import ExitIntentPopup from "./ExitIntentPopup";
 import OfferJourney from "./OfferJourney";
 import PromotionStoryAccessFlow from "./PromotionStoryAccessFlow";
+import Footer from "@/components/FooterSection";
 import styles from "./page.module.css";
 
 const outcomes = [
@@ -78,14 +79,15 @@ export const metadata: Metadata = {
 
 export default function PromotionStoryPage() {
   return (
-    <main className={styles.page}>
+    <>
+      <main className={styles.page}>
       <section className={styles.hero}>
         <nav className={styles.nav} aria-label="Main navigation">
           <Link href="/" className={styles.brand} aria-label="Better Corporate Life home">
             <Image src="/bcl-logo.png" alt="" width={42} height={42} priority />
             <span>Better Corporate Life</span>
           </Link>
-          <Link href="/diagnostic" className={styles.navCta}>
+          <Link href="#promotion-story-access" className={styles.navCta}>
             Find your blind spot
           </Link>
         </nav>
@@ -313,10 +315,22 @@ export default function PromotionStoryPage() {
       </section>
 
       <section className={styles.finalCta}>
-        <div className={styles.sectionInner}><p className={styles.eyebrow}>The next cycle is coming</p><h2>Work harder and hope—or understand how the decision is actually made.</h2><p>One of these has worked for you so far. The other is what gets you promoted.</p><Link href="/diagnostic" className={styles.primaryCta}>Get promoted without playing politics <span>→</span></Link><small>₹7,000 · one payment · 12-month access</small></div>
+        <div className={styles.finalCtaInner}>
+          <h2 className={styles.finalHeadline}>Next time,<br />it should be for you.</h2>
+          <p className={styles.finalPromise}>Getting congratulated. Getting promoted.</p>
+          <div className={styles.finalDivider} />
+          <div className={styles.finalResponsibility}>
+            <h3>Not getting promoted is not your fault.</h3>
+            <p>Learning the invisible rules of promotion is your responsibility.</p>
+          </div>
+          <Link href="#promotion-story-access" className={styles.finalButton}>Join to get promoted <span aria-hidden="true">→</span></Link>
+        </div>
+        <span className={styles.finalPageMark} aria-hidden="true">PA / COMPLETE</span>
       </section>
-      <PromotionStoryAccessFlow />
-      <ExitIntentPopup />
-    </main>
+        <PromotionStoryAccessFlow />
+        <ExitIntentPopup />
+      </main>
+      <Footer className={styles.promotionFooter} />
+    </>
   );
 }

@@ -57,8 +57,8 @@ export default function ExitIntentPopup() {
         <h2 id="exit-title">Still thinking it over?</h2>
         <p>The next cycle is coming whether you&apos;re ready or not. The only question is whether you walk in with a plan, or watch it happen again.</p>
         <div className={styles.exitActions}>
-          <Link href="#offer" className={styles.exitPrimary} onClick={() => setIsOpen(false)}>Get promoted without playing politics <ArrowRight aria-hidden="true" /></Link>
-          <Link href="/diagnostic" className={styles.exitSecondary} onClick={() => setIsOpen(false)}>Not ready? See where you stand first <ArrowRight aria-hidden="true" /></Link>
+          <Link href="#promotion-story-access" className={styles.exitPrimary} onClick={() => setIsOpen(false)}>Get promoted without playing politics <ArrowRight aria-hidden="true" /></Link>
+          <Link href="#promotion-story-access" className={styles.exitSecondary} onClick={() => setIsOpen(false)}>Not ready? See where you stand first <ArrowRight aria-hidden="true" /></Link>
         </div>
       </div>
     </div>
