@@ -71,7 +71,12 @@ export default function PromotionStoryAccessFlow() {
   };
 
   return <>
-    <PromotableStickyCTA onRequestAccess={handleRequestAccess} />
+    <PromotableStickyCTA
+      anchorId="promotion-story-access"
+      useIsoCountryLabels
+      variant="promotion"
+      onRequestAccess={handleRequestAccess}
+    />
     <PromotableHeroWaitlist
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}
