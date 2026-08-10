@@ -1362,18 +1362,22 @@
 .seedQuote cite, .testimonialGrid cite { display: block; margin-top: .75rem; color: #8fa5be; font-size: .75rem; font-style: normal; letter-spacing: .06em; text-transform: uppercase; }
 .planSection { overflow: hidden; padding: 0; background: #fff; color: #06172e; }
 .transformationInner { width: min(100% - 48px, 1120px); margin: 0 auto; padding: clamp(5rem,9vw,8rem) 0; }
-.transformationHeader { position: relative; display: grid; grid-template-columns: minmax(0,1fr) 250px; gap: 5rem; align-items: end; padding-bottom: 4.5rem; }
+.transformationHeader { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(340px,430px); gap: clamp(2.5rem,5vw,5rem); align-items: center; padding-bottom: 4.5rem; }
 .transformationHeader::after { position: absolute; top: -9rem; right: -16rem; width: 440px; height: 440px; border: 48px solid #f3f7fd; border-radius: 50%; box-shadow: 0 0 0 48px #f8faff; content: ""; }
 .transformationHeader > * { position: relative; z-index: 1; }
 .transformationEyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 1rem; color: #1674ee; font-size: .68rem; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
 .transformationEyebrow span { width: 32px; height: 2px; background: #1674ee; }
 .transformationHeader h2 { max-width: 760px; margin: 0; font-size: clamp(3rem,5vw,5.15rem); letter-spacing: -.06em; line-height: .96; }
-.transformationHeader > div > p:last-child { max-width: 700px; margin: 1.6rem 0 0; color: #607087; font-size: 1rem; line-height: 1.55; }
-.transformationFacts { margin: 0 0 .3rem; }
-.transformationFacts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; border-top: 1px solid #cddff5; padding: 13px 0; }
-.transformationFacts div:last-child { border-bottom: 1px solid #cddff5; }
+.transformationLead { max-width: 700px; margin: 1.6rem 0 0; color: #607087; font-size: 1rem; line-height: 1.55; }
+.transformationFacts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); max-width: 680px; margin: 2.2rem 0 0; border-top: 1px solid #cddff5; border-bottom: 1px solid #cddff5; }
+.transformationFacts div { display: block; border-right: 1px solid #cddff5; padding: 13px 14px; }
+.transformationFacts div:first-child { padding-left: 0; }
+.transformationFacts div:last-child { border-right: 0; }
 .transformationFacts dt { color: #7990ad; font-size: .55rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-.transformationFacts dd { margin: 0; font-size: .76rem; font-weight: 800; }
+.transformationFacts dd { margin: 7px 0 0; font-size: .76rem; font-weight: 800; }
+.moduleStack { position: relative; z-index: 1; width: 100%; margin: 0; text-align: center; }
+.moduleStack img { display: block; width: 100%; height: auto; filter: drop-shadow(0 22px 24px rgba(6,23,46,.13)); }
+.moduleStack figcaption { max-width: 330px; margin: .4rem auto 0; color: #36516f; font-size: .72rem; font-weight: 800; letter-spacing: .06em; line-height: 1.45; text-transform: uppercase; }
 .transformationTimeline { position: relative; border-top: 1px solid #dce7f4; }
 .transformationTimeline::before { position: absolute; top: 18px; bottom: 18px; left: 25px; width: 1px; background: #2382ef; content: ""; }
 .transformationStep { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) minmax(380px,1.05fr); gap: 2.2rem; align-items: center; min-height: 330px; border-bottom: 1px solid #dce7f4; padding: 40px 0; }
@@ -1548,7 +1552,9 @@
   .transformationHeader::after { top: -7rem; right: -10rem; width: 260px; height: 260px; border-width: 32px; box-shadow: 0 0 0 32px #f8faff; }
   .transformationEyebrow { font-size: .58rem; }
   .transformationHeader h2 { max-width: 330px; font-size: clamp(2.45rem,11.5vw,3.25rem); line-height: .96; }
-  .transformationHeader > div > p:last-child { margin-top: 1.5rem; font-size: .92rem; }
+  .transformationLead { margin-top: 1.5rem; font-size: .92rem; }
+  .moduleStack { width: min(100%,390px); margin: 2rem auto 0; }
+  .moduleStack figcaption { margin-top: .25rem; font-size: .62rem; }
   .transformationFacts { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 2rem; border-top: 1px solid #cddff5; border-bottom: 1px solid #cddff5; }
   .transformationFacts div { display: block; border: 0; border-right: 1px solid #cddff5; padding: 12px 7px; }
   .transformationFacts div:last-child { border: 0; }
@@ -2077,7 +2083,7 @@
 .outcomesSection h2 { font-size: clamp(3rem,5vw,5.2rem); line-height: 1.03; }
 .architectLead { max-width: 800px; color: var(--body-dark); font-size: clamp(1.05rem,1.6vw,1.35rem); line-height: 1.6; }
 .sectionLead,
-.transformationHeader>div>p:last-child,
+.transformationLead,
 .transformationCopy>span,
 .founderCopy p:not(.eyebrow):not(.signature),
 .faqList p { color: var(--body); }
