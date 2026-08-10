@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import kavitaProfile from "@/assets/KavitaG.jpg";
 import protagonistProfile from "@/assets/successStoriesImage3.jpg";
 import styles from "./page.module.css";
@@ -8,8 +11,31 @@ function Pin({ dark = false }: { dark?: boolean }) {
 }
 
 export default function PromotionIdentityComparison() {
+  const storyRef = useRef<HTMLDivElement>(null);
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    const story = storyRef.current;
+    if (!story) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setHasEntered(true);
+        observer.disconnect();
+      },
+      { threshold: 0.28 },
+    );
+
+    observer.observe(story);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={styles.mobileBoardStory}>
+    <div
+      ref={storyRef}
+      className={`${styles.mobileBoardStory} ${hasEntered ? styles.boardHasEntered : ""}`}
+    >
     <div className={styles.investigationBoard}>
       <div className={styles.boardHeading}>
         <span>Case file 03</span>

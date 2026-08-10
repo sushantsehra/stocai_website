@@ -209,14 +209,24 @@ export default function PromotionStoryPage() {
       <section id="modules" className={`${styles.contentSection} ${styles.planSection}`}>
         <div className={styles.transformationInner}>
           <header className={styles.transformationHeader}>
-            <div>
+            <div className={styles.transformationIntro}>
               <p className={styles.transformationEyebrow}><span />Inside Promotion Architect</p>
               <h2>Everything you need to get promotion ready in less than 8 weeks.</h2>
-              <p>Awareness videos. A 30–60–90 day plan. Apps. AI coach. Human support. Use them at your own pace.</p>
+              <p className={styles.transformationLead}>Awareness videos. A 30–60–90 day plan. Apps. AI coach. Human support. Use them at your own pace.</p>
+              <dl className={styles.transformationFacts}>
+                <div><dt>Format</dt><dd>Self-paced</dd></div><div><dt>Duration</dt><dd>Less than 8 weeks</dd></div><div><dt>Support</dt><dd>Human + AI</dd></div>
+              </dl>
             </div>
-            <dl className={styles.transformationFacts}>
-              <div><dt>Format</dt><dd>Self-paced</dd></div><div><dt>Duration</dt><dd>Less than 8 weeks</dd></div><div><dt>Support</dt><dd>Human + AI</dd></div>
-            </dl>
+            <figure className={styles.moduleStack}>
+              <Image
+                src="/images/course-modules-cassette-stack.png"
+                alt="Seven Promotion Architect course modules presented as a stack of video cassette cases"
+                width={1058}
+                height={1487}
+                sizes="(max-width: 600px) 90vw, 430px"
+              />
+              <figcaption>Seven modules. One promotion strategy built around you.</figcaption>
+            </figure>
           </header>
           <div className={styles.transformationTimeline}>
             {transformationSteps.map((step) => <article className={styles.transformationStep} key={step.number}>
