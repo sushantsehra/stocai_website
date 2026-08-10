@@ -2353,6 +2353,124 @@
   gap: .9rem;
 }
 .journeyBottom a { align-self: center; }
+
+/* Looping ID-card carousel: the current week stays centred while its neighbours
+   remain visible as context on either side. */
+.idSystem {
+  width: 100%;
+  max-width: none;
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.idSystem:focus-visible .activeCard .promotionId {
+  box-shadow: 0 0 0 3px #56a7ff, 0 24px 70px rgba(0,0,0,.42), inset 0 0 0 1px #d7e1eb;
+}
+
+.idCarousel {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  cursor: grab;
+}
+
+.idCarousel:active { cursor: grabbing; }
+
+.carouselCard {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(460px, calc(100vw - 52px));
+  transform-origin: center center;
+  transition: transform .62s cubic-bezier(.22,.72,.18,1), opacity .45s ease, filter .45s ease;
+}
+
+.carouselCard .idShell { margin: 0; padding: 0; }
+.carouselCard .promotionId { min-height: 620px; }
+.activeCard { z-index: 3; transform: translateX(-50%) scale(1); }
+.previousCard,
+.nextCard {
+  z-index: 1;
+  opacity: .68;
+  filter: saturate(.38) brightness(.72);
+  cursor: pointer;
+}
+.previousCard { transform: translateX(-116%) scale(.86); }
+.nextCard { transform: translateX(16%) scale(.86); }
+.previousCard .promotionId::after,
+.nextCard .promotionId::after {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: rgba(18,42,69,.22);
+  content: "";
+}
+
+.journeyDots {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 18px;
+}
+.journeyDots button {
+  width: 14px;
+  height: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: #587694;
+  cursor: pointer;
+  transition: width .25s ease, background .25s ease;
+}
+.journeyDots .activeDot { width: 24px; background: #1682ff; }
+.idSystem .swipeHint { margin-top: 12px; text-align: center; }
+
+@media (max-width: 600px) {
+  .idSystem { width: calc(100% + 42px); margin-left: -21px; }
+  .idCarousel { height: 620px; }
+  .carouselCard { width: min(390px, calc(100vw - 54px)); }
+  .carouselCard .idShell { margin: 0; }
+  .carouselCard .promotionId { min-height: 600px; }
+  .previousCard { transform: translateX(-120%) scale(.82); }
+  .nextCard { transform: translateX(20%) scale(.82); }
+  .previousCard,
+  .nextCard { opacity: .56; }
+  .journeyDots { gap: 5px; margin-top: 14px; }
+  .journeyDots button { width: 10px; }
+  .journeyDots .activeDot { width: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carouselCard { transition: none; }
+}
+
+/* Supplied product screens replace the illustrative mockups in the program timeline. */
+.transformationVisual,
+.transformationStep:nth-child(even) .transformationVisual {
+  height: auto;
+  aspect-ratio: 532 / 278;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  clip-path: none;
+}
+.transformationVisual::before { display: none; }
+.transformationVisual > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 28px rgba(6,23,46,.12));
+}
+
+@media (max-width: 600px) {
+  .transformationVisual,
+  .transformationStep:nth-child(even) .transformationVisual {
+    height: auto;
+    padding: 0;
+  }
+}
 .exitPrimary,
 .exitSecondary { justify-self: start; }
 

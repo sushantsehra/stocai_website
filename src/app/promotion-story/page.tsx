@@ -35,11 +35,11 @@ const formulaItems = [
 ];
 
 const transformationSteps = [
-  { number: "01", label: "Video", title: "Awareness Videos", subtitle: "See what you are missing.", copy: "Short videos explain the frameworks using psychology, coaching, marketing and real corporate experience.", visual: "awareness" },
-  { number: "02", label: "Personal plan", title: "Your 30–60–90 Day Plan", subtitle: "Know what moves to make.", copy: "Build a plan based on your role, your stakeholders and the promotion you want.", visual: "plan" },
-  { number: "03", label: "Apps", title: "Promotion Apps", subtitle: "Start using the plan at work.", copy: "Use the Stakeholder Map, Delegation and Personal Branding apps.", visual: "apps" },
-  { number: "04", label: "Practice", title: "AI Coach", subtitle: "Practice before the real conversation.", copy: "Work through personal barriers and practice your promotion pitch.", visual: "coach" },
-  { number: "05", label: "Human support", title: "Accountability Partner + Coach on Call", subtitle: "Keep moving when work gets busy.", copy: "Someone keeps you on track. You can call a coach when a real situation gets difficult.", visual: "support" },
+  { number: "01", label: "Video", title: "Awareness Videos", subtitle: "See what you are missing.", copy: "Short videos explain the frameworks using psychology, coaching, marketing and real corporate experience.", image: "/promotion-story/awareness-video.png", imageAlt: "Promotion awareness video about white-collar worker promotions" },
+  { number: "02", label: "Personal plan", title: "Your 30–60–90 Day Plan", subtitle: "Know what moves to make.", copy: "Build a plan based on your role, your stakeholders and the promotion you want.", image: "/promotion-story/action-plan.png", imageAlt: "Personal promotion action plan dashboard" },
+  { number: "03", label: "Apps", title: "Promotion Apps", subtitle: "Start using the plan at work.", copy: "Use the Stakeholder Map, Delegation and Personal Branding apps.", image: "/promotion-story/stakeholder-app.png", imageAlt: "Stakeholder channels selection app" },
+  { number: "04", label: "Practice", title: "AI Coach", subtitle: "Practice before the real conversation.", copy: "Work through personal barriers and practice your promotion pitch.", image: "/promotion-story/ai-coach.png", imageAlt: "AI companion helping build a personal brand" },
+  { number: "05", label: "Human support", title: "Accountability Partner + Coach on Call", subtitle: "Keep moving when work gets busy.", copy: "Someone keeps you on track. You can call a coach when a real situation gets difficult.", image: "/promotion-story/human-support.png", imageAlt: "Accountability partner reminding a member to plan ahead" },
 ];
 
 const testimonials = [
@@ -232,13 +232,8 @@ export default function PromotionStoryPage() {
             {transformationSteps.map((step) => <article className={styles.transformationStep} key={step.number}>
               <span className={styles.transformationNumber}>{step.number}</span>
               <div className={styles.transformationCopy}><p>{step.label}</p><h3>{step.title}</h3><strong>{step.subtitle}</strong><span>{step.copy}</span></div>
-              <div className={`${styles.transformationVisual} ${styles[`visual${step.visual}`]}`} aria-hidden="true">
-                <small>{step.visual === "plan" ? "Your promotion plan" : step.label}</small>
-                {step.visual === "awareness" && <div className={styles.awarenessGraphic}><i /><i /><i /><b>You</b><span>Work</span><span>Perception</span><span>Pattern</span></div>}
-                {step.visual === "plan" && <div className={styles.daysGraphic}>{[30,60,90].map(day => <div key={day}><b>{day}</b><small>Days</small><i /><i /><i /></div>)}</div>}
-                {step.visual === "apps" && <div className={styles.appsGraphic}><div>Stakeholder Map<small>Map influence</small></div><div>Delegation</div><div>Personal Brand<small>Shape perception</small></div></div>}
-                {step.visual === "coach" && <div className={styles.coachGraphic}><div><b>You</b>I know the work. I don&apos;t know how to talk about it.</div><div><b>AI coach</b>Okay. Tell me what changed because of your work.</div><div><b>Practice</b>&ldquo;Because of my work...&rdquo;</div></div>}
-                {step.visual === "support" && <div className={styles.supportGraphic}><ul><li>Did this week&apos;s move</li><li>Spoke to stakeholder</li><li>Next move</li><li>Weekly check-in</li></ul><div><b>↗</b><strong>Coach<br/>on call</strong><small>For real situations</small></div></div>}
+              <div className={styles.transformationVisual}>
+                <Image src={step.image} alt={step.imageAlt} width={532} height={278} sizes="(max-width: 600px) calc(100vw - 42px), 48vw" />
               </div>
             </article>)}
           </div>
