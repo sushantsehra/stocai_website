@@ -9,6 +9,7 @@ import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistReferenceFromResponse, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 import env from "@/utils/env";
+import { trackLead } from "@/lib/analytics/events";
 
 type UserData = {
   name: string;
@@ -65,6 +66,9 @@ export default function PromotionStoryAccessFlow() {
         trackAlreadyWaitlisted(userData.source, { context: "promotion_story_request_access", payment_started: false });
       }
       posthog.capture("waitlist_submitted", { source: userData.source, payment_started: false });
+      if (waitlistData?.updated === false && referenceId) {
+        trackLead({ leadId: referenceId, source: userData.source });
+      }
     } catch (error) {
       posthog.capture("waitlist_submit_failed", { source: userData.source, error: error instanceof Error ? error.message : "unknown_error" });
     }
