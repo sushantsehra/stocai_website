@@ -175,9 +175,22 @@ export default function PromotionStoryPage() {
       <section id="program" className={`${styles.contentSection} ${styles.outcomesSection}`}>
         <div className={styles.architectInner}>
           <span className={styles.pageMark} aria-hidden="true">PA / 01</span>
-          <p className={styles.architectEyebrow}><span />Introducing</p>
-          <h2>Promotion Architect</h2>
-          <p className={styles.architectLead}>An advanced online system that designs your personal strategy for becoming the first choice for promotion.</p>
+          <div className={styles.architectHero}>
+            <div className={styles.architectHeroCopy}>
+              <p className={styles.architectEyebrow}><span />Introducing</p>
+              <h2>Promotion Architect</h2>
+              <p className={styles.architectLead}>An advanced online system that designs your personal strategy for becoming the first choice for promotion.</p>
+            </div>
+            <figure className={styles.architectCassettes}>
+              <Image
+                src="/images/promotion-architect-cassettes-transparent.png"
+                alt="Seven Promotion Architect modules presented as horizontally arranged video cassette cases"
+                width={1737}
+                height={905}
+                sizes="(max-width: 600px) calc(100vw - 44px), 520px"
+              />
+            </figure>
+          </div>
           <div className={styles.strategyLabel}><span>Your strategy is designed to help you</span><i /></div>
           <div className={styles.architectMap}>
             <svg className={styles.desktopPath} viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true">
@@ -233,7 +246,7 @@ export default function PromotionStoryPage() {
               <span className={styles.transformationNumber}>{step.number}</span>
               <div className={styles.transformationCopy}><p>{step.label}</p><h3>{step.title}</h3><strong>{step.subtitle}</strong><span>{step.copy}</span></div>
               <div className={styles.transformationVisual}>
-                <Image src={step.image} alt={step.imageAlt} width={532} height={278} sizes="(max-width: 600px) calc(100vw - 42px), 48vw" />
+                <Image src={step.image} alt={step.imageAlt} width={535} height={280} sizes="(max-width: 600px) calc(100vw - 52px), (max-width: 1280px) 55vw, 650px" />
               </div>
             </article>)}
           </div>

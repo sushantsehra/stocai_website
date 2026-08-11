@@ -17,7 +17,7 @@
   --surface-strong: #eaf3ff;
   --radius-card: 18px;
   --radius-action: 9px;
-  --section-space: clamp(5.5rem,7vw,7rem);
+  --section-space: clamp(4rem,5vw,5rem);
   --content-space: clamp(2.75rem,4vw,3.75rem);
   background: #ffffff;
   color: var(--ink);
@@ -478,6 +478,13 @@
   font-weight: 700;
   letter-spacing: normal;
   line-height: 1.05;
+}
+
+@media (min-width: 901px) {
+  .closingQuestion {
+    max-width: none;
+    white-space: nowrap;
+  }
 }
 
 .artwork {
@@ -1325,6 +1332,9 @@
 .outcomesSection::before { position: absolute; inset: 0; background-image: linear-gradient(rgba(33,103,161,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(33,103,161,.055) 1px,transparent 1px); background-size: 32px 32px; content: ""; pointer-events: none; }
 .architectInner { position: relative; width: min(1280px,calc(100% - 96px)); min-height: 840px; margin: 0 auto; padding: 48px 0 38px; }
 .pageMark { position: absolute; top: 33px; right: -17px; color: #66809c; font-family: monospace; font-size: .65rem; letter-spacing: .16em; writing-mode: vertical-rl; }
+.architectHero { display: grid; grid-template-columns: minmax(0,1fr) minmax(390px,520px); gap: clamp(2rem,4vw,4.5rem); align-items: center; }
+.architectCassettes { margin: 0; }
+.architectCassettes img { display: block; width: 100%; height: auto; filter: drop-shadow(0 18px 18px rgba(0,8,20,.34)); }
 .architectEyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; color: #f3c67e; font-size: .7rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
 .architectEyebrow span { width: 34px; height: 2px; background: #2e94ff; }
 .outcomesSection h2 { max-width: none; font-size: clamp(4rem,6vw,6.7rem); letter-spacing: -.065em; line-height: 1; }
@@ -1361,7 +1371,7 @@
 .seedQuote { margin: 0; border-left: 3px solid #3985e8; padding: 1.25rem 0 1.25rem 1.5rem; color: #fff; font-size: 1.1rem; }
 .seedQuote cite, .testimonialGrid cite { display: block; margin-top: .75rem; color: #8fa5be; font-size: .75rem; font-style: normal; letter-spacing: .06em; text-transform: uppercase; }
 .planSection { overflow: hidden; padding: 0; background: #fff; color: #06172e; }
-.transformationInner { width: min(100% - 48px, 1120px); margin: 0 auto; padding: clamp(5rem,9vw,8rem) 0; }
+.transformationInner { width: min(100% - 48px, 1240px); margin: 0 auto; padding: clamp(5rem,9vw,8rem) 0; }
 .transformationHeader { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(340px,430px); gap: clamp(2.5rem,5vw,5rem); align-items: center; padding-bottom: 4.5rem; }
 .transformationHeader::after { position: absolute; top: -9rem; right: -16rem; width: 440px; height: 440px; border: 48px solid #f3f7fd; border-radius: 50%; box-shadow: 0 0 0 48px #f8faff; content: ""; }
 .transformationHeader > * { position: relative; z-index: 1; }
@@ -1380,8 +1390,8 @@
 .moduleStack figcaption { max-width: 330px; margin: .4rem auto 0; color: #36516f; font-size: .72rem; font-weight: 800; letter-spacing: .06em; line-height: 1.45; text-transform: uppercase; }
 .transformationTimeline { position: relative; border-top: 1px solid #dce7f4; }
 .transformationTimeline::before { position: absolute; top: 18px; bottom: 18px; left: 25px; width: 1px; background: #2382ef; content: ""; }
-.transformationStep { position: relative; display: grid; grid-template-columns: 64px minmax(0,1fr) minmax(380px,1.05fr); gap: 2.2rem; align-items: center; min-height: 330px; border-bottom: 1px solid #dce7f4; padding: 40px 0; }
-.transformationStep:nth-child(even) { grid-template-columns: 64px minmax(380px,1.05fr) minmax(0,1fr); }
+.transformationStep { position: relative; display: grid; grid-template-columns: 64px minmax(280px,.72fr) minmax(460px,1.28fr); gap: 2.2rem; align-items: center; min-height: 390px; border-bottom: 1px solid #dce7f4; padding: 40px 0; }
+.transformationStep:nth-child(even) { grid-template-columns: 64px minmax(460px,1.28fr) minmax(280px,.72fr); }
 .transformationStep:nth-child(even) .transformationCopy { grid-column: 3; grid-row: 1; }
 .transformationStep:nth-child(even) .transformationVisual { grid-column: 2; grid-row: 1; }
 .transformationNumber { position: relative; z-index: 2; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #6ba9f4; border-radius: 50%; background: #fff; color: #1674ee; font-size: .62rem; font-weight: 800; letter-spacing: .08em; }
@@ -1452,6 +1462,14 @@
 @media (max-width: 900px) {
   .formula { display: grid; grid-template-columns: 1fr; gap: .8rem; }.formulaPart { display: contents; }.operator { height: auto; min-height: 25px; align-self: stretch; margin: 0; transform: rotate(90deg); }
   .planLayout,.offerInner,.founderLayout { grid-template-columns: 1fr; }.offerIntro { position: static; }.testimonialGrid { grid-template-columns: 1fr; }
+  .architectHero { grid-template-columns: 1fr; }
+  .architectCassettes { width: min(620px,100%); margin-top: 1.5rem; }
+  .transformationStep,
+  .transformationStep:nth-child(even) { grid-template-columns: 48px minmax(0,1fr); min-height: 0; }
+  .transformationCopy,
+  .transformationStep:nth-child(even) .transformationCopy { grid-column: 2; grid-row: 1; }
+  .transformationVisual,
+  .transformationStep:nth-child(even) .transformationVisual { grid-column: 2; grid-row: 2; margin-top: 1.5rem; }
   .chartBody { grid-template-columns: 1fr; }
   .chartSummary { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
   .chartSummary > p { grid-column: 1/-1; margin-bottom: 0; }
@@ -1525,9 +1543,15 @@
   .formulaResult .formulaCopy span { display: block; margin-top: 6px; color: #fff; font-size: .9rem; }
   .formulaLine { text-align: left; line-height: 1.6; }
   .architectInner { width: calc(100% - 44px); min-height: 1050px; padding: 38px 0 28px; }
+  .architectHero { grid-template-columns: minmax(0,1fr) 138px; gap: 14px; align-items: center; }
+  .architectHeroCopy { display: contents; }
+  .architectHero .architectEyebrow { grid-column: 1/-1; grid-row: 1; align-self: end; }
+  .architectHero h2 { grid-column: 1; grid-row: 2; align-self: start; }
+  .architectHero .architectLead { grid-column: 1/-1; grid-row: 3; }
+  .architectCassettes { grid-column: 2; grid-row: 2; align-self: center; width: 100%; margin: 0; }
   .pageMark { top: 25px; right: -8px; }
   .architectEyebrow { margin-bottom: 12px; font-size: .61rem; }
-  .outcomesSection h2 { max-width: 330px; font-size: clamp(3.05rem,14vw,4rem); line-height: .96; }
+  .outcomesSection h2 { max-width: 330px; font-size: clamp(2.15rem,9.8vw,2.75rem); line-height: .96; }
   .architectLead { margin-top: 22px; font-size: 1.08rem; line-height: 1.42; }
   .strategyLabel { width: 100%; margin-top: 38px; font-size: .55rem; white-space: nowrap; }
   .architectMap { height: 770px; margin-top: 18px; }
@@ -1548,14 +1572,15 @@
   .primaryCta { width: 100%; text-align: center; }
   .planSection { padding: 0; }
   .transformationInner { width: min(100% - 32px,1120px); padding: 4rem 0; }
-  .transformationHeader { display: block; padding-bottom: 2.3rem; }
+  .transformationHeader { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(115px,.8fr); gap: 0 14px; align-items: start; padding-bottom: 2.3rem; }
+  .transformationIntro { display: contents; }
   .transformationHeader::after { top: -7rem; right: -10rem; width: 260px; height: 260px; border-width: 32px; box-shadow: 0 0 0 32px #f8faff; }
-  .transformationEyebrow { font-size: .58rem; }
-  .transformationHeader h2 { max-width: 330px; font-size: clamp(2.45rem,11.5vw,3.25rem); line-height: .96; }
-  .transformationLead { margin-top: 1.5rem; font-size: .92rem; }
-  .moduleStack { width: min(100%,390px); margin: 2rem auto 0; }
-  .moduleStack figcaption { margin-top: .25rem; font-size: .62rem; }
-  .transformationFacts { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 2rem; border-top: 1px solid #cddff5; border-bottom: 1px solid #cddff5; }
+  .transformationEyebrow { grid-column: 1; grid-row: 1; font-size: .58rem; }
+  .transformationHeader h2 { grid-column: 1; grid-row: 2; max-width: none; font-size: clamp(2rem,9.2vw,2.55rem); line-height: .96; }
+  .transformationLead { grid-column: 1/-1; grid-row: 3; margin-top: 1.5rem; font-size: .92rem; }
+  .moduleStack { grid-column: 2; grid-row: 1/3; align-self: center; width: 100%; margin: 0; }
+  .moduleStack figcaption { display: none; }
+  .transformationFacts { grid-column: 1/-1; grid-row: 4; display: grid; grid-template-columns: repeat(3,1fr); margin-top: 2rem; border-top: 1px solid #cddff5; border-bottom: 1px solid #cddff5; }
   .transformationFacts div { display: block; border: 0; border-right: 1px solid #cddff5; padding: 12px 7px; }
   .transformationFacts div:last-child { border: 0; }
   .transformationFacts dt { font-size: .42rem; }
@@ -2296,8 +2321,8 @@
 .contentSection.outcomesSection { padding: 0; }
 .transformationInner,
 .journeyFrame { padding-top: var(--section-space); padding-bottom: var(--section-space); }
-.finalCta { padding: clamp(6.5rem,8vw,8rem) 0; }
-.followUp { padding-bottom: clamp(7rem,9vw,8.5rem); }
+.finalCta { padding: var(--section-space) 0; }
+.followUp { padding-bottom: var(--section-space); }
 .formula,
 .chart,
 .testimonialGrid { margin-top: var(--content-space); }
@@ -2461,7 +2486,7 @@
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 16px 28px rgba(6,23,46,.12));
+  filter: contrast(1.06) saturate(1.03) drop-shadow(0 16px 28px rgba(6,23,46,.12));
 }
 
 @media (max-width: 600px) {
