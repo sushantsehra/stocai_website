@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import posthog from "posthog-js";
+import { trackCtaClick } from "@/lib/analytics/events";
 
 // ✅ Define prop types
 type PromotableStickyCTAProps = {
@@ -115,6 +116,11 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
       if (!link) return;
 
       event.preventDefault();
+      trackCtaClick({
+        location: link.dataset.ctaLocation || "page",
+        label: link.textContent || "Get Access",
+        source,
+      });
       trackGetEarlyAccess();
       setIsExpanded(true);
       window.setTimeout(() => nameInputRef.current?.focus(), 0);
@@ -151,6 +157,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
       alert("Please fill in all fields");
       return;
     }
+    trackCtaClick({ location: "sticky", label: "Get Access", source });
     trackRequestAccess();
 
     const fullPhone = `${countryCode}${phone}`;
@@ -185,6 +192,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
           <div className="flex items-center justify-center py-1.5">
             <button
               onClick={() => {
+                trackCtaClick({ location: "sticky", label: "Get Access", source });
                 trackGetEarlyAccess();
                 setIsExpanded(true);
               }}

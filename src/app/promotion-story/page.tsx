@@ -87,7 +87,7 @@ export default function PromotionStoryPage() {
             <Image src="/bcl-logo.png" alt="" width={42} height={42} priority />
             <span>Better Corporate Life</span>
           </Link>
-          <Link href="#promotion-story-access" className={styles.navCta}>
+          <Link href="#promotion-story-access" className={styles.navCta} data-cta-location="hero">
             Find your blind spot <span aria-hidden="true">→</span>
           </Link>
         </nav>
@@ -328,7 +328,7 @@ export default function PromotionStoryPage() {
             <h3>Not getting promoted is not your fault.</h3>
             <p>Learning the invisible rules of promotion is your responsibility.</p>
           </div>
-          <Link href="#promotion-story-access" className={styles.finalButton}>Join to get promoted <span aria-hidden="true">→</span></Link>
+          <Link href="#promotion-story-access" className={styles.finalButton} data-cta-location="footer">Join to get promoted <span aria-hidden="true">→</span></Link>
         </div>
         <span className={styles.finalPageMark} aria-hidden="true">PA / COMPLETE</span>
       </section>

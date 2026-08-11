@@ -100,7 +100,7 @@ export default function OfferJourney() {
         </nav>
         <small className={styles.swipeHint}>Swipe or use arrow keys</small>
       </div>
-      <div className={styles.journeyBottom}><div><p>Movement guarantee</p><strong>Do the program, apply the plan, and if you see no movement toward your promotion, we refund every rupee.</strong><span>The only thing you risk is staying on the curve you&apos;re already on.</span></div><div><Link href="#promotion-story-access">Get promoted without playing politics <span>→</span></Link><small>Get chosen first. Get backed for the next level.</small></div></div>
+      <div className={styles.journeyBottom}><div><p>Movement guarantee</p><strong>Do the program, apply the plan, and if you see no movement toward your promotion, we refund every rupee.</strong><span>The only thing you risk is staying on the curve you&apos;re already on.</span></div><div><Link href="#promotion-story-access" data-cta-location="mid_page">Get promoted without playing politics <span>→</span></Link><small>Get chosen first. Get backed for the next level.</small></div></div>
     </div>
   </section>;
 }

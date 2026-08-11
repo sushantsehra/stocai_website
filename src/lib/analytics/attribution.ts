@@ -10,6 +10,8 @@ export type AttributionData = {
   utm_marketing_tactic?: string;
   gclid?: string;
   fbclid?: string;
+  fbp?: string;
+  fbc?: string;
   msclkid?: string;
   ttclid?: string;
   twclid?: string;
@@ -47,6 +49,13 @@ const CLICK_KEYS = [
 const ATTR_KEYS = [...UTM_KEYS, ...CLICK_KEYS];
 
 const isBrowser = () => typeof window !== "undefined";
+
+const readCookie = (name: string): string | undefined => {
+  if (!isBrowser()) return undefined;
+  const prefix = `${name}=`;
+  const value = document.cookie.split("; ").find((item) => item.startsWith(prefix));
+  return value ? decodeURIComponent(value.slice(prefix.length)) : undefined;
+};
 
 const parseSearch = (search: string): Partial<AttributionData> => {
   if (!search) return {};
@@ -88,6 +97,8 @@ export const persistAttribution = (): AttributionData => {
   const fromUrl = parseSearch(window.location.search);
 
   const next: AttributionData = { ...stored };
+  next.fbp = readCookie("_fbp") || next.fbp;
+  next.fbc = readCookie("_fbc") || next.fbc;
 
   if (!next.initial_landing_url) {
     next.initial_landing_url = window.location.href;
@@ -127,6 +138,8 @@ export const getAttributionProperties = (): Record<string, string> => {
   const data = readStored();
   return pickKeys(data, [
     ...ATTR_KEYS,
+    "fbp",
+    "fbc",
     "initial_landing_url",
     "initial_referrer",
     "last_landing_url",
@@ -157,6 +170,8 @@ export const getAttributionForApi = (): Record<string, string> => {
   const data = readStored();
   return pickKeys(data, [
     ...ATTR_KEYS,
+    "fbp",
+    "fbc",
     "initial_landing_url",
     "initial_referrer",
     "last_landing_url",

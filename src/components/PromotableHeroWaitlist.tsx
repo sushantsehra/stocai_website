@@ -15,6 +15,7 @@ import env from "@/utils/env";
 import useSubscriptionAmount, {
   formatSubscriptionAmount,
 } from "@/hooks/useSubscriptionAmount";
+import { trackCtaClick, trackInitiateCheckout } from "@/lib/analytics/events";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -204,6 +205,8 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
     return {
       shortUrl: shortUrl as string,
+      referenceId: data?.reference_id as string,
+      paymentLinkId: data?.payment_link_id as string | undefined,
       pricing: data?.pricing as
         | {
             original_amount?: number;
@@ -247,16 +250,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         email,
       });
 
-      posthog.capture("waitlist_submitted", {
-        source,
-        payment_started: true,
-      });
-      pushToDataLayer({
-        event: "waitlist_submitted",
-        source,
-        payment_started: true,
-      });
-
       const payment = await createPaymentLink({
         name,
         email,
@@ -274,6 +267,13 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         source,
         amount: payment.pricing?.final_amount,
         discount_code: payment.pricing?.discount_code,
+      });
+      trackInitiateCheckout({
+        checkoutId: payment.referenceId,
+        paymentLinkId: payment.paymentLinkId,
+        value: payment.pricing?.final_amount,
+        currency: payment.pricing?.currency,
+        source,
       });
       window.location.href = payment.shortUrl;
     } catch (error) {
@@ -563,6 +563,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               type="submit"
               form="promotion-checkout-form"
               disabled={status === "loading"}
+              onClick={() => trackCtaClick({ location: "checkout_modal", label: "Proceed to Secure Checkout", source })}
               className="mt-7 inline-flex min-h-[62px] w-full cursor-pointer items-center justify-center rounded-[16px] bg-gradient-to-b from-[#ffdc20] to-[#ffca05] px-5 font-jakarta text-[20px] font-extrabold text-[#121820] shadow-[0_5px_10px_rgba(208,163,0,0.25)] transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-55 sm:text-[25px]"
             >
               {status === "loading" ? "Processing..." : "Proceed to Secure Checkout"}
