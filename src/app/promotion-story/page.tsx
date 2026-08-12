@@ -19,6 +19,8 @@ import ExitIntentPopup from "./ExitIntentPopup";
 import OfferJourney from "./OfferJourney";
 import PromotionStoryAccessFlow from "./PromotionStoryAccessFlow";
 import Footer from "@/components/FooterSection";
+import TestimonialTrustStrip from "@/components/TestimonialTrustStrip";
+import { getSignupUrl } from "@/utils/env";
 import styles from "./page.module.css";
 
 const outcomes = [
@@ -84,12 +86,11 @@ export default function PromotionStoryPage() {
       <section className={styles.hero}>
         <nav className={styles.nav} aria-label="Main navigation">
           <Link href="/" className={styles.brand} aria-label="Better Corporate Life home">
-            <Image src="/bcl-logo.png" alt="" width={42} height={42} priority />
-            <span>Better Corporate Life</span>
+            <Image src="/bcl-logo.png" alt="Better Corporate Life" width={210} height={105} priority />
           </Link>
-          <Link href="#promotion-story-access" className={styles.navCta} data-cta-location="hero">
-            Find your blind spot <span aria-hidden="true">→</span>
-          </Link>
+          <a href={getSignupUrl("/")} className={styles.signInLink}>
+            Sign in
+          </a>
         </nav>
 
         <div className={styles.heroContent}>
@@ -168,7 +169,7 @@ export default function PromotionStoryPage() {
               <div className={styles.formulaCopy}><strong>Promoted</strong><span>The decision goes your way.</span></div>
             </div>
           </div>
-          <p className={styles.formulaLine}>Good work gets you considered. <strong>Seen × Believed × Backed</strong> is what gets you promoted.</p>
+          <p className={styles.formulaLine}><span>Good work gets you considered.</span>{" "}<span><strong>Seen × Believed × Backed</strong> is what gets you promoted.</span></p>
         </div>
       </section>
 
@@ -315,7 +316,8 @@ export default function PromotionStoryPage() {
 
       <section id="testimonials" className={`${styles.contentSection} ${styles.proofSection}`}>
         <div className={styles.sectionInner}>
-          <p className={styles.eyebrow}>From professionals doing the work</p><h2>Small shifts. Different conversations.</h2>
+          <p className={styles.eyebrow}>From professionals doing the work</p><h2 className={styles.testimonialHeading}><span>Small shifts.</span>{" "}<span>Different conversations.</span></h2>
+          <TestimonialTrustStrip />
           <div className={styles.testimonialGrid}>{testimonials.map(({ quote, role, image }) => <blockquote key={role}><div className={styles.memberPortrait}><Image src={image} alt="" fill sizes="72px" /></div><div><span className={styles.quoteMark} aria-hidden="true">“</span>{quote}<cite>{role}</cite></div></blockquote>)}</div>
           <div className={styles.companies}>
             <span>Our members come from teams like</span>
