@@ -4,6 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { PointerEvent, useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
+import anikaPortrait from "@/assets/AnikaSharma.jpg";
+import dikshaPortrait from "@/assets/diksha.jpg";
+import eleenaPortrait from "@/assets/EleenaR.jpg";
+import hussainPortrait from "@/assets/MHussain.jpg";
+import manavPortrait from "@/assets/manav.jpg";
+import nikhilPortrait from "@/assets/NikhilS.jpg";
+import utkarshPortrait from "@/assets/utkarshJha.jpg";
+import venkatramanPortrait from "@/assets/VenkatramanA.jpg";
 
 const weeks = [
   ["Phase 01 · See the game clearly", "What actually makes someone promotable", "See your real gaps and what needs fixing first.", "A clear starting point."],
@@ -14,6 +22,17 @@ const weeks = [
   ["Phase 03 · Build the reputation that travels", "Leadership presence before the title", "Build a clear leadership brand and the words for it.", "A next-level leadership signal."],
   ["Phase 04 · Close the promotion", "Promotion psychology", "Know how to position yourself before the next cycle opens.", "The right timing."],
   ["Phase 04 · Close the promotion", "Your personalised 30–60–90 roadmap", "Leave with a plan built around your actual role.", "A promotion plan ready to run."],
+];
+
+const profilePortraits = [
+  anikaPortrait,
+  dikshaPortrait,
+  eleenaPortrait,
+  hussainPortrait,
+  manavPortrait,
+  nikhilPortrait,
+  utkarshPortrait,
+  venkatramanPortrait,
 ];
 
 export default function OfferJourney() {
@@ -86,7 +105,7 @@ export default function OfferJourney() {
                 <div className={styles.promotionId}>
                   <div className={styles.idTop}><span>Your promotion ID</span><span>Profile refresh <b>{String(index + 1).padStart(2, "0")}/08</b></span></div>
                   <div className={styles.idBody}>
-                    <div className={styles.idPerson}><b><Image src="/promotion-story/finance-head-testimonial.png" alt={position === 0 ? "Professional profile portrait" : ""} width={74} height={74} /></b><strong>Your Name</strong><span>Your current role</span><em>Being rebuilt</em><small>ID&nbsp; PA–008 &nbsp;·&nbsp; Promotion Architect</small></div>
+                    <div className={styles.idPerson}><b><Image src={profilePortraits[index]} alt={position === 0 ? `Professional profile portrait for week ${index + 1}` : ""} width={74} height={74} /></b><strong>Your Name</strong><span>Your current role</span><em>Being rebuilt</em><small>ID&nbsp; PA–008 &nbsp;·&nbsp; Promotion Architect</small></div>
                     <article className={styles.shiftSlide}><div><span>{week[0]}</span><span>Week {String(index + 1).padStart(2, "0")}</span></div><h3>{week[1]}</h3><p>{week[2]}</p><aside><small>Your profile now has</small>{week[3]}</aside></article>
                   </div>
                   <footer className={styles.idFooter}><div className={styles.buildMeta}><span>Profile build</span><b>{progress}%</b></div><div className={styles.buildTrack}><i style={{ width: `${progress}%` }} /></div></footer>
