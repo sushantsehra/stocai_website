@@ -16,6 +16,7 @@ import useSubscriptionAmount, {
   formatSubscriptionAmount,
 } from "@/hooks/useSubscriptionAmount";
 import { trackCtaClick, trackInitiateCheckout } from "@/lib/analytics/events";
+import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -177,7 +178,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     reference_id?: string;
     discount_code?: string;
   }) => {
-    const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
+    const response = await fetch(`${env.apiUrl}/payments/razorpay/order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,15 +199,14 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       throw new Error(data?.detail || data?.error || "Unable to start payment.");
     }
 
-    const shortUrl = data?.short_url || data?.shortUrl;
-    if (!shortUrl) {
-      throw new Error("Payment link was not returned.");
+    if (!data?.order_id || !data?.key_id) {
+      throw new Error("Payment order was not returned.");
     }
 
     return {
-      shortUrl: shortUrl as string,
-      referenceId: data?.reference_id as string,
-      paymentLinkId: data?.payment_link_id as string | undefined,
+      order: data,
+      referenceId: data?.checkout_attempt_id as string,
+      paymentLinkId: data?.order_id as string | undefined,
       pricing: data?.pricing as
         | {
             original_amount?: number;
@@ -275,7 +275,20 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         currency: payment.pricing?.currency,
         source,
       });
-      window.location.href = payment.shortUrl;
+      const verification = await openRazorpayCheckout(payment.order, env.apiUrl);
+      if (payment.order.completion_url) {
+        const destination = new URL(payment.order.completion_url, window.location.origin);
+        if (verification.activation_token) {
+          destination.hash = new URLSearchParams({
+            payment_activation: String(verification.activation_token),
+          }).toString();
+        } else if (verification.account_already_active) {
+          destination.searchParams.set("auth", "login");
+        } else {
+          throw new Error("Payment succeeded, but account activation could not be started. Please contact support.");
+        }
+        window.location.href = destination.toString();
+      }
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -361,7 +374,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         role="dialog"
         aria-modal="true"
         data-waitlist-modal
-        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:h-auto sm:max-h-[calc(100vh-32px)] sm:max-w-[680px] sm:rounded-[42px] sm:border sm:border-[#aeb4bc]"
+        className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:h-auto sm:max-h-[calc(100vh-32px)] sm:max-w-[544px] sm:rounded-[42px] sm:border sm:border-[#aeb4bc]"
       >
         <button
           type="button"
@@ -382,8 +395,9 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               <span><strong className="font-extrabold">Trusted by 500+ professionals</strong><br /><span className="text-[#596273]">4.8/5 average rating</span> <span className="ml-2 tracking-[2px] text-[#ffc20a]">★★★★★</span></span>
             </div>
 
-            <h2 className="mt-8 max-w-[590px] font-jakarta text-[38px] font-extrabold leading-[1.03] tracking-[-1.8px] text-[#080d18] sm:text-[54px]">
-              Never Get Rejected<br />for a <span className="relative inline-block text-[#0865df] after:absolute after:bottom-[-2px] after:left-0 after:h-[3px] after:w-full after:-rotate-1 after:bg-[#2eaf68]">Promotion</span>.
+            <h2 className="mt-8 max-w-[590px] font-jakarta text-[clamp(26px,8vw,38px)] font-extrabold leading-[1.03] tracking-[-1.8px] text-[#080d18] sm:text-[48px]">
+              <span className="block whitespace-nowrap">Never Get Rejected</span>
+              <span className="block whitespace-nowrap">for a <span className="relative inline-block text-[#0865df] after:absolute after:bottom-[-2px] after:left-0 after:h-[3px] after:w-full after:-rotate-1 after:bg-[#2eaf68]">Promotion</span>.</span>
             </h2>
             <p className="mt-5 max-w-[570px] font-jakarta text-[17px] font-medium leading-[1.4] text-[#50545c] sm:text-[22px]">
               The one skill that has changed career trajectory of many corporate employees.
