@@ -6,6 +6,7 @@ import certificate from "../assets/certificate.png"
 import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import posthog from "posthog-js";
+import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -126,7 +127,7 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
     reference_id?: string;
     discount_code?: string;
   }) => {
-    const response = await fetch(`${env.apiUrl}/payments/razorpay/link`, {
+    const response = await fetch(`${env.apiUrl}/payments/razorpay/order`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -147,13 +148,12 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       throw new Error(data?.detail || data?.error || "Unable to start payment.");
     }
 
-    const shortUrl = data?.short_url || data?.shortUrl;
-    if (!shortUrl) {
-      throw new Error("Payment link was not returned.");
+    if (!data?.order_id || !data?.key_id) {
+      throw new Error("Payment order was not returned.");
     }
 
     return {
-      shortUrl: shortUrl as string,
+      order: data,
       pricing: data?.pricing as
         | {
             original_amount?: number;
@@ -220,7 +220,20 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           amount: payment.pricing?.final_amount,
           discount_code: payment.pricing?.discount_code,
         });
-        window.location.href = payment.shortUrl;
+        const verification = await openRazorpayCheckout(payment.order, env.apiUrl);
+        if (payment.order.completion_url) {
+          const destination = new URL(payment.order.completion_url, window.location.origin);
+          if (verification.activation_token) {
+            destination.hash = new URLSearchParams({
+              payment_activation: String(verification.activation_token),
+            }).toString();
+          } else if (verification.account_already_active) {
+            destination.searchParams.set("auth", "login");
+          } else {
+            throw new Error("Payment succeeded, but account activation could not be started. Please contact support.");
+          }
+          window.location.href = destination.toString();
+        }
         return;
       }
 
