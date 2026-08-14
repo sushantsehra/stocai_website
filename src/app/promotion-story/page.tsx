@@ -18,9 +18,9 @@ import PromotionSequence from "./PromotionSequence";
 import ExitIntentPopup from "./ExitIntentPopup";
 import OfferJourney from "./OfferJourney";
 import PromotionStoryAccessFlow from "./PromotionStoryAccessFlow";
+import PromotionStoryUserNav from "./PromotionStoryUserNav";
 import Footer from "@/components/FooterSection";
 import TestimonialTrustStrip from "@/components/TestimonialTrustStrip";
-import { getSignupUrl } from "@/utils/env";
 import styles from "./page.module.css";
 
 const outcomes = [
@@ -88,9 +88,7 @@ export default function PromotionStoryPage() {
           <Link href="/" className={styles.brand} aria-label="Better Corporate Life home">
             <Image src="/bcl-logo.png" alt="Better Corporate Life" width={210} height={105} priority />
           </Link>
-          <a href={getSignupUrl("/")} className={styles.signInLink}>
-            Sign in
-          </a>
+          <PromotionStoryUserNav />
         </nav>
 
         <div className={styles.heroContent}>

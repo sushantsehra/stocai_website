@@ -91,6 +91,36 @@
   color: #0877fa;
 }
 
+.userLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 4px 12px 4px 4px;
+  background: var(--action);
+  color: #ffffff;
+  font-size: .84rem;
+  font-weight: 700;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.userLink:hover {
+  background: #0758d6;
+  transform: translateY(-1px);
+}
+
+.userAvatar {
+  display: block;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.userNavPlaceholder {
+  display: block;
+  width: 78px;
+  height: 39px;
+}
+
 .navCta {
   border: 1px solid var(--blue);
   border-radius: var(--radius-action);
