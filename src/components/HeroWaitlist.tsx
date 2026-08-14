@@ -7,6 +7,11 @@ import Image from "next/image";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import posthog from "posthog-js";
 import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
+import {
+  trackInitiateCheckout,
+  trackPurchase,
+  trackRazorpayCheckoutOpened,
+} from "@/lib/analytics/events";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -148,6 +153,9 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
       throw new Error(data?.detail || data?.error || "Unable to start payment.");
     }
 
+    if (["already_active", "activation_required"].includes(data?.state)) {
+      return { order: data, pricing: data?.pricing };
+    }
     if (!data?.order_id || !data?.key_id) {
       throw new Error("Payment order was not returned.");
     }
@@ -209,18 +217,42 @@ const HeroWaitlist: React.FC<HeroWaitlistProps> = ({
           reference_id: initialReferenceId,
           discount_code: discountCode.trim(),
         });
-        posthog.capture("payment_redirected", {
+        if (["already_active", "activation_required"].includes(payment.order.state)) {
+          const destination = new URL(
+            payment.order.completion_url || "/signUp",
+            window.location.origin,
+          );
+          destination.searchParams.set("auth", "login");
+          if (payment.order.state === "activation_required") {
+            destination.searchParams.set("payment", "already_paid");
+          }
+          window.location.href = destination.toString();
+          return;
+        }
+        const checkoutId = String(payment.order.checkout_attempt_id || payment.order.order_id);
+        trackInitiateCheckout({
+          checkoutId,
+          orderId: payment.order.order_id,
+          value: payment.pricing?.final_amount ?? payment.order.amount,
+          currency: payment.pricing?.currency ?? payment.order.currency,
           source,
-          amount: payment.pricing?.final_amount,
-          discount_code: payment.pricing?.discount_code,
         });
-        pushToDataLayer({
-          event: "payment_redirected",
+        trackRazorpayCheckoutOpened({
+          checkoutId,
+          orderId: payment.order.order_id,
+          value: payment.pricing?.final_amount ?? payment.order.amount,
+          currency: payment.pricing?.currency ?? payment.order.currency,
           source,
-          amount: payment.pricing?.final_amount,
-          discount_code: payment.pricing?.discount_code,
+          discountCode: payment.pricing?.discount_code,
         });
         const verification = await openRazorpayCheckout(payment.order, env.apiUrl);
+        await trackPurchase({
+          orderId: payment.order.order_id,
+          paymentId: verification.razorpay_payment_id as string | undefined,
+          value: payment.pricing?.final_amount ?? payment.order.amount,
+          currency: payment.pricing?.currency ?? payment.order.currency,
+          source,
+        });
         if (payment.order.completion_url) {
           const destination = new URL(payment.order.completion_url, window.location.origin);
           if (verification.activation_token) {
