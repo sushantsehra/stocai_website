@@ -38,27 +38,8 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
   const nameInputRef = useRef<HTMLInputElement>(null);
   const source = "promotable_sticky_cta";
 
-  const pushToDataLayer = (payload: Record<string, unknown>) => {
-    if (typeof window === "undefined") return;
-    const dataLayerWindow = window as unknown as Window & { dataLayer?: unknown[] };
-    if (!dataLayerWindow.dataLayer) {
-      dataLayerWindow.dataLayer = [];
-    }
-    dataLayerWindow.dataLayer.push(payload);
-  };
-
   const trackGetEarlyAccess = () => {
     posthog.capture("get_early_access_clicked", {
-      source,
-    });
-  };
-
-  const trackRequestAccess = () => {
-    posthog.capture("waitlist_modal_opened", {
-      source,
-    });
-    pushToDataLayer({
-      event: "waitlist_modal_opened",
       source,
     });
   };
@@ -90,11 +71,9 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
   // Listen for modal events
   useEffect(() => {
     const handleModalOpen = () => {
-      console.log("Modal opened event received");
       setIsModalOpen(true);
     };
     const handleModalClose = () => {
-      console.log("Modal closed event received");
       setIsModalOpen(false);
     };
 
@@ -157,9 +136,6 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
       alert("Please fill in all fields");
       return;
     }
-    trackCtaClick({ location: "sticky", label: "Get Access", source });
-    trackRequestAccess();
-
     const fullPhone = `${countryCode}${phone}`;
 
     if (onRequestAccess) {
@@ -171,7 +147,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
           phone: phone.trim(),
           countryCode: countryCode,
           fullPhone: fullPhone,
-          source: "sticky_cta",
+          source,
         });
       } finally {
         setIsLoading(false); // ✅ Hide loading
@@ -181,7 +157,6 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
 
   // Hide sticky CTA when modal is open
   if (isModalOpen) {
-    console.log("Hiding sticky CTA because modal is open");
     return null;
   }
 

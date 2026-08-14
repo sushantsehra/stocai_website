@@ -104,13 +104,13 @@ Event name: waitlist_submit_failed
 - GTM dataLayer: yes (event name = waitlist_submit_failed)
 
 ### Payment redirected
-Event name: payment_redirected
-- Trigger: redirect to payment short URL
+Event name: razorpay_checkout_opened
+- Trigger: embedded Razorpay checkout is opened for a successfully created order
 - Properties:
   - source
   - amount
 - PostHog: yes
-- GTM dataLayer: yes (event name = payment_redirected)
+- GTM dataLayer: yes (event name = razorpay_checkout_opened)
 - Suggested marketing conversion: optional (secondary)
 
 ### Auth success
@@ -134,7 +134,9 @@ Event name: auth_error
 
 ## GTM Triggers (recommended)
 - waitlist_submitted -> primary conversion tag (Meta + LinkedIn + Google Ads)
-- payment_redirected -> secondary conversion tag (optional)
+- razorpay_checkout_opened -> diagnostic funnel event (do not count as a purchase)
+- InitiateCheckout -> Meta standard checkout event
+- Purchase -> Meta standard conversion, only after server verification
 - auth_success -> optional (signup success)
 
 ## GTM Setup Checklist
@@ -145,7 +147,9 @@ Event name: auth_error
   - (Optional) Google Ads / GA4 tags
 - Create triggers:
   - Custom Event: waitlist_submitted (primary conversion)
-  - Custom Event: payment_redirected (secondary conversion)
+  - Custom Event: razorpay_checkout_opened (diagnostic funnel event)
+  - Standard Event: InitiateCheckout
+  - Standard Event: Purchase
   - Custom Event: auth_success (optional)
 - Verify in GTM Preview:
   - dataLayer events are firing on the correct user actions.
@@ -158,5 +162,5 @@ Event name: auth_error
 - Breakdown: utm_source, utm_campaign, first_referrer, path
 
 2) Waitlist Funnel
-- Steps: waitlist_modal_opened -> waitlist_submit_attempt -> waitlist_submitted -> payment_redirected
+- Steps: waitlist_modal_opened -> waitlist_submit_attempt -> waitlist_submitted -> InitiateCheckout -> razorpay_checkout_opened -> Purchase
 - Breakdown: utm_source, utm_campaign
