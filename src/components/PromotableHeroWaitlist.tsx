@@ -600,7 +600,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               100% Money Back Guarantee
             </h3>
             <p className="mx-auto mt-4 max-w-[550px] font-jakarta text-[14px] font-medium leading-[1.45] text-[#e3e6eb] sm:text-[18px]">
-              Complete the program. If you don&apos;t believe it has improved your understanding of how promotions work, we&apos;ll refund your money. No questions asked.
+              Complete the program. If you believe it didn&apos;t help, we will refund your money. NO QUESTIONS ASKED
             </p>
             <button
               type="submit"
