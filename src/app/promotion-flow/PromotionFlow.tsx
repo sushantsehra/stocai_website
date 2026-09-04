@@ -7,6 +7,8 @@ import { ArrowRight } from "lucide-react";
 import { readStoDiagnosticContext } from "@/lib/diagnosticContext";
 import { barriers, type Barrier } from "./flowData";
 import PromotionStoryAccessFlow from "../promotion-story/PromotionStoryAccessFlow";
+import PromotionStoryUserNav from "../promotion-story/PromotionStoryUserNav";
+import storyStyles from "../promotion-story/page.module.css";
 import { usePromotionFlowTracking } from "./usePromotionFlowTracking";
 import styles from "./promotionFlow.module.css";
 
@@ -39,6 +41,15 @@ const honestChoices = [
   { id: "hope", label: "Hoping things improve" },
   { id: "manager", label: "Trusting my manager will notice me" },
 ] as const;
+
+const offerPresentation: Record<string, { label: string; headline: React.ReactNode }> = {
+  "office-politics": { label: "Office Politics", headline: <>Get promoted without playing <em>office politics.</em></> },
+  "biased-manager": { label: "My Manager", headline: <>Don’t just have managers. Get <em>godfathers who promote you.</em></> },
+  "invisible-work": { label: "Invisible Work", headline: <>Build a memorable brand that speaks <em>louder than your work.</em></> },
+  "zero-network": { label: "My Network", headline: <>Don’t just connect with people. Connect <em>with opportunities.</em></> },
+  "executive-presence": { label: "Executive Presence", headline: <>Be naturally seen <em>as next level.</em></> },
+};
+
 const consequenceContent: Record<string, { chosen: string; title: React.ReactNode; body: string; image: string; caption: [string, string] }> = {
   change: { chosen: "Changing jobs", title: <>A new company can still produce <em>the same career.</em></>, body: "Changing jobs changes the setting. Without changing how you manage your career, the same conditions can follow you into the next role.", image: "/promotion-flow/honest-change.png", caption: ["Different company", "Same pattern"] },
   hope: { chosen: "Hoping things improve", title: <>Hope is <em>not a strategy.</em></>, body: "While you wait for things to improve, someone else continues making the decisions that shape your career.", image: "/promotion-flow/honest-hope.png", caption: ["Time moves", "The career doesn’t"] },
@@ -64,25 +75,46 @@ export default function PromotionFlow({ initialBarrierId, initialStage, initialC
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [step]);
 
-  if (step === 0) return <PrimeSuspectScreen />;
-  if (step === 1 && barrier) return <TruthScreen barrier={barrier} />;
-  if (step === 2 && barrier) return <PrincipleScreen barrier={barrier} />;
-  if (step === 3 && barrier) return <HonestPartScreen barrier={barrier} choice={initialStage === "consequence" ? initialChoice : undefined} />;
+  if (step === 0) return <PromotionFlowFrame><PrimeSuspectScreen /></PromotionFlowFrame>;
+  if (step === 1 && barrier) return <PromotionFlowFrame><TruthScreen barrier={barrier} /></PromotionFlowFrame>;
+  if (step === 2 && barrier) return <PromotionFlowFrame><PrincipleScreen barrier={barrier} /></PromotionFlowFrame>;
+  if (step === 3 && barrier) return <PromotionFlowFrame><HonestPartScreen barrier={barrier} choice={initialStage === "consequence" ? initialChoice : undefined} /></PromotionFlowFrame>;
 
-  return <main className="min-h-svh bg-white font-[var(--font-jakarta),sans-serif] text-black">
-    <header className="border-b border-[#d8e4f1] bg-white"><div className="mx-auto flex w-[min(1180px,calc(100%-48px))] items-center justify-between py-5">
-      <Link href="/" aria-label="Better Corporate Life home"><Image src="/bcl-logo.png" alt="Better Corporate Life" width={210} height={105} className="h-auto w-[168px] sm:w-[210px]" priority /></Link>
-      <span className="hidden text-[11px] font-bold uppercase tracking-[0.18em] text-[#526278] sm:block">Promotion clarity flow</span>
-    </div></header>
-    <div className="mx-auto w-[min(1030px,calc(100%-40px))] py-7 sm:py-10">
-      <section className="min-h-[610px] py-12 sm:py-16">
-        {step === 4 && barrier && <div className="grid gap-10 lg:grid-cols-[1fr_0.92fr] lg:items-center"><div><h2 className="text-[clamp(3rem,6vw,5.5rem)] font-bold leading-[0.94] tracking-[-0.055em]">{barrier.offer}</h2></div>
-          <div className="bg-[#061d3a] p-7 text-white shadow-[0_24px_70px_rgba(1,45,104,0.18)] sm:p-10"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#48d0c4]">Movement guarantee</p><p className="mt-5 border-l-[3px] border-[#448ee7] pl-5 text-xl font-bold leading-8">100 percent money back guarantee</p><a href="#promotion-flow-access" onClick={() => { void completeFlow(); }} className="mt-8 flex items-center justify-between rounded-[9px] bg-[#0b64f4] px-6 py-5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2678fa]" data-cta-location="promotion_flow_complete">Continue <ArrowRight className="h-5 w-5" /></a></div>
-          <button type="button" onClick={() => { setStep(0); setBarrier(null); }} className="text-left text-sm font-bold text-[#014baa] underline underline-offset-4">Start again</button></div>}
-      </section>
-    </div>
+  const offer = barrier ? offerPresentation[barrier.id] : null;
+  return <PromotionFlowFrame><main className={styles.offerPage}>
+    {step === 4 && barrier && offer && <section className={styles.offerHero}>
+      <div className={styles.offerCopy}>
+        <div className={styles.offerPicked}><span><i />You picked</span><strong>{offer.label}</strong></div>
+        <h1>{offer.headline}</h1>
+        <div className={styles.offerActions}>
+          <a href="#promotion-flow-access" onClick={() => { void completeFlow(); }} data-cta-location="promotion_flow_complete">Get access to Promotion Architect <ArrowRight aria-hidden="true" /></a>
+          <p><span aria-hidden="true">✓</span>100% money-back guarantee</p>
+        </div>
+        <button type="button" onClick={() => { setStep(0); setBarrier(null); }}>Start again</button>
+      </div>
+      <div className={styles.offerVisual}>
+        <div className={styles.offerHalo}>
+          <Image src="/promotion-flow/promotion-blueprint-stairs.png" alt="A professional climbing a career blueprint staircase toward an open door" fill priority sizes="(max-width: 700px) 90vw, 540px" />
+        </div>
+        <div className={styles.actionPlan}><i /><span><strong>Action plan</strong>To get promoted</span></div>
+      </div>
+    </section>}
     {step === 4 && <PromotionStoryAccessFlow modalTriggerAnchorId="promotion-flow-access" showSticky={false} />}
-  </main>;
+  </main></PromotionFlowFrame>;
+}
+
+function PromotionFlowFrame({ children }: { children: React.ReactNode }) {
+  return <>
+    <header className={styles.flowHeader}>
+      <nav className={storyStyles.nav} aria-label="Main navigation">
+        <Link href="/" className={storyStyles.brand} aria-label="Better Corporate Life home">
+          <Image src="/bcl-logo.png" alt="Better Corporate Life" width={210} height={105} priority />
+        </Link>
+        <PromotionStoryUserNav />
+      </nav>
+    </header>
+    {children}
+  </>;
 }
 
 function PrimeSuspectScreen() {
@@ -108,7 +140,6 @@ function PrimeSuspectScreen() {
 function TruthScreen({ barrier }: { barrier: Barrier }) {
   const content = truthContent[barrier.id];
   return <main className={styles.truthPage}>
-    <header className={styles.truthHeader}><div><a href="/promotion-flow" className={styles.truthLogo} aria-label="Back to evidence selection"><b>BCL</b><i /><span>Better<br />Corporate<br />Life</span></a><strong>Promotion architect</strong></div></header>
     <div className={styles.truthShell}>
       <div className={styles.picked}><span><i />You picked</span><strong>{barrier.label}</strong></div>
       <section className={styles.truthStory}>
