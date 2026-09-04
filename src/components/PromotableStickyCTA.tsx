@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import posthog from "posthog-js";
 import { trackCtaClick } from "@/lib/analytics/events";
 
@@ -10,6 +10,7 @@ type PromotableStickyCTAProps = {
   anchorId?: string;
   useIsoCountryLabels?: boolean;
   variant?: "default" | "promotion";
+  source?: string;
   onRequestAccess?: (data: {
     name: string;
     email: string;
@@ -26,6 +27,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
   anchorId,
   useIsoCountryLabels = false,
   variant = "default",
+  source = "promotable_sticky_cta",
 }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,13 +38,12 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
   const nameInputRef = useRef<HTMLInputElement>(null);
-  const source = "promotable_sticky_cta";
 
-  const trackGetEarlyAccess = () => {
+  const trackGetEarlyAccess = useCallback(() => {
     posthog.capture("get_early_access_clicked", {
       source,
     });
-  };
+  }, [source]);
 
   // Popular country codes
   const countryCodes = [
@@ -107,7 +108,7 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
 
     document.addEventListener("click", openAccessForm);
     return () => document.removeEventListener("click", openAccessForm);
-  }, [anchorId]);
+  }, [anchorId, source, trackGetEarlyAccess]);
 
   // Check DOM for modal presence (backup)
   useEffect(() => {

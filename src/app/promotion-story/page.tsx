@@ -345,7 +345,7 @@ export default function PromotionStoryPage() {
         </div>
         <span className={styles.finalPageMark} aria-hidden="true">PA / COMPLETE</span>
       </section>
-        <PromotionStoryAccessFlow />
+        <PromotionStoryAccessFlow redirectAfterRequestAccess="/promotion-flow" />
         <ExitIntentPopup />
       </main>
       <Footer className={styles.promotionFooter} variant="promotion" />

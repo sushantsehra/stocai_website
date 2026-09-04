@@ -8,6 +8,8 @@ export type StoDiagnosticContext = {
   referenceId?: string;
   waitlistId?: string;
   source?: string;
+  promotionFlowSessionId?: string;
+  promotionFlowToken?: string;
 };
 
 const STORAGE_KEY = "stoDiagnosticContext";
@@ -33,6 +35,8 @@ export const writeStoDiagnosticContext = (context: StoDiagnosticContext) => {
       referenceId: context.referenceId?.trim() || "",
       waitlistId: context.waitlistId?.trim() || context.referenceId?.trim() || "",
       source: context.source?.trim() || "waitlist_modal",
+      promotionFlowSessionId: context.promotionFlowSessionId?.trim() || "",
+      promotionFlowToken: context.promotionFlowToken?.trim() || "",
     }),
   );
 };

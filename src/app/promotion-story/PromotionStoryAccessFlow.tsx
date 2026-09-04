@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import posthog from "posthog-js";
 import PromotableHeroWaitlist from "@/components/PromotableHeroWaitlist";
 import PromotableStickyCTA from "@/components/PromotableStickyCTA";
 import { getAttributionForApi } from "@/lib/analytics/attribution";
 import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
-import { getWaitlistReferenceFromResponse, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
+import { getWaitlistReferenceFromResponse, readStoDiagnosticContext, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 import env from "@/utils/env";
 import { pushToDataLayer, trackLead } from "@/lib/analytics/events";
@@ -20,6 +20,8 @@ type UserData = {
   source: string;
   referenceId?: string;
   waitlistId?: string;
+  promotionFlowSessionId?: string;
+  promotionFlowToken?: string;
 };
 
 const fetchWithTimeout = async (url: string, options: RequestInit, timeout = 10000) => {
@@ -32,14 +34,40 @@ const fetchWithTimeout = async (url: string, options: RequestInit, timeout = 100
   }
 };
 
-export default function PromotionStoryAccessFlow() {
+export default function PromotionStoryAccessFlow({
+  anchorId = "promotion-story-access",
+  redirectAfterRequestAccess,
+  modalTriggerAnchorId,
+  showSticky = true,
+}: {
+  anchorId?: string;
+  redirectAfterRequestAccess?: string;
+  modalTriggerAnchorId?: string;
+  showSticky?: boolean;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<UserData>({ name: "", email: "", phone: "", countryCode: "+91", source: "promotion_story_sticky_cta" });
+
+  useEffect(() => {
+    if (!modalTriggerAnchorId) return;
+
+    setModalData((current) => ({ ...current, ...readStoDiagnosticContext() }));
+    const openModal = (event: MouseEvent) => {
+      const target = event.target as Element | null;
+      if (!target?.closest<HTMLAnchorElement>(`a[href="#${modalTriggerAnchorId}"]`)) return;
+      event.preventDefault();
+      setModalData((current) => ({ ...current, ...readStoDiagnosticContext() }));
+      setIsModalOpen(true);
+    };
+
+    document.addEventListener("click", openModal);
+    return () => document.removeEventListener("click", openModal);
+  }, [modalTriggerAnchorId]);
 
   const handleRequestAccess = async (userData: UserData) => {
     writeStoDiagnosticContext(userData);
     setModalData(userData);
-    setIsModalOpen(true);
+    if (!redirectAfterRequestAccess) setIsModalOpen(true);
 
     try {
       const response = await fetchWithTimeout(`${env.apiUrl}/waitlist`, {
@@ -58,7 +86,13 @@ export default function PromotionStoryAccessFlow() {
       if (!response.ok) throw new Error(waitlistData?.error || "Unable to join the waitlist.");
 
       const referenceId = getWaitlistReferenceFromResponse(waitlistData);
-      const enriched = { ...userData, referenceId, waitlistId: referenceId };
+      const enriched = {
+        ...userData,
+        referenceId,
+        waitlistId: referenceId,
+        promotionFlowSessionId: waitlistData?.promotion_flow_session_id,
+        promotionFlowToken: waitlistData?.promotion_flow_token,
+      };
       writeStoDiagnosticContext(enriched);
       setModalData(enriched);
 
@@ -75,18 +109,20 @@ export default function PromotionStoryAccessFlow() {
       if (waitlistData?.updated === false && referenceId) {
         trackLead({ leadId: referenceId, source: userData.source });
       }
+      if (redirectAfterRequestAccess) window.location.assign(redirectAfterRequestAccess);
     } catch (error) {
       posthog.capture("waitlist_submit_failed", { source: userData.source, error: error instanceof Error ? error.message : "unknown_error" });
     }
   };
 
   return <>
-    <PromotableStickyCTA
-      anchorId="promotion-story-access"
+    {showSticky && <PromotableStickyCTA
+      anchorId={anchorId}
       useIsoCountryLabels
       variant="promotion"
+      source="promotion_story_sticky_cta"
       onRequestAccess={handleRequestAccess}
-    />
+    />}
     <PromotableHeroWaitlist
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}
