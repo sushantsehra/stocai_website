@@ -172,13 +172,13 @@ function HonestPartScreen({ barrier, choice }: { barrier: Barrier; choice?: stri
   const base = `/promotion-flow?barrier=${encodeURIComponent(barrier.id)}`;
   return <main className={styles.honestPage}><div className={styles.honestShell}>
     {!consequence ? <section className={styles.honestChoice}>
-      <div className={styles.honestCopy}><p className={styles.honestEyebrow}><i />The honest part</p><h1>Right now, what are you <em>relying on to move your</em> career forward?</h1><p>Choose the one closest to the truth.</p>
-        <div className={styles.honestOptions}>{honestChoices.map((item, index) => <a key={item.id} href={`${base}&stage=consequence&choice=${item.id}`}><small>0{index + 1}</small><strong>{item.label}</strong><i /></a>)}</div>
-      </div>
+      <div className={styles.honestCopy}><p className={styles.honestEyebrow}><i />The honest part</p><h1>Right now, what are you <em>relying on to move your</em> career forward?</h1><p>Choose the one closest to the truth.</p></div>
       <HonestArtwork src="/promotion-flow/honest-choice.png" alt="Corporate professional holding his next move" caption={["What he is holding", "His next move"]} />
+      <div className={styles.honestOptions}>{honestChoices.map((item, index) => <a key={item.id} href={`${base}&stage=consequence&choice=${item.id}`}><small>0{index + 1}</small><strong>{item.label}</strong><i /></a>)}</div>
     </section> : <section className={styles.honestConsequence}>
-      <div className={styles.honestCopy}><p className={styles.honestEyebrow}><i />You chose <strong>{consequence.chosen}</strong></p><span className={styles.uncomfortable}>The uncomfortable consequence</span><h1>{consequence.title}</h1><div className={styles.unchanged}>Look at what stays unchanged</div><p>{consequence.body}</p><blockquote>Your next move needs to<br />belong to you.</blockquote><a className={styles.showMe} href={`${base}&stage=offer`}>Show me how <span>→</span></a></div>
+      <div className={`${styles.honestCopy} ${styles.consequenceIntro}`}><p className={styles.honestEyebrow}><i />You chose <strong>{consequence.chosen}</strong></p><span className={styles.uncomfortable}>The uncomfortable consequence</span><h1>{consequence.title}</h1></div>
       <HonestArtwork src={consequence.image} alt={consequence.chosen} caption={consequence.caption} />
+      <div className={`${styles.honestCopy} ${styles.consequenceDetails}`}><div className={styles.unchanged}>Look at what stays unchanged</div><p>{consequence.body}</p><blockquote>Your next move needs to<br />belong to you.</blockquote><a className={styles.showMe} href={`${base}&stage=offer`}>Show me how <span>→</span></a></div>
     </section>}
   </div></main>;
 }

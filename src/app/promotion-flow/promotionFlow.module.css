@@ -96,3 +96,92 @@
   .offerCopy h1{margin-top:24px}
 }
 @media(max-width:700px){.actionPlan{top:auto}}
+
+@media(min-width:761px){
+  .honestChoice .honestCopy{grid-column:1;grid-row:1}
+  .honestChoice .honestOptions{grid-column:1;grid-row:2;align-self:start}
+  .honestChoice .honestArtwork{grid-column:2;grid-row:1 / span 2}
+  .honestConsequence .consequenceIntro{grid-column:1;grid-row:1}
+  .honestConsequence .consequenceDetails{grid-column:1;grid-row:2}
+  .honestConsequence .honestArtwork{grid-column:2;grid-row:1 / span 2}
+}
+
+@media(max-width:760px){
+  .casePage{min-height:100svh;padding:0 11px 20px}
+  .caseHeading{padding:2px 6px 24px;text-align:left}
+  .caseHeading h1{max-width:340px;font-size:44px;line-height:.9}
+  .caseHeading p{max-width:330px;margin-top:14px;font-size:16px;line-height:1.2}
+  .evidenceBoard{padding:50px 12px 38px}
+  .evidenceBoard legend{top:-22px;width:190px;height:23px;padding-top:8px;font-size:7px}
+  .boardInstruction{position:absolute;top:15px;right:12px;margin:0;font-size:7px}
+  .evidenceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 9px}
+  .evidenceCard,.evidenceCard:nth-child(4),.evidenceCard:last-child{grid-column:span 1;width:100%;min-height:120px;padding:35px 12px 12px}
+  .evidenceCard:last-child{grid-column:1/-1;width:50%;justify-self:center}
+  .evidenceCard strong{margin-top:12px;font-size:13px}
+  .evidenceCard q{margin-top:8px;font-size:12px}
+  .evidenceCode{font-size:7px}
+  .stamp{top:9px;right:8px;font-size:6px}
+  .tape{width:44px;height:14px}
+  .reassurance{margin-top:14px;font-size:10px}
+
+  .truthShell{width:calc(100% - 32px);padding:8px 0 18px}
+  .truthShell>.picked{margin-top:0}
+  .truthStory{padding-top:14px}
+  .feelsPanel h1{margin-top:12px;font-size:30px;line-height:1.05}
+  .quoteMark{display:none}
+  .truthDivider{height:58px}
+  .changesPanel h2{margin-top:18px;font-size:31px}
+  .changesPanel>p:not(.truthEyebrow){margin-top:22px;font-size:17px;line-height:1.35}
+  .changesPanel>a{margin-top:34px}
+
+  .principlePage{padding:8px 15px 18px}
+  .principlePage .picked{margin-top:0}
+  .principleFrame{margin-top:16px;padding-left:20px}
+  .principleFrame h1{margin-bottom:18px;font-size:30px;line-height:.96}
+  .principleDiagram{padding:8px 0 12px}
+  .principleDiagram>div{min-height:72px;justify-content:flex-start;padding-left:48px;text-align:left}
+  .principleDiagram>div>b{right:auto;bottom:-8px;left:58px}
+  .principleDiagram:before{right:-8px;left:auto;font-size:58px}
+  .principleExplanation{margin:20px 0;font-size:15px}
+  .principleFooter{gap:18px}
+
+  .honestPage{padding:8px 13px 20px}
+  .honestChoice{display:flex;gap:0;padding-top:0}
+  .honestCopy h1{margin-top:18px;font-size:25px;line-height:.98}
+  .honestCopy>p:not(.honestEyebrow){margin-top:14px;font-size:13px}
+  .honestChoice .honestArtwork{order:0;margin-top:0}
+  .honestArtwork>div{width:220px;height:220px;margin:0 auto}
+  .honestArtwork figcaption{justify-content:flex-start;gap:8px;margin-top:-20px;padding:8px 18px 0;font-size:6px}
+  .honestChoice .honestOptions{order:1;margin-top:8px}
+  .honestOptions a{min-height:50px}
+  .honestOptions strong{font-size:13px}
+  .honestConsequence .consequenceIntro{order:0}
+  .honestConsequence .honestArtwork{order:1;margin-top:10px}
+  .honestConsequence .consequenceDetails{order:2}
+  .honestConsequence .consequenceDetails>p{margin-top:20px}
+
+  .offerPage{min-height:100svh}
+  .offerHero{display:grid;grid-template-columns:1fr;min-height:100svh;padding:8px 15px 24px}
+  .offerCopy{display:contents}
+  .offerPicked{grid-row:1;align-self:start}
+  .offerCopy h1{grid-row:2;margin-top:18px;font-size:36px;line-height:.95}
+  .offerVisual{grid-row:3;width:100%;height:330px;margin:4px 0 0}
+  .offerHalo{top:12px;right:8%;width:84%}
+  .offerHalo img{width:158%!important;height:105%!important}
+  .actionPlan{top:auto;bottom:10px;left:4%;width:190px;min-height:58px}
+  .offerActions{display:flex;grid-row:4;width:100%;margin-top:8px;flex-direction:column}
+  .offerActions p{order:1;margin:0 0 22px}
+  .offerActions>a{order:2;min-height:50px}
+  .offerCopy>button{display:none}
+}
+
+@media(max-width:760px){
+  .principleDiagram{overflow:hidden;padding:8px 54px 12px 0}
+  .principleDiagram:before{inset:0 0 0 auto;width:48px;overflow:hidden;place-items:center;color:#e8f1ff;font-size:48px;line-height:1;writing-mode:vertical-rl}
+  .principleDiagram>div{min-height:88px;padding:12px 0 18px 48px;justify-content:flex-start;text-align:left}
+  .principleDiagram small{top:16px;left:14px}
+  .principleDiagram strong{max-width:175px;font-size:17px;line-height:.92}
+  .principleDiagram>div>span{bottom:4px;left:48px;min-width:130px;padding-top:6px;text-align:left}
+  .principleDiagram>div>b{right:auto;bottom:-10px;left:64px;transform:rotate(90deg);font-size:22px}
+  .principleExplanation{position:relative;z-index:2;background:transparent}
+}
