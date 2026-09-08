@@ -1,6 +1,6 @@
 .flowHeader { --action:#0b64f4; position:relative; z-index:10; background:#fff; font-family:var(--font-jakarta),sans-serif }
 .flowHeader nav { padding:4px 0 }
-.flowHeader nav img { width:145px }
+.flowHeader nav>a:first-child img { width:145px }
 
 .casePage { min-height:100svh; color:#07101b; background:repeating-linear-gradient(to bottom,#fff 0,#fff 77px,#e8eef5 78px,#fff 79px); font-family:var(--font-jakarta),sans-serif; padding:28px 24px 42px }
 .caseShell { width:min(1120px,100%); margin:0 auto }
@@ -78,7 +78,7 @@
 @media(max-width:700px){.offerPage{overflow:auto}.offerHero{display:flex;min-height:100svh;flex-direction:column;padding:28px 20px 34px}.offerCopy{display:block;padding:0}.offerPicked{gap:16px}.offerPicked span{gap:9px;font-size:9px}.offerPicked strong{font-size:12px}.offerCopy h1{margin-top:28px;font-size:clamp(41px,12.5vw,58px)}.offerActions{margin-top:24px}.offerActions>a{min-height:60px;padding:0 14px;font-size:11px}.offerActions p{margin-top:14px}.offerCopy>button{position:absolute;right:0;bottom:-23px;z-index:4}.offerVisual{width:calc(100% + 40px);height:410px;margin:16px -20px 0}.offerHalo{top:5%;right:5%;width:90%}.actionPlan{bottom:5%;left:5%;width:190px;min-height:64px}.actionPlan>span{font-size:9px}.actionPlan strong{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.offerActions>a{transition:none}}
 .casePage{min-height:calc(100svh - 81px);padding-top:12px}
-@media(max-width:800px){.flowHeader nav{padding:4px 0}.flowHeader nav img{width:128px}.casePage{min-height:calc(100svh - 72px);padding-top:10px}}
+@media(max-width:800px){.flowHeader nav{padding:4px 0}.flowHeader nav>a:first-child img{width:128px}.casePage{min-height:calc(100svh - 72px);padding-top:10px}}
 
 /* Keep each screen's opening statement in the first ruled row. */
 @media(min-width:761px){
