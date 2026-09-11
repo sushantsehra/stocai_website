@@ -16,6 +16,7 @@ import useSubscriptionAmount, {
   formatSubscriptionAmount,
 } from "@/hooks/useSubscriptionAmount";
 import {
+  trackCheckoutModalOpened,
   trackCtaClick,
   trackInitiateCheckout,
   trackPurchase,
@@ -65,6 +66,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   onClose,
   initialEmail,
   initialReferenceId,
+  initialWaitlistId,
   initialName,
   initialPhone,
   initialCountryCode = "+91",
@@ -174,7 +176,12 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       source,
       has_prefill_email: hasPrefillEmail,
     });
-  }, [isOpen, source, initialEmail]);
+    trackCheckoutModalOpened({
+      source,
+      hasPrefillEmail,
+      hasReferenceId: Boolean(initialReferenceId || initialWaitlistId),
+    });
+  }, [isOpen, source, initialEmail, initialReferenceId, initialWaitlistId]);
 
   const createPaymentLink = async (payload: {
     name?: string;

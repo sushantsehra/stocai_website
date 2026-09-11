@@ -9,7 +9,7 @@ import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistReferenceFromResponse, readStoDiagnosticContext, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 import env from "@/utils/env";
-import { pushToDataLayer, trackLead } from "@/lib/analytics/events";
+import { pushToDataLayer, trackCtaClick, trackLead, trackPromotionJourneyEvent } from "@/lib/analytics/events";
 
 type UserData = {
   name: string;
@@ -54,8 +54,14 @@ export default function PromotionStoryAccessFlow({
     setModalData((current) => ({ ...current, ...readStoDiagnosticContext() }));
     const openModal = (event: MouseEvent) => {
       const target = event.target as Element | null;
-      if (!target?.closest<HTMLAnchorElement>(`a[href="#${modalTriggerAnchorId}"]`)) return;
+      const link = target?.closest<HTMLAnchorElement>(`a[href="#${modalTriggerAnchorId}"]`);
+      if (!link) return;
       event.preventDefault();
+      trackCtaClick({
+        location: link.dataset.ctaLocation || "promotion_flow",
+        label: link.textContent || "Get Access",
+        source: readStoDiagnosticContext().source || "promotion_flow",
+      });
       setModalData((current) => ({ ...current, ...readStoDiagnosticContext() }));
       setIsModalOpen(true);
     };
@@ -68,6 +74,17 @@ export default function PromotionStoryAccessFlow({
     writeStoDiagnosticContext(userData);
     setModalData(userData);
     if (!redirectAfterRequestAccess) setIsModalOpen(true);
+
+    posthog.capture("waitlist_submit_attempt", { source: userData.source });
+    pushToDataLayer({
+      event: "waitlist_submit_attempt",
+      source: userData.source,
+    });
+    trackPromotionJourneyEvent("promotion_story_access_submit_attempt", {
+      source: userData.source,
+      entry_page: typeof window !== "undefined" ? window.location.pathname : "",
+      redirect_after_request_access: redirectAfterRequestAccess,
+    });
 
     try {
       const response = await fetchWithTimeout(`${env.apiUrl}/waitlist`, {
@@ -99,6 +116,13 @@ export default function PromotionStoryAccessFlow({
       if (waitlistData?.updated === true) {
         trackAlreadyWaitlisted(userData.source, { context: "promotion_story_request_access", payment_started: false });
       }
+      trackPromotionJourneyEvent("promotion_story_access_submitted", {
+        source: userData.source,
+        waitlist_reference_id: referenceId,
+        promotion_flow_session_id: waitlistData?.promotion_flow_session_id,
+        payment_started: false,
+        updated: waitlistData?.updated === true,
+      });
       posthog.capture("waitlist_submitted", { source: userData.source, payment_started: false });
       pushToDataLayer({
         event: "waitlist_submitted",
@@ -115,6 +139,29 @@ export default function PromotionStoryAccessFlow({
     }
   };
 
+  const handleClose = (reason?: "x_button" | "escape") => {
+    if (reason) {
+      posthog.capture("waitlist_modal_closed", {
+        source: modalData.source,
+        close_reason: reason,
+        has_prefill_email: Boolean(modalData.email),
+      });
+      pushToDataLayer({
+        event: "waitlist_modal_closed",
+        source: modalData.source,
+        close_reason: reason,
+        has_prefill_email: Boolean(modalData.email),
+      });
+      trackPromotionJourneyEvent("checkout_modal_closed", {
+        source: modalData.source,
+        close_reason: reason,
+        has_prefill_email: Boolean(modalData.email),
+        has_reference_id: Boolean(modalData.referenceId || modalData.waitlistId),
+      });
+    }
+    setIsModalOpen(false);
+  };
+
   return <>
     {showSticky && <PromotableStickyCTA
       anchorId={anchorId}
@@ -125,7 +172,7 @@ export default function PromotionStoryAccessFlow({
     />}
     <PromotableHeroWaitlist
       isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
+      onClose={handleClose}
       initialEmail={modalData.email}
       initialName={modalData.name}
       initialPhone={modalData.phone}

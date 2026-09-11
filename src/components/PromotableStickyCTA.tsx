@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import posthog from "posthog-js";
-import { trackCtaClick } from "@/lib/analytics/events";
+import { trackCtaClick, trackPromotionJourneyEvent } from "@/lib/analytics/events";
 
 // ✅ Define prop types
 type PromotableStickyCTAProps = {
@@ -101,6 +101,11 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
         label: link.textContent || "Get Access",
         source,
       });
+      trackPromotionJourneyEvent("promotion_story_cta_clicked", {
+        source,
+        cta_location: link.dataset.ctaLocation || "page",
+        cta_label: link.textContent || "Get Access",
+      });
       trackGetEarlyAccess();
       setIsExpanded(true);
       window.setTimeout(() => nameInputRef.current?.focus(), 0);
@@ -169,6 +174,11 @@ const PromotableStickyCTA: React.FC<PromotableStickyCTAProps> = ({
             <button
               onClick={() => {
                 trackCtaClick({ location: "sticky", label: "Get Access", source });
+                trackPromotionJourneyEvent("promotion_story_cta_clicked", {
+                  source,
+                  cta_location: "sticky",
+                  cta_label: "Get Access",
+                });
                 trackGetEarlyAccess();
                 setIsExpanded(true);
               }}

@@ -18,6 +18,43 @@ export const trackCtaClick = (input: { location: string; label: string; source?:
   pushToDataLayer({ event: "cta_clicked", ...payload });
 };
 
+const pageContext = () => ({
+  page_path: typeof window !== "undefined" ? window.location.pathname : "",
+  page_url: typeof window !== "undefined" ? window.location.href : "",
+});
+
+const promotionJourneyPayload = (properties: Record<string, unknown> = {}) => ({
+  journey: "promotion_architect",
+  journey_version: "v1",
+  ...pageContext(),
+  ...properties,
+});
+
+export const trackPromotionJourneyEvent = (
+  event: string,
+  properties: Record<string, unknown> = {},
+) => {
+  const payload = promotionJourneyPayload(properties);
+  posthog.capture(event, payload);
+  pushToDataLayer({ event, ...payload });
+};
+
+export const trackCheckoutModalOpened = (input: {
+  source: string;
+  modalKind?: string;
+  hasPrefillEmail?: boolean;
+  hasReferenceId?: boolean;
+  ctaLocation?: string;
+}) => {
+  trackPromotionJourneyEvent("checkout_modal_opened", {
+    source: input.source,
+    modal_kind: input.modalKind || "promotion_checkout",
+    has_prefill_email: Boolean(input.hasPrefillEmail),
+    has_reference_id: Boolean(input.hasReferenceId),
+    cta_location: input.ctaLocation,
+  });
+};
+
 export const trackLead = (input: { leadId: string; source: string }) => {
   const payload = {
     lead_id: input.leadId,
