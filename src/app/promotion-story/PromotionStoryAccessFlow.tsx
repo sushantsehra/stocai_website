@@ -24,6 +24,22 @@ type UserData = {
   promotionFlowToken?: string;
 };
 
+type WaitlistResponse = {
+  error?: string;
+  reference_id?: string;
+  referenceId?: string;
+  waitlist_id?: string;
+  waitlistId?: string;
+  id?: string;
+  updated?: boolean;
+  promotion_flow_session_id?: string;
+  promotion_flow_token?: string;
+  promotion_flow_current_step?: string;
+  promotion_flow_answers?: {
+    barrier_id?: string;
+  };
+};
+
 const fetchWithTimeout = async (url: string, options: RequestInit, timeout = 10000) => {
   const controller = new AbortController();
   const timer = window.setTimeout(() => controller.abort(), timeout);
@@ -32,6 +48,18 @@ const fetchWithTimeout = async (url: string, options: RequestInit, timeout = 100
   } finally {
     window.clearTimeout(timer);
   }
+};
+
+const buildRedirectAfterRequestAccess = (fallback: string, waitlistData: WaitlistResponse) => {
+  const barrierId = waitlistData.updated === true ? waitlistData.promotion_flow_answers?.barrier_id?.trim() : "";
+  if (!barrierId) return fallback;
+
+  const destination = new URL(fallback, window.location.origin);
+  if (destination.pathname === "/promotion-flow") {
+    destination.searchParams.set("barrier", barrierId);
+    destination.searchParams.set("stage", "offer");
+  }
+  return `${destination.pathname}${destination.search}${destination.hash}`;
 };
 
 export default function PromotionStoryAccessFlow({
@@ -99,7 +127,7 @@ export default function PromotionStoryAccessFlow({
           attribution: getAttributionForApi(),
         }),
       });
-      const waitlistData = await response.json().catch(() => ({}));
+      const waitlistData = (await response.json().catch(() => ({}))) as WaitlistResponse;
       if (!response.ok) throw new Error(waitlistData?.error || "Unable to join the waitlist.");
 
       const referenceId = getWaitlistReferenceFromResponse(waitlistData);
@@ -133,7 +161,9 @@ export default function PromotionStoryAccessFlow({
       if (waitlistData?.updated === false && referenceId) {
         trackLead({ leadId: referenceId, source: userData.source });
       }
-      if (redirectAfterRequestAccess) window.location.assign(redirectAfterRequestAccess);
+      if (redirectAfterRequestAccess) {
+        window.location.assign(buildRedirectAfterRequestAccess(redirectAfterRequestAccess, waitlistData));
+      }
     } catch (error) {
       posthog.capture("waitlist_submit_failed", { source: userData.source, error: error instanceof Error ? error.message : "unknown_error" });
     }
