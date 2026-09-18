@@ -1385,8 +1385,8 @@
 .architectInner { position: relative; width: min(1030px,calc(100% - 48px)); min-height: 840px; margin: 0 auto; padding: 48px 0 38px; }
 .pageMark { position: absolute; top: 33px; right: -17px; color: #66809c; font-family: monospace; font-size: .65rem; letter-spacing: .16em; writing-mode: vertical-rl; }
 .architectHero { display: grid; grid-template-columns: minmax(0,1fr) minmax(390px,520px); gap: clamp(2rem,4vw,4.5rem); align-items: center; }
-.architectCassettes { margin: 0; }
-.architectCassettes img { display: block; width: 100%; height: auto; filter: drop-shadow(0 18px 18px rgba(0,8,20,.34)); }
+.architectMascot { width: min(320px,100%); margin: 0 auto; }
+.architectMascot img { display: block; width: 100%; height: auto; filter: drop-shadow(0 12px 22px rgba(0,8,20,.25)); mask-image: linear-gradient(to bottom,#000 0%,#000 78%,transparent 100%); }
 .architectEyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; color: #f3c67e; font-size: .7rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
 .architectEyebrow span { width: 34px; height: 2px; background: #2e94ff; }
 .outcomesSection h2 { max-width: none; font-size: clamp(4rem,6vw,6.7rem); letter-spacing: -.065em; line-height: 1; }
@@ -1515,7 +1515,7 @@
   .formula { display: grid; grid-template-columns: 1fr; gap: .8rem; }.formulaPart { display: contents; }.operator { height: auto; min-height: 25px; align-self: stretch; margin: 0; transform: rotate(90deg); }
   .planLayout,.offerInner,.founderLayout { grid-template-columns: 1fr; }.offerIntro { position: static; }.testimonialGrid { grid-template-columns: 1fr; }
   .architectHero { grid-template-columns: 1fr; }
-  .architectCassettes { width: min(620px,100%); margin-top: 1.5rem; }
+  .architectMascot { width: min(320px,100%); margin-top: 1.5rem; }
   .transformationStep,
   .transformationStep:nth-child(even) { grid-template-columns: 48px minmax(0,1fr); min-height: 0; }
   .transformationCopy,
@@ -1602,7 +1602,7 @@
   .architectHero .architectEyebrow { grid-column: 1/-1; grid-row: 1; align-self: end; }
   .architectHero h2 { grid-column: 1; grid-row: 2; align-self: start; }
   .architectHero .architectLead { grid-column: 1/-1; grid-row: 3; }
-  .architectCassettes { grid-column: 2; grid-row: 2; align-self: center; width: 125%; margin: 0; transform: none; }
+  .architectMascot { grid-column: 2; grid-row: 2; align-self: center; width: 100%; margin: 0; }
   .pageMark { top: 25px; right: -8px; }
   .architectEyebrow { margin-bottom: 12px; font-size: .61rem; }
   .outcomesSection h2 { max-width: 330px; font-size: clamp(2.15rem,9.8vw,2.75rem); line-height: .96; }

@@ -1,10 +1,29 @@
 import posthog from "posthog-js";
+import { readStoDiagnosticContext } from "../diagnosticContext";
+
+const capturePostHog = (event: string, payload: Record<string, unknown>) => {
+  try { posthog.capture(event, payload); }
+  catch { console.warn("PostHog event could not be queued", { event }); }
+};
+
+const flowContext = () => {
+  if (typeof window === "undefined" || window.location.pathname !== "/promotion-flow") return {};
+  const context = readStoDiagnosticContext();
+  const params = new URLSearchParams(window.location.search);
+  return {
+    promotion_flow_session_id: context.promotionFlowSessionId,
+    barrier_id: params.get("barrier") || undefined,
+    choice_id: params.get("choice") || undefined,
+  };
+};
 
 export const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
   const target = window as unknown as Window & { dataLayer?: unknown[] };
-  target.dataLayer ||= [];
-  target.dataLayer.push(payload);
+  try {
+    target.dataLayer ||= [];
+    target.dataLayer.push(payload);
+  } catch { console.warn("GTM event could not be queued", { event: payload.event }); }
 };
 
 export const trackCtaClick = (input: { location: string; label: string; source?: string }) => {
@@ -13,8 +32,9 @@ export const trackCtaClick = (input: { location: string; label: string; source?:
     cta_label: input.label.trim(),
     source: input.source,
     page_path: typeof window !== "undefined" ? window.location.pathname : "",
+    ...flowContext(),
   };
-  posthog.capture("cta_clicked", payload);
+  capturePostHog("cta_clicked", payload);
   pushToDataLayer({ event: "cta_clicked", ...payload });
 };
 
@@ -26,6 +46,7 @@ const pageContext = () => ({
 const promotionJourneyPayload = (properties: Record<string, unknown> = {}) => ({
   journey: "promotion_architect",
   journey_version: "v1",
+  ...flowContext(),
   ...pageContext(),
   ...properties,
 });
@@ -35,7 +56,7 @@ export const trackPromotionJourneyEvent = (
   properties: Record<string, unknown> = {},
 ) => {
   const payload = promotionJourneyPayload(properties);
-  posthog.capture(event, payload);
+  capturePostHog(event, payload);
   pushToDataLayer({ event, ...payload });
 };
 
@@ -61,7 +82,7 @@ export const trackLead = (input: { leadId: string; source: string }) => {
     source: input.source,
     event_id: `lead:${input.leadId}`,
   };
-  posthog.capture("Lead", payload);
+  capturePostHog("Lead", payload);
   pushToDataLayer({ event: "Lead", ...payload });
 };
 
@@ -74,13 +95,14 @@ export const trackInitiateCheckout = (input: {
 }) => {
   const payload = {
     checkout_id: input.checkoutId,
+    ...flowContext(),
     order_id: input.orderId,
     value: typeof input.value === "number" ? input.value / 100 : undefined,
     currency: input.currency || "INR",
     source: input.source,
     event_id: `initiate_checkout:${input.orderId || input.checkoutId}`,
   };
-  posthog.capture("InitiateCheckout", payload);
+  capturePostHog("InitiateCheckout", payload);
   pushToDataLayer({ event: "InitiateCheckout", ...payload });
 };
 
@@ -94,6 +116,7 @@ export const trackRazorpayCheckoutOpened = (input: {
 }) => {
   const payload = {
     checkout_id: input.checkoutId,
+    ...flowContext(),
     order_id: input.orderId,
     value: typeof input.value === "number" ? input.value / 100 : undefined,
     currency: input.currency || "INR",
@@ -101,7 +124,7 @@ export const trackRazorpayCheckoutOpened = (input: {
     discount_code: input.discountCode,
     event_id: `razorpay_checkout_opened:${input.orderId}`,
   };
-  posthog.capture("razorpay_checkout_opened", payload);
+  capturePostHog("razorpay_checkout_opened", payload);
   pushToDataLayer({ event: "razorpay_checkout_opened", ...payload });
 };
 
@@ -114,13 +137,14 @@ export const trackPurchase = (input: {
 }) => {
   const payload = {
     order_id: input.orderId,
+    ...flowContext(),
     payment_id: input.paymentId,
     value: typeof input.value === "number" ? input.value / 100 : undefined,
     currency: input.currency || "INR",
     source: input.source,
     event_id: `purchase:${input.orderId}`,
   };
-  posthog.capture("Purchase", payload);
+  capturePostHog("Purchase", payload);
   if (typeof window === "undefined") return Promise.resolve();
 
   return new Promise<void>((resolve) => {

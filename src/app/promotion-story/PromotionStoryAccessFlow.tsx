@@ -9,6 +9,7 @@ import { trackAlreadyWaitlisted } from "@/lib/analytics/waitlist";
 import { getWaitlistReferenceFromResponse, readStoDiagnosticContext, writeStoDiagnosticContext } from "@/lib/diagnosticContext";
 import { getWaitlistVisitorId } from "@/lib/waitlistVisitor";
 import env from "@/utils/env";
+import { buildPromotionFlowResumeUrl } from "@/lib/promotionFlowResume";
 import { pushToDataLayer, trackCtaClick, trackLead, trackPromotionJourneyEvent } from "@/lib/analytics/events";
 
 type UserData = {
@@ -37,6 +38,7 @@ type WaitlistResponse = {
   promotion_flow_current_step?: string;
   promotion_flow_answers?: {
     barrier_id?: string;
+    choice_id?: string;
   };
 };
 
@@ -50,28 +52,18 @@ const fetchWithTimeout = async (url: string, options: RequestInit, timeout = 100
   }
 };
 
-const buildRedirectAfterRequestAccess = (fallback: string, waitlistData: WaitlistResponse) => {
-  const barrierId = waitlistData.updated === true ? waitlistData.promotion_flow_answers?.barrier_id?.trim() : "";
-  if (!barrierId) return fallback;
-
-  const destination = new URL(fallback, window.location.origin);
-  if (destination.pathname === "/promotion-flow") {
-    destination.searchParams.set("barrier", barrierId);
-    destination.searchParams.set("stage", "offer");
-  }
-  return `${destination.pathname}${destination.search}${destination.hash}`;
-};
-
 export default function PromotionStoryAccessFlow({
   anchorId = "promotion-story-access",
   redirectAfterRequestAccess,
   modalTriggerAnchorId,
   showSticky = true,
+  checkoutVariant = "default",
 }: {
   anchorId?: string;
   redirectAfterRequestAccess?: string;
   modalTriggerAnchorId?: string;
   showSticky?: boolean;
+  checkoutVariant?: "default" | "promotion-architect";
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<UserData>({ name: "", email: "", phone: "", countryCode: "+91", source: "promotion_story_sticky_cta" });
@@ -162,7 +154,7 @@ export default function PromotionStoryAccessFlow({
         trackLead({ leadId: referenceId, source: userData.source });
       }
       if (redirectAfterRequestAccess) {
-        window.location.assign(buildRedirectAfterRequestAccess(redirectAfterRequestAccess, waitlistData));
+        window.location.assign(buildPromotionFlowResumeUrl(redirectAfterRequestAccess, waitlistData, window.location.origin));
       }
     } catch (error) {
       posthog.capture("waitlist_submit_failed", { source: userData.source, error: error instanceof Error ? error.message : "unknown_error" });
@@ -170,21 +162,21 @@ export default function PromotionStoryAccessFlow({
   };
 
   const handleClose = (reason?: "x_button" | "escape") => {
-    if (reason) {
+    {
       posthog.capture("waitlist_modal_closed", {
         source: modalData.source,
-        close_reason: reason,
+        close_reason: reason || "backdrop",
         has_prefill_email: Boolean(modalData.email),
       });
       pushToDataLayer({
         event: "waitlist_modal_closed",
         source: modalData.source,
-        close_reason: reason,
+        close_reason: reason || "backdrop",
         has_prefill_email: Boolean(modalData.email),
       });
       trackPromotionJourneyEvent("checkout_modal_closed", {
         source: modalData.source,
-        close_reason: reason,
+        close_reason: reason || "backdrop",
         has_prefill_email: Boolean(modalData.email),
         has_reference_id: Boolean(modalData.referenceId || modalData.waitlistId),
       });
@@ -201,6 +193,7 @@ export default function PromotionStoryAccessFlow({
       onRequestAccess={handleRequestAccess}
     />}
     <PromotableHeroWaitlist
+      checkoutVariant={checkoutVariant}
       isOpen={isModalOpen}
       onClose={handleClose}
       initialEmail={modalData.email}

@@ -1,91 +1,61 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { trackPromotionJourneyEvent } from "@/lib/analytics/events";
-import { readStoDiagnosticContext } from "@/lib/diagnosticContext";
+import { readStoDiagnosticContext, type StoDiagnosticContext } from "@/lib/diagnosticContext";
+import { retryFlowProgress, saveFlowProgress, trackFlowOnce, type FlowSession, type FlowSnapshot } from "@/lib/promotionFlowProgress";
 import env from "@/utils/env";
 
-type PromotionFlowSnapshot = {
-  currentStep: string;
-  answers: Record<string, string>;
-};
+export function usePromotionFlowTracking({ currentStep, answers }: FlowSnapshot) {
+  const [context, setContext] = useState<StoDiagnosticContext | null>(null);
+  const viewedSteps = useRef(new Set<string>());
+  const answersKey = JSON.stringify(answers);
+  const snapshot = useMemo<FlowSnapshot>(() => ({ currentStep, answers: JSON.parse(answersKey) }), [currentStep, answersKey]);
+  const session = useMemo<FlowSession | null>(() => context?.promotionFlowSessionId && context.promotionFlowToken ? {
+    id: context.promotionFlowSessionId, token: context.promotionFlowToken, source: context.source || "promotion_flow",
+  } : null, [context]);
 
-export function usePromotionFlowTracking({ currentStep, answers }: PromotionFlowSnapshot) {
-  const [session, setSession] = useState<{ id: string; token: string } | null>(null);
-  const startedTrackedRef = useRef(false);
-  const completedTrackedRef = useRef(false);
-  const viewedStepsRef = useRef(new Set<string>());
+  useEffect(() => { setContext(readStoDiagnosticContext()); }, []);
+
+  const eventProperties = useMemo(() => ({
+    source: context?.source || "promotion_flow",
+    current_step: currentStep,
+    promotion_flow_session_id: context?.promotionFlowSessionId,
+    ...snapshot.answers,
+  }), [context, currentStep, snapshot]);
 
   useEffect(() => {
-    const context = readStoDiagnosticContext();
-    if (context.promotionFlowSessionId && context.promotionFlowToken) {
-      setSession({ id: context.promotionFlowSessionId, token: context.promotionFlowToken });
+    if (!context) return;
+    trackFlowOnce(context.promotionFlowSessionId || "anonymous", "started", () => trackPromotionJourneyEvent("promotion_flow_started", eventProperties));
+    const viewedKey = JSON.stringify(eventProperties);
+    if (!viewedSteps.current.has(viewedKey)) {
+      viewedSteps.current.add(viewedKey);
+      trackPromotionJourneyEvent("promotion_flow_step_viewed", eventProperties);
     }
-  }, []);
+  }, [context, eventProperties]);
 
   useEffect(() => {
-    if (startedTrackedRef.current) return;
-    startedTrackedRef.current = true;
-    trackPromotionJourneyEvent("promotion_flow_started", {
-      source: readStoDiagnosticContext().source || "promotion_flow",
-      current_step: currentStep,
-      promotion_flow_session_id: session?.id,
-      ...answers,
-    });
-  }, [answers, currentStep, session?.id]);
-
-  useEffect(() => {
-    const viewedKey = `${currentStep}:${JSON.stringify(answers)}`;
-    if (viewedStepsRef.current.has(viewedKey)) return;
-    viewedStepsRef.current.add(viewedKey);
-    trackPromotionJourneyEvent("promotion_flow_step_viewed", {
-      source: readStoDiagnosticContext().source || "promotion_flow",
-      current_step: currentStep,
-      promotion_flow_session_id: session?.id,
-      ...answers,
-    });
-  }, [answers, currentStep, session?.id]);
-
-  const updateSession = useCallback(async (status: "in_progress" | "completed") => {
     if (!session) return;
-
-    try {
-      const response = await fetch(`${env.apiUrl}/promotion-flow-sessions/${session.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "X-Promotion-Flow-Token": session.token,
-        },
-        body: JSON.stringify({
-          status,
-          current_step: currentStep,
-          answers_json: answers,
-        }),
-        keepalive: true,
-      });
-      if (!response.ok) throw new Error(`Promotion flow update failed (${response.status}).`);
-    } catch (error) {
-      console.error("Failed to update promotion flow session", error);
-    }
-  }, [answers, currentStep, session]);
+    void saveFlowProgress(env.apiUrl, session, snapshot);
+  }, [session, snapshot]);
 
   useEffect(() => {
-    void updateSession("in_progress");
-  }, [updateSession]);
+    if (!session) return;
+    const retry = () => { void retryFlowProgress(env.apiUrl, session); };
+    window.addEventListener("online", retry);
+    return () => window.removeEventListener("online", retry);
+  }, [session]);
 
   return {
     completeFlow: useCallback(() => {
-      if (!completedTrackedRef.current) {
-        completedTrackedRef.current = true;
-        trackPromotionJourneyEvent("promotion_flow_completed", {
-          source: readStoDiagnosticContext().source || "promotion_flow",
-          current_step: currentStep,
-          promotion_flow_session_id: session?.id,
-          ...answers,
-        });
-      }
-      return updateSession("completed");
-    }, [answers, currentStep, session?.id, updateSession]),
+      const latest = context || readStoDiagnosticContext();
+      trackFlowOnce(latest.promotionFlowSessionId || "anonymous", "completedEvent", () => trackPromotionJourneyEvent("promotion_flow_completed", {
+        ...eventProperties, source: latest.source || eventProperties.source, promotion_flow_session_id: latest.promotionFlowSessionId,
+      }));
+      const activeSession = session || (latest.promotionFlowSessionId && latest.promotionFlowToken ? {
+        id: latest.promotionFlowSessionId, token: latest.promotionFlowToken, source: latest.source || "promotion_flow",
+      } : null);
+      return activeSession ? saveFlowProgress(env.apiUrl, activeSession, snapshot, "completed") : Promise.resolve();
+    }, [context, eventProperties, session, snapshot]),
   };
 }

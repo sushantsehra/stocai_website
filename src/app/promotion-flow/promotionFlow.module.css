@@ -1,6 +1,8 @@
 .flowHeader { --action:#0b64f4; position:relative; z-index:10; background:#fff; font-family:var(--font-jakarta),sans-serif }
 .flowHeader nav { padding:4px 0 }
 .flowHeader nav>a:first-child img { width:145px }
+.checkoutPage { min-height:calc(100svh - 81px); background:#faf8f2; font-family:var(--font-jakarta),sans-serif }
+.checkoutPageShell { width:min(1440px,100%); margin:0 auto }
 
 .casePage { min-height:100svh; color:#07101b; background:repeating-linear-gradient(to bottom,#fff 0,#fff 77px,#e8eef5 78px,#fff 79px); font-family:var(--font-jakarta),sans-serif; padding:28px 24px 42px }
 .caseShell { width:min(1120px,100%); margin:0 auto }
@@ -32,6 +34,17 @@
 @media (prefers-reduced-motion:reduce) { .evidenceCard{transition:none} }
 
 .truthPage { min-height:100svh; color:#081c35; background:repeating-linear-gradient(to bottom,#fff 0,#fff 77px,#e8eef5 78px,#fff 79px); font-family:var(--font-jakarta),sans-serif }
+.barrierEquation { position:relative; margin:32px 0 0; font-size:clamp(17px,2vw,22px); font-weight:800; line-height:1.4; text-transform:uppercase }
+.barrierBody { color:#5f6b7a; font-size:22px; line-height:1.45 }
+.barrierBody p { margin:0 0 20px }
+.barrierBody p:first-child { margin-top:28px; color:#161b21; font-size:clamp(28px,2.8vw,36px); letter-spacing:-.025em; line-height:1.15 }
+.barrierBody p:first-child:after { content:""; display:block; width:72px; height:4px; margin:30px 0; border-radius:3px; background:#43c8c4 }
+.barrierBody strong { color:#161b21 }
+.barrierAttribution { display:flex; align-items:center; gap:14px; margin-top:28px; font-size:12px; line-height:1.4 }
+.barrierAttribution>div { display:flex; flex-direction:column; gap:5px; min-width:0 }
+.playbookMascot { width:80px; height:80px; flex-shrink:0; object-fit:contain }
+.barrierAttribution strong { color:#43c8c4; text-transform:uppercase }
+.barrierAttribution em { color:#000 }
 .truthHeader { height:76px; border-bottom:1px solid #0c233f; background:#fff }
 .truthHeader>div { display:flex; width:min(960px,calc(100% - 40px)); height:100%; margin:0 auto; align-items:center; justify-content:space-between }
 .truthHeader>div>strong { font-size:13px; letter-spacing:.04em; text-transform:uppercase }
@@ -184,4 +197,67 @@
   .principleDiagram>div>span{bottom:4px;left:48px;min-width:130px;padding-top:6px;text-align:left}
   .principleDiagram>div>b{right:auto;bottom:-10px;left:64px;transform:rotate(90deg);font-size:22px}
   .principleExplanation{position:relative;z-index:2;background:transparent}
+}
+
+.barrierDetails>a { max-width:100%; gap:8px; margin-top:36px; padding:14px 16px }
+.offerIntroduction { max-width:650px; margin:22px 0 0; color:#31506a; font-size:18px; line-height:1.5 }
+.offerDirection { max-width:650px; margin-top:26px; border-left:4px solid #43c8c4; padding:4px 0 4px 20px }
+.offerDirection>p,.offerInside h2 { margin:0; color:#18314b; font-size:11px; font-weight:800; letter-spacing:.06em; line-height:1.5; text-transform:uppercase }
+.offerDirection h2 { margin:10px 0; color:#0757ba; font-size:28px; font-weight:800; line-height:1.15; text-transform:uppercase }
+.offerDirection>div,.offerInside>p { color:#31506a; font-size:16px; line-height:1.5 }
+.offerInside { max-width:650px; margin-top:24px }
+.offerInside>p { margin:8px 0 0 }
+.offerCopy h1 { font-size:clamp(42px,4.3vw,64px); line-height:1.02 }
+.offerActions { margin-top:28px }
+@media(max-width:760px) {
+  .offerCopy h1{font-size:36px}
+  .offerIntroduction{grid-row:3;margin-top:18px;font-size:16px}
+  .offerDirection{grid-row:4;margin-top:22px;padding-left:16px}
+  .offerDirection h2{font-size:25px}
+  .offerInside{grid-row:5;margin-top:20px}
+  .offerVisual{grid-row:6}
+  .offerActions{grid-row:7;margin-top:16px}
+}
+.solvingShell { width:min(960px,100%); margin:0 auto }
+.solvingBranch { margin:12px 0 18px; color:#4d5664; font-size:18px; font-weight:800; text-transform:uppercase }
+.solvingShell>.picked { margin-top:0 }
+.solvingChoices { min-width:0; margin:36px 0 0; border:0; padding:0 }
+.solvingChoices legend { padding:0; color:#161b21; font-size:clamp(28px,3.5vw,42px); font-weight:800; letter-spacing:-.035em; line-height:1.12 }
+.solvingInstruction { margin:18px 0 24px; color:#5f6b7a; font-size:17px; font-style:italic; line-height:1.5 }
+.solvingOption { display:grid; grid-template-columns:36px minmax(0,1fr) 22px; align-items:center; gap:18px; min-height:88px; border-top:1px solid #b8c6d6; padding:18px 12px; cursor:pointer; text-decoration:none }
+.solvingOption:last-child { border-bottom:1px solid #b8c6d6 }
+.solvingNumber { color:#0756ba; font-size:13px; font-weight:800 }
+.solvingOption strong,.solvingOption em { display:block; line-height:1.4 }
+.solvingOption strong { color:#0a1e39; font-size:18px }
+.solvingOption em { margin-top:3px; color:#5f6b7a; font-size:16px }
+.solvingArrow { color:#0756ba; font-size:22px }
+.solvingOption:hover { background:#e8f1ff }
+.solvingOption:focus-visible { outline:3px solid #0b64f4; outline-offset:3px }
+.insightSelected { position:relative; margin:0; color:#0756ba; font-size:12px; font-weight:800; line-height:1.5 }
+.insightStory .feelsPanel h1 { font-size:clamp(28px,3vw,38px); line-height:1.15 }
+.insightStory .barrierSetup { font-size:18px }
+.insightStory .insightGapTitle { margin:0 0 28px; font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase }
+.insightGap { font-size:clamp(24px,2.6vw,34px); line-height:1.25; letter-spacing:-.025em }
+.insightGap p { margin:0 }
+.insightGap p:first-child { color:#5f6b7a }
+.insightGap .tealRule { margin:28px 0 }
+@media(max-width:760px) {
+  .solvingChoices{margin-top:28px}
+  .solvingInstruction{font-size:15px}
+  .solvingOption{grid-template-columns:25px minmax(0,1fr) 20px;gap:10px;padding:16px 6px}
+  .solvingOption strong{font-size:16px}
+  .solvingOption em{font-size:14px}
+}
+.barrierSetup { position:relative; margin-top:28px; color:#5f6b7a; font-size:22px; line-height:1.45 }
+.barrierSetup p { margin:0 0 20px }
+.barrierSetupGold { color:#f3c67e }
+.barrierDetails>.barrierEquation { margin:24px 0 0; color:#081c35; font-size:19px; font-weight:800; line-height:1.4 }
+@media(max-width:760px) {
+  .barrierSetup{margin-top:24px;font-size:17px}
+  .barrierDetails>.barrierEquation{font-size:17px}
+  .barrierBody{font-size:17px}
+  .barrierBody p:first-child{margin-top:12px;font-size:27px}
+  .barrierBody p:first-child:after{margin:24px 0}
+  .barrierEquation{margin-top:24px}
+  .barrierDetails>a{margin-top:28px}
 }

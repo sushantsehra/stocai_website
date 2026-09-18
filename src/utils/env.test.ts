@@ -3,13 +3,14 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 const originalEnv = { ...process.env };
 
 afterEach(() => {
+  vi.unstubAllEnvs();
   vi.resetModules();
   process.env = { ...originalEnv };
 });
 
 describe("env utility", () => {
   test("uses development defaults when no public URLs are configured", async () => {
-    process.env.NODE_ENV = "development";
+    vi.stubEnv("NODE_ENV", "development");
     delete process.env.NEXT_PUBLIC_SITE_URL;
     delete process.env.NEXT_PUBLIC_APP_URL;
     delete process.env.NEXT_PUBLIC_APP_PUBLIC_URL;
@@ -27,7 +28,7 @@ describe("env utility", () => {
   });
 
   test("prefers explicit app URL over legacy app public URL", async () => {
-    process.env.NODE_ENV = "production";
+    vi.stubEnv("NODE_ENV", "production");
     process.env.NEXT_PUBLIC_APP_URL = "https://app.example.test";
     process.env.NEXT_PUBLIC_APP_PUBLIC_URL = "https://legacy.example.test";
     process.env.NEXT_PUBLIC_SITE_URL = "https://site.example.test";

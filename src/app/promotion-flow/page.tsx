@@ -12,5 +12,5 @@ export default async function PromotionFlowPage({
   searchParams: Promise<{ barrier?: string; stage?: string; choice?: string }>;
 }) {
   const { barrier, stage, choice } = await searchParams;
-  return <PromotionFlow initialBarrierId={barrier} initialStage={stage} initialChoice={choice} />;
+  return <PromotionFlow key={`${barrier || ""}:${stage || ""}:${choice || ""}`} initialBarrierId={barrier} initialStage={stage} initialChoice={choice} />;
 }

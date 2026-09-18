@@ -180,13 +180,13 @@ export default function PromotionStoryPage() {
               <h2>Promotion Architect</h2>
               <p className={styles.architectLead}>An advanced online system that designs your personal strategy for becoming the first choice for promotion.</p>
             </div>
-            <figure className={styles.architectCassettes}>
+            <figure className={styles.architectMascot}>
               <Image
-                src="/images/promotion-architect-cassettes-transparent.png"
-                alt="Seven Promotion Architect modules presented as horizontally arranged video cassette cases"
-                width={1737}
-                height={905}
-                sizes="(max-width: 600px) calc(100vw - 44px), 520px"
+                src="/images/promotion-architect/panda-guide.png"
+                alt="Promotion Architect panda holding your promotion plan"
+                width={1122}
+                height={1402}
+                sizes="(max-width: 600px) 138px, 320px"
               />
             </figure>
           </div>

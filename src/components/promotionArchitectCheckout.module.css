@@ -1,0 +1,45 @@
+﻿.checkout { color:#12213a; background:#faf8f2; font-family:var(--font-jakarta),sans-serif; text-align:center }
+.cover { padding:82px 24px 36px; color:#fff; background:radial-gradient(ellipse at 100% 0%,#164ca0 0%,transparent 65%),#091c3b; border-bottom:5px solid #43ddd2 }
+.trust { display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border:1px solid #587196; border-radius:12px; background:#142e51; text-align:left; font-size:12px; line-height:1.4 }
+.trust>span { color:#ffd24b; font-size:28px }.trust strong { font-weight:800 }.trust p { margin:3px 0 0; color:#d6e3f7 }.trust p span { color:#ffd24b; letter-spacing:1px; white-space:nowrap }
+.hero { margin-top:28px }.hero h2 { margin:0; font-size:clamp(32px,8vw,48px); font-weight:800; letter-spacing:-.055em; line-height:1.02; text-transform:uppercase }.hero h2 span { display:block; color:#66eee0 }
+.hero p { max-width:390px; margin:18px auto 0; color:#d6e3f7; font-size:16px; line-height:1.6 }.hero .tagline { margin-top:22px; color:#fff; font-size:clamp(22px,5.5vw,28px); font-weight:700; letter-spacing:-.035em; line-height:1.2 }
+.content { padding:30px 24px 32px }.checkout h3 { font-size:14px; font-weight:800; line-height:1.4; text-transform:uppercase }
+.positioning h3 { margin:0; color:#0757c7; font-size:20px; letter-spacing:-.035em; line-height:1.15 }.positioning p { margin:18px 0 0; color:#526075; font-size:15px; line-height:1.8 }.positioning p:last-child { margin-top:20px; color:#11223e; font-size:20px; line-height:1.4; letter-spacing:-.025em }.positioning strong { font-weight:800 }
+.pillars { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin:28px -8px; overflow:hidden; border:1px solid #233c5f; border-radius:16px; background:#0e2445; box-shadow:0 8px 22px #0a23451a }.pillars>div { padding:20px 9px; border-top:4px solid #57e4d4 }.pillars>div+div { border-left:1px solid #324562 }.pillars>div:nth-child(2) { border-top-color:#ffd45c }.pillars>div:nth-child(3) { border-top-color:#a7bbff }
+.pillars h3 { margin:0; color:#79f0e3; font-size:12px; letter-spacing:-.02em }.pillars>div:nth-child(2) h3 { color:#ffdf7c }.pillars>div:nth-child(3) h3 { color:#bdcdff }.pillars p { margin:10px 0 0; color:#e1e9f5; font-size:13px; line-height:1.5 }
+.includes h3 { margin:0 0 18px; color:#41526b; font-size:12px; letter-spacing:.06em }.includes ul { display:grid; gap:10px; margin:0; padding:0; list-style:none; text-align:left }.includes li { display:flex; align-items:center; gap:12px; border:1px solid #dce3ee; border-radius:12px; background:#fff; padding:15px 12px; font-size:15px; line-height:1.4; box-shadow:0 3px 0 #e7ebf2 }.includes svg { width:23px; height:23px; flex-shrink:0; color:#075dcc }
+.pricing { margin-top:26px }.pricing summary,.pricing button { display:flex; min-height:60px; align-items:center; justify-content:center; gap:12px; width:100%; border:0; border-radius:12px; padding:16px; background:#075deb; color:#fff; font:inherit; font-size:17px; font-weight:800; cursor:pointer; list-style:none; box-shadow:0 5px 0 #03449f; transition:background .15s ease,transform .15s ease }
+.pricing summary { justify-content:space-between; border:1px solid #b9cdef; background:#edf3ff; color:#0757c7; box-shadow:none; text-align:left }
+.pricing summary:hover { background:#dfeaff }.pricing summary::-webkit-details-marker { display:none }.pricing summary:focus-visible,.pricing button:focus-visible { outline:3px solid #075deb; outline-offset:5px }.pricing svg { width:21px; height:21px; flex-shrink:0 }.pricing summary svg { transition:transform .15s ease }.pricing[open]>summary svg { transform:rotate(180deg) }
+.priceContent { padding-top:36px }.priceContent>h3 { margin:0; color:#102749; font-size:22px; line-height:1.2; letter-spacing:-.03em }
+.comparison { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:24px 0 18px }.comparison>div { display:flex; flex-direction:column-reverse; gap:9px; border:1px solid #dfdfd9; border-radius:10px; background:#fff; padding:16px 6px }.comparison dt { color:#526075; font-size:11px; line-height:1.4 }.comparison dd { margin:0; color:#162c4c; font-size:clamp(19px,5vw,25px); font-weight:800; letter-spacing:-.04em }.comparison small { display:block; font-size:10px; letter-spacing:0 }.comparisonNote { margin:0; color:#664515; font-size:14px; line-height:1.5 }
+.price { position:relative; margin-top:28px; overflow:hidden; border:1px solid #28578c; border-radius:20px; padding:28px 20px; color:#fff; background:radial-gradient(ellipse at 0% 100%,#164981 0%,transparent 65%),#0b2243; box-shadow:0 12px 28px #08234521 }.price:before { content:""; position:absolute; inset:0 0 auto; height:5px; background:linear-gradient(90deg,#52e4d3,#ffdc69) }
+.price h3 { margin:0; color:#79f0e3; font-size:20px; letter-spacing:-.02em }.price>p { margin:14px 0 0; color:#d6e3f7; font-size:14px; line-height:1.6 }.amount { margin-top:24px; color:#ffdf6b; font-size:clamp(42px,12vw,64px); font-weight:800; letter-spacing:-.06em; line-height:1.1; overflow-wrap:anywhere }.price del { display:block; margin-top:10px; color:#b6c5db; font-size:22px; text-decoration-thickness:2px }.price .oneTime { display:inline-block; margin:18px 0 0; border:1px solid #526989; border-radius:20px; padding:6px 14px; color:#fff; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase }
+.guarantee { margin:24px 0; border:1px solid #a3d5ba; border-radius:16px; background:#e4f5ea; padding:24px 16px }.guarantee h3 { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; margin:0; color:#125934; font-size:17px; line-height:1.25 }.guarantee h3 svg { width:38px; height:38px; color:#137645 }.guarantee p { margin:14px 0 0; color:#28553c; font-size:14px; line-height:1.6 }.guarantee p:last-child { font-size:17px; color:#125934 }
+.pricing button { min-height:66px; background:#ffd13a; color:#10213b; font-size:22px; letter-spacing:-.02em; text-transform:uppercase; box-shadow:0 5px 0 #ba890a,0 10px 22px #ba890a22 }.pricing button:hover:not(:disabled) { background:#ffdd64; transform:translateY(-1px) }.pricing button:disabled { cursor:wait; opacity:.55 }.secure { margin-top:20px; color:#526075; font-size:13px }.error { border:1px solid #f0b5ad; border-radius:10px; padding:12px; background:#fff0ed; color:#9e2115; font-size:14px; line-height:1.5 }
+@media(min-width:640px) { .cover{padding:92px 36px 38px}.content{padding:32px 32px 36px} }
+@media(max-width:360px) { .cover{padding-inline:16px}.content{padding-inline:16px}.pillars h3{font-size:10px}.pillars p{font-size:12px}.comparison dd{font-size:19px}.trust{font-size:11px}.includes li{font-size:14px} }
+@media(prefers-reduced-motion:reduce) { .pricing summary,.pricing summary svg,.pricing button{transition:none} }
+.page { width:100%; min-height:calc(100svh - 81px); border:0; border-radius:0; box-shadow:none }
+.page .cover { padding:48px 32px }
+.page .hero h1 { margin:0; font-size:clamp(38px,5vw,78px); font-weight:800; letter-spacing:-.055em; line-height:1.02; text-transform:uppercase }
+.page .hero h1 span { display:block; color:#66eee0 }
+.page .hero p { max-width:560px }
+.mascot { display:block; width:240px; max-width:100%; height:auto; margin:28px auto 0; filter:drop-shadow(0 12px 22px #00000030) }
+.page .content { width:100%; padding:40px clamp(24px,4vw,64px) 56px; background:repeating-linear-gradient(to bottom,#faf8f2 0,#faf8f2 77px,#ebe7df 78px,#faf8f2 79px) }
+.page .pillars h3 { font-size:15px }.page .pillars p { font-size:15px }
+@media(min-width:700px) { .page .includes ul{grid-template-columns:repeat(2,minmax(0,1fr))}.page .price{padding:36px 32px}.page .comparison dt{font-size:14px}.page .comparison dd{font-size:30px} }
+@media(min-width:960px) {
+  .page{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:start}
+  .page .cover{align-self:stretch;min-height:calc(100svh - 81px);border-right:5px solid #43ddd2;border-bottom:0;padding:56px clamp(28px,4vw,72px)}
+  .page .coverInner{display:flex;min-height:calc(100svh - 193px);flex-direction:column;align-items:center;justify-content:center}
+  .page .hero{margin-top:28px}
+  .page .hero h1{font-size:clamp(38px,4.3vw,62px)}
+  .page .hero .tagline{margin-top:24px;font-size:clamp(26px,2.2vw,32px)}
+  .page .hero p{font-size:17px}
+  .page .mascot{width:300px;margin-top:32px}
+  .page .content{min-width:0;padding-top:48px}
+  .page .positioning h3{font-size:26px}
+}
+@media(max-width:600px) { .page .cover{padding:36px 20px}.page .content{padding:28px 20px 40px}.page .pillars h3{font-size:11px}.page .pillars p{font-size:13px} }

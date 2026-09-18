@@ -21,8 +21,10 @@ import {
   trackInitiateCheckout,
   trackPurchase,
   trackRazorpayCheckoutOpened,
+  trackPromotionJourneyEvent,
 } from "@/lib/analytics/events";
 import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
+import PromotionArchitectCheckout from "./PromotionArchitectCheckout";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
@@ -44,6 +46,8 @@ type HeroWaitlistProps = {
   initialPhone?: string;
   initialCountryCode?: string;
   source?: string;
+  checkoutVariant?: "default" | "promotion-architect";
+  presentation?: "modal" | "page";
   onSubmit?: (data: {
     name: string;
     phone: string;
@@ -71,6 +75,8 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   initialPhone,
   initialCountryCode = "+91",
   source = "waitlist_modal",
+  checkoutVariant = "default",
+  presentation = "modal",
   onSubmit,
 }) => {
   const [email, setEmail] = useState("");
@@ -107,7 +113,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || presentation === "page") return;
     const controller = new AbortController();
     fetch(`${env.apiUrl}/consultations/slots`, { signal: controller.signal })
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
@@ -127,18 +133,18 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         }
       });
     return () => controller.abort();
-  }, [isOpen]);
+  }, [isOpen, presentation]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || presentation === "page") return;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [isOpen, presentation]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || presentation === "page") return;
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -148,7 +154,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, presentation]);
 
   useEffect(() => {
     if (isOpen) return;
@@ -157,16 +163,23 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   }, [isOpen]);
 
   useEffect(() => {
+    if (presentation === "page") return;
     if (isOpen) {
       window.dispatchEvent(new CustomEvent("waitlist-modal-opened"));
     } else {
       window.dispatchEvent(new CustomEvent("waitlist-modal-closed"));
     }
-  }, [isOpen]);
+  }, [isOpen, presentation]);
 
   useEffect(() => {
     if (!isOpen) return;
     const hasPrefillEmail = Boolean(initialEmail?.trim());
+    if (presentation === "page") {
+      trackPromotionJourneyEvent("checkout_page_viewed", { source, has_prefill_email: hasPrefillEmail, has_reference_id: Boolean(initialReferenceId || initialWaitlistId) });
+      // Retain the existing GTM/PostHog checkout funnel entry event for compatibility.
+      trackCheckoutModalOpened({ source, modalKind: "promotion_checkout_page", hasPrefillEmail, hasReferenceId: Boolean(initialReferenceId || initialWaitlistId) });
+      return;
+    }
     posthog.capture("waitlist_modal_opened", {
       source,
       has_prefill_email: hasPrefillEmail,
@@ -181,7 +194,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       hasPrefillEmail,
       hasReferenceId: Boolean(initialReferenceId || initialWaitlistId),
     });
-  }, [isOpen, source, initialEmail, initialReferenceId, initialWaitlistId]);
+  }, [isOpen, source, initialEmail, initialReferenceId, initialWaitlistId, presentation]);
 
   const createPaymentLink = async (payload: {
     name?: string;
@@ -398,6 +411,19 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
 
   if (!isOpen) return null;
 
+  if (presentation === "page") return <PromotionArchitectCheckout
+    presentation="page"
+    amount={subscriptionAmount}
+    loading={status === "loading"}
+    message={message}
+    onSubmit={handleSubmit}
+    onCheckoutClick={() => trackCtaClick({ location: "checkout_page", label: "Get access", source })}
+    onPricingRevealed={() => {
+      trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source });
+      trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });
+    }}
+  />;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-3">
       <div
@@ -409,6 +435,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       <div
         role="dialog"
         aria-modal="true"
+        aria-labelledby={checkoutVariant === "promotion-architect" ? "promotion-architect-checkout-title" : undefined}
         data-waitlist-modal
         className="pointer-events-auto relative z-10 h-full max-h-screen w-full overflow-hidden bg-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:h-auto sm:max-h-[calc(100vh-32px)] sm:max-w-[544px] sm:rounded-[42px] sm:border sm:border-[#aeb4bc]"
       >
@@ -425,6 +452,17 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         </button>
 
         <div className="h-full max-h-screen overflow-y-auto sm:max-h-[calc(100vh-32px)]">
+          {checkoutVariant === "promotion-architect" ? <PromotionArchitectCheckout
+            amount={subscriptionAmount}
+            loading={status === "loading"}
+            message={message}
+            onSubmit={handleSubmit}
+            onCheckoutClick={() => trackCtaClick({ location: "checkout_modal", label: "Get access", source })}
+            onPricingRevealed={() => {
+              trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source });
+              trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });
+            }}
+          /> : <>
           <div className="relative px-6 pb-0 pt-7 sm:px-10 sm:pt-10">
             <div className="inline-flex items-center gap-3 rounded-xl bg-[#eaf8ef] px-4 py-2.5 font-jakarta text-[12px] leading-tight text-[#1d2939] sm:text-[15px]">
               <span className="text-[30px] leading-none text-[#20b568]">★</span>
@@ -622,6 +660,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
               <CheckCircle2 className="h-5 w-5 text-[#d8e0ea]" /> Instant access after secure payment
             </p>
           </div>
+          </>}
         </div>
       </div>
     </div>
