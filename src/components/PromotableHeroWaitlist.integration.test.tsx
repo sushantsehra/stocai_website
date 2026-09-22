@@ -44,6 +44,20 @@ describe("checkout event and payment wiring", () => {
       details.open = true;
       fireEvent(details, new Event("toggle"));
       await waitFor(() => expect(dataLayer.some((item) => item.event === "checkout_pricing_viewed")).toBe(true));
+      expect(dataLayer.find((item) => item.event === "cta_clicked")).toMatchObject({
+        cta_location: "checkout_pricing",
+        cta_label: "Show me what it costs",
+        source: "promotion_story_sticky_cta",
+      });
+      expect(dataLayer.find((item) => item.event === "checkout_pricing_viewed")).toMatchObject({
+        source: "promotion_story_sticky_cta",
+        value: 1800,
+        currency: "INR",
+      });
+      expect(posthog.capture).toHaveBeenCalledWith("cta_clicked", expect.objectContaining({
+        cta_location: "checkout_pricing",
+        cta_label: "Show me what it costs",
+      }));
       expect(openRazorpayCheckout).not.toHaveBeenCalled();
     }
     fireEvent.click(screen.getByRole("button", { name: variant === "promotion-architect" ? /Get access/ : /Proceed to Secure Checkout/ }));
