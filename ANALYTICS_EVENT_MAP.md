@@ -15,6 +15,7 @@ Purpose: Keep a single source of truth for analytics events across PostHog and G
 - Meta Lead tag fires on dataLayer event: waitlist_submitted
 - Meta InitiateCheckout tag fires on dataLayer event: razorpay_checkout_opened
 - Meta Purchase tag fires on dataLayer event: Purchase
+- The app emits Meta-facing custom-event aliases `diagnostic_start` and `diagnostic_complete` for the promotion-flow lifecycle. GTM must have corresponding Meta Pixel custom-event tags and triggers published before Meta receives them.
 - Lead and InitiateCheckout dataLayer events may be emitted by the app, but GTM v10 does not currently trigger Meta tags from those event names.
 - payment_redirected exists as a GTM trigger in v10, but no tag is attached.
 
@@ -282,6 +283,7 @@ Event name: promotion_flow_started
   - choice_label
 - PostHog: yes
 - GTM dataLayer: yes (diagnostic only in GTM v10)
+- Meta alias: diagnostic_start (same properties; GTM dataLayer only)
 
 ### Promotion flow step viewed
 Event name: promotion_flow_step_viewed
@@ -314,6 +316,7 @@ Event name: promotion_flow_completed
   - choice_label
 - PostHog: yes
 - GTM dataLayer: yes (diagnostic only in GTM v10)
+- Meta alias: diagnostic_complete (same properties; GTM dataLayer only)
 
 ### Checkout modal opened
 Event name: checkout_modal_opened
@@ -343,6 +346,8 @@ Event name: checkout_modal_closed
 - GTM dataLayer: yes (diagnostic only in GTM v10)
 
 ## Compatibility Events
+- diagnostic_start: Meta-facing alias of promotion_flow_started; emitted once per promotion-flow session.
+- diagnostic_complete: Meta-facing alias of promotion_flow_completed; emitted once per promotion-flow session.
 - waitlist_modal_opened: still emitted when a waitlist/promotion checkout modal actually opens. Do not use as the first step of the new promotion-story funnel.
 - waitlist_modal_closed: still emitted for explicit modal close actions where implemented.
 - waitlist_submitted: still the current GTM v10 Meta Lead trigger.

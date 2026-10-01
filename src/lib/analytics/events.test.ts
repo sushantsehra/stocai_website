@@ -16,6 +16,30 @@ beforeEach(() => {
 afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
 
 describe("GTM / PostHog parity", () => {
+  it("emits Meta diagnostic aliases for the promotion-flow lifecycle", () => {
+    trackPromotionJourneyEvent("promotion_flow_started", { current_step: "truth" });
+    trackPromotionJourneyEvent("promotion_flow_completed", { current_step: "offer" });
+
+    expect(layer().filter((item) => item.event === "diagnostic_start")).toEqual([
+      expect.objectContaining({
+        journey: "promotion_architect",
+        promotion_flow_session_id: "flow-1",
+        current_step: "truth",
+      }),
+    ]);
+    expect(layer().filter((item) => item.event === "diagnostic_complete")).toEqual([
+      expect.objectContaining({
+        journey: "promotion_architect",
+        promotion_flow_session_id: "flow-1",
+        current_step: "offer",
+      }),
+    ]);
+    expect(vi.mocked(posthog.capture).mock.calls.map(([event]) => event)).toEqual([
+      "promotion_flow_started",
+      "promotion_flow_completed",
+    ]);
+  });
+
   it("sends each funnel event to both sinks with safe correlation and identical properties", () => {
     trackPromotionJourneyEvent("promotion_flow_step_viewed", { current_step: "consequence" });
     trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source: "promotion_story_sticky_cta" });
@@ -33,7 +57,7 @@ describe("GTM / PostHog parity", () => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
     vi.mocked(posthog.capture).mockImplementation(() => { throw new Error("unavailable"); });
     expect(() => trackPromotionJourneyEvent("promotion_flow_completed")).not.toThrow();
-    expect(layer()).toHaveLength(1);
+    expect(layer().map((item) => item.event)).toEqual(["promotion_flow_completed", "diagnostic_complete"]);
   });
 
   it("preserves events from other pages without attaching an unrelated flow session", () => {

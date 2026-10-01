@@ -51,6 +51,11 @@ const promotionJourneyPayload = (properties: Record<string, unknown> = {}) => ({
   ...properties,
 });
 
+const metaPromotionEventAliases: Partial<Record<string, string>> = {
+  promotion_flow_started: "diagnostic_start",
+  promotion_flow_completed: "diagnostic_complete",
+};
+
 export const trackPromotionJourneyEvent = (
   event: string,
   properties: Record<string, unknown> = {},
@@ -58,6 +63,8 @@ export const trackPromotionJourneyEvent = (
   const payload = promotionJourneyPayload(properties);
   capturePostHog(event, payload);
   pushToDataLayer({ event, ...payload });
+  const metaEvent = metaPromotionEventAliases[event];
+  if (metaEvent) pushToDataLayer({ event: metaEvent, ...payload });
 };
 
 export const trackCheckoutModalOpened = (input: {
