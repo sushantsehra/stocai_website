@@ -85,4 +85,33 @@ describe("checkout event and payment wiring", () => {
     expect(dataLayer.some((item) => ["InitiateCheckout", "Purchase"].includes(String(item.event)))).toBe(false);
     expect(openRazorpayCheckout).not.toHaveBeenCalled();
   });
+
+  it("charges the separate callback order and confirms the 24-hour response without granting access", async () => {
+    vi.mocked(fetch).mockImplementation(async (url) => ({
+      ok: true,
+      json: async () => String(url).endsWith("/payments/razorpay/callback/order")
+        ? { order_id: "callback-order", key_id: "test-key", checkout_attempt_id: "callback-attempt", amount: 5100, currency: "INR" }
+        : { enabled: false },
+    } as Response));
+    vi.mocked(openRazorpayCheckout).mockResolvedValueOnce({
+      razorpay_payment_id: "callback-payment",
+      verified: true,
+      state: "callback_requested",
+      message: "Payment confirmed. Expect a callback within the next 24 hours.",
+    });
+    render(<PromotableHeroWaitlist isOpen onClose={() => {}} initialName="Test" initialEmail="test@example.test" initialPhone="9000000000" initialReferenceId="test-reference" checkoutVariant="promotion-architect" source="promotion_flow" />);
+
+    fireEvent.click(screen.getByRole("button", { name: /Speak with us first/ }));
+
+    expect(await screen.findByText("Callback requested")).toBeTruthy();
+    expect(screen.getByText("Payment confirmed. Expect a callback within the next 24 hours.")).toBeTruthy();
+    const request = vi.mocked(fetch).mock.calls.find(([url]) => String(url).endsWith("/payments/razorpay/callback/order"));
+    expect(JSON.parse(request![1]!.body as string)).toMatchObject({
+      reference_id: "test-reference",
+      email: "test@example.test",
+      phone: "+919000000000",
+    });
+    expect(dataLayer.find((item) => item.event === "callback_payment_confirmed")).toMatchObject({ amount: 5100, currency: "INR" });
+    expect(dataLayer.some((item) => item.event === "Purchase")).toBe(false);
+  });
 });

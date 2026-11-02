@@ -1,6 +1,6 @@
 import type { FormEvent } from "react";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, ChevronDown, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown, PhoneCall, ShieldCheck } from "lucide-react";
 import styles from "./promotionArchitectCheckout.module.css";
 
 type Props = {
@@ -9,11 +9,15 @@ type Props = {
   message: string;
   onSubmit: (event: FormEvent) => void;
   onCheckoutClick: () => void;
+  callbackLoading: boolean;
+  callbackMessage: string;
+  callbackConfirmed: boolean;
+  onCallbackClick: () => void;
   onPricingRevealed?: () => void;
   presentation?: "modal" | "page";
 };
 
-export default function PromotionArchitectCheckout({ amount, loading, message, onSubmit, onCheckoutClick, onPricingRevealed, presentation = "modal" }: Props) {
+export default function PromotionArchitectCheckout({ amount, loading, message, onSubmit, onCheckoutClick, callbackLoading, callbackMessage, callbackConfirmed, onCallbackClick, onPricingRevealed, presentation = "modal" }: Props) {
   const Heading = presentation === "page" ? "h1" : "h2";
   const price = amount ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount / 100) : "At checkout";
 
@@ -71,6 +75,20 @@ export default function PromotionArchitectCheckout({ amount, loading, message, o
           <button type="submit" disabled={loading} onClick={onCheckoutClick}>{loading ? "Processing..." : <>Get access <ArrowRight aria-hidden="true" /></>}</button>
           <p className={styles.secure}><em>Instant access · Secure payment</em></p>
         </form>
+        {callbackConfirmed ? (
+          <section className={styles.callbackConfirmed} role="status" aria-live="polite">
+            <CheckCircle2 aria-hidden="true" />
+            <div><h3>Callback requested</h3><p>{callbackMessage}</p></div>
+          </section>
+        ) : (
+          <section className={styles.callbackOption}>
+            <div><h3>Want to speak with us first?</h3><p>Pay ₹51 and our team will call you within 24 hours. This does not include programme access.</p></div>
+            <button type="button" className={styles.callbackButton} disabled={callbackLoading || loading} onClick={onCallbackClick}>
+              <PhoneCall aria-hidden="true" />{callbackLoading ? "Opening payment..." : "Speak with us first — ₹51"}
+            </button>
+            {callbackMessage && <p className={styles.error} role="status" aria-live="polite">{callbackMessage}</p>}
+          </section>
+        )}
       </div>
     </details>
     </div>

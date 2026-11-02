@@ -41,6 +41,35 @@ describe("Razorpay checkout recovery", () => {
     );
   });
 
+  test("recovers a paid callback after the verification response is lost", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        state: "callback_requested",
+        callback_requested: true,
+        message: "Payment confirmed. Expect a callback within 24 hours.",
+      }),
+    }));
+
+    const result = await recoverRazorpayCheckout(
+      {
+        key_id: "rzp_test_key",
+        order_id: "order_callback",
+        amount: 5100,
+        currency: "INR",
+        checkout_attempt_id: "callback-attempt",
+        checkout_recovery_token: "callback-recovery-token",
+      },
+      "http://localhost:8000",
+      1,
+    );
+
+    expect(result).toMatchObject({
+      state: "callback_requested",
+      callback_requested: true,
+    });
+  });
+
   test("does not turn a declined payment into a success state", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,

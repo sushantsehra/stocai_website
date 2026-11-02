@@ -60,7 +60,9 @@ export async function recoverRazorpayCheckout(
         data?.detail || "Payment status could not be checked.",
       );
     }
-    if (["activation_required", "already_active"].includes(data?.state)) return data;
+    if (["activation_required", "already_active", "callback_requested"].includes(data?.state)) {
+      return data;
+    }
     if (["payment_failed", "expired", "cancelled"].includes(data?.state)) {
       throw new RazorpayCheckoutError(
         "verification_failed",
