@@ -22,6 +22,7 @@ import {
   trackPurchase,
   trackRazorpayCheckoutOpened,
   trackPromotionJourneyEvent,
+  trackPromotionFlowCheckoutAction,
 } from "@/lib/analytics/events";
 import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
 import PromotionArchitectCheckout from "./PromotionArchitectCheckout";
@@ -364,6 +365,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   };
 
   const handleCallbackPayment = async () => {
+    trackCtaClick({ location: "checkout_callback", label: "Speak with us first — ₹51", source });
     setCallbackStatus("loading");
     setCallbackMessage("");
     try {
@@ -466,6 +468,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     callbackMessage={callbackMessage}
     callbackConfirmed={callbackStatus === "success"}
     onCallbackClick={handleCallbackPayment}
+    onPricingClick={(opening) => trackPromotionFlowCheckoutAction(opening ? "reveal_pricing" : "hide_pricing", "Show me what it costs")}
     onPricingRevealed={() => {
       trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source });
       trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });

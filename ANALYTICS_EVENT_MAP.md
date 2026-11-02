@@ -6,7 +6,8 @@ Purpose: Keep a single source of truth for analytics events across PostHog and G
 - Event names: lower_snake_case
 - Properties: lower_snake_case
 - Avoid PII in event properties unless required and consented.
-- PostHog is the product analytics source of truth.
+- PostHog is the existing product analytics adapter. GA4 is the selected destination
+  for marketing's diagnostic funnel report; GTM/GA4 configuration is deferred.
 - GTM consumes dataLayer events for marketing tags only.
 - Preserve existing GTM-triggered conversion event names unless GTM is migrated first.
 
@@ -300,6 +301,70 @@ Event name: promotion_flow_step_viewed
   - choice_label
 - PostHog: yes
 - GTM dataLayer: yes (diagnostic only in GTM v10)
+
+### Diagnostic screen and click contract (2026-11-02)
+
+See [approved scope and acceptance criteria](docs/diagnostic-event-contract.md).
+The app emits these events; receipt in GA4 or Meta requires the appropriate GTM
+tags/triggers and is not established by app tests or the historical v10 map above.
+
+| `screen_id` | `step_number` | Backend `current_step` |
+| --- | --- | --- |
+| `prime_suspect` | 1 | `prime_suspect` |
+| `truth` | 2 | `truth` |
+| `solving` | 3 | `principle` |
+| `insight` | 4 | `consequence` |
+| `offer` | 5 | `offer` |
+| `checkout` | 6 | `offer` |
+| `honest_choice` (legacy) | 3 | `honest_choice` |
+| `consequence` (legacy) | 4 | `consequence` |
+
+`promotion_flow_started`, `promotion_flow_step_viewed` and
+`promotion_flow_completed` now include `screen_id`, `step_number` and
+`flow_version=promotion-flow-v1`. The backend enum and completion policy are unchanged.
+
+New event: `promotion_flow_step_clicked`, emitted to both PostHog and the GTM
+data layer before navigation or the checkout action. Properties:
+
+- `journey`, `journey_version`, `flow_version`, `source`, `promotion_flow_session_id`
+- `screen_id`, `step_number`, `current_step`
+- `cta_id`, `cta_label`, `next_screen_id`, `next_step_number`
+- `barrier_id`, `choice_id`, `option_id`, `option_label`
+- `page_path`, `page_url` (journey URL properties exclude query strings and fragments)
+
+CTA IDs: `select_barrier`, `continue_to_solving`, `select_approach`,
+`continue_to_offer`, `proceed_to_checkout`, `start_again`, `select_legacy_choice`,
+`reveal_pricing`, `hide_pricing`, `get_access`, `request_callback`.
+Payment destinations are `programme_payment` and `callback_payment`, with
+`next_step_number=null`; these describe a click, not a successful payment.
+Pricing open/close clicks point back to `checkout` and do not imply progression.
+They are captured synchronously on summary activation; programmatic disclosure
+still emits the existing pricing-view event but does not invent a diagnostic click.
+Existing `cta_clicked`, pricing, checkout, callback and payment events remain.
+Saved contact details and update tokens are not attached to diagnostic events.
+
+Count semantics:
+
+- A rendered screen visit produces one view; unrelated rerenders/StrictMode effect
+  replay do not. Remounts, refreshes and back-navigation revisits produce new views.
+- Every actual button/answer activation produces a click. Do not treat raw view or
+  click totals as unique visitors or completed transitions. Match the destination's
+  view to distinguish a clicked link from a successful navigation.
+- Start/completion stay once per flow session in the same browser tab. Anonymous
+  direct visits receive an analytics-only session ID retained in sessionStorage;
+  this ID grants no backend write access. If storage is unavailable, correlation
+  and deduplication only survive in memory until a reload.
+- Start again revisits the same flow session, clears selected answers and is
+  separately identifiable by its CTA ID. It does not create a new backend attempt.
+- View/lifecycle events reset click-only fields to empty values/null. Click events
+  reset unused option fields, avoiding stale GTM data-model values.
+
+Future GTM setup: use explicit custom-event triggers for the lifecycle, step view,
+step click and existing checkout events; map only required parameters to the chosen
+GA4 property. Register screen/choice/CTA parameters needed for reporting. Do not
+register the high-cardinality flow session ID as a GA4 custom dimension. Do not
+forward both lifecycle aliases and canonical events into the same report as two
+separate completions. GA4/Meta container publication and reports remain out of scope.
 
 ### Promotion flow completed
 Event name: promotion_flow_completed

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getPromotionInsight } from "./insightData";
 import SolvingScreen from "./SolvingScreen";
 import styles from "./promotionFlow.module.css";
+import { trackPromotionFlowStepClicked } from "@/lib/analytics/events";
 
 export default function InsightScreen({ barrierId, barrierLabel, choiceId }: { barrierId: string; barrierLabel: string; choiceId?: string }) {
   const content = getPromotionInsight(barrierId, choiceId);
@@ -20,7 +21,7 @@ export default function InsightScreen({ barrierId, barrierLabel, choiceId }: { b
         <div className={`${styles.changesPanel} ${styles.barrierDetails}`}>
           <h2 className={styles.insightGapTitle}>The gap</h2>
           <div className={styles.insightGap}><p>{content.gap[0]}</p><i className={styles.tealRule} aria-hidden="true" /><p><strong>{content.gap[1]}</strong></p></div>
-          <Link href={`/promotion-flow?barrier=${encodeURIComponent(barrierId)}&stage=offer&choice=${encodeURIComponent(choiceId!)}`}>Show me what I need to do <span aria-hidden="true">→</span></Link>
+          <Link href={`/promotion-flow?barrier=${encodeURIComponent(barrierId)}&stage=offer&choice=${encodeURIComponent(choiceId!)}`} onClick={() => trackPromotionFlowStepClicked({ screenId: "insight", nextScreenId: "offer", ctaId: "continue_to_offer", ctaLabel: "Show me what I need to do", barrierId, choiceId })}>Show me what I need to do <span aria-hidden="true">→</span></Link>
         </div>
       </section>
     </div>

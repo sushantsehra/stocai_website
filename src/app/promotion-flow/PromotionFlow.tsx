@@ -13,7 +13,7 @@ import styles from "./promotionFlow.module.css";
 import SolvingScreen from "./SolvingScreen";
 import InsightScreen from "./InsightScreen";
 import CheckoutScreen from "./CheckoutScreen";
-import { trackCtaClick } from "@/lib/analytics/events";
+import { trackCtaClick, trackPromotionFlowStepClicked } from "@/lib/analytics/events";
 import { approaches, getPromotionInsight } from "./insightData";
 
 const evidence: ReadonlyArray<{ id: string; code: string; title: string; quote: string; stamp?: string }> = [
@@ -117,8 +117,10 @@ export default function PromotionFlow({ initialBarrierId, initialStage, initialC
   const choice = barrier && step >= 3 ? (approach ? { id: approach.id, label: approach.title } : honestChoices.find((item) => item.id === initialChoice)) : undefined;
   // Preserve the backend/GTM step contract; Screen 03 is the new consequence screen.
   const currentStep = step === 0 ? "prime_suspect" : step === 1 ? "truth" : step === 2 ? "principle" : step === 5 ? "consequence" : step === 3 ? (initialStage === "consequence" && initialChoice && Object.hasOwn(consequenceContent, initialChoice) ? "consequence" : "honest_choice") : "offer";
+  const screenId = currentStep === "principle" ? "solving" : step === 5 ? "insight" : step === 6 ? "checkout" : currentStep;
   const { completeFlow } = usePromotionFlowTracking({
     currentStep,
+    screenId,
     answers: {
       barrier_id: barrier?.id || "",
       barrier_label: barrier ? offerPresentation[barrier.id].label : "",
@@ -161,12 +163,16 @@ export default function PromotionFlow({ initialBarrierId, initialStage, initialC
         </section>
         <div className={styles.offerActions}>
           <Link href={`/promotion-flow?barrier=${encodeURIComponent(barrier.id)}&stage=checkout${choice ? `&choice=${encodeURIComponent(choice.id)}` : ""}`} onClick={() => {
+            trackPromotionFlowStepClicked({ screenId: "offer", nextScreenId: "checkout", ctaId: "proceed_to_checkout", ctaLabel: "Get access to Promotion Architect", barrierId: barrier.id, choiceId: choice?.id });
             trackCtaClick({ location: "promotion_flow_complete", label: "Get access to Promotion Architect", source: readStoDiagnosticContext().source || "promotion_flow" });
             void completeFlow();
           }}>Get access to Promotion Architect <ArrowRight aria-hidden="true" /></Link>
           <p><span aria-hidden="true">✓</span>100% money-back guarantee</p>
         </div>
-        <button type="button" onClick={() => { setStep(0); setBarrier(null); }}>Start again</button>
+        <button type="button" onClick={() => {
+          trackPromotionFlowStepClicked({ screenId: "offer", nextScreenId: "prime_suspect", ctaId: "start_again", ctaLabel: "Start again", barrierId: barrier.id, choiceId: choice?.id });
+          setStep(0); setBarrier(null);
+        }}>Start again</button>
       </div>
       <div className={styles.offerVisual}>
         <div className={styles.offerHalo}>
@@ -203,7 +209,7 @@ function PrimeSuspectScreen() {
     <header className={styles.caseHeading}><h1>What’s your <em>prime suspect?</em></h1><p>Which explanation do you keep returning to when you ask, “Why am I still stuck?”</p></header>
     <fieldset className={styles.evidenceBoard}><legend>{caseFileName ? `${caseFileName}’s case file` : "Your case file"}</legend><p className={styles.boardInstruction}>Tap one piece of evidence</p>
       <div className={styles.evidenceGrid}>{evidence.map((item) => <article key={item.id} className={styles.evidenceCard}>
-        <Link href={`/promotion-flow?barrier=${encodeURIComponent(item.id)}`} className={styles.cardHitArea} aria-label={`Choose ${item.title}`} />
+        <Link href={`/promotion-flow?barrier=${encodeURIComponent(item.id)}`} className={styles.cardHitArea} aria-label={`Choose ${item.title}`} onClick={() => trackPromotionFlowStepClicked({ screenId: "prime_suspect", nextScreenId: "truth", ctaId: "select_barrier", ctaLabel: item.title, barrierId: item.id, optionId: item.id, optionLabel: item.title })} />
         <span className={styles.tape} aria-hidden="true" />
         {item.stamp && <span className={`${styles.stamp} ${item.id === "biased-manager" ? styles.redStamp : ""}`}>{item.stamp}</span>}
         <span className={styles.evidenceCode}>Evidence {item.code}</span><strong>{item.title}</strong><q>{item.quote}</q>
@@ -231,7 +237,7 @@ function TruthScreen({ barrier }: { barrier: Barrier }) {
             <Image className={styles.playbookMascot} src="/images/promotion-architect/panda-portrait.png" alt="" width={1254} height={1254} sizes="80px" />
             <div><strong>From the Promotion Architect playbook</strong><em>Distilled from 25 years inside corporate life.</em></div>
           </div>
-          <Link href={`/promotion-flow?barrier=${encodeURIComponent(barrier.id)}&stage=principle`}>Show me what I’m missing <span aria-hidden="true">→</span></Link>
+          <Link href={`/promotion-flow?barrier=${encodeURIComponent(barrier.id)}&stage=principle`} onClick={() => trackPromotionFlowStepClicked({ screenId: "truth", nextScreenId: "solving", ctaId: "continue_to_solving", ctaLabel: "Show me what I’m missing", barrierId: barrier.id })}>Show me what I’m missing <span aria-hidden="true">→</span></Link>
         </div>
       </section>
     </div>
@@ -245,11 +251,11 @@ function HonestPartScreen({ barrier, choice }: { barrier: Barrier; choice?: stri
     {!consequence ? <section className={styles.honestChoice}>
       <div className={styles.honestCopy}><h1>Right now, what are you <em>relying on to move your</em> career forward?</h1><p>Choose the one closest to the truth.</p></div>
       <HonestArtwork src="/promotion-flow/honest-choice.png" alt="Corporate professional holding his next move" caption={["What he is holding", "His next move"]} />
-      <div className={styles.honestOptions}>{honestChoices.map((item, index) => <Link key={item.id} href={`${base}&stage=consequence&choice=${item.id}`}><small>0{index + 1}</small><strong>{item.label}</strong><i /></Link>)}</div>
+      <div className={styles.honestOptions}>{honestChoices.map((item, index) => <Link key={item.id} href={`${base}&stage=consequence&choice=${item.id}`} onClick={() => trackPromotionFlowStepClicked({ screenId: "honest_choice", nextScreenId: "consequence", ctaId: "select_legacy_choice", ctaLabel: item.label, barrierId: barrier.id, choiceId: item.id, optionId: item.id, optionLabel: item.label })}><small>0{index + 1}</small><strong>{item.label}</strong><i /></Link>)}</div>
     </section> : <section className={styles.honestConsequence}>
       <div className={`${styles.honestCopy} ${styles.consequenceIntro}`}><p className={styles.honestEyebrow}><i />You chose <strong>{consequence.chosen}</strong></p><h1>{consequence.title}</h1></div>
       <HonestArtwork src={consequence.image} alt={consequence.chosen} caption={consequence.caption} />
-      <div className={`${styles.honestCopy} ${styles.consequenceDetails}`}><div className={styles.unchanged}>Look at what stays unchanged</div><p>{consequence.body}</p><blockquote>Your next move needs to<br />belong to you.</blockquote><Link className={styles.showMe} href={`${base}&stage=offer&choice=${encodeURIComponent(choice!)}`}>Show me how <span>→</span></Link></div>
+      <div className={`${styles.honestCopy} ${styles.consequenceDetails}`}><div className={styles.unchanged}>Look at what stays unchanged</div><p>{consequence.body}</p><blockquote>Your next move needs to<br />belong to you.</blockquote><Link className={styles.showMe} href={`${base}&stage=offer&choice=${encodeURIComponent(choice!)}`} onClick={() => trackPromotionFlowStepClicked({ screenId: "consequence", nextScreenId: "offer", ctaId: "continue_to_offer", ctaLabel: "Show me how", barrierId: barrier.id, choiceId: choice })}>Show me how <span>→</span></Link></div>
     </section>}
   </div></main>;
 }

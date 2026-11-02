@@ -5,31 +5,33 @@ import { trackPromotionJourneyEvent } from "@/lib/analytics/events";
 import { readStoDiagnosticContext, type StoDiagnosticContext } from "@/lib/diagnosticContext";
 import { retryFlowProgress, saveFlowProgress, trackFlowOnce, type FlowSession, type FlowSnapshot } from "@/lib/promotionFlowProgress";
 import env from "@/utils/env";
+import { getPromotionFlowSessionId, promotionFlowScreenProperties, type PromotionFlowScreenId } from "@/lib/analytics/promotionFlowContext";
 
-export function usePromotionFlowTracking({ currentStep, answers }: FlowSnapshot) {
-  const [context, setContext] = useState<StoDiagnosticContext | null>(null);
-  const viewedSteps = useRef(new Set<string>());
+export function usePromotionFlowTracking({ currentStep, answers, screenId }: FlowSnapshot & { screenId: PromotionFlowScreenId }) {
+  const [context, setContext] = useState<(StoDiagnosticContext & { analyticsSessionId: string }) | null>(null);
+  const lastViewed = useRef<string | null>(null);
   const answersKey = JSON.stringify(answers);
   const snapshot = useMemo<FlowSnapshot>(() => ({ currentStep, answers: JSON.parse(answersKey) }), [currentStep, answersKey]);
   const session = useMemo<FlowSession | null>(() => context?.promotionFlowSessionId && context.promotionFlowToken ? {
     id: context.promotionFlowSessionId, token: context.promotionFlowToken, source: context.source || "promotion_flow",
   } : null, [context]);
 
-  useEffect(() => { setContext(readStoDiagnosticContext()); }, []);
+  useEffect(() => { setContext({ ...readStoDiagnosticContext(), analyticsSessionId: getPromotionFlowSessionId() }); }, []);
 
   const eventProperties = useMemo(() => ({
+    ...promotionFlowScreenProperties(screenId),
     source: context?.source || "promotion_flow",
     current_step: currentStep,
-    promotion_flow_session_id: context?.promotionFlowSessionId,
+    promotion_flow_session_id: context?.analyticsSessionId,
     ...snapshot.answers,
-  }), [context, currentStep, snapshot]);
+  }), [context, currentStep, screenId, snapshot]);
 
   useEffect(() => {
     if (!context) return;
-    trackFlowOnce(context.promotionFlowSessionId || "anonymous", "started", () => trackPromotionJourneyEvent("promotion_flow_started", eventProperties));
+    trackFlowOnce(context.analyticsSessionId, "started", () => trackPromotionJourneyEvent("promotion_flow_started", eventProperties));
     const viewedKey = JSON.stringify(eventProperties);
-    if (!viewedSteps.current.has(viewedKey)) {
-      viewedSteps.current.add(viewedKey);
+    if (lastViewed.current !== viewedKey) {
+      lastViewed.current = viewedKey;
       trackPromotionJourneyEvent("promotion_flow_step_viewed", eventProperties);
     }
   }, [context, eventProperties]);
@@ -49,8 +51,9 @@ export function usePromotionFlowTracking({ currentStep, answers }: FlowSnapshot)
   return {
     completeFlow: useCallback(() => {
       const latest = context || readStoDiagnosticContext();
-      trackFlowOnce(latest.promotionFlowSessionId || "anonymous", "completedEvent", () => trackPromotionJourneyEvent("promotion_flow_completed", {
-        ...eventProperties, source: latest.source || eventProperties.source, promotion_flow_session_id: latest.promotionFlowSessionId,
+      const analyticsSessionId = getPromotionFlowSessionId();
+      trackFlowOnce(analyticsSessionId, "completedEvent", () => trackPromotionJourneyEvent("promotion_flow_completed", {
+        ...eventProperties, source: latest.source || eventProperties.source, promotion_flow_session_id: analyticsSessionId,
       }));
       const activeSession = session || (latest.promotionFlowSessionId && latest.promotionFlowToken ? {
         id: latest.promotionFlowSessionId, token: latest.promotionFlowToken, source: latest.source || "promotion_flow",

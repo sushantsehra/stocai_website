@@ -27,6 +27,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe("checkout event and payment wiring", () => {
   it.each([["promotion-architect", "modal"], ["default", "modal"], ["promotion-architect", "page"]] as const)("preserves payment events and payloads for %s / %s checkout", async (variant, presentation) => {
     const close = vi.fn();
+    if (presentation === "page") window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
     render(presentation === "page" ? <CheckoutScreen /> : <PromotableHeroWaitlist isOpen onClose={close} initialName="Test" initialEmail="test@example.test" initialPhone="9000000000" initialReferenceId="test-reference" checkoutVariant={variant} source="promotion_story_sticky_cta" />);
     if (presentation === "page") {
       expect(screen.queryByRole("dialog")).toBeNull();
@@ -40,9 +41,7 @@ describe("checkout event and payment wiring", () => {
       expect(dataLayer.find((item) => item.event === "checkout_modal_opened")).toMatchObject({ modal_kind: "promotion_checkout_page" });
     }
     if (variant === "promotion-architect") {
-      const details = screen.getByText("Show me what it costs").closest("details")!;
-      details.open = true;
-      fireEvent(details, new Event("toggle"));
+      fireEvent.click(screen.getByText("Show me what it costs"));
       await waitFor(() => expect(dataLayer.some((item) => item.event === "checkout_pricing_viewed")).toBe(true));
       expect(dataLayer.find((item) => item.event === "cta_clicked")).toMatchObject({
         cta_location: "checkout_pricing",
@@ -61,6 +60,10 @@ describe("checkout event and payment wiring", () => {
       expect(openRazorpayCheckout).not.toHaveBeenCalled();
     }
     fireEvent.click(screen.getByRole("button", { name: variant === "promotion-architect" ? /Get access/ : /Proceed to Secure Checkout/ }));
+    if (presentation === "page") {
+      expect(dataLayer.filter((item) => item.event === "promotion_flow_step_clicked").map((item) => item.cta_id)).toEqual(["reveal_pricing", "get_access"]);
+      expect(dataLayer.find((item) => item.event === "promotion_flow_step_clicked" && item.cta_id === "get_access")).toMatchObject({ screen_id: "checkout", step_number: 6, next_screen_id: "programme_payment", promotion_flow_session_id: "test-flow" });
+    }
     await waitFor(() => expect(dataLayer.some((item) => item.event === "Purchase")).toBe(true));
     for (const event of ["checkout_modal_opened", "InitiateCheckout", "razorpay_checkout_opened", "Purchase"]) {
       const payload = dataLayer.find((item) => item.event === event)!;
@@ -86,7 +89,27 @@ describe("checkout event and payment wiring", () => {
     expect(openRazorpayCheckout).not.toHaveBeenCalled();
   });
 
+  it("records pricing activations synchronously, even when rapid toggles coalesce", () => {
+    window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
+    render(<CheckoutScreen />);
+    const summary = screen.getByText("Show me what it costs");
+    fireEvent.click(summary);
+    expect(dataLayer.filter((item) => item.event === "promotion_flow_step_clicked").map((item) => item.cta_id)).toEqual(["reveal_pricing"]);
+    fireEvent.click(summary);
+    expect(dataLayer.filter((item) => item.event === "promotion_flow_step_clicked").map((item) => item.cta_id)).toEqual(["reveal_pricing", "hide_pricing"]);
+  });
+
+  it("does not report a diagnostic click for programmatic pricing disclosure", async () => {
+    window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
+    render(<CheckoutScreen />);
+    const details = screen.getByText("Show me what it costs").closest("details")!;
+    details.open = true;
+    await waitFor(() => expect(dataLayer.some((item) => item.event === "checkout_pricing_viewed")).toBe(true));
+    expect(dataLayer.filter((item) => item.event === "promotion_flow_step_clicked")).toEqual([]);
+  });
+
   it("charges the separate callback order and confirms the 24-hour response without granting access", async () => {
+    window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
     vi.mocked(fetch).mockImplementation(async (url) => ({
       ok: true,
       json: async () => String(url).endsWith("/payments/razorpay/callback/order")
@@ -102,6 +125,7 @@ describe("checkout event and payment wiring", () => {
     render(<PromotableHeroWaitlist isOpen onClose={() => {}} initialName="Test" initialEmail="test@example.test" initialPhone="9000000000" initialReferenceId="test-reference" checkoutVariant="promotion-architect" source="promotion_flow" />);
 
     fireEvent.click(screen.getByRole("button", { name: /Speak with us first/ }));
+    expect(dataLayer.find((item) => item.event === "promotion_flow_step_clicked")).toMatchObject({ screen_id: "checkout", cta_id: "request_callback", next_screen_id: "callback_payment", promotion_flow_session_id: "test-flow", choice_id: "good-work" });
 
     expect(await screen.findByText("Callback requested")).toBeTruthy();
     expect(screen.getByText("Payment confirmed. Expect a callback within the next 24 hours.")).toBeTruthy();

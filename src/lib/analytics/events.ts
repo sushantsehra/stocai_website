@@ -1,5 +1,5 @@
 import posthog from "posthog-js";
-import { readStoDiagnosticContext } from "../diagnosticContext";
+import { getPromotionFlowSessionId, promotionFlowClickProperties, type PromotionFlowClick } from "./promotionFlowContext";
 
 const capturePostHog = (event: string, payload: Record<string, unknown>) => {
   try { posthog.capture(event, payload); }
@@ -8,10 +8,9 @@ const capturePostHog = (event: string, payload: Record<string, unknown>) => {
 
 const flowContext = () => {
   if (typeof window === "undefined" || window.location.pathname !== "/promotion-flow") return {};
-  const context = readStoDiagnosticContext();
   const params = new URLSearchParams(window.location.search);
   return {
-    promotion_flow_session_id: context.promotionFlowSessionId,
+    promotion_flow_session_id: getPromotionFlowSessionId(),
     barrier_id: params.get("barrier") || undefined,
     choice_id: params.get("choice") || undefined,
   };
@@ -36,11 +35,13 @@ export const trackCtaClick = (input: { location: string; label: string; source?:
   };
   capturePostHog("cta_clicked", payload);
   pushToDataLayer({ event: "cta_clicked", ...payload });
+  if (input.location === "checkout_page") trackPromotionFlowCheckoutAction("get_access", input.label);
+  if (input.location === "checkout_callback") trackPromotionFlowCheckoutAction("request_callback", input.label);
 };
 
 const pageContext = () => ({
   page_path: typeof window !== "undefined" ? window.location.pathname : "",
-  page_url: typeof window !== "undefined" ? window.location.href : "",
+  page_url: typeof window !== "undefined" ? `${window.location.origin}${window.location.pathname}` : "",
 });
 
 const promotionJourneyPayload = (properties: Record<string, unknown> = {}) => ({
@@ -65,6 +66,24 @@ export const trackPromotionJourneyEvent = (
   pushToDataLayer({ event, ...payload });
   const metaEvent = metaPromotionEventAliases[event];
   if (metaEvent) pushToDataLayer({ event: metaEvent, ...payload });
+};
+
+export const trackPromotionFlowStepClicked = (input: PromotionFlowClick) => {
+  trackPromotionJourneyEvent("promotion_flow_step_clicked", promotionFlowClickProperties(input));
+};
+
+export const trackPromotionFlowCheckoutAction = (
+  ctaId: "get_access" | "request_callback" | "reveal_pricing" | "hide_pricing",
+  label: string,
+) => {
+  if (typeof window === "undefined" || window.location.pathname !== "/promotion-flow"
+      || new URLSearchParams(window.location.search).get("stage") !== "checkout") return;
+  const context = flowContext();
+  trackPromotionFlowStepClicked({
+    screenId: "checkout",
+    nextScreenId: ctaId === "get_access" ? "programme_payment" : ctaId === "request_callback" ? "callback_payment" : "checkout",
+    ctaId, ctaLabel: label, barrierId: context.barrier_id, choiceId: context.choice_id,
+  });
 };
 
 export const trackCheckoutModalOpened = (input: {

@@ -14,10 +14,11 @@ type Props = {
   callbackConfirmed: boolean;
   onCallbackClick: () => void;
   onPricingRevealed?: () => void;
+  onPricingClick?: (opening: boolean) => void;
   presentation?: "modal" | "page";
 };
 
-export default function PromotionArchitectCheckout({ amount, loading, message, onSubmit, onCheckoutClick, callbackLoading, callbackMessage, callbackConfirmed, onCallbackClick, onPricingRevealed, presentation = "modal" }: Props) {
+export default function PromotionArchitectCheckout({ amount, loading, message, onSubmit, onCheckoutClick, callbackLoading, callbackMessage, callbackConfirmed, onCallbackClick, onPricingRevealed, onPricingClick, presentation = "modal" }: Props) {
   const Heading = presentation === "page" ? "h1" : "h2";
   const price = amount ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount / 100) : "At checkout";
 
@@ -49,7 +50,7 @@ export default function PromotionArchitectCheckout({ amount, loading, message, o
       <ul>{["30–60–90 Day Promotion Plan", "Stakeholder + Personal Brand Tools", "AI Coach + Accountability Partner", "Coach on Call"].map((item) => <li key={item}><CheckCircle2 aria-hidden="true" /><strong>{item}</strong></li>)}</ul>
     </section>
     <details className={styles.pricing} onToggle={(event) => { if (event.currentTarget.open) onPricingRevealed?.(); }}>
-      <summary>Show me what it costs <ChevronDown aria-hidden="true" /></summary>
+      <summary onClick={(event) => onPricingClick?.(!event.currentTarget.parentElement?.hasAttribute("open"))}>Show me what it costs <ChevronDown aria-hidden="true" /></summary>
       <div className={styles.priceContent}>
         <h3>What does it take to get promoted?</h3>
         <dl className={styles.comparison}>
