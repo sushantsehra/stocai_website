@@ -35,10 +35,10 @@ export default function PromotionSequence() {
       </div>
       <div className={styles.teamPhoto}>
         <Image
-          src="/promotion-team-offsite.png"
+          src="/promotion-team-offsite.webp"
           alt="Ten colleagues together at a corporate team offsite."
           width={1672}
-          height={939}
+          height={941}
           sizes="(max-width: 900px) calc(100vw - 32px), 1030px"
           priority
         />
