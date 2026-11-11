@@ -44,17 +44,17 @@ describe("Promotion Architect checkout", () => {
     expect(html).toContain("Unable to start payment.");
   });
 
-  it("offers a separate 51 rupee callback without promising access", () => {
+  it("keeps the callback option hidden", () => {
     const html = render(180000);
-    expect(html).toContain("Speak with us first");
-    expect(html).toContain("₹51");
-    expect(html).toContain("within 24 hours");
+    expect(html).not.toContain("Speak with us first");
+    expect(html).not.toContain("₹51");
+    expect(html).not.toContain("within 24 hours");
   });
 
-  it("shows the confirmed callback state after payment", () => {
+  it("keeps the confirmed callback state hidden", () => {
     const html = render(180000, false, "", true);
-    expect(html).toContain("Callback requested");
-    expect(html).toContain("Payment confirmed. Expect a callback within the next 24 hours.");
+    expect(html).not.toContain("Callback requested");
+    expect(html).not.toContain("Payment confirmed. Expect a callback within the next 24 hours.");
     expect(html).not.toContain("Speak with us first — ₹51");
   });
 });
