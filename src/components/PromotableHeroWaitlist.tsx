@@ -365,7 +365,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   };
 
   const handleCallbackPayment = async () => {
-    trackCtaClick({ location: "checkout_callback", label: "Speak with us first — ₹51", source });
+    trackCtaClick({ location: "checkout_callback", label: "Book a diagnostic call — ₹51", source });
     setCallbackStatus("loading");
     setCallbackMessage("");
     try {

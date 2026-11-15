@@ -33,7 +33,7 @@ describe("checkout event and payment wiring", () => {
       expect(screen.queryByRole("dialog")).toBeNull();
       expect(screen.queryByRole("button", { name: "Close waitlist" })).toBeNull();
       expect(document.body.style.overflow).not.toBe("hidden");
-      expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Promotion Architect");
+      expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Build the case for your next promotion.");
       expect(screen.queryByRole("link", { name: "Your promotion direction" })).toBeNull();
       fireEvent.keyDown(document, { key: "Escape" });
       expect(close).not.toHaveBeenCalled();
@@ -108,11 +108,18 @@ describe("checkout event and payment wiring", () => {
     expect(dataLayer.filter((item) => item.event === "promotion_flow_step_clicked")).toEqual([]);
   });
 
-  it("keeps the separate callback option hidden", () => {
+  it("starts the ₹51 callback-payment path without navigating to the legacy diagnostic", async () => {
     window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
     render(<PromotableHeroWaitlist isOpen onClose={() => {}} initialName="Test" initialEmail="test@example.test" initialPhone="9000000000" initialReferenceId="test-reference" checkoutVariant="promotion-architect" source="promotion_flow" />);
 
-    expect(screen.queryByRole("button", { name: /Speak with us first/ })).toBeNull();
-    expect(screen.queryByText("Want to speak with us first?")).toBeNull();
+    expect(screen.queryByRole("link", { name: /Book a diagnostic call/ })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /Book a diagnostic call — ₹51/ }));
+
+    await screen.findByText("Payment confirmed. Expect a callback within the next 24 hours.");
+    const callbackRequest = vi.mocked(fetch).mock.calls.find(([url]) => String(url).endsWith("/payments/razorpay/callback/order"));
+    expect(JSON.parse(callbackRequest![1]!.body as string)).toMatchObject({ reference_id: "test-reference", phone: "+919000000000" });
+    expect(dataLayer.find((item) => item.event === "callback_payment_started")).toMatchObject({ source: "promotion_flow" });
+    expect(dataLayer.find((item) => item.event === "callback_payment_confirmed")).toMatchObject({ source: "promotion_flow" });
+    expect(openRazorpayCheckout).toHaveBeenCalledTimes(1);
   });
 });
