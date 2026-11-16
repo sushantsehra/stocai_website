@@ -12,8 +12,9 @@ import {
 } from "lucide-react";
 import posthog from "posthog-js";
 import env from "@/utils/env";
-import useSubscriptionAmount, {
+import {
   formatSubscriptionAmount,
+  usePaymentSettings,
 } from "@/hooks/useSubscriptionAmount";
 import {
   trackCheckoutModalOpened,
@@ -25,6 +26,7 @@ import {
   trackPromotionFlowCheckoutAction,
 } from "@/lib/analytics/events";
 import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
+import useCallbackPayment from "@/hooks/useCallbackPayment";
 import PromotionArchitectCheckout from "./PromotionArchitectCheckout";
 
 const pushToDataLayer = (payload: Record<string, unknown>) => {
@@ -87,9 +89,20 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
-  const [callbackStatus, setCallbackStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [callbackMessage, setCallbackMessage] = useState("");
-  const subscriptionAmount = useSubscriptionAmount(isOpen);
+  const { subscriptionAmount, callbackAmount } = usePaymentSettings(isOpen);
+  const {
+    status: callbackStatus,
+    message: callbackMessage,
+    reset: resetCallbackPayment,
+    startPayment: startCallbackPayment,
+  } = useCallbackPayment({
+    referenceId: initialReferenceId,
+    name,
+    email,
+    phone,
+    countryCode,
+    source,
+  });
   const [consultationStatus, setConsultationStatus] = useState<"idle" | "loading" | "error">("idle");
   const [consultationMessage, setConsultationMessage] = useState("");
   const [consultationAmount, setConsultationAmount] = useState<number | null>(null);
@@ -112,10 +125,9 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
       setSelectedSlotStart("");
       setSelectedConsultationDate("");
       setShowConsultationSlots(false);
-      setCallbackStatus("idle");
-      setCallbackMessage("");
+      resetCallbackPayment();
     }
-  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode]);
+  }, [isOpen, initialName, initialEmail, initialPhone, initialCountryCode, resetCallbackPayment]);
 
   useEffect(() => {
     if (!isOpen || presentation === "page") return;
@@ -364,47 +376,6 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     }
   };
 
-  const handleCallbackPayment = async () => {
-    trackCtaClick({ location: "checkout_callback", label: "Speak with us first — ₹51", source });
-    setCallbackStatus("loading");
-    setCallbackMessage("");
-    try {
-      if (!initialReferenceId || !name.trim() || !email.trim() || !phone.trim()) {
-        throw new Error("Missing contact details. Please submit the request access form first.");
-      }
-      const response = await fetch(`${env.apiUrl}/payments/razorpay/callback/order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          reference_id: initialReferenceId,
-          name,
-          email,
-          phone: `${countryCode}${phone}`,
-        }),
-      });
-      const order = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(order?.detail || "Unable to start callback payment.");
-      if (order?.state === "callback_requested") {
-        setCallbackStatus("success");
-        setCallbackMessage(order.message || "Your callback is confirmed. Expect our call within 24 hours.");
-        return;
-      }
-      if (!order?.order_id || !order?.key_id) throw new Error("Payment order was not returned.");
-      posthog.capture("callback_payment_started", { source, amount: order.amount, currency: order.currency });
-      pushToDataLayer({ event: "callback_payment_started", source, amount: order.amount, currency: order.currency });
-      const verification = await openRazorpayCheckout(order, env.apiUrl);
-      setCallbackStatus("success");
-      setCallbackMessage(
-        String(verification.message || "Payment confirmed. Expect a callback within the next 24 hours."),
-      );
-      posthog.capture("callback_payment_confirmed", { source, amount: order.amount, currency: order.currency });
-      pushToDataLayer({ event: "callback_payment_confirmed", source, amount: order.amount, currency: order.currency });
-    } catch (error) {
-      setCallbackStatus("error");
-      setCallbackMessage(error instanceof Error ? error.message : "Unable to request a callback.");
-    }
-  };
-
   const handleBookConsultation = async () => {
     if (!showConsultationSlots) {
       setShowConsultationSlots(true);
@@ -460,6 +431,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   if (presentation === "page") return <PromotionArchitectCheckout
     presentation="page"
     amount={subscriptionAmount}
+    callbackAmount={callbackAmount}
     loading={status === "loading"}
     message={message}
     onSubmit={handleSubmit}
@@ -467,10 +439,10 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     callbackLoading={callbackStatus === "loading"}
     callbackMessage={callbackMessage}
     callbackConfirmed={callbackStatus === "success"}
-    onCallbackClick={handleCallbackPayment}
-    onPricingClick={(opening) => trackPromotionFlowCheckoutAction(opening ? "reveal_pricing" : "hide_pricing", "Show me what it costs")}
+    onCallbackClick={startCallbackPayment}
+    onPricingClick={(opening) => trackPromotionFlowCheckoutAction(opening ? "reveal_pricing" : "hide_pricing", "Invest in my next promotion")}
     onPricingRevealed={() => {
-      trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source });
+      trackCtaClick({ location: "checkout_pricing", label: "Invest in my next promotion", source });
       trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });
     }}
   />;
@@ -505,6 +477,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
         <div className="h-full max-h-screen overflow-y-auto sm:max-h-[calc(100vh-32px)]">
           {checkoutVariant === "promotion-architect" ? <PromotionArchitectCheckout
             amount={subscriptionAmount}
+            callbackAmount={callbackAmount}
             loading={status === "loading"}
             message={message}
             onSubmit={handleSubmit}
@@ -512,9 +485,9 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             callbackLoading={callbackStatus === "loading"}
             callbackMessage={callbackMessage}
             callbackConfirmed={callbackStatus === "success"}
-            onCallbackClick={handleCallbackPayment}
+            onCallbackClick={startCallbackPayment}
             onPricingRevealed={() => {
-              trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source });
+              trackCtaClick({ location: "checkout_pricing", label: "Invest in my next promotion", source });
               trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });
             }}
           /> : <>

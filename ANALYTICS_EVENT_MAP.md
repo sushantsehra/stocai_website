@@ -343,6 +343,31 @@ still emits the existing pricing-view event but does not invent a diagnostic cli
 Existing `cta_clicked`, pricing, checkout, callback and payment events remain.
 Saved contact details and update tokens are not attached to diagnostic events.
 
+### Paid diagnostic callback
+
+The callback checkout uses dedicated events so it cannot trigger the subscription-only
+Meta `Purchase` tag. Every event is emitted to PostHog and the GTM data layer with
+`purchase_type=callback`, source and promotion-flow context when available. Monetary
+`value` is expressed in major currency units; the backend order remains the source of
+truth for amount and currency.
+
+- `callback_payment_started`: a valid backend order was created or reused. Includes
+  checkout/order IDs, value, currency and a stable event ID.
+- `callback_checkout_opened`: the Razorpay checkout was requested for that order.
+- `callback_checkout_dismissed`: the customer closed Razorpay without a verified payment.
+- `callback_payment_confirmation_pending`: the provider accepted the interaction but the
+  application cannot yet determine completion; this is not counted as failure or purchase.
+- `callback_payment_failed`: validation, order creation, checkout or verification failed;
+  includes normalized `failure_stage` and `error_code`, never raw contact data.
+- `callback_payment_succeeded`: server verification returned `callback_requested`.
+  Includes `transaction_id=order_id`, a stable PostHog `$insert_id`, and a GA4 ecommerce
+  object for the `diagnostic_callback` service item.
+
+GTM must map `callback_payment_started` to GA4 `begin_checkout` and
+`callback_payment_succeeded` to GA4 `purchase`. It must not map either callback event to
+the existing Meta Purchase tag. GA4 uses `transaction_id` and PostHog uses `$insert_id`
+to deduplicate verified recovery/re-entry events.
+
 Count semantics:
 
 - A rendered screen visit produces one view; unrelated rerenders/StrictMode effect

@@ -2,7 +2,7 @@
 .flowHeader nav { padding:4px 0 }
 .flowHeader nav>a:first-child img { width:145px }
 .checkoutPage { min-height:calc(100svh - 81px); background:#faf8f2; font-family:var(--font-jakarta),sans-serif }
-.checkoutPageShell { width:min(1440px,100%); margin:0 auto }
+.checkoutPageShell { width:100%; margin:0 auto }
 
 .casePage { min-height:100svh; color:#07101b; background:repeating-linear-gradient(to bottom,#fff 0,#fff 77px,#e8eef5 78px,#fff 79px); font-family:var(--font-jakarta),sans-serif; padding:28px 24px 42px }
 .caseShell { width:min(1120px,100%); margin:0 auto }
