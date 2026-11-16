@@ -5,6 +5,7 @@ import styles from "./promotionArchitectCheckout.module.css";
 
 type Props = {
   amount: number | null;
+  callbackAmount: number | null;
   loading: boolean;
   message: string;
   onSubmit: (event: FormEvent) => void;
@@ -34,6 +35,7 @@ const coachingSteps = [
 
 export default function PromotionArchitectCheckout({
   amount,
+  callbackAmount,
   loading,
   message,
   onSubmit,
@@ -50,6 +52,12 @@ export default function PromotionArchitectCheckout({
   const price = amount
     ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount / 100)
     : "At checkout";
+  const pricingCtaLabel = amount
+    ? `Invest ${price} in my next promotion`
+    : "Invest in my next promotion";
+  const callbackPrice = callbackAmount
+    ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(callbackAmount / 100)
+    : null;
 
   return (
     <div className={`${styles.checkout} ${presentation === "page" ? styles.page : ""}`}>
@@ -90,7 +98,7 @@ export default function PromotionArchitectCheckout({
             </section>
 
             <details className={styles.pricing} onToggle={(event) => { if (event.currentTarget.open) onPricingRevealed?.(); }}>
-              <summary onClick={(event) => onPricingClick?.(!event.currentTarget.parentElement?.hasAttribute("open"))}>Show me what it costs <ArrowRight aria-hidden="true" /></summary>
+              <summary onClick={(event) => onPricingClick?.(!event.currentTarget.parentElement?.hasAttribute("open"))}>{pricingCtaLabel} <ArrowRight aria-hidden="true" /></summary>
               <div className={styles.priceContent}>
                 <h3>What does it take to get promoted?</h3>
                 <dl className={styles.comparison}>
@@ -145,7 +153,7 @@ export default function PromotionArchitectCheckout({
               <>
                 {callbackMessage && <p className={styles.error} role="status" aria-live="polite">{callbackMessage}</p>}
                 <button type="button" className={styles.diagnosticCta} disabled={callbackLoading || loading} onClick={onCallbackClick}>
-                  {callbackLoading ? "Opening payment..." : <>Book a diagnostic call — ₹51 <ArrowRight aria-hidden="true" /></>}
+                  {callbackLoading ? "Opening payment..." : <>Book a diagnostic call{callbackPrice ? ` — ${callbackPrice}` : ""} <ArrowRight aria-hidden="true" /></>}
                 </button>
               </>
             )}

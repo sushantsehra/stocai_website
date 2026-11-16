@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import posthog from "posthog-js";
-import { trackCtaClick, trackInitiateCheckout, trackPromotionFlowCheckoutAction, trackPromotionFlowStepClicked, trackPromotionJourneyEvent, trackPurchase, trackRazorpayCheckoutOpened } from "./events";
+import { trackCallbackPaymentStarted, trackCallbackPaymentSucceeded, trackCtaClick, trackInitiateCheckout, trackPromotionFlowCheckoutAction, trackPromotionFlowStepClicked, trackPromotionJourneyEvent, trackPurchase, trackRazorpayCheckoutOpened } from "./events";
 
 vi.mock("posthog-js", () => ({ default: { capture: vi.fn() } }));
 const layer = () => (window as unknown as { dataLayer: Record<string, unknown>[] }).dataLayer;
@@ -42,7 +42,7 @@ describe("GTM / PostHog parity", () => {
 
   it("sends each funnel event to both sinks with safe correlation and identical properties", () => {
     trackPromotionJourneyEvent("promotion_flow_step_viewed", { current_step: "consequence" });
-    trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs", source: "promotion_story_sticky_cta" });
+    trackCtaClick({ location: "checkout_pricing", label: "Invest in my next promotion", source: "promotion_story_sticky_cta" });
     trackInitiateCheckout({ checkoutId: "attempt", orderId: "order", value: 180000, source: "promotion_story_sticky_cta" });
     trackRazorpayCheckoutOpened({ checkoutId: "attempt", orderId: "order", value: 180000, source: "promotion_story_sticky_cta" });
     for (const [event, properties] of vi.mocked(posthog.capture).mock.calls) {
@@ -98,9 +98,9 @@ describe("GTM / PostHog parity", () => {
 
   it("separates pricing clicks from disclosure observations", () => {
     window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
-    trackPromotionFlowCheckoutAction("reveal_pricing", "Show me what it costs");
-    trackCtaClick({ location: "checkout_pricing", label: "Show me what it costs" });
-    trackPromotionFlowCheckoutAction("hide_pricing", "Show me what it costs");
+    trackPromotionFlowCheckoutAction("reveal_pricing", "Invest in my next promotion");
+    trackCtaClick({ location: "checkout_pricing", label: "Invest in my next promotion" });
+    trackPromotionFlowCheckoutAction("hide_pricing", "Invest in my next promotion");
     expect(layer().map((item) => item.event)).toEqual(["promotion_flow_step_clicked", "cta_clicked", "promotion_flow_step_clicked"]);
     expect(layer()[0]).toMatchObject({ screen_id: "checkout", step_number: 6, cta_id: "reveal_pricing", next_screen_id: "checkout" });
     expect(layer()[2]).toMatchObject({ cta_id: "hide_pricing", next_screen_id: "checkout" });
@@ -136,5 +136,19 @@ describe("GTM / PostHog parity", () => {
     const fallback = trackPurchase({ orderId: "order-2", source: "promotion_flow" });
     await vi.advanceTimersByTimeAsync(1200);
     await expect(fallback).resolves.toBeUndefined();
+  });
+
+  it("emits callback commerce events to both sinks without using the Meta-triggering Purchase event", () => {
+    window.history.replaceState({}, "", "/promotion-flow?barrier=invisible-work&stage=checkout&choice=good-work");
+    const input = { checkoutId: "attempt-1", orderId: "order-1", value: 9900, currency: "INR", source: "promotion_flow" };
+    trackCallbackPaymentStarted(input);
+    trackCallbackPaymentSucceeded({ ...input, paymentId: "payment-1" });
+
+    expect(layer().map((item) => item.event)).toEqual(["callback_payment_started", "callback_payment_succeeded"]);
+    expect(layer()[0]).toMatchObject({ value: 99, purchase_type: "callback", event_id: "callback_payment_started:order-1" });
+    expect(layer()[1]).toMatchObject({ value: 99, transaction_id: "order-1", event_id: "callback_payment_succeeded:order-1" });
+    expect(layer()[1].ecommerce).toMatchObject({ transaction_id: "order-1", value: 99, currency: "INR" });
+    expect(posthog.capture).toHaveBeenCalledWith("callback_payment_succeeded", expect.objectContaining({ $insert_id: "callback_payment_succeeded:order-1", promotion_flow_session_id: "flow-1" }));
+    expect(layer().some((item) => item.event === "Purchase")).toBe(false);
   });
 });

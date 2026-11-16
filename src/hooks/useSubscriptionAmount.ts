@@ -10,8 +10,25 @@ export const formatSubscriptionAmount = (amountInPaise: number) =>
     maximumFractionDigits: 0,
   }).format(amountInPaise / 100);
 
-const useSubscriptionAmount = (enabled = true) => {
-  const [subscriptionAmount, setSubscriptionAmount] = useState<number | null>(null);
+export type PaymentSettings = {
+  subscriptionAmount: number | null;
+  callbackAmount: number | null;
+  currency: string;
+};
+
+const emptySettings: PaymentSettings = {
+  subscriptionAmount: null,
+  callbackAmount: null,
+  currency: "INR",
+};
+
+const positiveAmount = (value: unknown) => {
+  const amount = Number(value);
+  return Number.isFinite(amount) && amount > 0 ? amount : null;
+};
+
+export const usePaymentSettings = (enabled = true) => {
+  const [settings, setSettings] = useState<PaymentSettings>(emptySettings);
 
   useEffect(() => {
     if (!enabled) return;
@@ -20,16 +37,24 @@ const useSubscriptionAmount = (enabled = true) => {
     fetch(`${env.apiUrl}/payments/razorpay/settings`, { signal: controller.signal })
       .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
       .then(({ ok, data }) => {
-        const amount = Number(data?.subscription_amount);
-        setSubscriptionAmount(ok && Number.isFinite(amount) && amount > 0 ? amount : null);
+        setSettings(ok ? {
+          subscriptionAmount: positiveAmount(data?.subscription_amount),
+          callbackAmount: positiveAmount(data?.callback_amount),
+          currency: typeof data?.currency === "string" && data.currency ? data.currency : "INR",
+        } : emptySettings);
       })
       .catch((reason) => {
-        if (reason?.name !== "AbortError") setSubscriptionAmount(null);
+        if (reason?.name !== "AbortError") setSettings(emptySettings);
       });
 
     return () => controller.abort();
   }, [enabled]);
 
+  return settings;
+};
+
+const useSubscriptionAmount = (enabled = true) => {
+  const { subscriptionAmount } = usePaymentSettings(enabled);
   return subscriptionAmount;
 };
 

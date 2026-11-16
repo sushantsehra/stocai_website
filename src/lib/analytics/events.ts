@@ -154,6 +154,85 @@ export const trackRazorpayCheckoutOpened = (input: {
   pushToDataLayer({ event: "razorpay_checkout_opened", ...payload });
 };
 
+type CallbackPaymentInput = {
+  checkoutId?: string;
+  orderId?: string;
+  paymentId?: string;
+  value?: number;
+  currency?: string;
+  source: string;
+};
+
+const callbackItem = (value?: number) => ({
+  item_id: "diagnostic_callback",
+  item_name: "Diagnostic callback",
+  item_category: "service",
+  price: typeof value === "number" ? value / 100 : undefined,
+  quantity: 1,
+});
+
+const trackCallbackEvent = (
+  event: string,
+  input: CallbackPaymentInput,
+  properties: Record<string, unknown> = {},
+  includeCommerce = false,
+) => {
+  const identity = input.orderId || input.checkoutId;
+  const eventId = identity ? `${event}:${identity}` : undefined;
+  const value = typeof input.value === "number" ? input.value / 100 : undefined;
+  const currency = input.currency || "INR";
+  const payload = promotionJourneyPayload({
+    purchase_type: "callback",
+    checkout_id: input.checkoutId,
+    order_id: input.orderId,
+    payment_id: input.paymentId,
+    value,
+    currency,
+    source: input.source,
+    event_id: eventId,
+    ...(eventId ? { $insert_id: eventId } : {}),
+    ...properties,
+  });
+  capturePostHog(event, payload);
+  pushToDataLayer({
+    event,
+    ...payload,
+    ...(includeCommerce ? {
+      ecommerce: {
+        ...("transaction_id" in properties ? { transaction_id: properties.transaction_id } : {}),
+        value,
+        currency,
+        items: [callbackItem(input.value)],
+      },
+    } : {}),
+  });
+};
+
+export const trackCallbackPaymentStarted = (input: CallbackPaymentInput & { orderId: string }) =>
+  trackCallbackEvent("callback_payment_started", input, {}, true);
+
+export const trackCallbackCheckoutOpened = (input: CallbackPaymentInput & { orderId: string }) =>
+  trackCallbackEvent("callback_checkout_opened", input);
+
+export const trackCallbackPaymentSucceeded = (input: CallbackPaymentInput & { orderId: string }) =>
+  trackCallbackEvent("callback_payment_succeeded", input, { transaction_id: input.orderId }, true);
+
+export const trackCallbackCheckoutDismissed = (input: CallbackPaymentInput) =>
+  trackCallbackEvent("callback_checkout_dismissed", input, { error_code: "dismissed", failure_stage: "checkout" });
+
+export const trackCallbackPaymentConfirmationPending = (input: CallbackPaymentInput) =>
+  trackCallbackEvent("callback_payment_confirmation_pending", input, {
+    error_code: "confirmation_pending",
+    failure_stage: "verification",
+  });
+
+export const trackCallbackPaymentFailed = (
+  input: CallbackPaymentInput & { errorCode: string; failureStage: "validation" | "order_creation" | "checkout" | "verification" },
+) => trackCallbackEvent("callback_payment_failed", input, {
+  error_code: input.errorCode,
+  failure_stage: input.failureStage,
+});
+
 export const trackPurchase = (input: {
   orderId: string;
   paymentId?: string;
