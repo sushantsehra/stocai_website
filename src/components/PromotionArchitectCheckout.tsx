@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { Children, type FormEvent, type ReactNode } from "react";
 import Image from "next/image";
 import { ArrowDown, ArrowRight, Check, CheckCircle2, Compass, MessageCircle, Phone, Search, ShieldCheck } from "lucide-react";
 import styles from "./promotionArchitectCheckout.module.css";
@@ -32,6 +32,12 @@ const coachingSteps = [
   { title: "Understand your promotion barriers", description: "We identify what may be holding you back and where to focus.", Icon: Search },
   { title: "Find the right coaching approach", description: "We recommend coaching to help you build your 30–60–90-day promotion plan.", Icon: Compass },
 ];
+
+function CallbackFirstOfferGrid({ children }: { children: ReactNode }) {
+  const [diyCard, callbackCard] = Children.toArray(children);
+
+  return <div className={styles.offerGrid}>{callbackCard}{diyCard}</div>;
+}
 
 export default function PromotionArchitectCheckout({
   amount,
@@ -72,11 +78,11 @@ export default function PromotionArchitectCheckout({
         </header>
 
         <nav className={styles.offerNav} aria-label="Offer choices">
-          <a href="#digital-diy">Digital DIY <ArrowDown aria-hidden="true" /></a>
           <a href="#human-coaching">1:1 Coaching <ArrowDown aria-hidden="true" /></a>
+          <a href="#digital-diy">Digital DIY <ArrowDown aria-hidden="true" /></a>
         </nav>
 
-        <div className={styles.offerGrid}>
+        <CallbackFirstOfferGrid>
           <article className={`${styles.card} ${styles.digitalCard}`} id="digital-diy">
             <div className={styles.digitalIntro}>
               <div className={styles.cardCopy}>
@@ -158,7 +164,7 @@ export default function PromotionArchitectCheckout({
               </>
             )}
           </article>
-        </div>
+        </CallbackFirstOfferGrid>
       </section>
     </div>
   );
