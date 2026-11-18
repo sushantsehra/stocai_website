@@ -32,6 +32,13 @@ describe("Promotion Architect checkout", () => {
     expect(html).toContain("Book a diagnostic call — ₹499");
   });
 
+  it("presents the callback path before the DIY path", () => {
+    const html = render(499900);
+
+    expect(html.indexOf("1:1 Coaching")).toBeLessThan(html.indexOf("Digital DIY"));
+    expect(html.indexOf("Get clarity.")).toBeLessThan(html.indexOf("Build your plan."));
+  });
+
   it("places the supplied price and access action inside a closed pricing reveal", () => {
     const html = render(499900);
     expect(html).toContain("₹4,999");
