@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 import { readStoDiagnosticContext } from "@/lib/diagnosticContext";
 import { barriers, type Barrier } from "./flowData";
 import PromotionStoryUserNav from "../promotion-story/PromotionStoryUserNav";
+import PromotionJourneyHomeLink from "../promotion-story/PromotionJourneyHomeLink";
 import storyStyles from "../promotion-story/page.module.css";
 import { usePromotionFlowTracking } from "./usePromotionFlowTracking";
 import styles from "./promotionFlow.module.css";
@@ -149,7 +150,14 @@ export default function PromotionFlow({ initialBarrierId, initialStage, initialC
   return <PromotionFlowFrame><main className={styles.offerPage}>
     {step === 4 && barrier && offer && <section className={styles.offerHero}>
       <div className={styles.offerCopy}>
-        <div className={styles.offerPicked}><span><i />You picked</span><strong>{offer.label}</strong></div>
+        <div className={styles.offerPicked} role="group" aria-label="Current promotion result">
+          <span><i />You picked</span>
+          <strong>{offer.label}</strong>
+          <button className={styles.offerRestart} type="button" onClick={() => {
+            trackPromotionFlowStepClicked({ screenId: "offer", nextScreenId: "prime_suspect", ctaId: "start_again", ctaLabel: "Start again", barrierId: barrier.id, choiceId: choice?.id });
+            setStep(0); setBarrier(null);
+          }}><RotateCcw aria-hidden="true" />Start again</button>
+        </div>
         <h1>{offer.headline}</h1>
         <p className={styles.offerIntroduction}>{offer.introduction}</p>
         <section className={styles.offerDirection} aria-label="Your promotion direction">
@@ -169,10 +177,6 @@ export default function PromotionFlow({ initialBarrierId, initialStage, initialC
           }}>Get access to Promotion Architect <ArrowRight aria-hidden="true" /></Link>
           <p><span aria-hidden="true">✓</span>100% money-back guarantee</p>
         </div>
-        <button type="button" onClick={() => {
-          trackPromotionFlowStepClicked({ screenId: "offer", nextScreenId: "prime_suspect", ctaId: "start_again", ctaLabel: "Start again", barrierId: barrier.id, choiceId: choice?.id });
-          setStep(0); setBarrier(null);
-        }}>Start again</button>
       </div>
       <div className={styles.offerVisual}>
         <div className={styles.offerHalo}>
@@ -188,9 +192,7 @@ function PromotionFlowFrame({ children }: { children: React.ReactNode }) {
   return <>
     <header className={styles.flowHeader}>
       <nav className={storyStyles.nav} aria-label="Main navigation">
-        <Link href="/" className={storyStyles.brand} aria-label="Better Corporate Life home">
-          <Image src="/bcl-logo.png" alt="Better Corporate Life" width={210} height={105} priority />
-        </Link>
+        <PromotionJourneyHomeLink className={storyStyles.brand} />
         <PromotionStoryUserNav />
       </nav>
     </header>

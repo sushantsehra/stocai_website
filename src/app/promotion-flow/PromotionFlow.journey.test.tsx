@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import React from "react";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import PromotionFlow from "./PromotionFlow";
 import { barriers } from "./flowData";
@@ -29,6 +29,13 @@ beforeEach(() => {
 afterEach(() => { document.removeEventListener("click", preventDocumentNavigation); cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe("all promotion journeys", () => {
+  it.each([undefined, "checkout"])("returns the %s screen to the promotion story from the home logo", async (stage) => {
+    render(<PromotionFlow initialBarrierId="biased-manager" initialStage={stage} initialChoice="manager" />);
+
+    expect(screen.getByRole("link", { name: "Better Corporate Life home" }).getAttribute("href")).toBe("/promotion-story");
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+  });
+
   it.each(barriers.flatMap((barrier) => approaches.map((approach) => ({ barrier, approach }))))("saves $barrier.id / $approach.id through completion", async ({ barrier, approach }) => {
     const view = render(<PromotionFlow key="truth" initialBarrierId={barrier.id} />);
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
@@ -113,7 +120,9 @@ describe("all promotion journeys", () => {
   it("tracks Start again and records the revisited first screen", async () => {
     render(<PromotionFlow initialBarrierId="zero-network" initialStage="offer" initialChoice="good-work" />);
     await waitFor(() => expect(fetch).toHaveBeenCalled());
-    fireEvent.click(screen.getByRole("button", { name: "Start again" }));
+    const currentResult = screen.getByRole("group", { name: "Current promotion result" });
+    const startAgain = within(currentResult).getByRole("button", { name: "Start again" });
+    fireEvent.click(startAgain);
     expect(capture).toHaveBeenCalledWith("promotion_flow_step_clicked", expect.objectContaining({ screen_id: "offer", cta_id: "start_again", next_screen_id: "prime_suspect" }));
     await waitFor(() => expect(capture).toHaveBeenCalledWith("promotion_flow_step_viewed", expect.objectContaining({ screen_id: "prime_suspect", barrier_id: "", choice_id: "" })));
   });
