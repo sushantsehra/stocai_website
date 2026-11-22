@@ -19,6 +19,7 @@ import ExitIntentPopup from "./ExitIntentPopup";
 import OfferJourney from "./OfferJourney";
 import PromotionStoryAccessFlow from "./PromotionStoryAccessFlow";
 import PromotionStoryUserNav from "./PromotionStoryUserNav";
+import PromotionJourneyHomeLink from "./PromotionJourneyHomeLink";
 import Footer from "@/components/FooterSection";
 import TestimonialTrustStrip from "@/components/TestimonialTrustStrip";
 import styles from "./page.module.css";
@@ -85,9 +86,7 @@ export default function PromotionStoryPage() {
       <main className={styles.page}>
       <section className={styles.hero}>
         <nav className={styles.nav} aria-label="Main navigation">
-          <Link href="/" className={styles.brand} aria-label="Better Corporate Life home">
-            <Image src="/bcl-logo.png" alt="Better Corporate Life" width={210} height={105} priority />
-          </Link>
+          <PromotionJourneyHomeLink className={styles.brand} />
           <PromotionStoryUserNav />
         </nav>
 
