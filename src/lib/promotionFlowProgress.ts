@@ -2,13 +2,37 @@ import { trackPromotionJourneyEvent } from "./analytics/events";
 
 export type PromotionFlowStep = "prime_suspect" | "truth" | "principle" | "honest_choice" | "consequence" | "offer";
 export type FlowSnapshot = { currentStep: PromotionFlowStep; answers: Record<string, string> };
-export type FlowSession = { id: string; token: string; source: string };
-type Update = { status: "in_progress" | "completed"; current_step: PromotionFlowStep; answers_json: Record<string, string> };
+export type FlowSession = { id: string; token: string; source: string; revisionId: string };
+type Update = { revision_id: string; status: "in_progress" | "completed"; current_step: PromotionFlowStep; answers_json: Record<string, string> };
 type StoredProgress = { started?: boolean; completedEvent?: boolean; pending?: Update; saved?: Update };
 
 const queues = new Map<string, Promise<void>>();
 const memory = new Map<string, StoredProgress>();
 const key = (id: string) => `promotionFlowProgress:${id}`;
+const revisionKey = (id: string) => `promotionFlowRevision:${id}`;
+const memoryRevisionIds = new Map<string, string>();
+
+export function getOrCreateFlowRevisionId(sessionId: string): string {
+  try {
+    const stored = window.sessionStorage.getItem(revisionKey(sessionId));
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    window.sessionStorage.setItem(revisionKey(sessionId), id);
+    return id;
+  } catch {
+    const stored = memoryRevisionIds.get(sessionId);
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    memoryRevisionIds.set(sessionId, id);
+    return id;
+  }
+}
+
+export function endFlowVisit(sessionId: string) {
+  memoryRevisionIds.delete(sessionId);
+  try { window.sessionStorage.removeItem(revisionKey(sessionId)); }
+  catch { /* The next document visit will use a fresh in-memory id. */ }
+}
 
 function read(id: string): StoredProgress {
   try { return JSON.parse(window.sessionStorage.getItem(key(id)) || "null") || memory.get(id) || {}; }
@@ -59,7 +83,8 @@ async function send(apiUrl: string, session: FlowSession, payload: Update) {
 export function saveFlowProgress(apiUrl: string, session: FlowSession, snapshot: FlowSnapshot, status: Update["status"] = "in_progress") {
   const state = read(session.id);
   const payload: Update = {
-    status: state.pending?.status === "completed" || state.saved?.status === "completed" ? "completed" : status,
+    revision_id: session.revisionId,
+    status,
     current_step: snapshot.currentStep,
     answers_json: snapshot.answers,
   };
@@ -76,5 +101,5 @@ export function saveFlowProgress(apiUrl: string, session: FlowSession, snapshot:
 export function retryFlowProgress(apiUrl: string, session: FlowSession) {
   const pending = read(session.id).pending;
   if (!pending) return Promise.resolve();
-  return saveFlowProgress(apiUrl, session, { currentStep: pending.current_step, answers: pending.answers_json }, pending.status);
+  return saveFlowProgress(apiUrl, { ...session, revisionId: pending.revision_id }, { currentStep: pending.current_step, answers: pending.answers_json }, pending.status);
 }

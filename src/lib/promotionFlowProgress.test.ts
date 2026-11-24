@@ -4,7 +4,7 @@ import { retryFlowProgress, saveFlowProgress } from "./promotionFlowProgress";
 const capture = vi.hoisted(() => vi.fn());
 vi.mock("./analytics/events", () => ({ trackPromotionJourneyEvent: capture }));
 const snapshot = { currentStep: "consequence" as const, answers: { barrier_id: "zero-network", choice_id: "waiting" } };
-const newSession = () => ({ id: crypto.randomUUID(), token: "never-log-this", source: "promotion_flow" });
+const newSession = () => ({ id: crypto.randomUUID(), token: "never-log-this", source: "promotion_flow", revisionId: crypto.randomUUID() });
 
 beforeEach(() => { sessionStorage.clear(); capture.mockClear(); vi.stubGlobal("fetch", vi.fn()); });
 afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
@@ -34,12 +34,14 @@ describe("progress persistence", () => {
     expect(JSON.parse(sessionStorage.getItem(`promotionFlowProgress:${session.id}`)!).pending).toBeUndefined();
   });
 
-  it("preserves completion on revisit and clears stale answers for a new branch", async () => {
+  it("keeps one revision id while the same visit changes branch", async () => {
     const session = newSession();
     vi.mocked(fetch).mockResolvedValue({ ok: true } as Response);
     await saveFlowProgress("http://localhost", session, snapshot, "completed");
     await saveFlowProgress("http://localhost", session, { currentStep: "truth", answers: { barrier_id: "biased-manager", choice_id: "", choice_label: "" } });
     const payload = JSON.parse(vi.mocked(fetch).mock.calls[1][1]!.body as string);
-    expect(payload).toMatchObject({ status: "completed", current_step: "truth", answers_json: { barrier_id: "biased-manager", choice_id: "" } });
+    expect(payload).toMatchObject({ status: "in_progress", current_step: "truth", answers_json: { barrier_id: "biased-manager", choice_id: "" } });
+    expect(payload.revision_id).toBe(session.revisionId);
+    expect(JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string).revision_id).toBe(session.revisionId);
   });
 });

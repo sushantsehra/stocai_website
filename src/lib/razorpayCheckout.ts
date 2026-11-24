@@ -78,6 +78,28 @@ export async function recoverRazorpayCheckout(
   );
 }
 
+export async function dismissRazorpayCheckout(
+  order: RazorpayOrder,
+  apiBaseUrl: string,
+) {
+  if (!order.checkout_attempt_id || !order.checkout_recovery_token) return null;
+
+  const response = await fetch(`${apiBaseUrl}/payments/razorpay/checkout/dismiss`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      checkout_attempt_id: order.checkout_attempt_id,
+      recovery_token: order.checkout_recovery_token,
+    }),
+    keepalive: true,
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data?.detail || "Checkout dismissal could not be recorded.");
+  }
+  return data;
+}
+
 export async function openRazorpayCheckout(order: RazorpayOrder, apiBaseUrl: string) {
   await loadCheckout();
   return new Promise<Record<string, unknown>>((resolve, reject) => {
@@ -108,12 +130,17 @@ export async function openRazorpayCheckout(order: RazorpayOrder, apiBaseUrl: str
         }
       },
       modal: {
-        ondismiss: () => reject(
-          new RazorpayCheckoutError(
+        ondismiss: async () => {
+          try {
+            await dismissRazorpayCheckout(order, apiBaseUrl);
+          } catch (error) {
+            console.error("Failed to record Razorpay checkout dismissal", error);
+          }
+          reject(new RazorpayCheckoutError(
             "dismissed",
             "Checkout was closed. You can continue whenever you're ready.",
-          ),
-        ),
+          ));
+        },
       },
       retry: { enabled: true },
     }).open();
