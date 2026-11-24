@@ -9,7 +9,6 @@ const render = (amount: number | null, loading = false, message = "", callbackCo
     callbackAmount={callbackAmount}
     loading={loading}
     message={message}
-    onSubmit={() => {}}
     onCheckoutClick={() => {}}
     callbackLoading={callbackLoading}
     callbackMessage={callbackConfirmed ? "Payment confirmed. Expect a callback within the next 24 hours." : ""}
@@ -19,43 +18,43 @@ const render = (amount: number | null, loading = false, message = "", callbackCo
 );
 
 describe("Promotion Architect checkout", () => {
-  it("presents the digital and human support paths from the offer design", () => {
+  it("presents the approved digital and strategist offer copy", () => {
     const html = render(499900);
     expect(html).toContain("Build the case for your next promotion.");
-    expect(html).toContain("Build your plan.");
-    expect(html).toContain("At your pace.");
-    expect(html).toContain("1:1 human coaching");
-    expect(html).toContain("Get clarity.");
-    expect(html).toContain("Plan your next move.");
-    expect(html).toContain("Schedule a diagnostic call");
+    expect(html).toContain("Start with a plan. Choose how you want to move forward.");
+    expect(html).toContain("Digital programme");
+    expect(html).toContain("Talk to a strategist");
+    expect(html).toContain("A structured roadmap to turn your promotion goals into actionable priorities.");
+    expect(html).toContain("Stakeholder Management, Personal Branding &amp; Networking Tools");
+    expect(html).toContain("1:1 strategist conversation");
+    expect(html).toContain("What we’ll cover");
     expect(html).not.toContain('href="/diagnostic"');
-    expect(html).toContain("Book a diagnostic call — ₹499");
+    expect(html).toContain("First call for just ₹499");
   });
 
-  it("presents the callback path before the DIY path", () => {
+  it("presents the DIY path before the callback path", () => {
     const html = render(499900);
 
-    expect(html.indexOf("1:1 Coaching")).toBeLessThan(html.indexOf("Digital DIY"));
-    expect(html.indexOf("Get clarity.")).toBeLessThan(html.indexOf("Build your plan."));
+    expect(html.indexOf("Digital programme")).toBeLessThan(html.indexOf("Talk to a strategist"));
+    expect(html.indexOf("DIGITAL PROGRAMME")).toBeLessThan(html.indexOf("TALK TO A STRATEGIST"));
   });
 
-  it("places the supplied price and access action inside a closed pricing reveal", () => {
+  it("shows the supplied price and a direct programme checkout action", () => {
     const html = render(499900);
     expect(html).toContain("₹4,999");
-    expect(html).toContain("₹15,000");
-    expect(html).toContain("Invest ₹4,999 in my next promotion");
-    expect(html).not.toMatch(/<details[^>]*\sopen/);
-    expect(html).toMatch(/<form[^>]*>[\s\S]*<button type="submit"/);
-    expect(html).toContain("One-time payment");
+    expect(html).not.toContain("Invest ₹4,999 in my next promotion");
+    expect(html).not.toContain("₹15,000");
+    expect(html).not.toContain("<details");
+    expect(html).toMatch(/<button type="button"[^>]*>GET PROMOTION ARCHITECT/);
+    expect(html).toContain("GET PROMOTION ARCHITECT");
+    expect(html).toContain("One-time payment. Instant programme access.");
     expect(html).toContain("No questions asked.");
   });
 
   it("uses the payment service price instead of hardcoding a different charge", () => {
     expect(render(250000)).toContain("₹2,500");
-    expect(render(250000)).toContain("Invest ₹2,500 in my next promotion");
     expect(render(250000)).not.toContain("₹4,999");
     expect(render(null)).toContain("At checkout");
-    expect(render(null)).toContain("Invest in my next promotion");
     expect(render(null)).not.toContain("₹4,999");
   });
 
@@ -69,9 +68,9 @@ describe("Promotion Architect checkout", () => {
 
   it("shows the callback payment action and its loading state", () => {
     const html = render(499900, false, "", false, false, 9900);
-    expect(html).toContain("Book a diagnostic call — ₹99");
-    expect(html).not.toContain("Book a diagnostic call — ₹499");
-    expect(render(499900, false, "", false, false, null)).toContain("Book a diagnostic call");
+    expect(html).toContain("First call for just ₹99");
+    expect(html).not.toContain("First call for just ₹499");
+    expect(render(499900, false, "", false, false, null)).toContain("Book your diagnostic call");
     expect(render(499900, false, "", false, true)).toContain("Opening payment...");
   });
 
@@ -79,6 +78,6 @@ describe("Promotion Architect checkout", () => {
     const html = render(499900, false, "", true);
     expect(html).toContain("Callback requested");
     expect(html).toContain("Payment confirmed. Expect a callback within the next 24 hours.");
-    expect(html).not.toContain("Book a diagnostic call — ₹499");
+    expect(html).not.toContain("First call for just ₹499");
   });
 });
