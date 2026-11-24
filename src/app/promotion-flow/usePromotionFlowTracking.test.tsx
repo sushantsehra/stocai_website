@@ -30,6 +30,21 @@ describe("promotion flow tracking lifecycle", () => {
     renderHook(() => usePromotionFlowTracking({ screenId: "solving", currentStep: "principle", answers: { barrier_id: "office-politics" } }));
     await waitFor(() => expect(capture.mock.calls.filter(([event]) => event === "promotion_flow_step_viewed")).toHaveLength(2));
     expect(capture.mock.calls.filter(([event]) => event === "promotion_flow_started")).toHaveLength(1);
+    const revisionIds = vi.mocked(fetch).mock.calls.map(([, options]) => JSON.parse(options!.body as string).revision_id);
+    expect(new Set(revisionIds).size).toBe(1);
+  });
+
+  it("starts a new revision only after the user leaves the document", async () => {
+    const first = renderHook(() => usePromotionFlowTracking({ screenId: "offer", currentStep: "offer", answers: {} }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    const firstRevisionId = JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string).revision_id;
+    window.dispatchEvent(new PageTransitionEvent("pagehide"));
+    first.unmount();
+
+    renderHook(() => usePromotionFlowTracking({ screenId: "prime_suspect", currentStep: "prime_suspect", answers: {} }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+    const secondRevisionId = JSON.parse(vi.mocked(fetch).mock.calls[1][1]!.body as string).revision_id;
+    expect(secondRevisionId).not.toBe(firstRevisionId);
   });
 
   it("does not PATCH again on an unrelated render with identical answers", async () => {
@@ -49,6 +64,24 @@ describe("promotion flow tracking lifecycle", () => {
     await act(async () => { finish({ ok: true }); });
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
     expect(JSON.parse(vi.mocked(fetch).mock.calls[1][1]!.body as string).status).toBe("completed");
+  });
+
+  it("does not classify the checkout remount as an in-progress revisit", async () => {
+    const hook = renderHook(() => usePromotionFlowTracking({
+      screenId: "checkout",
+      currentStep: "offer",
+      answers: { barrier_id: "office-politics", choice_id: "good-work" },
+    }));
+
+    await waitFor(() => expect(capture).toHaveBeenCalledWith(
+      "promotion_flow_step_viewed",
+      expect.objectContaining({ screen_id: "checkout" }),
+    ));
+    expect(fetch).not.toHaveBeenCalled();
+
+    act(() => { void hook.result.current.completeFlow(); });
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    expect(JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string).status).toBe("completed");
   });
 
   it("counts a return visit but not an identical rerender, including StrictMode effect replay", async () => {

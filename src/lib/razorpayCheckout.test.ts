@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import {
+  openRazorpayCheckout,
   recoverRazorpayCheckout,
 } from "./razorpayCheckout";
 
@@ -11,6 +12,54 @@ afterEach(() => {
 
 
 describe("Razorpay checkout recovery", () => {
+  test("persists checkout dismissal before reporting it to the caller", async () => {
+    type CheckoutOptions = {
+      modal: { ondismiss: () => Promise<void> };
+    };
+    let checkoutOptions: CheckoutOptions | null = null;
+    vi.stubGlobal("window", { setTimeout });
+    window.Razorpay = class {
+      constructor(options: Record<string, unknown>) {
+        checkoutOptions = options as unknown as CheckoutOptions;
+      }
+      open() {}
+    };
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ state: "cancelled" }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const checkout = openRazorpayCheckout(
+      {
+        key_id: "rzp_test_key",
+        order_id: "order_123",
+        amount: 499900,
+        currency: "INR",
+        checkout_attempt_id: "attempt-123",
+        checkout_recovery_token: "recovery-token",
+      },
+      "http://localhost:8000",
+    );
+    const rejectedCheckout = expect(checkout).rejects.toMatchObject({ code: "dismissed" });
+    await Promise.resolve();
+    if (!checkoutOptions) throw new Error("Razorpay options were not captured");
+    await checkoutOptions.modal.ondismiss();
+
+    await rejectedCheckout;
+    expect(fetchMock).toHaveBeenCalledWith(
+      "http://localhost:8000/payments/razorpay/checkout/dismiss",
+      expect.objectContaining({
+        method: "POST",
+        keepalive: true,
+        body: JSON.stringify({
+          checkout_attempt_id: "attempt-123",
+          recovery_token: "recovery-token",
+        }),
+      }),
+    );
+  });
+
   test("recovers activation after webhook-first payment completion", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,

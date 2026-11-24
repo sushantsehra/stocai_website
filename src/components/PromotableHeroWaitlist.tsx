@@ -23,7 +23,6 @@ import {
   trackPurchase,
   trackRazorpayCheckoutOpened,
   trackPromotionJourneyEvent,
-  trackPromotionFlowCheckoutAction,
 } from "@/lib/analytics/events";
 import { openRazorpayCheckout } from "@/lib/razorpayCheckout";
 import useCallbackPayment from "@/hooks/useCallbackPayment";
@@ -269,8 +268,8 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     };
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     setStatus("loading");
     setMessage("");
 
@@ -434,15 +433,12 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     callbackAmount={callbackAmount}
     loading={status === "loading"}
     message={message}
-    onSubmit={handleSubmit}
-    onCheckoutClick={() => trackCtaClick({ location: "checkout_page", label: "Get access", source })}
+    onCheckoutClick={() => { trackCtaClick({ location: "checkout_page", label: "GET PROMOTION ARCHITECT", source }); void handleSubmit(); }}
     callbackLoading={callbackStatus === "loading"}
     callbackMessage={callbackMessage}
     callbackConfirmed={callbackStatus === "success"}
     onCallbackClick={startCallbackPayment}
-    onPricingClick={(opening) => trackPromotionFlowCheckoutAction(opening ? "reveal_pricing" : "hide_pricing", "Invest in my next promotion")}
-    onPricingRevealed={() => {
-      trackCtaClick({ location: "checkout_pricing", label: "Invest in my next promotion", source });
+    onPricingViewed={() => {
       trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });
     }}
   />;
@@ -480,14 +476,12 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
             callbackAmount={callbackAmount}
             loading={status === "loading"}
             message={message}
-            onSubmit={handleSubmit}
-            onCheckoutClick={() => trackCtaClick({ location: "checkout_modal", label: "Get access", source })}
+            onCheckoutClick={() => { trackCtaClick({ location: "checkout_modal", label: "GET PROMOTION ARCHITECT", source }); void handleSubmit(); }}
             callbackLoading={callbackStatus === "loading"}
             callbackMessage={callbackMessage}
             callbackConfirmed={callbackStatus === "success"}
             onCallbackClick={startCallbackPayment}
-            onPricingRevealed={() => {
-              trackCtaClick({ location: "checkout_pricing", label: "Invest in my next promotion", source });
+            onPricingViewed={() => {
               trackPromotionJourneyEvent("checkout_pricing_viewed", { source, value: subscriptionAmount ? subscriptionAmount / 100 : undefined, currency: "INR" });
             }}
           /> : <>
