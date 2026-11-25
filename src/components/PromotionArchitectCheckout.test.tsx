@@ -3,10 +3,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import PromotionArchitectCheckout from "./PromotionArchitectCheckout";
 
-const render = (amount: number | null, loading = false, message = "", callbackConfirmed = false, callbackLoading = false, callbackAmount: number | null = 49900) => renderToStaticMarkup(
+const render = (amount: number | null, loading = false, message = "", callbackConfirmed = false, callbackLoading = false, callbackAmount: number | null = 49900, personalCoachingAmount: number | null = 2199900) => renderToStaticMarkup(
   <PromotionArchitectCheckout
     amount={amount}
     callbackAmount={callbackAmount}
+    personalCoachingAmount={personalCoachingAmount}
     loading={loading}
     message={message}
     onCheckoutClick={() => {}}
@@ -18,16 +19,25 @@ const render = (amount: number | null, loading = false, message = "", callbackCo
 );
 
 describe("Promotion Architect checkout", () => {
-  it("presents the approved digital and strategist offer copy", () => {
+  it("presents the approved digital and 1:1 personal coaching offer copy", () => {
     const html = render(499900);
     expect(html).toContain("Build the case for your next promotion.");
     expect(html).toContain("Start with a plan. Choose how you want to move forward.");
     expect(html).toContain("Digital programme");
-    expect(html).toContain("Talk to a strategist");
+    expect(html).toContain("1:1 personal coaching");
     expect(html).toContain("A structured roadmap to turn your promotion goals into actionable priorities.");
     expect(html).toContain("Stakeholder Management, Personal Branding &amp; Networking Tools");
-    expect(html).toContain("1:1 strategist conversation");
-    expect(html).toContain("What we’ll cover");
+    expect(html).toContain("1:1 PERSONAL COACHING");
+    expect(html).toContain("Personalised coaching");
+    expect(html).toContain("Build your promotion strategy with your personal Corporate Strategist.");
+    expect(html).toContain("Your personal promotion dossier");
+    expect(html).not.toContain("Perfect your brand and promotion pitch");
+    expect(html).toContain("Complete 1:1 personal coaching programme");
+    expect(html).toContain("7 personalised coaching sessions");
+    expect(html).toContain("₹21,999");
+    expect(html).toContain("₹50,000");
+    expect(html).not.toContain("TALK TO A STRATEGIST");
+    expect(html).not.toContain("1:1 strategist conversation");
     expect(html).not.toContain('href="/diagnostic"');
     expect(html).toContain("First call for just ₹499");
   });
@@ -35,8 +45,8 @@ describe("Promotion Architect checkout", () => {
   it("presents the DIY path before the callback path", () => {
     const html = render(499900);
 
-    expect(html.indexOf("Digital programme")).toBeLessThan(html.indexOf("Talk to a strategist"));
-    expect(html.indexOf("DIGITAL PROGRAMME")).toBeLessThan(html.indexOf("TALK TO A STRATEGIST"));
+    expect(html.indexOf("Digital programme")).toBeLessThan(html.indexOf("1:1 personal coaching"));
+    expect(html.indexOf("DIGITAL PROGRAMME")).toBeLessThan(html.indexOf("1:1 PERSONAL COACHING"));
   });
 
   it("shows the supplied price and a direct programme checkout action", () => {
