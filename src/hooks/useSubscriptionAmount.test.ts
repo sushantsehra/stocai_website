@@ -8,10 +8,10 @@ vi.mock("@/utils/env", () => ({ default: { apiUrl: "http://localhost:8000" } }))
 afterEach(() => vi.unstubAllGlobals());
 
 describe("payment settings", () => {
-  it("loads subscription and callback amounts from the public payment settings endpoint", async () => {
+  it("loads subscription, callback, and personal coaching amounts from the public payment settings endpoint", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => ({ subscription_amount: 499900, callback_amount: 49900, currency: "INR" }),
+      json: async () => ({ subscription_amount: 499900, callback_amount: 49900, personal_coaching_amount: 2199900, currency: "INR" }),
     }));
 
     const { result } = renderHook(() => usePaymentSettings());
@@ -19,6 +19,7 @@ describe("payment settings", () => {
     await waitFor(() => expect(result.current).toEqual({
       subscriptionAmount: 499900,
       callbackAmount: 49900,
+      personalCoachingAmount: 2199900,
       currency: "INR",
     }));
     expect(fetch).toHaveBeenCalledWith(
@@ -36,6 +37,6 @@ describe("payment settings", () => {
     const { result } = renderHook(() => usePaymentSettings());
 
     await waitFor(() => expect(fetch).toHaveBeenCalled());
-    expect(result.current).toEqual({ subscriptionAmount: null, callbackAmount: null, currency: "INR" });
+    expect(result.current).toEqual({ subscriptionAmount: null, callbackAmount: null, personalCoachingAmount: null, currency: "INR" });
   });
 });

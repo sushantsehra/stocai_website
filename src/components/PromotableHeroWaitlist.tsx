@@ -88,7 +88,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
   const [discountCode, setDiscountCode] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
-  const { subscriptionAmount, callbackAmount } = usePaymentSettings(isOpen);
+  const { subscriptionAmount, callbackAmount, personalCoachingAmount } = usePaymentSettings(isOpen);
   const {
     status: callbackStatus,
     message: callbackMessage,
@@ -431,6 +431,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
     presentation="page"
     amount={subscriptionAmount}
     callbackAmount={callbackAmount}
+    personalCoachingAmount={personalCoachingAmount}
     loading={status === "loading"}
     message={message}
     onCheckoutClick={() => { trackCtaClick({ location: "checkout_page", label: "GET PROMOTION ARCHITECT", source }); void handleSubmit(); }}
@@ -474,6 +475,7 @@ const PromotableHeroWaitlist: React.FC<HeroWaitlistProps> = ({
           {checkoutVariant === "promotion-architect" ? <PromotionArchitectCheckout
             amount={subscriptionAmount}
             callbackAmount={callbackAmount}
+            personalCoachingAmount={personalCoachingAmount}
             loading={status === "loading"}
             message={message}
             onCheckoutClick={() => { trackCtaClick({ location: "checkout_modal", label: "GET PROMOTION ARCHITECT", source }); void handleSubmit(); }}

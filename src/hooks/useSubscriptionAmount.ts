@@ -13,12 +13,14 @@ export const formatSubscriptionAmount = (amountInPaise: number) =>
 export type PaymentSettings = {
   subscriptionAmount: number | null;
   callbackAmount: number | null;
+  personalCoachingAmount: number | null;
   currency: string;
 };
 
 const emptySettings: PaymentSettings = {
   subscriptionAmount: null,
   callbackAmount: null,
+  personalCoachingAmount: null,
   currency: "INR",
 };
 
@@ -40,6 +42,7 @@ export const usePaymentSettings = (enabled = true) => {
         setSettings(ok ? {
           subscriptionAmount: positiveAmount(data?.subscription_amount),
           callbackAmount: positiveAmount(data?.callback_amount),
+          personalCoachingAmount: positiveAmount(data?.personal_coaching_amount),
           currency: typeof data?.currency === "string" && data.currency ? data.currency : "INR",
         } : emptySettings);
       })

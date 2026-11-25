@@ -6,6 +6,7 @@ import styles from "./promotionArchitectCheckout.module.css";
 type Props = {
   amount: number | null;
   callbackAmount: number | null;
+  personalCoachingAmount: number | null;
   loading: boolean;
   message: string;
   onCheckoutClick: () => void;
@@ -25,15 +26,16 @@ const digitalToolkit = [
 ];
 
 const coachingTopics = [
-  { title: "Your current situation and career goals.", description: "Clarify where you are now, what you want next and what a successful promotion would mean for you." },
-  { title: "The challenges holding you back.", description: "Explore the decisions, relationships or workplace dynamics that may be slowing your progress." },
-  { title: "Your promotion barriers and areas to focus on.", description: "Identify the gaps in visibility, support or readiness that deserve your attention first." },
-  { title: "Possible next steps and the right coaching approach.", description: "Leave with practical priorities and a clearer sense of whether coaching could help you move forward." },
+  { title: "Build your promotion strategy", description: "Know which moves to make, with whom and when." },
+  { title: "Build your promotability skills", description: "Develop visibility, influence, stakeholder management, networking and personal branding." },
+  { title: "Remove your personal barriers", description: "Identify and overcome the habits, beliefs and behaviours limiting your progression." },
+  { title: "Navigate bosses and stakeholders", description: "Manage difficult relationships, expectations and workplace dynamics with confidence." },
 ];
 
 export default function PromotionArchitectCheckout({
   amount,
   callbackAmount,
+  personalCoachingAmount,
   loading,
   message,
   onCheckoutClick,
@@ -58,6 +60,9 @@ export default function PromotionArchitectCheckout({
   const callbackPrice = callbackAmount
     ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(callbackAmount / 100)
     : null;
+  const personalCoachingPrice = personalCoachingAmount
+    ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(personalCoachingAmount / 100)
+    : "Price unavailable";
 
   return (
     <div className={`${styles.checkout} ${presentation === "page" ? styles.page : ""}`}>
@@ -70,7 +75,7 @@ export default function PromotionArchitectCheckout({
 
         <nav className={styles.offerNav} aria-label="Offer choices">
           <a href="#digital-diy">Digital programme <ArrowDown aria-hidden="true" /></a>
-          <a href="#human-coaching">Talk to a strategist <ArrowDown aria-hidden="true" /></a>
+          <a href="#human-coaching">1:1 personal coaching <ArrowDown aria-hidden="true" /></a>
         </nav>
 
         <div className={styles.offerGrid}>
@@ -115,18 +120,24 @@ export default function PromotionArchitectCheckout({
           <article className={`${styles.card} ${styles.coachingCard}`} id="human-coaching">
             <div className={styles.coachingIntro}>
               <div className={styles.cardCopy}>
-                <h3>TALK TO A STRATEGIST</h3>
-                <p className={styles.cardLabel}>1:1 strategist conversation</p>
-                <h4>Get clarity. Plan your next move.</h4>
-                <p>Sometimes, you need another perspective to understand what&apos;s holding you back and what to do next.</p>
+                <h3>1:1 PERSONAL COACHING</h3>
+                <p className={styles.cardLabel}>Personalised coaching</p>
+                <h4>Build your promotion strategy with your personal Corporate Strategist.</h4>
               </div>
-              <Image className={styles.coachingImage} src="/images/promotion-architect/diagnostic-coaching.webp" alt="A corporate strategist speaking with a professional during a coaching session" width={1200} height={800} sizes="(min-width: 960px) 300px, 45vw" />
-              <p className={styles.coachingFullWidth}>Speak with a Corporate Strategist about your situation, your promotion goals and the challenges you&apos;re navigating.</p>
+              <Image className={styles.coachingImage} src="/personal-coaching/coaching-session.png" alt="A corporate strategist coaching a professional in a one-to-one session" width={1456} height={1092} sizes="(min-width: 960px) 300px, 45vw" />
+              <p className={styles.coachingFullWidth}>Work 1:1 with a real human strategist to build your promotion strategy, develop your promotability skills and overcome the barriers holding you back.</p>
+              <p className={styles.coachingFullWidth}>Your ambition. Your context. Your strategist.</p>
             </div>
 
             <section className={styles.howItWorks} aria-labelledby="how-it-works-title">
-              <h4 id="how-it-works-title"><span>What we’ll cover</span><i /></h4>
-              <ul className={styles.topicList}>{coachingTopics.map((topic) => <li key={topic.title}><div><strong>{topic.title}</strong><p>{topic.description}</p></div></li>)}</ul>
+              <h4 id="how-it-works-title"><span>Your personal promotion dossier</span><i /></h4>
+              <ul className={styles.topicList}>
+                {coachingTopics.map((topic) => <li key={topic.title}><div><strong>{topic.title}</strong><p>{topic.description}</p></div></li>)}
+                <li className={styles.coachingPriceDetail}>
+                  <div><strong>Complete 1:1 personal coaching programme</strong><p>7 personalised coaching sessions with your Personal Corporate Strategist.</p></div>
+                  <div className={styles.coachingPrice}><del>₹50,000</del><strong>{personalCoachingPrice}</strong><small>One-time payment</small></div>
+                </li>
+              </ul>
             </section>
 
             {callbackConfirmed ? (
